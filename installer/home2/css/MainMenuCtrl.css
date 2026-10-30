@@ -13,7 +13,7 @@
   height: 416px;
   overflow: hidden;
   background: #05060C url(../images/home2/bg_ltr.png) no-repeat 0px 0px;
-  font-family: "Tajawal", "Tajawal Medium", "Tipperary", Arial, sans-serif;
+  font-family: "Home2 Tajawal Bold", "Tipperary", Arial, sans-serif;
   color: #FFFFFF;
   direction: ltr;
 }
@@ -28,7 +28,7 @@
 }
 
 .H2TimeLine {
-  font-family: "Tajawal Light", "Tajawal", "Tipperary", Arial, sans-serif;
+  font-family: "Home2 Tajawal Light", "Home2 Tajawal Bold", "Tipperary", Arial, sans-serif;
   font-size: 104px;
   font-weight: 300;
   line-height: 112px;
@@ -42,7 +42,7 @@
 }
 
 .H2AmPm {
-  font-family: "Tajawal", "Tipperary", Arial, sans-serif;
+  font-family: "Home2 Tajawal Bold", "Tipperary", Arial, sans-serif;
   font-size: 22px;
   font-weight: 700;
   letter-spacing: 0px;
@@ -61,7 +61,7 @@
 
 .H2Hijri {
   margin-top: 2px;
-  font-family: "Tajawal Medium", "Tajawal", "Tipperary", Arial, sans-serif;
+  font-family: "Home2 Tajawal Medium", "Home2 Tajawal Bold", "Tipperary", Arial, sans-serif;
   font-size: 18px;
   font-weight: 500;
   line-height: 26px;
@@ -169,7 +169,7 @@
   left: 28px;
   right: 28px;
   top: 160px;
-  font-family: "Tajawal Medium", "Tajawal", "Tipperary", Arial, sans-serif;
+  font-family: "Home2 Tajawal Medium", "Home2 Tajawal Bold", "Tipperary", Arial, sans-serif;
   font-size: 16px;
   font-weight: 500;
   line-height: 22px;
@@ -240,6 +240,42 @@
   line-height: 24px;
   white-space: nowrap;
   overflow: hidden;
+}
+
+/* ---------- no phone connected: card hidden, clock centred ---------- */
+.H2NoPhone .H2Hero {
+  display: none;
+}
+
+.H2NoPhone .H2Clock {
+  left: 0px;
+  top: 40px;
+  width: 800px;
+  text-align: center;
+}
+
+/* ---------- font check line (testing builds) ---------- */
+.H2FontCheck {
+  position: absolute;
+  left: 0px;
+  top: 392px;
+  width: 800px;
+  height: 20px;
+  line-height: 20px;
+  text-align: center;
+  font-family: Arial, sans-serif;
+  font-size: 14px;
+  color: rgba(255, 255, 255, 0.55);
+  direction: ltr;
+}
+
+.H2FontProbe {
+  position: absolute;
+  left: 0px;
+  top: 0px;
+  visibility: hidden;
+  white-space: nowrap;
+  font-size: 40px;
 }
 
 /* Kept for API compatibility, never shown */

@@ -131,8 +131,10 @@ then
     cp "${PAYLOAD}/css/MainMenuCtrl.css" "${CTRL}/css/MainMenuCtrl.css" &&
     cp "${PAYLOAD}/css/MainMenuCtrl_rtl.css" "${CTRL}/css/MainMenuCtrl_rtl.css" &&
     cp "${PAYLOAD}"/images/home2/*.png "${CTRL}/images/home2/" &&
-    cp "${PAYLOAD}"/fonts/Tajawal-*.ttf "${FONTS}/"
+    cp "${PAYLOAD}"/fonts/Home2Tajawal-*.ttf "${FONTS}/"
     COPY_OK=$?
+    # Fonts from v1.0.0/1.0.1 had the plain Tajawal names; replaced by Home2Tajawal-*.
+    rm -f "${FONTS}"/Tajawal-*.ttf
     sync
 
     # Verify what landed on the unit.
@@ -187,7 +189,7 @@ else
     RESTORE_OK=$?
     rm -f "${CTRL}/css/MainMenuCtrl_rtl.css"
     rm -rf "${CTRL}/images/home2"
-    rm -f "${FONTS}"/Tajawal-*.ttf
+    rm -f "${FONTS}"/Tajawal-*.ttf "${FONTS}"/Home2Tajawal-*.ttf
     sync
 
     if [ ${RESTORE_OK} -ne 0 ]; then

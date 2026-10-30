@@ -55,3 +55,8 @@
   right: 14px;
   text-align: right;
 }
+
+.H2NoPhone .H2Clock {
+  left: 0px;
+  text-align: center;
+}

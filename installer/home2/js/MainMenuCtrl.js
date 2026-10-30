@@ -1,6 +1,6 @@
 /*
  * Home 2.0 "Ember Glass" launcher for Mazda Connect (CMU 150, firmware 74.x)
- * Version 1.0.1 — see README.md
+ * Version 1.0.2 — see README.md
  *
  * Drop-in replacement for /jci/gui/apps/system/controls/MainMenu/js/MainMenuCtrl.js.
  * It keeps the public API the stock system app uses (constructor, handleControllerEvent,
@@ -21,8 +21,13 @@ var HOME2_CONFIG = {
     // How often to check whether a phone is connected (ms).
     phonePollMs : 1000,
     // How often to refresh the clock (ms).
-    clockMs : 5000
+    clockMs : 5000,
+    // Show a small line saying whether the Tajawal font loaded (for testing on the car).
+    fontCheck : true
 };
+
+// Font family names, as written inside the installed .ttf files (see tools/rename_fonts.py).
+var HOME2_FONTS = ["Home2 Tajawal Bold", "Home2 Tajawal Medium", "Home2 Tajawal Light"];
 
 /* ---------- static text ---------- */
 var HOME2_TEXT = {
@@ -217,7 +222,40 @@ MainMenuCtrl.prototype.createStructure = function()
     // status-bar button name here via setText(). Not shown.
     this._iconNameDiv = this._el("div", "MainMenuCtrlIconName", this.divElt);
 
+    if (HOME2_CONFIG.fontCheck)
+    {
+        this._fontCheckEl = this._el("div", "H2FontCheck", this.divElt, "");
+    }
+
     this._applyPhoneState();
+};
+
+// Reports whether each Home 2.0 font is available, by comparing the width of a sample
+// drawn in that font against the same text in a font name that cannot exist.
+MainMenuCtrl.prototype._checkFonts = function()
+{
+    if (!this._fontCheckEl) { return; }
+    // Arabic and Latin are checked separately: the browser can use a font for one script
+    // and fall back to another font for the other.
+    var samples = { ar : "وصّل جوالك الإعدادات", en : "Android Auto 0123" };
+    var probe = this._el("span", "H2FontProbe", this.divElt, "");
+    var self = this;
+    function width(text, family)
+    {
+        self._setText(probe, text);
+        probe.style.fontFamily = family;
+        return probe.offsetWidth;
+    }
+    var parts = [];
+    for (var i = 0; i < HOME2_FONTS.length; i++)
+    {
+        var fam = "'" + HOME2_FONTS[i] + "', 'H2NoSuchFont', monospace";
+        var ar = width(samples.ar, fam) !== width(samples.ar, "'H2NoSuchFont', monospace");
+        var en = width(samples.en, fam) !== width(samples.en, "'H2NoSuchFont', monospace");
+        parts.push(HOME2_FONTS[i].replace("Home2 Tajawal ", "") + " AR " + (ar ? "OK" : "NO") + " EN " + (en ? "OK" : "NO"));
+    }
+    this.divElt.removeChild(probe);
+    this._setText(this._fontCheckEl, "Font check: " + parts.join("  |  "));
 };
 
 MainMenuCtrl.prototype.init = function()
@@ -235,6 +273,13 @@ MainMenuCtrl.prototype.init = function()
 
     // Start on the phone card when a phone is connected, otherwise on Navigation.
     this._setFocus(this._phone === "none" ? 1 : 0);
+
+    this._checkFonts();
+    if (this._fontCheckEl)
+    {
+        // Check again once the page has settled, in case fonts were still loading.
+        this._fontCheckTimerId = setTimeout(this._checkFonts.bind(this), 3000);
+    }
 };
 
 /* ---------- clock ---------- */
@@ -389,6 +434,28 @@ MainMenuCtrl.prototype._applyPhoneState = function()
         this._setText(this._heroTitle, this._text.connect);
         this._setText(this._heroSub, this._text.connectSub);
     }
+
+    // No phone: the card is hidden and the clock takes the top of the screen.
+    if (this._phone === "none")
+    {
+        this.divElt.classList.add("H2NoPhone");
+        if (this._focus === 0)
+        {
+            this._focus = 1;
+            if (this._highlighted === 0) { this._setHighlight(1); }
+        }
+        if (this._prvFocus === 0) { this._prvFocus = 1; }
+    }
+    else
+    {
+        this.divElt.classList.remove("H2NoPhone");
+    }
+};
+
+// The phone card can only take focus while a phone is connected.
+MainMenuCtrl.prototype._firstIndex = function()
+{
+    return (this._phone === "none") ? 1 : 0;
 };
 
 /* ---------- focus + highlight ---------- */
@@ -434,7 +501,7 @@ MainMenuCtrl.prototype._setHighlight = function(index)
 MainMenuCtrl.prototype._offsetFocus = function(direction)
 {
     var index = this._focus + direction;
-    if (index < 0) { index = 0; }
+    if (index < this._firstIndex()) { index = this._firstIndex(); }
     if (index > this._items.length - 1) { index = this._items.length - 1; }
 
     if (index !== this._focus || this._highlighted !== index)
@@ -622,6 +689,10 @@ MainMenuCtrl.prototype.handleControllerEvent = function(eventId)
             {
                 this._focus = this._prvFocus;
             }
+            if (this._focus < this._firstIndex())
+            {
+                this._focus = this._firstIndex();
+            }
             this._setHighlight(this._focus);
             break;
 
@@ -702,15 +773,15 @@ MainMenuCtrl.prototype.handleControllerEvent = function(eventId)
             if (this._allowInput)
             {
                 this._lastControllerStartEvent = "";
-                if (this._focus !== 0)
+                if (this._focus !== 0 && this._phone !== "none")
                 {
-                    // From the dock, up moves to the phone card.
+                    // From the dock, up moves to the phone card (only shown when a phone is connected).
                     this._setFocus(0);
                     this._setHighlight(0);
                 }
                 else
                 {
-                    // From the phone card, up goes to the status bar (stock behaviour).
+                    // From the top row, up goes to the status bar (stock behaviour).
                     response = "giveFocusUp";
                 }
             }
@@ -787,6 +858,7 @@ MainMenuCtrl.prototype.cleanUp = function()
     clearInterval(this._clockTimerId);
     clearInterval(this._phoneTimerId);
     clearTimeout(this._nudgeTimerId);
+    clearTimeout(this._fontCheckTimerId);
     if (this._allowInputTimerId)
     {
         clearTimeout(this._allowInputTimerId);
