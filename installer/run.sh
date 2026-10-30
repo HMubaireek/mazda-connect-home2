@@ -13,7 +13,7 @@ DIALOG="${R}/jci/tools/jci-dialog"
 MYDIR=$(dirname "$(readlink -f "$0")")
 PAYLOAD="${MYDIR}/home2"
 CTRL="${R}/jci/gui/apps/system/controls/MainMenu"
-FONTS="${R}/jci/fonts"
+OLD_FONTS="${R}/jci/fonts"     # where v1.0.0-1.0.2 put the fonts (Opera does not read it)
 BACKUP="${R}/data_persist/home2-backup"
 USB_BACKUP="${MYDIR}/backup"
 MARKER="Home 2.0 \"Ember Glass\" launcher"
@@ -41,11 +41,32 @@ md5()
     md5sum "$1" 2>/dev/null | cut -d ' ' -f 1
 }
 
+# The folder the GUI browser (Opera) loads fonts from: its OPERA_FONTS setting.
+# On firmware 74 /etc/profile sets it to /jci/fonts/CHN, not /jci/fonts.
+opera_font_dir()
+{
+    d=""
+    if [ -z "${R}" ]; then
+        for p in /proc/[0-9]*; do
+            case "$(tr '\000' ' ' < "$p/cmdline" 2>/dev/null)" in
+                /jci/opera/opera*)
+                    d=$(tr '\000' '\n' < "$p/environ" 2>/dev/null | sed -n 's/^OPERA_FONTS=//p' | head -n 1)
+                    [ -n "$d" ] && break ;;
+            esac
+        done
+    fi
+    [ -z "$d" ] && d=$(sed -n 's/^ *export OPERA_FONTS="\{0,1\}\([^"]*\)"\{0,1\}.*$/\1/p' "${R}/etc/profile" 2>/dev/null | head -n 1)
+    [ -z "$d" ] && d="/jci/fonts/CHN"
+    [ -d "${R}$d" ] || d="/jci/fonts"
+    echo "${R}$d"
+}
+
 # Keep the watchdog from rebooting the unit while we work, and make / writable.
 echo 1 > "${R}/sys/class/gpio/Watchdog Disable/value" 2>/dev/null
 mount -o rw,remount /
 mount -o rw,remount "${MYDIR}" 2>/dev/null
 mkdir -p "${MYDIR}/logs"
+FONTS=$(opera_font_dir)
 
 # --- Firmware must be V74 ----------------------------------------------------
 CMU_VER=$(grep "^JCI_SW_VER=" "${R}/jci/version.ini" | sed 's/^.*_\([^_]*\)\"$/\1/')
@@ -90,6 +111,7 @@ then
     CUR_CSS=$(md5 "${CTRL}/css/MainMenuCtrl.css")
     echo "Current MainMenuCtrl.js  md5: ${CUR_JS}"
     echo "Current MainMenuCtrl.css md5: ${CUR_CSS}"
+    echo "Browser font folder: ${FONTS}"
 
     if grep -q "${MARKER}" "${CTRL}/js/MainMenuCtrl.js"; then
         echo "Home 2.0 is already installed: updating it, keeping the existing backup."
@@ -133,8 +155,9 @@ then
     cp "${PAYLOAD}"/images/home2/*.png "${CTRL}/images/home2/" &&
     cp "${PAYLOAD}"/fonts/Home2Tajawal-*.ttf "${FONTS}/"
     COPY_OK=$?
-    # Fonts from v1.0.0/1.0.1 had the plain Tajawal names; replaced by Home2Tajawal-*.
-    rm -f "${FONTS}"/Tajawal-*.ttf
+    # Clean up fonts from earlier versions (plain Tajawal names, or put in /jci/fonts).
+    rm -f "${FONTS}"/Tajawal-*.ttf "${OLD_FONTS}"/Tajawal-*.ttf
+    [ "${FONTS}" != "${OLD_FONTS}" ] && rm -f "${OLD_FONTS}"/Home2Tajawal-*.ttf
     sync
 
     # Verify what landed on the unit.
@@ -145,11 +168,14 @@ then
     for f in MainMenuCtrl.css MainMenuCtrl_rtl.css; do
         [ "$(md5 "${CTRL}/css/$f")" = "$(md5 "${PAYLOAD}/css/$f")" ] || VERIFY_OK=1
     done
+    for f in Home2Tajawal-Light.ttf Home2Tajawal-Medium.ttf Home2Tajawal-Bold.ttf; do
+        [ "$(md5 "${FONTS}/$f")" = "$(md5 "${PAYLOAD}/fonts/$f")" ] || VERIFY_OK=1
+    done
 
     if [ ${COPY_OK} -ne 0 ] || [ ${VERIFY_OK} -ne 0 ]; then
         echo "Copy or verify failed: restoring originals."
         restore_originals "${BACKUP}"
-        rm -f "${CTRL}/css/MainMenuCtrl_rtl.css"
+        rm -f "${CTRL}/css/MainMenuCtrl_rtl.css" "${FONTS}"/Home2Tajawal-*.ttf
         sync
         dialog_wait "Install failed while copying.\nThe original home screen was restored.\nSee logs/install.log on the USB stick." 12
         exit 1
@@ -190,6 +216,7 @@ else
     rm -f "${CTRL}/css/MainMenuCtrl_rtl.css"
     rm -rf "${CTRL}/images/home2"
     rm -f "${FONTS}"/Tajawal-*.ttf "${FONTS}"/Home2Tajawal-*.ttf
+    rm -f "${OLD_FONTS}"/Tajawal-*.ttf "${OLD_FONTS}"/Home2Tajawal-*.ttf
     sync
 
     if [ ${RESTORE_OK} -ne 0 ]; then

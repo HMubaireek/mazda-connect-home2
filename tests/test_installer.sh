@@ -20,14 +20,16 @@ setup()
     CAR="$T/car"
     USB="$T/usb"
     CTRL="$CAR/jci/gui/apps/system/controls/MainMenu"
-    mkdir -p "$CTRL/js" "$CTRL/css" "$CTRL/images" "$CAR/jci/fonts" "$CAR/jci/tools" "$CAR/data_persist" "$T/bin"
+    mkdir -p "$CTRL/js" "$CTRL/css" "$CTRL/images" "$CAR/jci/fonts/CHN" "$CAR/etc" "$CAR/jci/tools" "$CAR/data_persist" "$T/bin"
     printf '[VersionInfo]\nJCI_SW_VER="MAZ_CMU-150_%s"\nJCI_SW_FLAVOR="cmu150_ADR"\n' "$1" > "$CAR/jci/version.ini"
     echo "/* stock MainMenuCtrl.js stand-in */" > "$CTRL/js/MainMenuCtrl.js"
     echo "/* stock MainMenuCtrl.css stand-in */" > "$CTRL/css/MainMenuCtrl.css"
     ORIG_JS=$(md5 "$CTRL/js/MainMenuCtrl.js")
     ORIG_CSS=$(md5 "$CTRL/css/MainMenuCtrl.css")
     cp -r "$REPO/installer" "$USB"
-    touch "$CAR/jci/fonts/Tajawal-Bold.ttf"   # left over from v1.0.x
+    FONTDIR="$CAR/jci/fonts/CHN"   # what firmware 74's /etc/profile gives the browser
+    printf 'OPERA_ROOT="/jci/opera"\nexport FREETYPE_FONT_SET=YES\nexport OPERA_FONTS="/jci/fonts/CHN"\n' > "$CAR/etc/profile"
+    touch "$CAR/jci/fonts/Tajawal-Bold.ttf" "$CAR/jci/fonts/Home2Tajawal-Bold.ttf"   # left over from v1.0.0-1.0.2
 
     # jci-dialog stub: --question answers come from $T/answers (one exit code per line)
     cat > "$CAR/jci/tools/jci-dialog" <<EOF
@@ -56,8 +58,9 @@ check "launcher installed" 'grep -q "Ember Glass" "$CTRL/js/MainMenuCtrl.js"'
 check "css installed" '[ "$(md5 "$CTRL/css/MainMenuCtrl.css")" = "$(md5 "$USB/home2/css/MainMenuCtrl.css")" ]'
 check "rtl css installed" '[ -f "$CTRL/css/MainMenuCtrl_rtl.css" ]'
 check "images installed" '[ -f "$CTRL/images/home2/bg_rtl.png" ]'
-check "fonts installed" '[ -f "$CAR/jci/fonts/Home2Tajawal-Light.ttf" ]'
-check "old v1.0 font names cleaned up" '[ ! -f "$CAR/jci/fonts/Tajawal-Bold.ttf" ]'
+check "fonts installed in the browser's font folder" '[ "$(md5 "$FONTDIR/Home2Tajawal-Light.ttf")" = "$(md5 "$USB/home2/fonts/Home2Tajawal-Light.ttf")" ]'
+check "old fonts in /jci/fonts cleaned up" '[ ! -f "$CAR/jci/fonts/Tajawal-Bold.ttf" ] && [ ! -f "$CAR/jci/fonts/Home2Tajawal-Bold.ttf" ]'
+check "log names the font folder" 'grep -q "Browser font folder: .*/jci/fonts/CHN" "$USB/logs/install.log"'
 check "backup on car" '[ "$(md5 "$CAR/data_persist/home2-backup/MainMenuCtrl.js")" = "$ORIG_JS" ]'
 check "backup on USB" '[ "$(md5 "$USB/backup/MainMenuCtrl.css")" = "$ORIG_CSS" ]'
 check "rebooted" '[ -f "$T/rebooted" ]'
@@ -76,7 +79,8 @@ check "js restored" '[ "$(md5 "$CTRL/js/MainMenuCtrl.js")" = "$ORIG_JS" ]'
 check "css restored" '[ "$(md5 "$CTRL/css/MainMenuCtrl.css")" = "$ORIG_CSS" ]'
 check "rtl css removed" '[ ! -f "$CTRL/css/MainMenuCtrl_rtl.css" ]'
 check "images removed" '[ ! -d "$CTRL/images/home2" ]'
-check "fonts removed" '[ ! -f "$CAR/jci/fonts/Home2Tajawal-Bold.ttf" ]'
+check "fonts removed" '[ ! -f "$FONTDIR/Home2Tajawal-Bold.ttf" ]'
+check "stock fonts folder kept" '[ -d "$FONTDIR" ]'
 
 echo "--- 4. remove when not installed changes nothing"
 rc=$(run 1)
@@ -103,11 +107,18 @@ check "exit 0" '[ "$rc" = 0 ]'
 check "js untouched" '[ "$(md5 "$CTRL/js/MainMenuCtrl.js")" = "$ORIG_JS" ]'
 check "no rtl css" '[ ! -f "$CTRL/css/MainMenuCtrl_rtl.css" ]'
 
-echo "--- 8. copy failure rolls back"
+echo "--- 8. no OPERA_FONTS in /etc/profile -> /jci/fonts/CHN is used"
 setup 74.00.333
-chmod 000 "$CAR/jci/fonts"
+: > "$CAR/etc/profile"
 rc=$(run 0 0)
-chmod 755 "$CAR/jci/fonts"
+check "exit 0" '[ "$rc" = 0 ]'
+check "fonts in CHN" '[ -f "$FONTDIR/Home2Tajawal-Bold.ttf" ]'
+
+echo "--- 9. copy failure rolls back"
+setup 74.00.333
+chmod 000 "$FONTDIR"
+rc=$(run 0 0)
+chmod 755 "$FONTDIR"
 if [ "$(id -u)" = 0 ]; then
     echo "SKIP running as root, permission failure cannot be simulated"
 else

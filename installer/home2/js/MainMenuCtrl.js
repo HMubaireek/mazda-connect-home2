@@ -1,6 +1,6 @@
 /*
  * Home 2.0 "Ember Glass" launcher for Mazda Connect (CMU 150, firmware 74.x)
- * Version 1.0.2 — see README.md
+ * Version 1.0.3 — see README.md
  *
  * Drop-in replacement for /jci/gui/apps/system/controls/MainMenu/js/MainMenuCtrl.js.
  * It keeps the public API the stock system app uses (constructor, handleControllerEvent,

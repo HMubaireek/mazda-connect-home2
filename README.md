@@ -15,12 +15,14 @@ appears when **Android Auto** or **Apple CarPlay** is connected and hides when n
 
 ## Status
 
-**v1.0.2 — running in a 2019 CX-9 on firmware 74.00.333A (ADR / 4A N).**
+**v1.0.3 — running in a 2019 CX-9 on firmware 74.00.333A (ADR / 4A N).**
 
 - Installed and running in the car: Arabic right-to-left layout, knob, touch and the stock tiles work.
 - v1.0.1 fixed the clock (the car's Linux clock is never set, so the time now comes from the Mazda framework).
 - v1.0.2 hides the phone card when no phone is connected, and ships Tajawal with the Arabic presentation
-  forms the car's browser needs (see [Fonts](#fonts)). It shows a temporary **"Font check"** line at the
+  forms the car's browser needs (see [Fonts](#fonts)).
+- v1.0.3 installs the fonts into the folder the browser really reads (`/jci/fonts/CHN` on firmware 74;
+  earlier versions used `/jci/fonts`, which the browser never scans). It shows a temporary **"Font check"** line at the
   bottom of the screen to confirm the font loads in the car; set `fontCheck : false` to hide it.
 - The launcher passes 23 automated behaviour checks (knob, tilt, touch, phone hot-plug, focus hand-off) and
   9 clock checks.
@@ -66,7 +68,7 @@ Only the home-menu control is replaced:
 | `/jci/gui/apps/system/controls/MainMenu/css/MainMenuCtrl.css` | replaced |
 | `/jci/gui/apps/system/controls/MainMenu/css/MainMenuCtrl_rtl.css` | added; the framework loads it for Arabic/Hebrew |
 | `/jci/gui/apps/system/controls/MainMenu/images/home2/` | added |
-| `/jci/fonts/Home2Tajawal-Light.ttf`, `-Medium.ttf`, `-Bold.ttf` | added |
+| `/jci/fonts/CHN/Home2Tajawal-Light.ttf`, `-Medium.ttf`, `-Bold.ttf` | added (the browser's font folder, see [Fonts](#fonts)) |
 
 Mazda's system app (`systemApp.js`) is **not modified**. The launcher reads the phone state the system app
 already publishes for its own small CarPlay / Android Auto button, and launches with the same
@@ -147,8 +149,11 @@ Rebuild after changing it.
 
 ## Fonts
 
-The car's browser (Opera Presto) does not load web fonts, so Tajawal is installed as a system font in
-`/jci/fonts`. Presto also draws Arabic using the **presentation form** characters (U+FB50–FDFF,
+The car's browser (Opera Presto) does not load web fonts, so Tajawal is installed as a system font.
+The browser loads fonts from the folder in its `OPERA_FONTS` setting. `/jci/opera/run-Opera` says
+`/jci/fonts`, but the system manager does not use that script: it starts Opera with the environment from
+`/etc/profile`, which sets `/jci/fonts/CHN`. The installer asks the running browser for its `OPERA_FONTS`
+(falling back to `/etc/profile`, then `/jci/fonts/CHN`) and installs the fonts there. Presto also draws Arabic using the **presentation form** characters (U+FB50–FDFF,
 U+FE70–FEFF). The original Tajawal only maps some of them, so Presto fell back to Mazda's own Arabic font
 for the missing letters. `tools/rename_fonts.py` fixes this: it adds the missing forms (pointing each at the
 glyph HarfBuzz picks for that letter and position) and gives each weight its own family name
