@@ -35,6 +35,8 @@
   var PHONE = q.get("phone") || "androidauto";
   var FMT = q.get("fmt") || "12hrs";
   var FOCUS = q.get("focus");
+  // Like the car: the OS clock may be wrong; the framework caches the real time. ?cached=<ms> overrides.
+  var CACHED = q.get("cached") ? +q.get("cached") : Date.now();
   function say(t) { document.getElementById("log").textContent = t; }
 
   window.log = { addSrcFile: function(){}, debug: function(){}, info: function(){}, warn: function(){}, error: function(){} };
@@ -46,6 +48,7 @@
     },
     common: {
       _remoteUiBtns: { system: PHONE === "none" ? null : { appName: PHONE } },
+      getCurrentTime: function() { return CACHED; },
       beep: function() {},
       stealFocus: function() {}
     },

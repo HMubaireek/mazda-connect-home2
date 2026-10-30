@@ -86,7 +86,7 @@
   background-color: rgba(255, 255, 255, 0.14);
   background-image: -o-linear-gradient(top left, rgba(255, 255, 255, 0.24), rgba(255, 255, 255, 0.08));
   background-image: linear-gradient(160deg, rgba(255, 255, 255, 0.24), rgba(255, 255, 255, 0.08));
-  box-shadow: 0px 0px 0px 4px rgba(110, 140, 255, 0.30), 0px 16px 36px rgba(58, 76, 255, 0.35);
+  box-shadow: 0px 0px 0px 3px rgba(110, 140, 255, 0.45);
 }
 
 .H2Card.H2Launch {
@@ -100,7 +100,7 @@
   width: 340px;
   height: 220px;
   border-radius: 30px;
-  box-shadow: 0px 18px 36px rgba(0, 0, 0, 0.35);
+  box-shadow: none;
 }
 
 .H2HeroChip {

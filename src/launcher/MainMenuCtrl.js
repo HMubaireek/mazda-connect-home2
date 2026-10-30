@@ -243,11 +243,32 @@ MainMenuCtrl.prototype._pad = function(n)
     return (n < 10 ? "0" : "") + n;
 };
 
+// The CMU's own Linux clock is usually never set (it starts at 1 January 1970).
+// The real time comes from the system as a message and is cached by the framework,
+// which is also what Mazda's status-bar clock shows. Use that; fall back to the OS clock
+// only if it looks valid. Returns null when no valid time is known yet.
+MainMenuCtrl.prototype._now = function()
+{
+    var t = 0;
+    try { t = framework.common.getCurrentTime(); } catch (e) {}
+    var d = (typeof t === "number" && t > 0) ? new Date(t) : new Date();
+    if (isNaN(d.getTime()) || d.getFullYear() < 2020)
+    {
+        return null;
+    }
+    return d;
+};
+
 MainMenuCtrl.prototype._updateClock = function()
 {
-    var now = new Date();
-    if (isNaN(now.getTime()) || now.getTime() <= 0)
+    var now = this._now();
+    if (!now)
     {
+        // Time not known yet: show nothing rather than a 1970 date.
+        this._setText(this._timeEl, "");
+        this._setText(this._ampmEl, "");
+        this._setText(this._dateEl, "");
+        this._setText(this._hijriEl, "");
         return;
     }
 
