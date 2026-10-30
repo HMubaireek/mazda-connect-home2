@@ -1,0 +1,248 @@
+/*
+ * Home 2.0 "Ember Glass" launcher — left-to-right layout.
+ * The framework loads MainMenuCtrl_rtl.css on top of this file for Arabic.
+ * Area: 800 x 416 (the space under Mazda's 64px status bar).
+ * Opera Presto: -o- prefixes, no flexbox.
+ */
+
+.H2Root {
+  position: absolute;
+  left: 0px;
+  top: 0px;
+  width: 800px;
+  height: 416px;
+  overflow: hidden;
+  background: #05060C url(../images/home2/bg_ltr.png) no-repeat 0px 0px;
+  font-family: "Tajawal", "Tajawal Medium", "Tipperary", Arial, sans-serif;
+  color: #FFFFFF;
+  direction: ltr;
+}
+
+/* ---------- clock ---------- */
+.H2Clock {
+  position: absolute;
+  left: 40px;
+  top: 14px;
+  width: 360px;
+  text-align: left;
+}
+
+.H2TimeLine {
+  font-family: "Tajawal Light", "Tajawal", "Tipperary", Arial, sans-serif;
+  font-size: 104px;
+  font-weight: 300;
+  line-height: 112px;
+  letter-spacing: -3px;
+  white-space: nowrap;
+}
+
+.H2Time {
+  direction: ltr;
+  unicode-bidi: embed;
+}
+
+.H2AmPm {
+  font-family: "Tajawal", "Tipperary", Arial, sans-serif;
+  font-size: 22px;
+  font-weight: 700;
+  letter-spacing: 0px;
+  margin: 0px 10px;
+  color: rgba(255, 255, 255, 0.6);
+}
+
+.H2Date {
+  margin-top: 4px;
+  font-size: 22px;
+  font-weight: 700;
+  line-height: 30px;
+  white-space: nowrap;
+  color: rgba(255, 255, 255, 0.94);
+}
+
+.H2Hijri {
+  margin-top: 2px;
+  font-family: "Tajawal Medium", "Tajawal", "Tipperary", Arial, sans-serif;
+  font-size: 18px;
+  font-weight: 500;
+  line-height: 26px;
+  white-space: nowrap;
+  color: rgba(255, 255, 255, 0.58);
+}
+
+/* ---------- cards (shared) ---------- */
+.H2Card {
+  position: absolute;
+  box-sizing: border-box;
+  border: 1.5px solid rgba(255, 255, 255, 0.16);
+  background-color: rgba(255, 255, 255, 0.07);
+  background-image: -o-linear-gradient(top left, rgba(255, 255, 255, 0.14), rgba(255, 255, 255, 0.03));
+  background-image: linear-gradient(160deg, rgba(255, 255, 255, 0.14), rgba(255, 255, 255, 0.03));
+  -o-transition: border-color 150ms linear, background-color 150ms linear, opacity 200ms linear;
+  transition: border-color 150ms linear, background-color 150ms linear, opacity 200ms linear;
+}
+
+.H2Card.H2Focus {
+  border-color: rgba(200, 212, 255, 0.85);
+  background-color: rgba(255, 255, 255, 0.14);
+  background-image: -o-linear-gradient(top left, rgba(255, 255, 255, 0.24), rgba(255, 255, 255, 0.08));
+  background-image: linear-gradient(160deg, rgba(255, 255, 255, 0.24), rgba(255, 255, 255, 0.08));
+  box-shadow: 0px 0px 0px 4px rgba(110, 140, 255, 0.30), 0px 16px 36px rgba(58, 76, 255, 0.35);
+}
+
+.H2Card.H2Launch {
+  opacity: 0.6;
+}
+
+/* ---------- phone card ---------- */
+.H2Hero {
+  left: 420px;
+  top: 14px;
+  width: 340px;
+  height: 220px;
+  border-radius: 30px;
+  box-shadow: 0px 18px 36px rgba(0, 0, 0, 0.35);
+}
+
+.H2HeroChip {
+  position: absolute;
+  left: 12px;
+  top: 10px;
+  width: 96px;
+  height: 96px;
+  background: url(../images/home2/chip_none.png) no-repeat 0px 0px;
+}
+
+.H2PhoneAA .H2HeroChip {
+  background-image: url(../images/home2/chip_aa.png);
+}
+
+.H2PhoneCP .H2HeroChip {
+  background-image: url(../images/home2/chip_cp.png);
+}
+
+.H2HeroArrow {
+  display: none;
+  position: absolute;
+  right: 24px;
+  top: 26px;
+  width: 28px;
+  height: 28px;
+  background: url(../images/home2/arrow_ltr.png) no-repeat 0px 0px;
+}
+
+.H2HeroBadge {
+  display: none;
+  position: absolute;
+  right: 62px;
+  top: 28px;
+  height: 26px;
+  line-height: 26px;
+  padding: 0px 11px;
+  border-radius: 13px;
+  background-color: rgba(74, 217, 139, 0.16);
+  color: #7DEBB0;
+  font-size: 14px;
+  font-weight: 700;
+}
+
+.H2PhoneAA .H2HeroArrow,
+.H2PhoneCP .H2HeroArrow,
+.H2PhoneAA .H2HeroBadge,
+.H2PhoneCP .H2HeroBadge {
+  display: block;
+}
+
+.H2HeroTitle {
+  position: absolute;
+  left: 28px;
+  right: 28px;
+  top: 116px;
+  font-size: 30px;
+  font-weight: 700;
+  line-height: 40px;
+  white-space: nowrap;
+  overflow: hidden;
+}
+
+.H2HeroSub {
+  position: absolute;
+  left: 28px;
+  right: 28px;
+  top: 160px;
+  font-family: "Tajawal Medium", "Tajawal", "Tipperary", Arial, sans-serif;
+  font-size: 16px;
+  font-weight: 500;
+  line-height: 22px;
+  color: rgba(255, 255, 255, 0.62);
+}
+
+/* No phone: quieter, dashed card */
+.H2Hero.H2PhoneNone {
+  border-style: dashed;
+  border-color: rgba(255, 255, 255, 0.26);
+  background-color: rgba(255, 255, 255, 0.03);
+  background-image: none;
+  box-shadow: none;
+}
+
+.H2Hero.H2PhoneNone.H2Focus {
+  border-color: rgba(200, 212, 255, 0.85);
+  box-shadow: 0px 0px 0px 4px rgba(110, 140, 255, 0.22);
+}
+
+.H2Hero.H2PhoneNone .H2HeroTitle {
+  color: rgba(255, 255, 255, 0.92);
+}
+
+/* Pressed with no phone connected */
+.H2Hero.H2Nudge {
+  border-color: #7DEBB0;
+  box-shadow: 0px 0px 0px 4px rgba(74, 217, 139, 0.25);
+}
+
+/* ---------- dock ---------- */
+.H2Dock {
+  top: 272px;
+  width: 136px;
+  height: 104px;
+  border-radius: 24px;
+}
+
+.H2Dock1 { left: 40px; }
+.H2Dock2 { left: 186px; }
+.H2Dock3 { left: 332px; }
+.H2Dock4 { left: 478px; }
+.H2Dock5 { left: 624px; }
+
+.H2DockChip {
+  position: absolute;
+  left: 6px;
+  top: 6px;
+  width: 56px;
+  height: 56px;
+  background-repeat: no-repeat;
+  background-position: 0px 0px;
+}
+
+.H2Chip-nav { background-image: url(../images/home2/chip_nav.png); }
+.H2Chip-ent { background-image: url(../images/home2/chip_ent.png); }
+.H2Chip-com { background-image: url(../images/home2/chip_com.png); }
+.H2Chip-set { background-image: url(../images/home2/chip_set.png); }
+.H2Chip-app { background-image: url(../images/home2/chip_app.png); }
+
+.H2DockLabel {
+  position: absolute;
+  left: 14px;
+  right: 10px;
+  top: 66px;
+  font-size: 17px;
+  font-weight: 700;
+  line-height: 24px;
+  white-space: nowrap;
+  overflow: hidden;
+}
+
+/* Kept for API compatibility, never shown */
+.MainMenuCtrlIconName {
+  display: none;
+}
