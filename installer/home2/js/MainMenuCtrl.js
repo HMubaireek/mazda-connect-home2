@@ -1,6 +1,6 @@
 /*
  * Home 2.0 "Ember Glass" launcher for Mazda Connect (CMU 150, firmware 74.x)
- * Version 1.0.3 — see README.md
+ * Version 1.0.4 — see README.md
  *
  * Drop-in replacement for /jci/gui/apps/system/controls/MainMenu/js/MainMenuCtrl.js.
  * It keeps the public API the stock system app uses (constructor, handleControllerEvent,
@@ -23,7 +23,7 @@ var HOME2_CONFIG = {
     // How often to refresh the clock (ms).
     clockMs : 5000,
     // Show a small line saying whether the Tajawal font loaded (for testing on the car).
-    fontCheck : true
+    fontCheck : false
 };
 
 // Font family names, as written inside the installed .ttf files (see tools/rename_fonts.py).

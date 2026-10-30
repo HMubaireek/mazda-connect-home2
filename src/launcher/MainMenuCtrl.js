@@ -23,7 +23,7 @@ var HOME2_CONFIG = {
     // How often to refresh the clock (ms).
     clockMs : 5000,
     // Show a small line saying whether the Tajawal font loaded (for testing on the car).
-    fontCheck : true
+    fontCheck : false
 };
 
 // Font family names, as written inside the installed .ttf files (see tools/rename_fonts.py).

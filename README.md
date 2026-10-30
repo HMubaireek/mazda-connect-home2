@@ -15,18 +15,18 @@ appears when **Android Auto** or **Apple CarPlay** is connected and hides when n
 
 ## Status
 
-**v1.0.3 — running in a 2019 CX-9 on firmware 74.00.333A (ADR / 4A N).**
+**v1.0.4 — running in a 2019 CX-9 on firmware 74.00.333A (ADR / 4A N).**
 
 - Installed and running in the car: Arabic right-to-left layout, knob, touch and the stock tiles work.
 - v1.0.1 fixed the clock (the car's Linux clock is never set, so the time now comes from the Mazda framework).
 - v1.0.2 hides the phone card when no phone is connected, and ships Tajawal with the Arabic presentation
   forms the car's browser needs (see [Fonts](#fonts)).
 - v1.0.3 installs the fonts into the folder the browser really reads (`/jci/fonts/CHN` on firmware 74;
-  earlier versions used `/jci/fonts`, which the browser never scans). It shows a temporary **"Font check"** line at the
-  bottom of the screen to confirm the font loads in the car; set `fontCheck : false` to hide it.
+  earlier versions used `/jci/fonts`, which the browser never scans). Confirmed in the car: Tajawal loads.
+- v1.0.4 turns off the "Font check" test line.
 - The launcher passes 23 automated behaviour checks (knob, tilt, touch, phone hot-plug, focus hand-off) and
   9 clock checks.
-- The installer passes 28 automated checks against a simulated car file system (install, reinstall, remove,
+- The installer passes 32 automated checks against a simulated car file system (install, reinstall, remove,
   wrong firmware, damaged USB copy, cancel).
 
 Treat it as experimental. Removing it is one step (see [Remove](#remove)).
@@ -141,7 +141,7 @@ var HOME2_CONFIG = {
     arabicDigits : true,   // ٠١٢٣ instead of 0123 when the system language is Arabic
     phonePollMs : 1000,    // how often to check for a connected phone
     clockMs : 5000,        // clock refresh
-    fontCheck : true       // show the "Font check" line (for testing in the car)
+    fontCheck : false      // true shows a "Font check" line (for testing in the car)
 };
 ```
 
@@ -159,7 +159,7 @@ for the missing letters. `tools/rename_fonts.py` fixes this: it adds the missing
 glyph HarfBuzz picks for that letter and position) and gives each weight its own family name
 ("Home2 Tajawal Light / Medium / Bold"). The originals are kept in `src/fonts/`.
 
-The "Font check" line shows, for each weight, whether Arabic (AR) and Latin (EN) text is drawn with Tajawal
+With `fontCheck : true`, a "Font check" line shows, for each weight, whether Arabic (AR) and Latin (EN) text is drawn with Tajawal
 (`OK`) or with a fallback font (`NO`).
 
 ## Build from source
