@@ -3,7 +3,7 @@
 # Home 2.0 "Ember Glass" launcher for Mazda Connect — install / remove
 # Runs on the car (busybox sh). Start it from the CMU terminal:
 #     sh /tmp/mnt/sda1/run.sh        (use sdb1 etc. if that is where the stick is)
-# MIT License. Not affiliated with Mazda. Use at your own risk.
+# Apache License 2.0. Not affiliated with Mazda. Use at your own risk.
 # ---------------------------------------------------------------------------
 
 TITLE="Home 2.0"

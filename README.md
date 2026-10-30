@@ -186,5 +186,5 @@ done **at your own risk**. Install only while parked, and don't operate the scre
 
 ## License
 
-MIT for this project's code and images (see `LICENSE`). Tajawal is under the SIL Open Font License.
-No Mazda files are included in this repository.
+Apache License 2.0 for this project's code and images (see `LICENSE`). The Tajawal font files are under the
+SIL Open Font License 1.1 (`installer/home2/fonts/OFL.txt`). No Mazda files are included in this repository.

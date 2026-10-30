@@ -9,7 +9,7 @@
  *
  * Written for the Opera Presto engine in the CMU: ES5 only, no flexbox.
  *
- * MIT License. Not affiliated with Mazda.
+ * Apache License 2.0. Not affiliated with Mazda.
  */
 
 log.addSrcFile("MainMenuCtrl.js", "system");
