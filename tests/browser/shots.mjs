@@ -25,6 +25,8 @@ await shot('lang=ar_SA&phone=androidauto&fmt=12hrs&focus=4&' + BUSY, 'shot_ar_gl
 await shot('lang=ar_SA&phone=carplay&fmt=12hrs&focus=2&driving=1&call=1&warnings=1&missed=3&texts=1&bt=' + BT + '&source=BTAudio&playing=0', 'shot_ar_drive_call.png');
 await shot('lang=ar_SA&phone=none&fmt=12hrs&focus=5&bt=' + BT + '&source=USB_A', 'shot_ar_allclear.png');
 await shot('lang=en_US&phone=androidauto&fmt=12hrs&focus=4&' + BUSY.replace(BT, 'Hussain%27s%20phone'), 'shot_en_glance.png');
+await shot('lang=en_US&phone=carplay&fmt=12hrs&focus=2&driving=1&call=1&warnings=1&missed=3&texts=1&bt=Hussain%27s%20phone&source=BTAudio&playing=0', 'shot_en_drive_call.png');
+await shot('lang=en_US&phone=none&fmt=12hrs&focus=5&bt=Hussain%27s%20phone&source=USB_A', 'shot_en_allclear.png');
 
 // ---- behaviour checks ----
 async function state() {

@@ -8,10 +8,13 @@ opens **Android Auto** or **Apple CarPlay** when a phone is plugged in.
 | Arabic · parked, everything showing | Arabic · driving, on a call, CarPlay |
 |---|---|
 | ![Arabic, 2 warnings, service due, missed calls, FM playing](docs/shot_ar_glance.png) | ![Arabic, driving, call in progress, CarPlay](docs/shot_ar_drive_call.png) |
-| **Arabic · all clear, no phone plugged in** | **English** |
+| **Arabic · all clear, no phone plugged in** | **English · parked, everything showing** |
 | ![Arabic, car OK, USB playing](docs/shot_ar_allclear.png) | ![English, same state as the first](docs/shot_en_glance.png) |
+| **English · driving, on a call, CarPlay** | **English · all clear, no phone plugged in** |
+| ![English, driving, call in progress, CarPlay](docs/shot_en_drive_call.png) | ![English, car OK, USB playing](docs/shot_en_allclear.png) |
 
-**System skin (Arabic)** — Mazda's own top bar, alerts and menus, restyled to match:
+**System skin (Arabic)** — Mazda's own top bar, alerts and menus, restyled to match. The skin is Arabic-only
+(Mazda loads it only for right-to-left languages), so in English Mazda's screens keep their stock look:
 
 | Settings menu | Navigation alert | Home with Android Auto | All top-bar icons |
 |---|---|---|---|
