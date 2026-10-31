@@ -1,6 +1,6 @@
 /*
  * Home 2.0 "Ember Glass" launcher for Mazda Connect (CMU 150, firmware 74.x)
- * Version 1.1.0, "Ember Glance" layout (live car, phone and media status) — see README.md
+ * Version 1.2.0, "Ember Glance" layout (live car, phone and media status) — see README.md
  *
  * The installer (run.sh) recognises an installed launcher by the first line above: keep it.
  *
@@ -362,6 +362,7 @@ MainMenuCtrl.prototype.init = function()
     this._clockTimerId = setInterval(this._updateClock.bind(this), HOME2_CONFIG.clockMs);
 
     this._hookSystemMessages();
+    home2HookStatusBar();
     this._pollStatus();
     this._statusTimerId = setInterval(this._pollStatus.bind(this), HOME2_CONFIG.statusPollMs);
 
@@ -1185,6 +1186,56 @@ MainMenuCtrl.prototype.cleanUp = function()
 
     delete this.properties;
 };
+
+/* ---------- system skin helper ---------- */
+// The Arabic system skin (common/css/common_rtl.css) draws each status-bar icon group as a glass pill.
+// CSS cannot tell whether a group has a visible icon, so groups that do are marked "H2On". Mazda's
+// StatusBarCtrl is not changed: its icon methods are wrapped once, and the originals still run.
+function home2MarkIconGroups(bar)
+{
+    if (!bar) { return; }
+    var groups = [bar._iconContainer0, bar._iconContainer1];
+    for (var g = 0; g < groups.length; g++)
+    {
+        var group = groups[g];
+        if (!group) { continue; }
+        var on = false;
+        for (var i = 0; i < group.childNodes.length; i++)
+        {
+            var d = group.childNodes[i].style ? group.childNodes[i].style.display : "";
+            if (d && d !== "none") { on = true; }
+        }
+        if (on) { group.classList.add("H2On"); } else { group.classList.remove("H2On"); }
+    }
+}
+
+function home2HookStatusBar()
+{
+    try
+    {
+        if (typeof StatusBarCtrl !== "undefined" && !StatusBarCtrl.prototype._home2Hooked)
+        {
+            var wrap = function(name)
+            {
+                var original = StatusBarCtrl.prototype[name];
+                if (typeof original !== "function") { return; }
+                StatusBarCtrl.prototype[name] = function()
+                {
+                    var result = original.apply(this, arguments);
+                    try { home2MarkIconGroups(this); } catch (e) {}
+                    return result;
+                };
+            };
+            wrap("setIcon");
+            wrap("setupCPAAMode");
+            StatusBarCtrl.prototype._home2Hooked = true;
+        }
+        home2MarkIconGroups(framework.common.statusBar);
+    }
+    catch (e2) {}
+}
+
+home2HookStatusBar();
 
 framework.registerCtrlLoaded("MainMenuCtrl");
 

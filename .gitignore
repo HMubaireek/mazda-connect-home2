@@ -118,3 +118,6 @@ installer/backup/
 __pycache__/
 *.pyc
 .DS_Store
+
+# Mazda GUI files for the skin preview (tools/copy_mazda_preview.sh); not ours to publish
+preview/mazda/

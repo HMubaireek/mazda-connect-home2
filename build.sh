@@ -19,6 +19,10 @@ sed -i "s/@VERSION@/${VERSION}/" "$P/js/MainMenuCtrl.js"
 cp src/launcher/MainMenuCtrl.css "$P/css/MainMenuCtrl.css"
 cp src/launcher/MainMenuCtrl_rtl.css "$P/css/MainMenuCtrl_rtl.css"
 
+# System skin for Mazda's own screens (images come from tools/build_assets.py).
+mkdir -p "$P/skin/css" "$P/skin/images/home2skin"
+cp src/skin/common_rtl.css "$P/skin/css/common_rtl.css"
+
 # Checksums the car verifies before installing.
 ( cd "$P" && find . -type f ! -name checksums.md5 | sed 's|^\./||' | sort | xargs md5sum > checksums.md5 )
 

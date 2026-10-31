@@ -4,7 +4,7 @@
   "type": "module",
   "description": "Launcher checks in headless Chromium against preview/index.html. Run ../../build.sh first.",
   "scripts": {
-    "test": "node es5check.mjs && node shots.mjs && node clocktest.mjs"
+    "test": "node es5check.mjs && node shots.mjs && node clocktest.mjs && node skin.mjs"
   },
   "dependencies": {
     "@sparticuz/chromium": "^153.0.0",

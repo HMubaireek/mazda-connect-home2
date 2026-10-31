@@ -20,12 +20,14 @@ setup()
     CAR="$T/car"
     USB="$T/usb"
     CTRL="$CAR/jci/gui/apps/system/controls/MainMenu"
-    mkdir -p "$CTRL/js" "$CTRL/css" "$CTRL/images" "$CAR/jci/fonts/CHN" "$CAR/etc" "$CAR/jci/tools" "$CAR/data_persist" "$T/bin"
+    mkdir -p "$CTRL/js" "$CTRL/css" "$CTRL/images" "$CAR/jci/fonts/CHN" "$CAR/etc" "$CAR/jci/tools" "$CAR/data_persist" "$T/bin"              "$CAR/jci/gui/common/css" "$CAR/jci/gui/common/images"
     printf '[VersionInfo]\nJCI_SW_VER="MAZ_CMU-150_%s"\nJCI_SW_FLAVOR="cmu150_ADR"\n' "$1" > "$CAR/jci/version.ini"
     echo "/* stock MainMenuCtrl.js stand-in */" > "$CTRL/js/MainMenuCtrl.js"
     echo "/* stock MainMenuCtrl.css stand-in */" > "$CTRL/css/MainMenuCtrl.css"
     ORIG_JS=$(md5 "$CTRL/js/MainMenuCtrl.js")
     ORIG_CSS=$(md5 "$CTRL/css/MainMenuCtrl.css")
+    SKIN="$CAR/jci/gui/common/css/common_rtl.css"
+    SKIN_IMG="$CAR/jci/gui/common/images/home2skin"
     cp -r "$REPO/installer" "$USB"
     FONTDIR="$CAR/jci/fonts/CHN"   # what firmware 74's /etc/profile gives the browser
     printf 'OPERA_ROOT="/jci/opera"\nexport FREETYPE_FONT_SET=YES\nexport OPERA_FONTS="/jci/fonts/CHN"\n' > "$CAR/etc/profile"
@@ -65,6 +67,8 @@ check "backup on car" '[ "$(md5 "$CAR/data_persist/home2-backup/MainMenuCtrl.js"
 check "backup on USB" '[ "$(md5 "$USB/backup/MainMenuCtrl.css")" = "$ORIG_CSS" ]'
 check "rebooted" '[ -f "$T/rebooted" ]'
 check "log says complete" 'grep -q "install complete" "$USB/logs/install.log"'
+check "skin style sheet installed" '[ "$(md5 "$SKIN")" = "$(md5 "$USB/home2/skin/css/common_rtl.css")" ]'
+check "skin images installed" '[ -f "$SKIN_IMG/list_panel.png" ] && [ -f "$SKIN_IMG/sb_batt_05.png" ]'
 
 echo "--- 2. reinstall over itself keeps the original backup"
 rm -f "$T/rebooted"
@@ -81,6 +85,9 @@ check "rtl css removed" '[ ! -f "$CTRL/css/MainMenuCtrl_rtl.css" ]'
 check "images removed" '[ ! -d "$CTRL/images/home2" ]'
 check "fonts removed" '[ ! -f "$FONTDIR/Home2Tajawal-Bold.ttf" ]'
 check "stock fonts folder kept" '[ -d "$FONTDIR" ]'
+check "skin style sheet removed" '[ ! -f "$SKIN" ]'
+check "skin images removed" '[ ! -d "$SKIN_IMG" ]'
+check "stock common css folder kept" '[ -d "$CAR/jci/gui/common/css" ]'
 
 echo "--- 4. remove when not installed changes nothing"
 rc=$(run 1)
@@ -125,6 +132,17 @@ else
     check "exit 1" '[ "$rc" = 1 ]'
     check "js rolled back" '[ "$(md5 "$CTRL/js/MainMenuCtrl.js")" = "$ORIG_JS" ]'
 fi
+
+echo "--- 10. an existing common_rtl.css is kept and restored on remove"
+setup 74.00.333
+echo "/* someone else's common_rtl.css */" > "$SKIN"
+OTHER=$(md5 "$SKIN")
+rc=$(run 0 0)
+check "exit 0" '[ "$rc" = 0 ]'
+check "existing sheet backed up" '[ "$(md5 "$CAR/data_persist/home2-backup/common_rtl.css")" = "$OTHER" ]'
+check "skin installed over it" 'grep -q "Home 2.0 system skin" "$SKIN"'
+rc=$(run 1)
+check "remove restores the earlier sheet" '[ "$(md5 "$SKIN")" = "$OTHER" ]'
 
 echo
 echo "$PASS passed, $FAIL failed"

@@ -208,3 +208,120 @@ if __name__ == "__main__":
     glyph("park", 18, "#FFFFFF", 0.75, "ic_park.png")
     glyph("steer", 18, "#A9BCFF", 1.0, "ic_drive.png")
     print("assets written to", OUT)
+
+
+# ---------------------------------------------------------------- system skin (top bar, alerts, menus)
+# Used by src/skin/common_rtl.css, installed to /jci/gui/common/images/home2skin/.
+SKIN = os.path.join(ROOT, "installer", "home2", "skin", "images", "home2skin")
+WHITE = "#FFFFFF"
+
+
+def svg_canvas(w, h, body, scale=4):
+    svg = ('<svg xmlns="http://www.w3.org/2000/svg" width="%d" height="%d" viewBox="0 0 %d %d">%s</svg>'
+           % (w * scale, h * scale, w, h, body))
+    big = cairosvg.svg2png(bytestring=svg.encode("utf-8"), output_width=w * scale, output_height=h * scale)
+    return Image.open(io.BytesIO(big)).convert("RGBA").resize((w, h), Image.LANCZOS)
+
+
+def sb_icon(out_name, body):
+    """A 37x29 status-bar icon (same size as Mazda's IcnSb*.png): a 24px glyph centred."""
+    g = '<g transform="translate(6.5 2.5)" stroke-linecap="round" stroke-linejoin="round">%s</g>' % body
+    svg_canvas(37, 29, g).save(os.path.join(SKIN, out_name), optimize=True)
+
+
+def stroke(d, colour=WHITE, opacity=0.92, width=1.8):
+    return '<path d="%s" fill="none" stroke="%s" stroke-opacity="%s" stroke-width="%s"/>' % (d, colour, opacity, width)
+
+
+def fill(d, colour=WHITE, opacity=0.92):
+    return '<path d="%s" fill="%s" fill-opacity="%s"/>' % (d, colour, opacity)
+
+
+def rbar(x, y, w, h, lit):
+    return '<rect x="%s" y="%s" width="%s" height="%s" rx="1" fill="#FFFFFF" fill-opacity="%s"/>' % (x, y, w, h, 0.92 if lit else 0.28)
+
+
+def render_status_icons():
+    # Phone signal: five bars, 00 = none received.
+    for level in range(6):
+        bars = "".join(rbar(2 + i * 4.2, 18 - (i + 1) * 3.2, 3, (i + 1) * 3.2 + 2.5, i < level) for i in range(5))
+        sb_icon("sb_signal_%02d.png" % level, bars)
+    # Battery: rounded outline with a fill level; empty is red.
+    for level in range(6):
+        colour = "#FF6B5E" if level <= 1 else WHITE
+        body = stroke("M2.5 9a2.5 2.5 0 0 1 2.5-2.5h12A2.5 2.5 0 0 1 19.5 9v6a2.5 2.5 0 0 1-2.5 2.5H5A2.5 2.5 0 0 1 2.5 15z", colour)
+        body += fill("M21.3 10.5a.8.8 0 0 1 .8.8v1.4a.8.8 0 0 1-.8.8z", colour)
+        if level:
+            body += '<rect x="5" y="9" width="%.1f" height="6" rx="1" fill="%s" fill-opacity="0.92"/>' % (12.0 * level / 5, colour)
+        sb_icon("sb_batt_%02d.png" % level, body)
+    # Wi-Fi: dot + two arcs.
+    arcs = ["M7.5 13.8a6.5 6.5 0 0 1 9 0", "M4.5 10.5a11 11 0 0 1 15 0"]
+    for level in range(5):
+        lit = min(level, 3)
+        body = fill("M12 16.5a2 2 0 1 1 0 4a2 2 0 1 1 0-4", WHITE, 0.92 if lit >= 1 else 0.28)
+        for i, a in enumerate(arcs):
+            body += stroke(a, WHITE, 0.92 if lit >= i + 2 else 0.28, 2)
+        for suffix in ("", "_active"):
+            sb_icon("sb_wifi_%02d%s.png" % (level, suffix), body)
+    bt = "M7 7.5l10 9-5 4.5V3l5 4.5-10 9"
+    sb_icon("sb_bt.png", stroke(bt))
+    sb_icon("sb_bt_ds.png", stroke(bt, WHITE, 0.35))
+    sb_icon("sb_msg.png", stroke("M4 6.5A2.5 2.5 0 0 1 6.5 4H14 M20 10v4.5a2.5 2.5 0 0 1-2.5 2.5H9.5L5 20.5V17h-.5") +
+            stroke("M4 6.5V16") + fill("M19 2.5a3 3 0 1 1 0 6a3 3 0 1 1 0-6", "#FF6B5E", 1))
+    sb_icon("sb_music.png", stroke("M9 18V5l11-2v13") + fill("M9 18a3 3 0 1 1-6 0a3 3 0 1 1 6 0 M20 16a3 3 0 1 1-6 0a3 3 0 1 1 6 0"))
+    sb_icon("sb_roam.png", stroke("M6 3.5h12A2.5 2.5 0 0 1 20.5 6v12a2.5 2.5 0 0 1-2.5 2.5H6A2.5 2.5 0 0 1 3.5 18V6A2.5 2.5 0 0 1 6 3.5z") +
+            stroke("M9.5 16.5v-9h3.5a2.75 2.75 0 0 1 0 5.5H9.5 M13 13l2.5 3.5"))
+    sb_icon("sb_traffic.png", stroke("M10.3 4.2a2 2 0 0 1 3.4 0l7.6 13.1a2 2 0 0 1-1.7 3H4.4a2 2 0 0 1-1.7-3z M12 9.5v4", "#FFC46B", 1) +
+            fill("M12 15.6a1.2 1.2 0 1 1 0 2.4a1.2 1.2 0 1 1 0-2.4", "#FFC46B", 1))
+
+
+def glyph24(out_name, d, size=24, opacity=1.0):
+    g = '<g fill="none" stroke="#FFFFFF" stroke-opacity="%s" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" transform="scale(%s)">%s</g>' % (
+        opacity, size / 24.0, ''.join('<path d="%s"/>' % p for p in d.split("|")))
+    svg_canvas(size, size, g).save(os.path.join(SKIN, out_name), optimize=True)
+
+
+GLASS = ('<defs><linearGradient id="gl" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#FFFFFF" stop-opacity="%s"/>'
+         '<stop offset="1" stop-color="#FFFFFF" stop-opacity="%s"/></linearGradient></defs>')
+
+
+def glass_rect(x, y, w, h, r, top=0.12, bottom=0.035, border=0.15, ring=None):
+    s = GLASS % (top, bottom)
+    s += '<rect x="%s" y="%s" width="%s" height="%s" rx="%s" fill="url(#gl)" stroke="#FFFFFF" stroke-opacity="%s" stroke-width="1"/>' % (
+        x + 0.5, y + 0.5, w - 1, h - 1, r, border)
+    if ring:
+        s += '<rect x="%s" y="%s" width="%s" height="%s" rx="%s" fill="none" stroke="%s" stroke-width="2"/>' % (
+            x + 1, y + 1, w - 2, h - 2, r, ring)
+    return s
+
+
+def render_skin_panels():
+    # Menu container: drawn inside the list's own 732x416 box (screen x 68-800), from x 26 to 708 (screen 94-776).
+    svg_canvas(732, 416, glass_rect(26, 0, 682, 412, 28), scale=2).save(os.path.join(SKIN, "list_panel.png"), optimize=True)
+    # Row divider: rows keep Mazda's 732px width; the container shows x 26-708, the line runs 16px inside it.
+    sep = Image.new("RGBA", (732, 1), (0, 0, 0, 0))
+    for x in range(42, 692):
+        sep.putpixel((x, 0), (255, 255, 255, 26))
+    sep.save(os.path.join(SKIN, "list_sep.png"), optimize=True)
+    # Back / folder-up buttons: a glass pill (screen x 24-84) beside the menu container, same height.
+    states = {"en": dict(), "ds": dict(top=0.06, bottom=0.02, border=0.08),
+              "focus": dict(top=0.24, bottom=0.08, ring="rgba(200,212,255,0.9)"), "hit": dict(top=0.32, bottom=0.14)}
+    arrows = {"back": "M43 196l-12 12 12 12", "up": "M42 214l12-12 12 12"}
+    for kind, d in arrows.items():
+        for st, kw in states.items():
+            body = glass_rect(24, 0, 60, 412, 30, **kw)
+            body += '<path d="%s" fill="none" stroke="#FFFFFF" stroke-opacity="%s" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" transform="translate(11 0)"/>' % (
+                d, 0.35 if st == "ds" else 0.95)
+            svg_canvas(94, 416, body, scale=2).save(os.path.join(SKIN, "%s_%s.png" % (kind, st)), optimize=True)
+
+
+if __name__ == "__main__":
+    os.makedirs(SKIN, exist_ok=True)
+    render_status_icons()
+    render_skin_panels()
+    glyph24("sb_home.png", "M3 11l9-8 9 8|M5 10v10h5v-6h4v6h5V10", 22)
+    glyph24("sb_aa.png", "M6.5 2.5h11v19h-11z|M10.5 18.5h3|M9.5 13.5l5-5-1.5 6-1.4-1.9z", 24)
+    glyph24("sb_cp.png", "M19 17h2c.6 0 1-.4 1-1v-3c0-.9-.7-1.7-1.5-1.9C18.7 10.6 16 10 16 10s-1.3-1.4-2.2-2.3c-.5-.4-1.1-.7-1.8-.7H5c-.6 0-1.1.4-1.4.9l-1.4 2.9A3.7 3.7 0 0 0 2 12v4c0 .6.4 1 1 1h2|M9 17h6|M9 17a2 2 0 1 1-4 0a2 2 0 1 1 4 0|M19 17a2 2 0 1 1-4 0a2 2 0 1 1 4 0", 24)
+    # Screen background for Mazda's own screens: the same Midnight art as the home screen, mirrored for Arabic.
+    Image.open(os.path.join(DOCS, "background_full.png")).transpose(Image.FLIP_LEFT_RIGHT).save(os.path.join(SKIN, "bg.png"), optimize=True)
+    print("skin assets written to", SKIN)

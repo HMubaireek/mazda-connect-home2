@@ -1,0 +1,125 @@
+<!doctype html>
+<html lang="ar">
+<head>
+<meta charset="utf-8">
+<title>Home 2.0 system skin preview</title>
+<!--
+  Desktop preview of the Arabic system skin (src/skin/common_rtl.css) on top of Mazda's own CSS.
+  Needs Mazda's GUI files in preview/mazda/ first:  sh tools/copy_mazda_preview.sh <extracted jci/gui folder>
+  Options: ?screen=settings|alert|home|icons  &skin=0 (stock look)  &alert=nav|bt|volume|msg  &phone=androidauto|carplay
+           &focus=btn (Android Auto button focused by the knob)
+  The DOM below copies what Mazda's StatusBarCtrl, SbnCtrl, List2Ctrl and LeftBtnCtrl build on firmware 74.
+-->
+<base href="mazda/">
+<style>
+  @font-face { font-family: "Home2 Tajawal Bold"; src: url(../../installer/home2/fonts/Home2Tajawal-Bold.ttf); font-weight: 700; }
+  @font-face { font-family: "Home2 Tajawal Light"; src: url(../../installer/home2/fonts/Home2Tajawal-Light.ttf); font-weight: 300; }
+  @font-face { font-family: "Home2 Tajawal Medium"; src: url(../../installer/home2/fonts/Home2Tajawal-Medium.ttf); font-weight: 500; }
+  html { background: #111; }
+  body { margin: 0; position: relative; width: 800px; height: 480px; overflow: hidden; }
+</style>
+<script>
+  var q = new URLSearchParams(location.search);
+  var SKIN = q.get("skin") !== "0";
+  function css(href) { document.write('<link rel="stylesheet" href="' + href + '">'); }
+  // Same order as the car: common.css (+ common_rtl.css for Arabic), then the controls' own sheets.
+  css("common/css/common.css");
+  if (SKIN) { css("../../installer/home2/skin/css/common_rtl.css"); }
+  css("common/transitions/css/TransitionsGen.css");
+  ["StatusBar/css/StatusBarCtrl", "Sbn/css/SbnCtrl", "List2/css/List2Ctrl", "LeftBtn/css/LeftBtnCtrl", "Button/css/ButtonCtrl"].forEach(function(c) {
+    css("common/controls/" + c + ".css");
+    if (c.indexOf("LeftBtn") === -1 && c.indexOf("Button/") === -1) { css("common/controls/" + c + "_rtl.css"); }
+  });
+  css("../../installer/home2/css/MainMenuCtrl.css");
+  css("../../installer/home2/css/MainMenuCtrl_rtl.css");
+  // Minimal stand-in for Mazda's framework, enough for the launcher (see preview/index.html for the full one).
+  window.log = { addSrcFile: function(){}, debug: function(){}, info: function(){}, warn: function(){}, error: function(){} };
+  window.framework = {
+    localize: { getCurrentLanguage: function() { return "ar_SA"; }, getTimeFormat: function() { return "12hrs"; }, getLocStr: function(a, id) { return id; } },
+    common: { _remoteUiBtns: { system: { appName: q.get("phone") || "androidauto" } }, getCurrentTime: function() { return new Date(2026, 9, 31, 14, 26).getTime(); },
+              getAtSpeedValue: function() { return false; }, beep: function() {}, stealFocus: function() {} },
+    _appInstances: {}, sendEventToMmui: function() {}, registerCtrlLoaded: function() {}
+  };
+</script>
+<script src="../../installer/home2/js/MainMenuCtrl.js"></script>
+</head>
+<body>
+<div class="CommonBgImg" id="bg"></div>
+<div class="TemplateWithStatus" id="home" style="position: absolute; left: 0; top: 64px; width: 800px; height: 416px"></div>
+<div id="list"></div>
+<div class="StatusBarCtrl" id="sb"></div>
+<div class="CommonRightChrome" id="chrome"></div>
+<script>
+  var SCREEN = q.get("screen") || "settings";
+  var ALERT = q.get("alert") || (SCREEN === "alert" ? "nav" : "");
+  var PHONE = q.get("phone") || "androidauto";
+  var isHome = SCREEN === "home";
+  function el(tag, cls, parent, text, style) {
+    var e = document.createElement(tag);
+    if (cls) { e.className = cls; }
+    if (text) { e.textContent = text; }
+    if (style) { e.setAttribute("style", style); }
+    if (parent) { parent.appendChild(e); }
+    return e;
+  }
+  function icon(name, state) { return "display: inline-block; background-image: url(common/images/icons/IcnSb" + name + (state ? "_" + state : "") + ".png);"; }
+
+  // ---- status bar (StatusBarCtrl._createStructure order) ----
+  var sb = document.getElementById("sb");
+  el("div", "StatusBarCtrlHomeBtn", sb, "", isHome ? "display: none" : "display: block");
+  var c0 = el("div", "StatusBarCtrlIconContainer", sb);
+  var c1 = el("div", "StatusBarCtrlIconContainer", sb);
+  var all = SCREEN === "icons";
+  el("div", "StatusBarCtrlIcon", c0, "", all ? icon("Traffic") : "").id = "StatusBar_Traffic";
+  el("div", "StatusBarCtrlIcon", c0, "", all ? icon("Roaming") : "").id = "StatusBar_Roaming";
+  el("div", "StatusBarCtrlIcon", c1, "", all ? icon("Message") : "").id = "StatusBar_Message";
+  el("div", "StatusBarCtrlIcon", c1, "", all ? icon("WifiSignal", "03") : "").id = "StatusBar_WifiSignal";
+  el("div", "StatusBarCtrlIcon", c1, "", icon("Batt", all ? "02" : "04")).id = "StatusBar_Batt";
+  el("div", "StatusBarCtrlIcon", c1, "", icon("PhoneSignal", "04")).id = "StatusBar_Bluetooth";
+  el("div", "StatusBarCtrlDivider", sb, "", isHome ? "" : "display: block");
+  var domain = el("div", "StatusBarCtrlDomainIcon", sb, "", isHome ? "" : "background-image: url(common/images/icons/IcnSbnSettings.png)");
+  var appName = el("div", "StatusBarCtrlAppName", sb, isHome ? "" : "الإعدادات");
+  el("div", "StatusBarCtrlClock", sb, "2:26");
+  if (isHome) {
+    // StatusBarCtrl.showRemoteUiButton: a ButtonCtrl with the Android Auto / CarPlay icon
+    var t = PHONE === "carplay" ? "_CP" : "_AA";
+    var btn = el("div", "StatusBarCtrlRemoteUIBtn_En" + (q.get("focus") === "btn" ? " StatusBarCtrlRemoteUIBtn" + t + "_focused" : ""), sb);
+    el("div", "ButtonCtrlIcon" + t, btn, "", "background-image: url(apps/system/images/" + (PHONE === "carplay" ? "AppleCP_Active" : "Android_Auto_Active") + ".png)");
+  }
+  // Mark icon groups the way the launcher's StatusBarCtrl hook does.
+  if (typeof home2MarkIconGroups === "function") { home2MarkIconGroups({ _iconContainer0: c0, _iconContainer1: c1 }); }
+
+  // ---- alert (SbnCtrl) ----
+  if (ALERT) {
+    var texts = { nav: "بعد ٣٠٠ م انعطف يمينًا", bt: "تم توصيل جوال حسين", volume: "الصوت ١٨", msg: "رسالة جديدة من أحمد" };
+    var images = { nav: "IcnSbnMap", bt: "IcnSbnBt", volume: "IcnSbnVolume", msg: "IcnSbnComm" };
+    var sbn = el("div", "SbnCtrl", document.body);
+    el("div", "SbnCtrl_Style02_Image1", sbn, "", "background-image: url(common/images/icons/" + images[ALERT] + ".png)");
+    el("div", "SbnCtrl_Style02_Text1", sbn, texts[ALERT]);
+    [c0, c1, appName, domain].forEach(function(e) { e.style.opacity = 0; });   // StatusBarCtrl.setSbnDisplayed(true)
+  }
+
+  // ---- menu (List2Tmplt + List2Ctrl, normal items, no title) and the back button ----
+  if (!isHome) {
+    var tmpl = el("div", "TemplateWithStatusLeft List2Tmplt", document.getElementById("list"));
+    var list = el("div", "List2Ctrl normalItems noTitle", tmpl);
+    var mask = el("div", "List2CtrlMask", list);
+    var scroller = el("div", "List2CtrlScroller", mask);
+    ["الشاشة", "الصوت", "الساعة", "الأجهزة", "اللغة", "النظام", "إعادة الضبط"].forEach(function(label, i) {
+      var li = el("div", "ListItem style01" + (i === 0 ? " focus" : ""), scroller, "", "top: " + (i * 64) + "px");
+      el("span", "line1", li, label);
+    });
+    el("div", "List2CtrlActiveArea", list);
+    var sw = el("div", "List2CtrlScrollIndicatorWrapper", list, "", "height: 416px; top: 0px");
+    el("div", "List2CtrlScrollIndicator", sw, "", "height: 330px; top: 0px");
+    var left = el("div", "LeftBtnCtrl", document.body);
+    el("div", "LeftBtnCtrlBackBtn", left);
+  }
+  if (isHome) {
+    document.getElementById("chrome").style.display = "none";
+    window.ctrl = new MainMenuCtrl("system", document.getElementById("home"), "MainMenuCtrl1", { selectCallback: function() {} });
+    ctrl.handleControllerEvent("acceptFocusInit");
+  }
+</script>
+</body>
+</html>

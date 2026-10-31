@@ -3,7 +3,8 @@
 A custom home screen ("Ember Glass") for Mazda Connect 1. Owner: Hussain (HMubaireek). His car is a
 **2019 Mazda CX-9, Saudi market, firmware 74.00.333A 4A N (ADR)**, system language **Arabic**.
 v1.0.4 is installed and confirmed working in the car (31 Oct 2026). v1.1.0 ("Ember Glance" layout, live status card)
-was built and tested on 31 Oct 2026 but is not yet confirmed in the car. Read this whole file before changing anything.
+and v1.2.0 (+ "Floating Pills" system skin for Mazda's screens) were built and tested on 31 Oct 2026 but are not
+yet confirmed in the car. Read this whole file before changing anything.
 
 ## What the owner wants
 - Arabic first, right-to-left, Arabic-Indic digits, Hijri (Umm al-Qura) date under the Gregorian date.
@@ -32,6 +33,43 @@ All read from the system app instance `framework._appInstances.system` without c
 - Status rows use stock home events only (car → `app`, phone → `com`, media → `ent`). Direct events like
   `SelectWarnGuide` are only known to work from the Applications list; untested from the home screen.
 - run.sh recognises an installed launcher by the line `Home 2.0 "Ember Glass" launcher` in the JS header: keep it.
+
+## System skin: top bar, alerts, menus (researched 31 Oct 2026, Round 6 on the canvas)
+- Top bar = `common/controls/StatusBar` (StatusBarCtrl.js/.css, StatusBarBg.png 800x64). CSS + images only; 64px tall.
+  Parts: home btn or Android Auto/CarPlay btn (x 1-59), domain icon (59-117), title `StatusBarCtrlAppName` (Tipperary
+  Semibold 40px), two `StatusBarCtrlIconContainer` rows (Traffic, Roaming / Message, WifiSignal, Batt, Bluetooth that
+  also shows PhoneSignal/Music), clock (right, 114px, text set by JS in Latin digits). In AA/CarPlay mode the JS narrows the bar.
+- Alerts = `common/controls/Sbn` (SbnCtrl.css, StatusNotificationBg.png 626x60): drawn over the bar at x 59, 626x58.
+- Menus = `common/controls/List2` (9000-line CSS, ListFocus.png red glow, ListBackground.png curved panel); rows are 64px.
+- Screen background = `common/images/background.png` (grey smoke) via `.CommonBgImg`.
+- Every Mazda CSS says "Tipperary" (no Arabic glyphs) → Arabic falls back to a system font. Fix globally with CSS.
+- **Hook:** the framework loads `common/css/common.css` like an app sheet and, for ar_SA/he_IL, also `common/css/common_rtl.css`,
+  which Mazda does not ship. Adding that one file gives an Arabic-only global stylesheet (use `!important`); no Mazda file changes.
+  Alternative `/jci/opera/opera_dir/styles/user.css` is active (opera.ini `Local CSS File`) but is a Mazda file and applies to all languages.
+- The Android Auto Theme installer in his Mazda folder also replaces `StatusBarBg.png` / `StatusBar_Divider.png`.
+- He likes **Q · Floating Pills** (bar mirrored for Arabic, no bar background, clock and icons in glass pills, Tajawal).
+  Menus: ALL rows inside ONE rounded glass container with thin dividers, focused row a rounded pill inside it
+  (he rejected one rounded border per row). Rows fill the container edge to edge; the focused row is filled across its
+  full width (no inset, no outline); first/last rows follow the container corners. Bar pills and the menu container
+  share a 24px side margin so their edges line up; the alert pill spans from the left button to the clock pill.
+- New top-bar icon set wanted (signal bars with unlit bars dimmed, rounded battery with fill level, message bubble with a
+  red dot, refined Bluetooth/Wi-Fi/roaming, amber traffic). The JS sets each icon as an inline
+  `background-image: url(common/images/icons/IcnSb<Name>[_<state>].png)` on `#StatusBar_<container>`; override per state with
+  `[style*="IcnSbBatt_03"] { background-image: url(...) !important }` (author !important beats inline style). Every state
+  PNG (Batt_00-05, PhoneSignal_00-05, WifiSignal_00-04 + _active, Bluetooth, Bluetooth_Ds, Message, Music, Roaming,
+  Traffic) has a replacement in the new style.
+- **Built in v1.2.0:** `src/skin/common_rtl.css` → car `/jci/gui/common/css/common_rtl.css`; images
+  `installer/home2/skin/images/home2skin/` (from `tools/build_assets.py`) → `/jci/gui/common/images/home2skin/`.
+  run.sh backs up a pre-existing common_rtl.css (not ours = no "Home 2.0 system skin" line) and restores it on Remove.
+  The launcher wraps `StatusBarCtrl.prototype.setIcon` / `setupCPAAMode` once to add "H2On" to icon groups with a
+  visible icon (CSS hides empty groups). Lists: the mask is the container (x 26-708 inside the 732px List2Ctrl,
+  screen 94-776), the scroller is shifted -26px so rows keep Mazda's positions. Mazda's stock CSS left-aligns
+  style01 Arabic row text; the skin keeps that (right-aligning risks clashing with labels/switches in other row styles).
+  Lists sit in `TemplateWithStatusLeft` (left 60, width 740) beside the LeftBtn back button (x 0-94).
+  SBN moved to x 130-722 (between clock pill and right button); inner text widths narrowed.
+- Skin test: `preview/skin.html` + `tests/browser/skin.mjs` need Mazda's CSS in `preview/mazda/` (git-ignored, Mazda's
+  files): `sh tools/copy_mazda_preview.sh <extracted jci/gui>`. The firmware extraction lives only in a session
+  scratchpad: re-extract from the .up (rootfs1/e0000000001.dat.gz is gzip inside gzip: `gzip -dc | gzip -dc | tar`).
 
 ## Repo layout
 - `src/launcher/MainMenuCtrl.js` (+ `hijri.js`, generated) — the launcher; `MainMenuCtrl.css`, `MainMenuCtrl_rtl.css`.

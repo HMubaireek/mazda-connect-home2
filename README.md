@@ -11,14 +11,23 @@ opens **Android Auto** or **Apple CarPlay** when a phone is plugged in.
 | **Arabic · all clear, no phone plugged in** | **English** |
 | ![Arabic, car OK, USB playing](docs/shot_ar_allclear.png) | ![English, same state as the first](docs/shot_en_glance.png) |
 
+**System skin (Arabic)** — Mazda's own top bar, alerts and menus, restyled to match:
+
+| Settings menu | Navigation alert | Home with Android Auto | All top-bar icons |
+|---|---|---|---|
+| ![Settings menu](docs/skin_ar_settings.png) | ![Navigation alert](docs/skin_ar_alert.png) | ![Home, Android Auto](docs/skin_ar_home.png) | ![All icons](docs/skin_ar_icons.png) |
+
 > Screenshots come from the desktop preview (`preview/index.html`). The top bar is Mazda's own
 > status bar, which this project does not change.
 
 ## Status
 
-**v1.1.0 — the Ember Glance layout with live status.** Not yet tried in the car. v1.0.4 (the previous
-layout) runs in a 2019 CX-9 on firmware 74.00.333A (ADR / 4A N).
+**v1.2.0 — Ember Glance home screen plus the "Floating Pills" system skin.** Not yet tried in the car.
+v1.0.4 (the first layout) runs in a 2019 CX-9 on firmware 74.00.333A (ADR / 4A N).
 
+- v1.2.0 adds the system skin for Mazda's own screens when the language is Arabic (see [System skin](#system-skin)):
+  Tajawal everywhere, a top bar of floating glass pills with a new icon set, glass alerts, and menus in one
+  rounded glass container.
 - v1.1.0 replaces the big phone card with a live status card (car, phone, media), a parked / driving chip,
   a small Android Auto / CarPlay pill, and count badges on the dock (see [Live status](#live-status)).
 
@@ -29,10 +38,11 @@ layout) runs in a 2019 CX-9 on firmware 74.00.333A (ADR / 4A N).
 - v1.0.3 installs the fonts into the folder the browser really reads (`/jci/fonts/CHN` on firmware 74;
   earlier versions used `/jci/fonts`, which the browser never scans). Confirmed in the car: Tajawal loads.
 - v1.0.4 turns off the "Font check" test line.
+- The system skin passes 26 checks against Mazda's own CSS (fonts, alignment, focus, icons, alerts).
 - The launcher passes 63 automated behaviour checks (knob, tilt, touch, every status state and its Arabic wording,
   phone hot-plug, focus hand-off, call and audio messages) and 9 clock checks.
-- The installer passes 32 automated checks against a simulated car file system (install, reinstall, remove,
-  wrong firmware, damaged USB copy, cancel).
+- The installer passes 43 automated checks against a simulated car file system (install, reinstall, remove,
+  wrong firmware, damaged USB copy, cancel, an existing `common_rtl.css`).
 
 Treat it as experimental. Removing it is one step (see [Remove](#remove)).
 
@@ -45,6 +55,7 @@ Treat it as experimental. Removing it is one step (see [Remove](#remove)).
 - **Parked / driving** chip under the date.
 - **Android Auto / CarPlay pill** next to it, only while a phone is plugged in. Tapping it opens Android Auto / CarPlay.
 - **Badges** on the dock: unread count (or a green dot during a call) on Phone, "!" on Apps when the car needs attention.
+- **System skin** (Arabic): Mazda's top bar, alerts, menus and back button restyled to match, all in Tajawal.
 - **Arabic and right-to-left**: follows the car's language setting. Arabic labels, Arabic-Indic digits,
   Arabic day/month names, mirrored layout and background.
 - **Hijri date** (Umm al-Qura) under the Gregorian date. The car's browser has no Hijri calendar, so a
@@ -79,6 +90,8 @@ Only the home-menu control is replaced:
 | `/jci/gui/apps/system/controls/MainMenu/css/MainMenuCtrl_rtl.css` | added; the framework loads it for Arabic/Hebrew |
 | `/jci/gui/apps/system/controls/MainMenu/images/home2/` | added |
 | `/jci/fonts/CHN/Home2Tajawal-Light.ttf`, `-Medium.ttf`, `-Bold.ttf` | added (the browser's font folder, see [Fonts](#fonts)) |
+| `/jci/gui/common/css/common_rtl.css` | added: the Arabic system skin (Mazda does not ship this file) |
+| `/jci/gui/common/images/home2skin/` | added: the skin's images |
 
 Mazda's system app (`systemApp.js`) is **not modified**. The launcher reads the phone state the system app
 already publishes for its own small CarPlay / Android Auto button, and launches with the same
@@ -102,6 +115,26 @@ Everything on the status card comes from data the system app already keeps for i
 On firmware 74 the system app's own active-call handler never records the call (its check can't be true),
 and it only keeps an icon for the audio source while it plays. So the launcher also observes those two
 messages on their way to the system app's handlers, which still run unchanged.
+
+### System skin
+
+Mazda's GUI loads `common/css/common_rtl.css` next to `common.css` whenever the language is Arabic (or Hebrew),
+but Mazda does not ship that file. Home 2.0 adds it, so one style sheet restyles every Mazda screen in Arabic
+without changing any Mazda file. Delete it (Remove does) and the stock look is back.
+
+- **Fonts:** every screen in Tajawal (Medium for text, Bold for titles and alerts) instead of Tipperary and the
+  system Arabic fallback.
+- **Top bar:** no bar background; mirrored for Arabic with the clock in a glass pill on the left, the status icons
+  in glass pills next to it, and the home / Android Auto / CarPlay button as a round pill on the right. New icons
+  for every battery, signal and Wi-Fi level, Bluetooth, messages, music, roaming and traffic: Mazda's code names the
+  icon image for each state, and the skin swaps in its own image for each name. The launcher marks which icon
+  groups have a visible icon, so empty groups don't show an empty pill.
+- **Alerts** (navigation, Bluetooth, volume, messages): a glass pill between the clock and the right button.
+- **Menus:** one rounded glass container whose right edge lines up with the top bar; rows fill it edge to edge and
+  the focused row is filled across its full width. Rows keep Mazda's size and text positions. The back button
+  is a glass pill beside it. The Midnight background replaces Mazda's grey one.
+
+The top-bar clock is written by Mazda's code, so it stays in English digits.
 
 Not available to the screen on firmware 74: oil life %, km to service and fuel economy (Mazda sends them only
 while their own screens are open), fuel level, range, odometer, tyre pressure, outside temperature and weather.
@@ -203,7 +236,14 @@ python3 tools/gen_hijri.py      # Umm al-Qura table -> src/launcher/hijri.js
 python3 tools/make_trigger.py   # the USB trigger MP3s
 ./build.sh                      # installer/home2/* and dist/home2-installer-<version>.zip
 sh tests/test_installer.sh      # installer tests on a simulated car file system
-(cd tests/browser && npm install && npm test)   # ES5 check, launcher behaviour, screenshots, clock
+(cd tests/browser && npm install && npm test)   # ES5 check, launcher behaviour, screenshots, clock, skin
+```
+
+The skin test renders `preview/skin.html` on top of Mazda's own CSS, which is not in this repository. Copy it from
+an extracted firmware first (it stays local, `preview/mazda/` is git-ignored); without it the skin test is skipped:
+
+```sh
+sh tools/copy_mazda_preview.sh <extracted firmware>/jci/gui
 ```
 
 The browser tests use a bundled Linux Chromium by default. On Windows (or to use your own browser), point them

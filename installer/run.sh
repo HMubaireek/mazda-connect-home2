@@ -17,6 +17,11 @@ OLD_FONTS="${R}/jci/fonts"     # where v1.0.0-1.0.2 put the fonts (Opera does no
 BACKUP="${R}/data_persist/home2-backup"
 USB_BACKUP="${MYDIR}/backup"
 MARKER="Home 2.0 \"Ember Glass\" launcher"
+# System skin for Mazda's own screens (top bar, alerts, menus): one Arabic-only style sheet that Mazda does
+# not ship (the GUI loads common_rtl.css next to common.css for Arabic), plus its images.
+SKIN_CSS="${R}/jci/gui/common/css/common_rtl.css"
+SKIN_IMG="${R}/jci/gui/common/images/home2skin"
+SKIN_MARKER="Home 2.0 system skin"
 
 # MD5 of Mazda's original home-menu files this build has been checked against.
 # 74.00.333A ADR (4A N)
@@ -98,6 +103,17 @@ restore_originals()
     cp "$1/MainMenuCtrl.css" "${CTRL}/css/MainMenuCtrl.css"
 }
 
+remove_skin()
+{
+    # $1 = backup folder that may hold a common_rtl.css that was there before Home 2.0
+    rm -rf "${SKIN_IMG}"
+    if [ -f "$1/common_rtl.css" ]; then
+        cp "$1/common_rtl.css" "${SKIN_CSS}"
+    else
+        rm -f "${SKIN_CSS}"
+    fi
+}
+
 if [ ${CHOICE} -eq 0 ]
 then
     # ======================================================================
@@ -147,13 +163,25 @@ then
         echo "Backed up originals to ${BACKUP} and ${USB_BACKUP}"
     fi
 
+    # Mazda does not ship common_rtl.css. If one is there and it is not ours, keep a copy.
+    if [ -f "${SKIN_CSS}" ] && ! grep -q "${SKIN_MARKER}" "${SKIN_CSS}"; then
+        mkdir -p "${BACKUP}" "${USB_BACKUP}"
+        if [ ! -f "${BACKUP}/common_rtl.css" ]; then
+            cp "${SKIN_CSS}" "${BACKUP}/" && cp "${SKIN_CSS}" "${USB_BACKUP}/"
+            echo "Backed up an existing common_rtl.css"
+        fi
+    fi
+
     # Copy the new launcher.
     mkdir -p "${CTRL}/images/home2"
     cp "${PAYLOAD}/js/MainMenuCtrl.js" "${CTRL}/js/MainMenuCtrl.js" &&
     cp "${PAYLOAD}/css/MainMenuCtrl.css" "${CTRL}/css/MainMenuCtrl.css" &&
     cp "${PAYLOAD}/css/MainMenuCtrl_rtl.css" "${CTRL}/css/MainMenuCtrl_rtl.css" &&
     cp "${PAYLOAD}"/images/home2/*.png "${CTRL}/images/home2/" &&
-    cp "${PAYLOAD}"/fonts/Home2Tajawal-*.ttf "${FONTS}/"
+    cp "${PAYLOAD}"/fonts/Home2Tajawal-*.ttf "${FONTS}/" &&
+    mkdir -p "${SKIN_IMG}" &&
+    cp "${PAYLOAD}"/skin/images/home2skin/*.png "${SKIN_IMG}/" &&
+    cp "${PAYLOAD}/skin/css/common_rtl.css" "${SKIN_CSS}"
     COPY_OK=$?
     # Clean up fonts from earlier versions (plain Tajawal names, or put in /jci/fonts).
     rm -f "${FONTS}"/Tajawal-*.ttf "${OLD_FONTS}"/Tajawal-*.ttf
@@ -171,11 +199,16 @@ then
     for f in Home2Tajawal-Light.ttf Home2Tajawal-Medium.ttf Home2Tajawal-Bold.ttf; do
         [ "$(md5 "${FONTS}/$f")" = "$(md5 "${PAYLOAD}/fonts/$f")" ] || VERIFY_OK=1
     done
+    [ "$(md5 "${SKIN_CSS}")" = "$(md5 "${PAYLOAD}/skin/css/common_rtl.css")" ] || VERIFY_OK=1
+    for p in "${PAYLOAD}"/skin/images/home2skin/*.png; do
+        [ "$(md5 "${SKIN_IMG}/$(basename "$p")")" = "$(md5 "$p")" ] || VERIFY_OK=1
+    done
 
     if [ ${COPY_OK} -ne 0 ] || [ ${VERIFY_OK} -ne 0 ]; then
         echo "Copy or verify failed: restoring originals."
         restore_originals "${BACKUP}"
         rm -f "${CTRL}/css/MainMenuCtrl_rtl.css" "${FONTS}"/Home2Tajawal-*.ttf
+        remove_skin "${BACKUP}"
         sync
         dialog_wait "Install failed while copying.\nThe original home screen was restored.\nSee logs/install.log on the USB stick." 12
         exit 1
@@ -217,6 +250,7 @@ else
     rm -rf "${CTRL}/images/home2"
     rm -f "${FONTS}"/Tajawal-*.ttf "${FONTS}"/Home2Tajawal-*.ttf
     rm -f "${OLD_FONTS}"/Tajawal-*.ttf "${OLD_FONTS}"/Home2Tajawal-*.ttf
+    remove_skin "${SRC}"
     sync
 
     if [ ${RESTORE_OK} -ne 0 ]; then
