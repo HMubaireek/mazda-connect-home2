@@ -1,0 +1,14 @@
+{
+  "name": "home2-browser-tests",
+  "private": true,
+  "type": "module",
+  "description": "Launcher checks in headless Chromium against preview/index.html. Run ../../build.sh first.",
+  "scripts": {
+    "test": "node es5check.mjs && node shots.mjs && node clocktest.mjs"
+  },
+  "dependencies": {
+    "@sparticuz/chromium": "^153.0.0",
+    "acorn": "^8.19.0",
+    "puppeteer-core": "^25.16.0"
+  }
+}

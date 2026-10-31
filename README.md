@@ -172,6 +172,7 @@ python3 tools/gen_hijri.py      # Umm al-Qura table -> src/launcher/hijri.js
 python3 tools/make_trigger.py   # the USB trigger MP3s
 ./build.sh                      # installer/home2/* and dist/home2-installer-<version>.zip
 sh tests/test_installer.sh      # installer tests on a simulated car file system
+(cd tests/browser && npm install && npm test)   # ES5 check, launcher behaviour, screenshots, clock
 ```
 
 Open `preview/index.html` in a desktop browser to try the launcher (keys: ← → tilt, `[` `]` rotate,
