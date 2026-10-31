@@ -1,0 +1,323 @@
+/*
+ * Home 2.0 system skin, "Floating Pills" — every language. Restyles Mazda's own screens: top bar, alerts,
+ * menus, back button, background, and Tajawal everywhere. Left-to-right layout; common_rtl.css mirrors it for Arabic.
+ * Installed as /jci/gui/common/css/home2skin.css (a new file) and added to the page by the Home 2.0 launcher.
+ * Images: ../images/home2skin/. Every rule uses !important because Mazda's control style sheets load later.
+ * Removing this file (and the images folder) brings back the stock look.
+ * Opera Presto: -o- prefixes, no flexbox.
+ */
+
+/* ---------- Tajawal everywhere ---------- */
+body,
+body * {
+  font-family: "Home2 Tajawal Medium", "Tipperary", Arial, Helvetica, sans-serif !important;
+  font-weight: 500 !important;
+}
+
+/* Titles and alerts in Bold (the Bold family must be paired with weight 700). */
+.StatusBarCtrlAppName,
+.SbnCtrl,
+.SbnCtrl *,
+.List2CtrlTitle,
+.List2CtrlTitle * {
+  font-family: "Home2 Tajawal Bold", "Tipperary", Arial, Helvetica, sans-serif !important;
+  font-weight: 700 !important;
+}
+
+/* The Home 2.0 home screen keeps its own weights. */
+.H2Root,
+.H2Root * {
+  font-family: "Home2 Tajawal Bold", "Tipperary", Arial, sans-serif !important;
+  font-weight: 700 !important;
+}
+
+.H2Root .H2TimeLine,
+.H2Root .H2Time {
+  font-family: "Home2 Tajawal Light", "Home2 Tajawal Bold", "Tipperary", Arial, sans-serif !important;
+  font-weight: 300 !important;
+}
+
+.H2Root .H2AmPm {
+  font-family: "Home2 Tajawal Bold", "Tipperary", Arial, sans-serif !important;
+  font-weight: 700 !important;
+}
+
+.H2Root .H2Hijri,
+.H2Root .H2PillSub,
+.H2Root .H2RowSub {
+  font-family: "Home2 Tajawal Medium", "Home2 Tajawal Bold", "Tipperary", Arial, sans-serif !important;
+  font-weight: 500 !important;
+}
+
+/* ---------- screen background ---------- */
+.CommonBgImg {
+  background-image: url(../images/home2skin/bg_ltr.png) !important;
+}
+
+.CommonRightChrome {
+  display: none !important;
+}
+
+/* ---------- top bar: no bar, floating glass pills ---------- */
+.StatusBarCtrl {
+  background: linear-gradient(180deg, rgba(0, 0, 0, 0.55), rgba(0, 0, 0, 0)) !important;
+  background: -o-linear-gradient(top, rgba(0, 0, 0, 0.55), rgba(0, 0, 0, 0)) !important;
+  box-sizing: border-box;
+  padding-right: 130px !important;   /* status-icon pills flow from here, next to the clock */
+  direction: ltr;
+  text-align: right;
+}
+
+/* Home button (inner screens): round glass pill at the start of the bar */
+.StatusBarCtrlHomeBtn {
+  left: 24px !important;
+  right: auto !important;
+  top: 10px !important;
+  width: 44px !important;
+  height: 44px !important;
+  box-sizing: border-box;
+  border-radius: 22px;
+  border: 1px solid rgba(255, 255, 255, 0.16);
+  background: rgba(255, 255, 255, 0.1) url(../images/home2skin/sb_home.png) 50% 50% no-repeat !important;
+}
+
+.StatusBarCtrlDivider {
+  display: none !important;
+}
+
+/* Android Auto / CarPlay button (home screen): round blue pill at the start of the bar */
+.StatusBarCtrlRemoteUIBtn_En {
+  left: 24px !important;
+  right: auto !important;
+  top: 10px !important;
+  width: 44px !important;
+  height: 44px !important;
+  border-radius: 22px;
+  background: #4F63F0 linear-gradient(140deg, #6C8BFF, #3A3FE0) !important;
+  background: #4F63F0 -o-linear-gradient(top left, #6C8BFF, #3A3FE0) !important;
+}
+
+.StatusBarCtrlRemoteUIBtn_focused,
+.StatusBarCtrlRemoteUIBtn_AA_focused,
+.StatusBarCtrlRemoteUIBtn_CP_focused {
+  box-shadow: 0px 0px 0px 3px rgba(200, 212, 255, 0.9);
+}
+
+.StatusBarCtrlRemoteUIBtn_down,
+.StatusBarCtrlRemoteUIBtn_AA_down,
+.StatusBarCtrlRemoteUIBtn_CP_down {
+  opacity: 0.75;
+}
+
+.StatusBarCtrlRemoteUIBtn_En .ButtonCtrlIcon,
+.StatusBarCtrlRemoteUIBtn_En .ButtonCtrlIcon_AA,
+.StatusBarCtrlRemoteUIBtn_En .ButtonCtrlIcon_CP {
+  left: 10px !important;
+  top: 10px !important;
+  width: 24px !important;
+  height: 24px !important;
+  background: url(../images/home2skin/sb_aa.png) 50% 50% no-repeat !important;
+}
+
+.StatusBarCtrlRemoteUIBtn_En .ButtonCtrlIcon_CP {
+  background-image: url(../images/home2skin/sb_cp.png) !important;
+}
+
+/* Screen icon and title next to the home button */
+.StatusBarCtrlDomainIcon {
+  left: 76px !important;
+  right: auto !important;
+  width: 44px !important;
+  height: 64px !important;
+  top: 0px !important;
+}
+
+.StatusBarCtrlAppName {
+  left: 124px !important;
+  right: auto !important;
+  width: 330px !important;
+  top: 0px !important;
+  height: 64px !important;
+  line-height: 64px !important;
+  font-size: 24px !important;
+  text-align: left !important;
+}
+
+/* Clock: glass pill at the end of the bar */
+.StatusBarCtrlClock {
+  left: auto !important;
+  right: 24px !important;
+  top: 10px !important;
+  width: 96px !important;
+  height: 44px !important;
+  line-height: 44px !important;
+  font-size: 24px !important;
+  text-align: center !important;
+  box-sizing: border-box;
+  border-radius: 22px;
+  border: 1px solid rgba(255, 255, 255, 0.16);
+  background-color: rgba(255, 255, 255, 0.1);
+}
+
+.StatusBarCtrlClockBtn {
+  left: auto !important;
+  right: 24px !important;
+  top: 10px !important;
+  width: 96px !important;
+  height: 44px !important;
+}
+
+/* Status icons: each group with a visible icon is a glass pill (the launcher marks those groups "H2On") */
+.StatusBarCtrlIconContainer {
+  display: none !important;
+  vertical-align: top;
+  height: 44px !important;
+  line-height: 44px;
+  margin: 10px 0px 0px 8px !important;
+  padding: 0px 8px;
+  box-sizing: border-box;
+  border-radius: 22px;
+  border: 1px solid rgba(255, 255, 255, 0.16);
+  background-color: rgba(255, 255, 255, 0.1);
+  text-align: left !important;
+}
+
+.StatusBarCtrlIconContainer.H2On {
+  display: inline-block !important;
+}
+
+.StatusBarCtrlIcon {
+  vertical-align: middle;
+  margin-top: -3px;
+}
+
+/* New icon set: Mazda's code sets each icon as an inline background image named by state. */
+#StatusBar_Batt[style*="IcnSbBatt_00"] { background-image: url(../images/home2skin/sb_batt_00.png) !important; }
+#StatusBar_Batt[style*="IcnSbBatt_01"] { background-image: url(../images/home2skin/sb_batt_01.png) !important; }
+#StatusBar_Batt[style*="IcnSbBatt_02"] { background-image: url(../images/home2skin/sb_batt_02.png) !important; }
+#StatusBar_Batt[style*="IcnSbBatt_03"] { background-image: url(../images/home2skin/sb_batt_03.png) !important; }
+#StatusBar_Batt[style*="IcnSbBatt_04"] { background-image: url(../images/home2skin/sb_batt_04.png) !important; }
+#StatusBar_Batt[style*="IcnSbBatt_05"] { background-image: url(../images/home2skin/sb_batt_05.png) !important; }
+#StatusBar_Bluetooth[style*="IcnSbPhoneSignal_00"] { background-image: url(../images/home2skin/sb_signal_00.png) !important; }
+#StatusBar_Bluetooth[style*="IcnSbPhoneSignal_01"] { background-image: url(../images/home2skin/sb_signal_01.png) !important; }
+#StatusBar_Bluetooth[style*="IcnSbPhoneSignal_02"] { background-image: url(../images/home2skin/sb_signal_02.png) !important; }
+#StatusBar_Bluetooth[style*="IcnSbPhoneSignal_03"] { background-image: url(../images/home2skin/sb_signal_03.png) !important; }
+#StatusBar_Bluetooth[style*="IcnSbPhoneSignal_04"] { background-image: url(../images/home2skin/sb_signal_04.png) !important; }
+#StatusBar_Bluetooth[style*="IcnSbPhoneSignal_05"] { background-image: url(../images/home2skin/sb_signal_05.png) !important; }
+#StatusBar_Bluetooth[style*="IcnSbBluetooth.png"] { background-image: url(../images/home2skin/sb_bt.png) !important; }
+#StatusBar_Bluetooth[style*="IcnSbBluetooth_Ds"] { background-image: url(../images/home2skin/sb_bt_ds.png) !important; }
+#StatusBar_Bluetooth[style*="IcnSbMusic"] { background-image: url(../images/home2skin/sb_music.png) !important; }
+#StatusBar_Message[style*="IcnSbMessage"] { background-image: url(../images/home2skin/sb_msg.png) !important; }
+#StatusBar_Roaming[style*="IcnSbRoaming"] { background-image: url(../images/home2skin/sb_roam.png) !important; }
+#StatusBar_Traffic[style*="IcnSbTraffic"] { background-image: url(../images/home2skin/sb_traffic.png) !important; }
+#StatusBar_WifiSignal[style*="IcnSbWifiSignal_00"] { background-image: url(../images/home2skin/sb_wifi_00.png) !important; }
+#StatusBar_WifiSignal[style*="IcnSbWifiSignal_01"] { background-image: url(../images/home2skin/sb_wifi_01.png) !important; }
+#StatusBar_WifiSignal[style*="IcnSbWifiSignal_02"] { background-image: url(../images/home2skin/sb_wifi_02.png) !important; }
+#StatusBar_WifiSignal[style*="IcnSbWifiSignal_03"] { background-image: url(../images/home2skin/sb_wifi_03.png) !important; }
+#StatusBar_WifiSignal[style*="IcnSbWifiSignal_04"] { background-image: url(../images/home2skin/sb_wifi_04.png) !important; }
+
+/* ---------- alerts (status-bar notifications) ---------- */
+/* A glass pill between the button and the clock pill. Mazda's inner layout is kept, with narrower text. */
+.SbnCtrl {
+  left: 78px !important;
+  top: 4px !important;
+  width: 592px !important;
+  height: 56px !important;
+  box-sizing: border-box;
+  border-radius: 28px;
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  background: rgba(30, 34, 52, 0.94) none !important;
+}
+
+.SbnCtrl_Style01_Text1 { width: 540px !important; }
+.SbnCtrl_Style02_Text1 { width: 500px !important; }
+.SbnCtrl_Style03_Meter { width: 430px !important; }
+.SbnCtrl_Style04_Meter { width: 500px !important; }
+.SbnCtrl_Style06_Meter { left: 320px !important; }
+
+.SbnCtrl_Style01_Text1,
+.SbnCtrl_Style02_Text1,
+.SbnCtrl_Style03_Text1,
+.SbnCtrl_Style06_Text1 {
+  font-size: 26px !important;
+}
+
+/* ---------- menus (List2) ---------- */
+/* One rounded glass container (screen x 94-776, right edge in line with the top bar pills). */
+.List2Ctrl {
+  background: url(../images/home2skin/list_panel.png) 0px 0px no-repeat !important;
+}
+
+.List2CtrlActiveArea {
+  background: none !important;
+}
+
+/* The mask is the container: it clips the rows to x 26-708 with rounded corners, so a focused row fills it
+   edge to edge. The rows themselves keep Mazda's width and positions (the scroller is shifted back by 26px),
+   so text and icons sit where Mazda put them. */
+.List2CtrlMask {
+  left: 26px !important;
+  width: 682px !important;
+  border-radius: 28px;
+}
+
+.List2CtrlScroller {
+  left: -26px !important;
+  width: 732px !important;
+}
+
+.List2CtrlTitle {
+  background-image: none !important;
+}
+
+.List2Ctrl.normalItems .ListItem,
+.List2Ctrl.thickItems .ListItem {
+  background-image: url(../images/home2skin/list_sep.png) !important;
+  background-position: 0px 100% !important;
+  background-repeat: no-repeat !important;
+}
+
+.List2Ctrl .ListItem.bgGrey {
+  background-image: none !important;
+  background-color: rgba(255, 255, 255, 0.06) !important;
+}
+
+/* Focus: the whole row is filled, no inset, no outline */
+.List2Ctrl .focusHighlight {
+  background-image: none !important;
+  background-color: rgba(190, 205, 255, 0.22) !important;
+}
+
+.List2Ctrl .ListItem.focus {
+  background-image: none !important;
+  background-color: rgba(190, 205, 255, 0.22) !important;
+}
+
+.List2Ctrl .ListItem.hit {
+  background-image: none !important;
+  background-color: rgba(190, 205, 255, 0.34) !important;
+}
+
+/* Thin scroll indicator inside the container */
+.List2CtrlScrollIndicatorWrapper {
+  right: 34px !important;
+  width: 8px !important;
+  background: none !important;
+}
+
+.List2CtrlScrollIndicator {
+  right: 2px !important;
+  width: 4px !important;
+  border-radius: 2px;
+  background: rgba(255, 255, 255, 0.35) none !important;
+}
+
+/* ---------- back / folder-up button: glass pill beside the menu ---------- */
+.LeftBtnCtrlBackBtn { background: url(../images/home2skin/back_en.png) no-repeat !important; }
+.LeftBtnCtrlBackBtnDisabled { background: url(../images/home2skin/back_ds.png) no-repeat !important; }
+.LeftBtnCtrlBackBtnFocused { background: url(../images/home2skin/back_focus.png) no-repeat !important; }
+.LeftBtnCtrlBackBtnDown { background: url(../images/home2skin/back_hit.png) no-repeat !important; }
+.LeftBtnCtrlMoveUpBtn { background: url(../images/home2skin/up_en.png) no-repeat !important; }
+.LeftBtnCtrlMoveUpBtnDisabled { background: url(../images/home2skin/up_ds.png) no-repeat !important; }
+.LeftBtnCtrlMoveUpBtnFocused { background: url(../images/home2skin/up_focus.png) no-repeat !important; }
+.LeftBtnCtrlMoveUpBtnDown { background: url(../images/home2skin/up_hit.png) no-repeat !important; }

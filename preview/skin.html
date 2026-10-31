@@ -4,9 +4,9 @@
 <meta charset="utf-8">
 <title>Home 2.0 system skin preview</title>
 <!--
-  Desktop preview of the Arabic system skin (src/skin/common_rtl.css) on top of Mazda's own CSS.
+  Desktop preview of the system skin (src/skin/home2skin.css, + common_rtl.css in Arabic) on top of Mazda's own CSS.
   Needs Mazda's GUI files in preview/mazda/ first:  sh tools/copy_mazda_preview.sh <extracted jci/gui folder>
-  Options: ?screen=settings|alert|home|icons  &skin=0 (stock look)  &alert=nav|bt|volume|msg  &phone=androidauto|carplay
+  Options: ?lang=ar|en  &screen=settings|alert|home|icons  &skin=0 (stock look)  &alert=nav|bt|volume|msg  &phone=androidauto|carplay
            &focus=btn (Android Auto button focused by the knob)
   The DOM below copies what Mazda's StatusBarCtrl, SbnCtrl, List2Ctrl and LeftBtnCtrl build on firmware 74.
 -->
@@ -21,21 +21,25 @@
 <script>
   var q = new URLSearchParams(location.search);
   var SKIN = q.get("skin") !== "0";
-  function css(href) { document.write('<link rel="stylesheet" href="' + href + '">'); }
-  // Same order as the car: common.css (+ common_rtl.css for Arabic), then the controls' own sheets.
+  var AR = q.get("lang") !== "en";
+  document.documentElement.lang = AR ? "ar" : "en";
+  function css(href, id) { document.write('<link rel="stylesheet"' + (id ? ' id="' + id + '"' : '') + ' href="' + href + '">'); }
+  // Same order as the car: common.css (+ common_rtl.css for Arabic), the controls' own sheets (+ their _rtl
+  // sheets for Arabic), then home2skin.css, which the launcher adds (the id stops it adding a second copy).
   css("common/css/common.css");
-  if (SKIN) { css("../../installer/home2/skin/css/common_rtl.css"); }
+  if (SKIN && AR) { css("../../installer/home2/skin/css/common_rtl.css"); }
   css("common/transitions/css/TransitionsGen.css");
   ["StatusBar/css/StatusBarCtrl", "Sbn/css/SbnCtrl", "List2/css/List2Ctrl", "LeftBtn/css/LeftBtnCtrl", "Button/css/ButtonCtrl"].forEach(function(c) {
     css("common/controls/" + c + ".css");
-    if (c.indexOf("LeftBtn") === -1 && c.indexOf("Button/") === -1) { css("common/controls/" + c + "_rtl.css"); }
+    if (AR && c.indexOf("LeftBtn") === -1 && c.indexOf("Button/") === -1) { css("common/controls/" + c + "_rtl.css"); }
   });
   css("../../installer/home2/css/MainMenuCtrl.css");
-  css("../../installer/home2/css/MainMenuCtrl_rtl.css");
+  if (AR) { css("../../installer/home2/css/MainMenuCtrl_rtl.css"); }
+  if (SKIN) { css("../../installer/home2/skin/css/home2skin.css", "Home2Skin"); }
   // Minimal stand-in for Mazda's framework, enough for the launcher (see preview/index.html for the full one).
   window.log = { addSrcFile: function(){}, debug: function(){}, info: function(){}, warn: function(){}, error: function(){} };
   window.framework = {
-    localize: { getCurrentLanguage: function() { return "ar_SA"; }, getTimeFormat: function() { return "12hrs"; }, getLocStr: function(a, id) { return id; } },
+    localize: { getCurrentLanguage: function() { return AR ? "ar_SA" : "en_US"; }, getTimeFormat: function() { return "12hrs"; }, getLocStr: function(a, id) { return id; } },
     common: { _remoteUiBtns: { system: { appName: q.get("phone") || "androidauto" } }, getCurrentTime: function() { return new Date(2026, 9, 31, 14, 26).getTime(); },
               getAtSpeedValue: function() { return false; }, beep: function() {}, stealFocus: function() {} },
     _appInstances: {}, sendEventToMmui: function() {}, registerCtrlLoaded: function() {}
@@ -78,7 +82,7 @@
   el("div", "StatusBarCtrlIcon", c1, "", icon("PhoneSignal", "04")).id = "StatusBar_Bluetooth";
   el("div", "StatusBarCtrlDivider", sb, "", isHome ? "" : "display: block");
   var domain = el("div", "StatusBarCtrlDomainIcon", sb, "", isHome ? "" : "background-image: url(common/images/icons/IcnSbnSettings.png)");
-  var appName = el("div", "StatusBarCtrlAppName", sb, isHome ? "" : "الإعدادات");
+  var appName = el("div", "StatusBarCtrlAppName", sb, isHome ? "" : (AR ? "الإعدادات" : "Settings"));
   el("div", "StatusBarCtrlClock", sb, "2:26");
   if (isHome) {
     // StatusBarCtrl.showRemoteUiButton: a ButtonCtrl with the Android Auto / CarPlay icon
@@ -91,7 +95,8 @@
 
   // ---- alert (SbnCtrl) ----
   if (ALERT) {
-    var texts = { nav: "بعد ٣٠٠ م انعطف يمينًا", bt: "تم توصيل جوال حسين", volume: "الصوت ١٨", msg: "رسالة جديدة من أحمد" };
+    var texts = AR ? { nav: "بعد ٣٠٠ م انعطف يمينًا", bt: "تم توصيل جوال حسين", volume: "الصوت ١٨", msg: "رسالة جديدة من أحمد" }
+                   : { nav: "In 300 m turn right", bt: "Hussain's phone connected", volume: "Volume 18", msg: "New message from Ahmed" };
     var images = { nav: "IcnSbnMap", bt: "IcnSbnBt", volume: "IcnSbnVolume", msg: "IcnSbnComm" };
     var sbn = el("div", "SbnCtrl", document.body);
     el("div", "SbnCtrl_Style02_Image1", sbn, "", "background-image: url(common/images/icons/" + images[ALERT] + ".png)");
@@ -105,7 +110,8 @@
     var list = el("div", "List2Ctrl normalItems noTitle", tmpl);
     var mask = el("div", "List2CtrlMask", list);
     var scroller = el("div", "List2CtrlScroller", mask);
-    ["الشاشة", "الصوت", "الساعة", "الأجهزة", "اللغة", "النظام", "إعادة الضبط"].forEach(function(label, i) {
+    (AR ? ["الشاشة", "الصوت", "الساعة", "الأجهزة", "اللغة", "النظام", "إعادة الضبط"]
+        : ["Display", "Sound", "Clock", "Devices", "Language", "System", "Factory Reset"]).forEach(function(label, i) {
       var li = el("div", "ListItem style01" + (i === 0 ? " focus" : ""), scroller, "", "top: " + (i * 64) + "px");
       el("span", "line1", li, label);
     });

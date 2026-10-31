@@ -17,8 +17,10 @@ OLD_FONTS="${R}/jci/fonts"     # where v1.0.0-1.0.2 put the fonts (Opera does no
 BACKUP="${R}/data_persist/home2-backup"
 USB_BACKUP="${MYDIR}/backup"
 MARKER="Home 2.0 \"Ember Glass\" launcher"
-# System skin for Mazda's own screens (top bar, alerts, menus): one Arabic-only style sheet that Mazda does
-# not ship (the GUI loads common_rtl.css next to common.css for Arabic), plus its images.
+# System skin for Mazda's own screens (top bar, alerts, menus): home2skin.css (every language, added to the
+# page by the launcher), common_rtl.css (Arabic mirroring; Mazda does not ship it, but the GUI loads it next to
+# common.css for Arabic), plus their images.
+SKIN_MAIN="${R}/jci/gui/common/css/home2skin.css"
 SKIN_CSS="${R}/jci/gui/common/css/common_rtl.css"
 SKIN_IMG="${R}/jci/gui/common/images/home2skin"
 SKIN_MARKER="Home 2.0 system skin"
@@ -107,6 +109,7 @@ remove_skin()
 {
     # $1 = backup folder that may hold a common_rtl.css that was there before Home 2.0
     rm -rf "${SKIN_IMG}"
+    rm -f "${SKIN_MAIN}"
     if [ -f "$1/common_rtl.css" ]; then
         cp "$1/common_rtl.css" "${SKIN_CSS}"
     else
@@ -181,6 +184,7 @@ then
     cp "${PAYLOAD}"/fonts/Home2Tajawal-*.ttf "${FONTS}/" &&
     mkdir -p "${SKIN_IMG}" &&
     cp "${PAYLOAD}"/skin/images/home2skin/*.png "${SKIN_IMG}/" &&
+    cp "${PAYLOAD}/skin/css/home2skin.css" "${SKIN_MAIN}" &&
     cp "${PAYLOAD}/skin/css/common_rtl.css" "${SKIN_CSS}"
     COPY_OK=$?
     # Clean up fonts from earlier versions (plain Tajawal names, or put in /jci/fonts).
@@ -200,6 +204,7 @@ then
         [ "$(md5 "${FONTS}/$f")" = "$(md5 "${PAYLOAD}/fonts/$f")" ] || VERIFY_OK=1
     done
     [ "$(md5 "${SKIN_CSS}")" = "$(md5 "${PAYLOAD}/skin/css/common_rtl.css")" ] || VERIFY_OK=1
+    [ "$(md5 "${SKIN_MAIN}")" = "$(md5 "${PAYLOAD}/skin/css/home2skin.css")" ] || VERIFY_OK=1
     for p in "${PAYLOAD}"/skin/images/home2skin/*.png; do
         [ "$(md5 "${SKIN_IMG}/$(basename "$p")")" = "$(md5 "$p")" ] || VERIFY_OK=1
     done

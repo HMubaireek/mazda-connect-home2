@@ -27,6 +27,7 @@ setup()
     ORIG_JS=$(md5 "$CTRL/js/MainMenuCtrl.js")
     ORIG_CSS=$(md5 "$CTRL/css/MainMenuCtrl.css")
     SKIN="$CAR/jci/gui/common/css/common_rtl.css"
+    SKIN_MAIN="$CAR/jci/gui/common/css/home2skin.css"
     SKIN_IMG="$CAR/jci/gui/common/images/home2skin"
     cp -r "$REPO/installer" "$USB"
     FONTDIR="$CAR/jci/fonts/CHN"   # what firmware 74's /etc/profile gives the browser
@@ -68,6 +69,7 @@ check "backup on USB" '[ "$(md5 "$USB/backup/MainMenuCtrl.css")" = "$ORIG_CSS" ]
 check "rebooted" '[ -f "$T/rebooted" ]'
 check "log says complete" 'grep -q "install complete" "$USB/logs/install.log"'
 check "skin style sheet installed" '[ "$(md5 "$SKIN")" = "$(md5 "$USB/home2/skin/css/common_rtl.css")" ]'
+check "skin main sheet installed" '[ "$(md5 "$SKIN_MAIN")" = "$(md5 "$USB/home2/skin/css/home2skin.css")" ]'
 check "skin images installed" '[ -f "$SKIN_IMG/list_panel.png" ] && [ -f "$SKIN_IMG/sb_batt_05.png" ]'
 
 echo "--- 2. reinstall over itself keeps the original backup"
@@ -86,6 +88,7 @@ check "images removed" '[ ! -d "$CTRL/images/home2" ]'
 check "fonts removed" '[ ! -f "$FONTDIR/Home2Tajawal-Bold.ttf" ]'
 check "stock fonts folder kept" '[ -d "$FONTDIR" ]'
 check "skin style sheet removed" '[ ! -f "$SKIN" ]'
+check "skin main sheet removed" '[ ! -f "$SKIN_MAIN" ]'
 check "skin images removed" '[ ! -d "$SKIN_IMG" ]'
 check "stock common css folder kept" '[ -d "$CAR/jci/gui/common/css" ]'
 

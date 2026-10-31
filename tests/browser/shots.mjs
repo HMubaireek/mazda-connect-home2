@@ -6,7 +6,8 @@ const out = fileURLToPath(new URL('../../docs/', import.meta.url));
 const browser = await launch();
 const page = await browser.newPage();
 page.on('pageerror', e => console.log('PAGE ERROR', e.message));
-page.on('console', m => { if (m.type() === 'error') console.log('CONSOLE', m.text()); });
+// The launcher adds common/css/home2skin.css, which only exists on the car: ignore that missing file here.
+page.on('console', m => { if (m.type() === 'error' && !m.text().includes('ERR_FILE_NOT_FOUND')) console.log('CONSOLE', m.text()); });
 
 const BT = encodeURIComponent('جوال حسين');
 const BUSY = 'warnings=2&service=1&missed=3&texts=1&bt=' + BT + '&source=FMRadio';
@@ -174,6 +175,7 @@ await wait(1200);
 expect('rebuilt: handler runs once', await page.evaluate(() => sysApp._handled), 1);
 expect('rebuilt: call shown', await text('.H2Row2 .H2RowTitle'), 'Call in progress');
 
+expect('launcher adds the system skin sheet', await page.evaluate(() => { const l = document.getElementById('Home2Skin'); return l ? l.getAttribute('href') : null; }), 'common/css/home2skin.css');
 expect('font check line off by default', await page.evaluate(() => document.querySelector('.H2FontCheck') === null), true);
 
 // Lost focus and back

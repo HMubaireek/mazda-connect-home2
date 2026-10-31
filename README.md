@@ -13,22 +13,23 @@ opens **Android Auto** or **Apple CarPlay** when a phone is plugged in.
 | **English · driving, on a call, CarPlay** | **English · all clear, no phone plugged in** |
 | ![English, driving, call in progress, CarPlay](docs/shot_en_drive_call.png) | ![English, car OK, USB playing](docs/shot_en_allclear.png) |
 
-**System skin (Arabic)** — Mazda's own top bar, alerts and menus, restyled to match. The skin is Arabic-only
-(Mazda loads it only for right-to-left languages), so in English Mazda's screens keep their stock look:
+**System skin** — Mazda's own top bar, alerts and menus, restyled to match, in Arabic and English:
 
-| Settings menu | Navigation alert | Home with Android Auto | All top-bar icons |
-|---|---|---|---|
-| ![Settings menu](docs/skin_ar_settings.png) | ![Navigation alert](docs/skin_ar_alert.png) | ![Home, Android Auto](docs/skin_ar_home.png) | ![All icons](docs/skin_ar_icons.png) |
+| | Settings menu | Navigation alert | Home with Android Auto | All top-bar icons |
+|---|---|---|---|---|
+| **Arabic** | ![Settings menu](docs/skin_ar_settings.png) | ![Navigation alert](docs/skin_ar_alert.png) | ![Home, Android Auto](docs/skin_ar_home.png) | ![All icons](docs/skin_ar_icons.png) |
+| **English** | ![Settings menu](docs/skin_en_settings.png) | ![Navigation alert](docs/skin_en_alert.png) | ![Home, Android Auto](docs/skin_en_home.png) | ![All icons](docs/skin_en_icons.png) |
 
 > Screenshots come from the desktop preview (`preview/index.html`). The top bar is Mazda's own
 > status bar, which this project does not change.
 
 ## Status
 
-**v1.2.0 — Ember Glance home screen plus the "Floating Pills" system skin.** Not yet tried in the car.
+**v1.2.1 — Ember Glance home screen plus the "Floating Pills" system skin, in every language.** Not yet tried in the car.
 v1.0.4 (the first layout) runs in a 2019 CX-9 on firmware 74.00.333A (ADR / 4A N).
 
-- v1.2.0 adds the system skin for Mazda's own screens when the language is Arabic (see [System skin](#system-skin)):
+- v1.2.1 applies the system skin in English (and every other language) too, mirrored for Arabic.
+- v1.2.0 adds the system skin for Mazda's own screens (see [System skin](#system-skin)):
   Tajawal everywhere, a top bar of floating glass pills with a new icon set, glass alerts, and menus in one
   rounded glass container.
 - v1.1.0 replaces the big phone card with a live status card (car, phone, media), a parked / driving chip,
@@ -41,10 +42,10 @@ v1.0.4 (the first layout) runs in a 2019 CX-9 on firmware 74.00.333A (ADR / 4A N
 - v1.0.3 installs the fonts into the folder the browser really reads (`/jci/fonts/CHN` on firmware 74;
   earlier versions used `/jci/fonts`, which the browser never scans). Confirmed in the car: Tajawal loads.
 - v1.0.4 turns off the "Font check" test line.
-- The system skin passes 26 checks against Mazda's own CSS (fonts, alignment, focus, icons, alerts).
-- The launcher passes 63 automated behaviour checks (knob, tilt, touch, every status state and its Arabic wording,
+- The system skin passes 40 checks against Mazda's own CSS, in Arabic and English (fonts, alignment, focus, icons, alerts).
+- The launcher passes 64 automated behaviour checks (knob, tilt, touch, every status state and its Arabic wording,
   phone hot-plug, focus hand-off, call and audio messages) and 9 clock checks.
-- The installer passes 43 automated checks against a simulated car file system (install, reinstall, remove,
+- The installer passes 45 automated checks against a simulated car file system (install, reinstall, remove,
   wrong firmware, damaged USB copy, cancel, an existing `common_rtl.css`).
 
 Treat it as experimental. Removing it is one step (see [Remove](#remove)).
@@ -58,7 +59,7 @@ Treat it as experimental. Removing it is one step (see [Remove](#remove)).
 - **Parked / driving** chip under the date.
 - **Android Auto / CarPlay pill** next to it, only while a phone is plugged in. Tapping it opens Android Auto / CarPlay.
 - **Badges** on the dock: unread count (or a green dot during a call) on Phone, "!" on Apps when the car needs attention.
-- **System skin** (Arabic): Mazda's top bar, alerts, menus and back button restyled to match, all in Tajawal.
+- **System skin**: Mazda's top bar, alerts, menus and back button restyled to match, all in Tajawal, in every language.
 - **Arabic and right-to-left**: follows the car's language setting. Arabic labels, Arabic-Indic digits,
   Arabic day/month names, mirrored layout and background.
 - **Hijri date** (Umm al-Qura) under the Gregorian date. The car's browser has no Hijri calendar, so a
@@ -93,7 +94,8 @@ Only the home-menu control is replaced:
 | `/jci/gui/apps/system/controls/MainMenu/css/MainMenuCtrl_rtl.css` | added; the framework loads it for Arabic/Hebrew |
 | `/jci/gui/apps/system/controls/MainMenu/images/home2/` | added |
 | `/jci/fonts/CHN/Home2Tajawal-Light.ttf`, `-Medium.ttf`, `-Bold.ttf` | added (the browser's font folder, see [Fonts](#fonts)) |
-| `/jci/gui/common/css/common_rtl.css` | added: the Arabic system skin (Mazda does not ship this file) |
+| `/jci/gui/common/css/home2skin.css` | added: the system skin (every language) |
+| `/jci/gui/common/css/common_rtl.css` | added: the skin's Arabic mirroring (Mazda does not ship this file) |
 | `/jci/gui/common/images/home2skin/` | added: the skin's images |
 
 Mazda's system app (`systemApp.js`) is **not modified**. The launcher reads the phone state the system app
@@ -121,18 +123,21 @@ messages on their way to the system app's handlers, which still run unchanged.
 
 ### System skin
 
-Mazda's GUI loads `common/css/common_rtl.css` next to `common.css` whenever the language is Arabic (or Hebrew),
-but Mazda does not ship that file. Home 2.0 adds it, so one style sheet restyles every Mazda screen in Arabic
-without changing any Mazda file. Delete it (Remove does) and the stock look is back.
+The skin is one new style sheet, `common/css/home2skin.css`, that the launcher adds to the page when it loads,
+so it restyles every Mazda screen in every language without changing any Mazda file. For Arabic, Mazda's GUI also
+loads `common/css/common_rtl.css` next to `common.css` (Mazda does not ship that file); Home 2.0 puts the mirrored
+top-bar layout there, and the GUI drops it again when you switch to English. Remove deletes both and the stock
+look is back.
 
 - **Fonts:** every screen in Tajawal (Medium for text, Bold for titles and alerts) instead of Tipperary and the
   system Arabic fallback.
-- **Top bar:** no bar background; mirrored for Arabic with the clock in a glass pill on the left, the status icons
-  in glass pills next to it, and the home / Android Auto / CarPlay button as a round pill on the right. New icons
+- **Top bar:** no bar background; the home / Android Auto / CarPlay button as a round pill at the start, the
+  screen title next to it, the status icons in glass pills, and the clock in a glass pill at the end (in Arabic
+  the clock is on the left and the button on the right). New icons
   for every battery, signal and Wi-Fi level, Bluetooth, messages, music, roaming and traffic: Mazda's code names the
   icon image for each state, and the skin swaps in its own image for each name. The launcher marks which icon
   groups have a visible icon, so empty groups don't show an empty pill.
-- **Alerts** (navigation, Bluetooth, volume, messages): a glass pill between the clock and the right button.
+- **Alerts** (navigation, Bluetooth, volume, messages): a glass pill between the button and the clock.
 - **Menus:** one rounded glass container whose right edge lines up with the top bar; rows fill it edge to edge and
   the focused row is filled across its full width. Rows keep Mazda's size and text positions. The back button
   is a glass pill beside it. The Midnight background replaces Mazda's grey one.

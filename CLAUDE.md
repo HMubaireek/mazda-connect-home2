@@ -3,8 +3,8 @@
 A custom home screen ("Ember Glass") for Mazda Connect 1. Owner: Hussain (HMubaireek). His car is a
 **2019 Mazda CX-9, Saudi market, firmware 74.00.333A 4A N (ADR)**, system language **Arabic**.
 v1.0.4 is installed and confirmed working in the car (31 Oct 2026). v1.1.0 ("Ember Glance" layout, live status card)
-and v1.2.0 (+ "Floating Pills" system skin for Mazda's screens) were built and tested on 31 Oct 2026 but are not
-yet confirmed in the car. Read this whole file before changing anything.
+and v1.2.0/v1.2.1 (+ "Floating Pills" system skin for Mazda's screens, every language) were built and tested on
+31 Oct 2026 but are not yet confirmed in the car. Read this whole file before changing anything.
 
 ## What the owner wants
 - Arabic first, right-to-left, Arabic-Indic digits, Hijri (Umm al-Qura) date under the Gregorian date.
@@ -58,6 +58,10 @@ All read from the system app instance `framework._appInstances.system` without c
   `[style*="IcnSbBatt_03"] { background-image: url(...) !important }` (author !important beats inline style). Every state
   PNG (Batt_00-05, PhoneSignal_00-05, WifiSignal_00-04 + _active, Bluetooth, Bluetooth_Ds, Message, Music, Roaming,
   Traffic) has a replacement in the new style.
+- He wants the skin in **English too** (v1.2.1). `src/skin/home2skin.css` (every language, LTR layout) → car
+  `/jci/gui/common/css/home2skin.css`, added to the page by the launcher (`home2LoadSkin`, link id `Home2Skin`; Mazda
+  loads no per-language sheet for English). `src/skin/common_rtl.css` now only mirrors the top bar/background for
+  Arabic, with `html body` selectors so it wins regardless of load order; the framework removes it on a switch to English.
 - **Built in v1.2.0:** `src/skin/common_rtl.css` → car `/jci/gui/common/css/common_rtl.css`; images
   `installer/home2/skin/images/home2skin/` (from `tools/build_assets.py`) → `/jci/gui/common/images/home2skin/`.
   run.sh backs up a pre-existing common_rtl.css (not ours = no "Home 2.0 system skin" line) and restores it on Remove.

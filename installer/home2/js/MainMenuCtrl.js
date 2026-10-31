@@ -1,6 +1,6 @@
 /*
  * Home 2.0 "Ember Glass" launcher for Mazda Connect (CMU 150, firmware 74.x)
- * Version 1.2.0, "Ember Glance" layout (live car, phone and media status) — see README.md
+ * Version 1.2.1, "Ember Glance" layout (live car, phone and media status) — see README.md
  *
  * The installer (run.sh) recognises an installed launcher by the first line above: keep it.
  *
@@ -1188,7 +1188,7 @@ MainMenuCtrl.prototype.cleanUp = function()
 };
 
 /* ---------- system skin helper ---------- */
-// The Arabic system skin (common/css/common_rtl.css) draws each status-bar icon group as a glass pill.
+// The system skin (common/css/home2skin.css) draws each status-bar icon group as a glass pill.
 // CSS cannot tell whether a group has a visible icon, so groups that do are marked "H2On". Mazda's
 // StatusBarCtrl is not changed: its icon methods are wrapped once, and the originals still run.
 function home2MarkIconGroups(bar)
@@ -1235,6 +1235,24 @@ function home2HookStatusBar()
     catch (e2) {}
 }
 
+// The system skin for Mazda's own screens (common/css/home2skin.css) applies in every language. Mazda's framework
+// only loads extra sheets for Arabic (common_rtl.css, the mirroring), so the launcher adds this one to the page.
+function home2LoadSkin()
+{
+    try
+    {
+        if (document.getElementById("Home2Skin")) { return; }
+        var link = document.createElement("link");
+        link.id = "Home2Skin";
+        link.rel = "stylesheet";
+        link.type = "text/css";
+        link.href = "common/css/home2skin.css";
+        document.querySelector("head").appendChild(link);
+    }
+    catch (e) {}
+}
+
+home2LoadSkin();
 home2HookStatusBar();
 
 framework.registerCtrlLoaded("MainMenuCtrl");

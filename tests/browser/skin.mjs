@@ -31,6 +31,10 @@ await shot('screen=settings', 'skin_ar_settings.png');
 await shot('screen=alert&alert=nav', 'skin_ar_alert.png');
 await shot('screen=home&focus=btn', 'skin_ar_home.png');
 await shot('screen=icons', 'skin_ar_icons.png');
+await shot('lang=en&screen=settings', 'skin_en_settings.png');
+await shot('lang=en&screen=alert&alert=nav', 'skin_en_alert.png');
+await shot('lang=en&screen=home&focus=btn', 'skin_en_home.png');
+await shot('lang=en&screen=icons', 'skin_en_icons.png');
 
 let fails = 0;
 function expect(name, got, want) {
@@ -56,7 +60,7 @@ expect('battery uses the new icon', (await css('#StatusBar_Batt', 'backgroundIma
 expect('signal uses the new icon', (await css('#StatusBar_Bluetooth', 'backgroundImage')).includes('sb_signal_04.png'), true);
 expect('back button restyled', (await css('.LeftBtnCtrlBackBtn', 'backgroundImage')).includes('back_en.png'), true);
 expect('Mazda right arc hidden', await css('.CommonRightChrome', 'display'), 'none');
-expect('Midnight background', (await css('.CommonBgImg', 'backgroundImage')).includes('home2skin/bg.png'), true);
+expect('Midnight background, mirrored', (await css('.CommonBgImg', 'backgroundImage')).includes('home2skin/bg_rtl.png'), true);
 
 await open('screen=alert&alert=nav');
 expect('alert between clock and right pill', (await box('.SbnCtrl')).slice(0, 2), [130, 722]);
@@ -73,6 +77,25 @@ expect('Android Auto icon replaced', (await css('.ButtonCtrlIcon_AA', 'backgroun
 expect('home clock keeps Tajawal Light', (await css('.H2Time', 'fontFamily')).split(',')[0], '"Home2 Tajawal Light"');
 expect('home clock keeps weight 300', await css('.H2Time', 'fontWeight'), '300');
 expect('home labels keep Tajawal Bold', (await css('.H2DockLabel', 'fontFamily')).split(',')[0], '"Home2 Tajawal Bold"');
+
+// English: the same skin, left to right (no common_rtl.css)
+await open('lang=en&screen=settings');
+expect('en title in Tajawal Bold', (await css('.StatusBarCtrlAppName', 'fontFamily')).split(',')[0], '"Home2 Tajawal Bold"');
+expect('en menu rows in Tajawal Medium', (await css('.ListItem .line1', 'fontFamily')).split(',')[0], '"Home2 Tajawal Medium"');
+expect('en home pill at the left edge (24px)', (await box('.StatusBarCtrlHomeBtn')).slice(0, 2), [24, 68]);
+expect('en clock pill at the right edge (776px)', (await box('.StatusBarCtrlClock')).slice(0, 2), [680, 776]);
+expect('en title starts after the screen icon', (await box('.StatusBarCtrlAppName'))[0], 124);
+expect('en icon pill ends next to the clock pill', await page.evaluate(() => Math.round(document.querySelectorAll('.StatusBarCtrlIconContainer')[1].getBoundingClientRect().right)), 670);
+expect('en menu container lines up with the bar', (await box('.List2CtrlMask')).slice(0, 2), [94, 776]);
+expect('en focused row filled', await css('.ListItem.focus', 'backgroundColor'), 'rgba(190, 205, 255, 0.22)');
+expect('en battery uses the new icon', (await css('#StatusBar_Batt', 'backgroundImage')).includes('sb_batt_04.png'), true);
+expect('en Midnight background, not mirrored', (await css('.CommonBgImg', 'backgroundImage')).includes('home2skin/bg_ltr.png'), true);
+expect('en back button restyled', (await css('.LeftBtnCtrlBackBtn', 'backgroundImage')).includes('back_en.png'), true);
+await open('lang=en&screen=alert&alert=nav');
+expect('en alert between button and clock', (await box('.SbnCtrl')).slice(0, 2), [78, 670]);
+await open('lang=en&screen=home&focus=btn');
+expect('en Android Auto pill at the left edge', (await box('.StatusBarCtrlRemoteUIBtn_En')).slice(0, 2), [24, 68]);
+expect('en home clock keeps Tajawal Light', (await css('.H2Time', 'fontFamily')).split(',')[0], '"Home2 Tajawal Light"');
 
 await open('screen=settings&skin=0');
 expect('stock look without the skin', (await css('.StatusBarCtrlAppName', 'fontFamily')).includes('Tajawal'), false);

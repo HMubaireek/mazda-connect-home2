@@ -21,6 +21,7 @@ cp src/launcher/MainMenuCtrl_rtl.css "$P/css/MainMenuCtrl_rtl.css"
 
 # System skin for Mazda's own screens (images come from tools/build_assets.py).
 mkdir -p "$P/skin/css" "$P/skin/images/home2skin"
+cp src/skin/home2skin.css "$P/skin/css/home2skin.css"
 cp src/skin/common_rtl.css "$P/skin/css/common_rtl.css"
 
 # Checksums the car verifies before installing.
