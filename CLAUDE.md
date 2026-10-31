@@ -2,17 +2,36 @@
 
 A custom home screen ("Ember Glass") for Mazda Connect 1. Owner: Hussain (HMubaireek). His car is a
 **2019 Mazda CX-9, Saudi market, firmware 74.00.333A 4A N (ADR)**, system language **Arabic**.
-v1.0.4 is installed and confirmed working in the car (31 Oct 2026). Read this whole file before changing anything.
+v1.0.4 is installed and confirmed working in the car (31 Oct 2026). v1.1.0 ("Ember Glance" layout, live status card)
+was built and tested on 31 Oct 2026 but is not yet confirmed in the car. Read this whole file before changing anything.
 
 ## What the owner wants
 - Arabic first, right-to-left, Arabic-Indic digits, Hijri (Umm al-Qura) date under the Gregorian date.
 - **Tajawal** font (Light for the clock, Medium for secondary lines, Bold for labels).
 - Look: modern, vibrant, "2027". He rejected an early round as "feels like 1990". He picked design **D, "Ember Glass"**
   (glass cards, Midnight palette with soft colour glows and light-trail arcs, no background pattern).
-- Phone card **only when Android Auto or CarPlay is connected**; with no phone it is hidden and the clock is centred.
+- Round 5 (31 Oct 2026): he picked **L · Ember Glance**: clock top right, a parked/driving chip and a small Android Auto /
+  CarPlay pill (only while a phone is connected) under the date, a status card on the left (car / phone / media rows),
+  the 5-tile dock with badges. He does **not** want prayer times. The old big phone card is gone.
 - Must work with the commander knob (turn, tilt, press, up/down) and touch.
 - Design rounds were shown as a canvas artifact: https://claude.ai/artifact/MPcAA3UpXN89E7ko7JLTyn
   Propose new designs the same way (several options side by side, Arabic shown), then build the chosen one.
+
+## Live status sources (firmware 74, researched 31 Oct 2026)
+All read from the system app instance `framework._appInstances.system` without changing systemApp.js:
+- Warnings: `_masterApplicationDataList` item `SelectWarnGuide`, `label1` = count string. Maintenance due: `_SchedMaintDueStatus`.
+- Missed calls / SMS / email: `_communicationsDataList` items `SelectCallHistory` / `SelectSms` / `SelectEmail`, `label1`.
+- BT phone name: `_masterEntertainmentDataList` item `SelectBTAudio`, `text1SubMap.deviceName`.
+- Playing source: the Entertainment item whose `image1` is the NowPlaying icon (`appData.audioSourceId`).
+- Driving: `framework.common.getAtSpeedValue()`.
+- **Mazda bug:** `_StatusPhoneCallMsgHandler` never sets the Active Call item visible (its condition can't be true), and
+  paused audio leaves no trace. So the launcher wraps `systemApp._messageTable.StatusPhoneCall` / `StatusUpdateAudioSource`
+  once (flag `_home2Hooked`), records into the global `HOME2_LIVE`, and calls the original handler.
+- Not available on the screen: oil life %, km to service, fuel economy (sent only while those Mazda screens are open),
+  fuel level, range, odometer, tyre pressure, outside temperature, weather (no internet; AA/CarPlay don't send it).
+- Status rows use stock home events only (car → `app`, phone → `com`, media → `ent`). Direct events like
+  `SelectWarnGuide` are only known to work from the Applications list; untested from the home screen.
+- run.sh recognises an installed launcher by the line `Home 2.0 "Ember Glass" launcher` in the JS header: keep it.
 
 ## Repo layout
 - `src/launcher/MainMenuCtrl.js` (+ `hijri.js`, generated) — the launcher; `MainMenuCtrl.css`, `MainMenuCtrl_rtl.css`.
@@ -25,6 +44,11 @@ v1.0.4 is installed and confirmed working in the car (31 Oct 2026). Read this wh
   `./build.sh && sh tests/test_installer.sh && (cd tests/browser && npm install && npm test)`.
   `npm test` = ES5 parse check + behaviour checks + screenshots into `docs/` + clock checks.
   Headless Chromium comes from `@sparticuz/chromium` + `puppeteer-core` (Playwright's browser download was blocked by the proxy).
+- **On his Windows PC** (desktop session): `build.sh` and `tests/test_installer.sh` run in WSL `Ubuntu-20.04` (has zip, md5sum).
+  Run the installer tests from a copy under `/tmp` (on `/mnt/c` some checks fail because of the Windows drive).
+  If you clone inside WSL use `git -c core.autocrlf=false`. Assets: `py -3.11 tools/build_assets.py` with the Poppler
+  `Library/bin` (has cairo.dll) on PATH. Browser tests: Node 16 is installed, so run `npx -y node@20 <test>.mjs` with
+  `CHROME_PATH="C:/Program Files/Google/Chrome/Application/chrome.exe"` (see `tests/browser/browser.mjs`).
 
 ## The car's GUI (firmware 74)
 - HTML/CSS/JS in **Opera Presto** (Opera/9.80). **ES5 only, no flexbox**, use `-o-` prefixes (`-o-linear-gradient`).

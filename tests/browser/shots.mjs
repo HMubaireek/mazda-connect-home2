@@ -1,17 +1,15 @@
-import chromium from '@sparticuz/chromium';
-import puppeteer from 'puppeteer-core';
+import { fileURLToPath } from 'url';
+import { launch } from './browser.mjs';
 
 const base = new URL('../../preview/index.html', import.meta.url).href;
-const out = new URL('../../docs/', import.meta.url).pathname;
-const browser = await puppeteer.launch({
-  executablePath: await chromium.executablePath(),
-  args: chromium.args,
-  headless: true,
-  defaultViewport: { width: 900, height: 600 },
-});
+const out = fileURLToPath(new URL('../../docs/', import.meta.url));
+const browser = await launch();
 const page = await browser.newPage();
 page.on('pageerror', e => console.log('PAGE ERROR', e.message));
 page.on('console', m => { if (m.type() === 'error') console.log('CONSOLE', m.text()); });
+
+const BT = encodeURIComponent('جوال حسين');
+const BUSY = 'warnings=2&service=1&missed=3&texts=1&bt=' + BT + '&source=FMRadio';
 
 async function shot(qs, file) {
   await page.goto(base + '?' + qs, { waitUntil: 'load' });
@@ -23,19 +21,23 @@ async function shot(qs, file) {
   console.log('shot', file);
 }
 
-await shot('lang=ar_SA&phone=androidauto&fmt=12hrs&focus=0', 'shot_ar_androidauto.png');
-await shot('lang=ar_SA&phone=none&fmt=12hrs&focus=4', 'shot_ar_nophone.png');
-await shot('lang=ar_SA&phone=carplay&fmt=12hrs&focus=3', 'shot_ar_carplay.png');
-await shot('lang=en_US&phone=androidauto&fmt=12hrs&focus=0', 'shot_en_androidauto.png');
+await shot('lang=ar_SA&phone=androidauto&fmt=12hrs&focus=4&' + BUSY, 'shot_ar_glance.png');
+await shot('lang=ar_SA&phone=carplay&fmt=12hrs&focus=2&driving=1&call=1&warnings=1&missed=3&texts=1&bt=' + BT + '&source=BTAudio&playing=0', 'shot_ar_drive_call.png');
+await shot('lang=ar_SA&phone=none&fmt=12hrs&focus=5&bt=' + BT + '&source=USB_A', 'shot_ar_allclear.png');
+await shot('lang=en_US&phone=androidauto&fmt=12hrs&focus=4&' + BUSY.replace(BT, 'Hussain%27s%20phone'), 'shot_en_glance.png');
 
 // ---- behaviour checks ----
-async function focusIndex() {
+async function state() {
   return page.evaluate(() => {
     const items = ctrl._items.map(i => i.div.classList.contains('H2Focus'));
     return { focus: ctrl._focus, highlighted: items.indexOf(true), log: document.getElementById('log').textContent };
   });
 }
 async function key(k) { await page.keyboard.press(k); await new Promise(r => setTimeout(r, 50)); }
+const wait = ms => new Promise(r => setTimeout(r, ms));
+const text = sel => page.evaluate(s => { const e = document.querySelector(s); return e ? e.textContent : null; }, sel);
+const shown = sel => page.evaluate(s => { const e = document.querySelector(s); return !!e && getComputedStyle(e).display !== 'none'; }, sel);
+async function live(o) { await page.evaluate(x => setStatus(x), o); await wait(1200); }
 
 let fails = 0;
 function expect(name, got, want) {
@@ -44,59 +46,141 @@ function expect(name, got, want) {
   console.log((ok ? 'PASS ' : 'FAIL ') + name + ' -> ' + JSON.stringify(got) + (ok ? '' : ' (want ' + JSON.stringify(want) + ')'));
 }
 
-// English, phone connected: starts on phone card
+// Items: 0 pill, 1 car row, 2 phone row, 3 media row, 4 Navigation, 5 Media, 6 Phone, 7 Settings, 8 Apps.
+// English, phone connected: knob order and up/down
 await page.goto(base + '?lang=en_US&phone=androidauto', { waitUntil: 'load' });
-expect('en start focus', (await focusIndex()).focus, 0);
-await key(']'); expect('en rotate cw', (await focusIndex()).focus, 1);
-await key('ArrowRight'); expect('en tilt right', (await focusIndex()).focus, 2);
-await key('ArrowUp'); expect('en up to phone card', (await focusIndex()).focus, 0);
-await key('ArrowUp'); expect('en up from card -> status bar', (await focusIndex()).log, 'giveFocusUp (focus moves to the status bar)');
-await key('Enter'); expect('en select phone card', (await focusIndex()).log, 'sendEventToMmui(system, SelectAndroidAuto)');
-await new Promise(r => setTimeout(r, 1100));
-await key('ArrowDown'); expect('en down into dock', (await focusIndex()).focus, 1);
-await key('Enter'); expect('en select nav', (await focusIndex()).log, 'selectCallback icon=nav');
-await new Promise(r => setTimeout(r, 1100));
-for (let i = 0; i < 8; i++) await key(']');
-expect('en clamp at end', (await focusIndex()).focus, 5);
+expect('en start on pill', (await state()).focus, 0);
+await key(']'); expect('en rotate cw -> car row', (await state()).focus, 1);
+await key('ArrowUp'); expect('en up from car row -> pill', (await state()).focus, 0);
+await key('ArrowUp'); expect('en up from pill -> status bar', (await state()).log, 'giveFocusUp (focus moves to the status bar)');
+await key('Enter'); expect('en select pill', (await state()).log, 'sendEventToMmui(system, SelectAndroidAuto)');
+await wait(1100);
+await key('ArrowDown'); await key('ArrowDown'); await key('ArrowDown');
+expect('en down through the card', (await state()).focus, 3);
+await key('ArrowDown'); expect('en down from media row -> dock', (await state()).focus, 4);
+await key('ArrowDown'); expect('en down in dock stays', (await state()).focus, 4);
+await key('ArrowRight'); await key('ArrowRight');
+await key('ArrowUp'); expect('en up from dock -> media row', (await state()).focus, 3);
+await key('Enter'); expect('en select media row', (await state()).log, 'selectCallback icon=ent');
+await wait(1100);
+for (let i = 0; i < 10; i++) await key(']');
+expect('en clamp at end', (await state()).focus, 8);
+await key('Enter'); expect('en select Apps', (await state()).log, 'selectCallback icon=app');
+await wait(1100);
 
-// Arabic: tilt right moves visually right = previous item
+// Arabic: tilt is mirrored
 await page.goto(base + '?lang=ar_SA&phone=carplay', { waitUntil: 'load' });
-await key(']'); await key(']'); // focus 2
-await key('ArrowRight'); expect('ar tilt right (mirrored)', (await focusIndex()).focus, 1);
-await key('ArrowLeft'); expect('ar tilt left (mirrored)', (await focusIndex()).focus, 2);
+await key(']'); await key(']');
+await key('ArrowRight'); expect('ar tilt right (mirrored)', (await state()).focus, 1);
+await key('ArrowLeft'); expect('ar tilt left (mirrored)', (await state()).focus, 2);
+expect('ar pill title', await text('.H2PillTitle'), 'آبل كاربلاي');
 
-// Touch on a dock tile (Settings = item 4)
+// No phone: pill hidden, start on Navigation, knob stops at the car row
 await page.goto(base + '?lang=en_US&phone=none', { waitUntil: 'load' });
-expect('no phone start on Navigation', (await focusIndex()).focus, 1);
-const box = await (await page.$('.H2Dock4')).boundingBox();
-await page.mouse.click(box.x + box.width / 2, box.y + box.height / 2);
-await new Promise(r => setTimeout(r, 100));
-expect('touch settings', (await focusIndex()).log, 'selectCallback icon=set');
-await new Promise(r => setTimeout(r, 1100));
-expect('no phone: card hidden', await page.evaluate(() => getComputedStyle(document.querySelector('.H2Hero')).display), 'none');
-for (let i = 0; i < 4; i++) await key('[');
-expect('no phone: knob cannot reach hidden card', (await focusIndex()).focus, 1);
-await key('ArrowUp'); expect('no phone: up from dock -> status bar', (await focusIndex()).log, 'giveFocusUp (focus moves to the status bar)');
+expect('no phone: start on Navigation', (await state()).focus, 4);
+expect('no phone: pill hidden', await shown('.H2Pill'), false);
+for (let i = 0; i < 9; i++) await key('[');
+expect('no phone: knob stops at car row', (await state()).focus, 1);
+await key('ArrowUp'); expect('no phone: up from car row -> status bar', (await state()).log, 'giveFocusUp (focus moves to the status bar)');
 
-// Phone connects while on screen
-await page.evaluate(() => { framework.common._remoteUiBtns.system = { appName: 'carplay' }; });
-await new Promise(r => setTimeout(r, 1200));
-expect('live phone change', await page.evaluate(() => document.querySelector('.H2HeroTitle').textContent), 'Apple CarPlay');
-expect('card appears when phone connects', await page.evaluate(() => getComputedStyle(document.querySelector('.H2Hero')).display), 'block');
-await key('ArrowUp'); expect('phone connected: up from dock -> card', (await focusIndex()).focus, 0);
-await page.evaluate(() => { framework.common._remoteUiBtns.system = null; });
-await new Promise(r => setTimeout(r, 1200));
-expect('phone unplugged while card focused -> focus moves to dock', (await focusIndex()).focus, 1);
-await new Promise(r => setTimeout(r, 1200));
+// Touch
+async function tap(sel) {
+  const b = await (await page.$(sel)).boundingBox();
+  await page.mouse.click(b.x + b.width / 2, b.y + b.height / 2);
+  await wait(100);
+}
+await tap('.H2Row1'); expect('touch car row -> Applications', (await state()).log, 'selectCallback icon=app');
+await wait(1100);
+await tap('.H2Row2'); expect('touch phone row -> Communication', (await state()).log, 'selectCallback icon=com');
+await wait(1100);
+await tap('.H2Dock4'); expect('touch Settings tile', (await state()).log, 'selectCallback icon=set');
+await wait(1100);
+
+// Status card, Arabic, everything showing
+await page.goto(base + '?lang=ar_SA&phone=androidauto&' + BUSY, { waitUntil: 'load' });
+expect('ar car title (2 warnings)', await text('.H2Row1 .H2RowTitle'), 'تحذيران في السيارة');
+expect('ar car sub (service due too)', await text('.H2Row1 .H2RowSub'), 'والصيانة مستحقة');
+expect('ar phone title = Bluetooth name', await text('.H2Row2 .H2RowTitle'), 'جوال حسين');
+expect('ar phone sub (missed + texts)', await text('.H2Row2 .H2RowSub'), '٣ مكالمات فائتة · رسالة جديدة');
+expect('ar phone row badge', await text('.H2Row2 .H2RowBadge'), '٤');
+expect('ar Phone tile badge', await text('.H2Dock3 .H2DockBadge'), '٤');
+expect('ar Apps tile flags the car', await text('.H2Dock5 .H2DockBadge'), '!');
+expect('ar media title', await text('.H2Row3 .H2RowTitle'), 'راديو FM');
+expect('ar media playing', await text('.H2Row3 .H2RowSub'), 'يعمل الآن');
+expect('ar playing bars shown', await shown('.H2Row3 .H2Eq'), true);
+expect('ar parked', await text('.H2DriveText'), 'متوقفة');
+
+// Live changes, the way the car sends them
+await live({ call: true });
+expect('call: phone row', await text('.H2Row2 .H2RowTitle'), 'مكالمة جارية');
+expect('call: phone row sub', await text('.H2Row2 .H2RowSub'), 'جوال حسين · اضغط للعودة');
+expect('call: green dot on Phone tile', await text('.H2Dock3 .H2DockBadge'), '●');
+expect('call: stock handler still runs', await page.evaluate(() => sysApp._handled > 0), true);
+await live({ call: false });
+expect('call ended', await text('.H2Row2 .H2RowTitle'), 'جوال حسين');
+await live({ driving: true });
+expect('driving', await text('.H2DriveText'), 'أثناء القيادة');
+await live({ warnings: 0, service: false });
+expect('all clear', await text('.H2Row1 .H2RowTitle'), 'السيارة سليمة');
+expect('all clear: no Apps flag', await shown('.H2Dock5 .H2DockBadge'), false);
+await live({ service: true });
+expect('service only', await text('.H2Row1 .H2RowTitle'), 'الصيانة مستحقة');
+await live({ warnings: 11 });
+expect('11 warnings wording', await text('.H2Row1 .H2RowTitle'), '١١ تحذيرًا في السيارة');
+await live({ warnings: 1, service: false });
+expect('1 warning wording', await text('.H2Row1 .H2RowTitle'), 'تحذير واحد في السيارة');
+expect('1 warning sub', await text('.H2Row1 .H2RowSub'), 'لا صيانة مستحقة');
+await live({ source: 'BTAudio', playing: false });
+expect('paused source', [await text('.H2Row3 .H2RowTitle'), await text('.H2Row3 .H2RowSub')], ['صوت بلوتوث', 'متوقف مؤقتًا']);
+expect('paused: no bars', await shown('.H2Row3 .H2Eq'), false);
+await page.evaluate(() => { sendMsg('StatusUpdateAudioSource', { statusAudio: { audioSource: 'BTAudio', audioActive: 'Off' } });
+                            sendMsg('StatusUpdateAudioSource', { statusAudio: { audioSource: 'USB_A', audioActive: 'Pause' } }); });
+await wait(1200);
+expect('switch with Off first', await text('.H2Row3 .H2RowTitle'), 'USB');
+await live({ source: 'AndroidAuto', playing: true });
+expect('Android Auto audio', [await text('.H2Row3 .H2RowTitle'), await text('.H2Row3 .H2RowSub')], ['أندرويد أوتو', 'يعمل الآن']);
+await live({ missed: 0, texts: 0 });
+expect('no news', await text('.H2Row2 .H2RowSub'), 'لا مكالمات أو رسائل جديدة');
+expect('no news: no badge', await shown('.H2Dock3 .H2DockBadge'), false);
+await live({ bt: '' });
+expect('no Bluetooth phone', await text('.H2Row2 .H2RowTitle'), 'لا يوجد جوال بلوتوث');
+
+// Phone unplugged while the pill has focus
+await page.evaluate(() => { ctrl._moveTo(0); framework.common._remoteUiBtns.system = null; });
+await wait(1200);
+expect('pill gone -> focus moves to Navigation', (await state()).focus, 4);
+expect('pill hidden after unplug', await shown('.H2Pill'), false);
+await page.evaluate(() => { framework.common._remoteUiBtns.system = { appName: 'androidauto' }; });
+await wait(1200);
+expect('pill back when phone connects', await shown('.H2Pill'), true);
+
+// No audio, English wording
+await page.goto(base + '?lang=en_US&phone=none&missed=3&texts=12&bt=Pixel', { waitUntil: 'load' });
+expect('en no audio', await text('.H2Row3 .H2RowTitle'), 'Audio off');
+expect('en counts', await text('.H2Row2 .H2RowSub'), '3 missed calls · 12 new messages');
+expect('en car ok', await text('.H2Row1 .H2RowTitle'), 'Car is OK');
+
+// Rebuilding the home screen does not wrap the system app's handlers twice
+await page.evaluate(() => {
+  ctrl.cleanUp();
+  ctrl.divElt.parentNode.removeChild(ctrl.divElt);
+  window.ctrl = new MainMenuCtrl('system', document.getElementById('tmpl'), 'MainMenuCtrl1', { selectCallback: function() {} });
+  sysApp._handled = 0;
+  setStatus({ call: true });
+});
+await wait(1200);
+expect('rebuilt: handler runs once', await page.evaluate(() => sysApp._handled), 1);
+expect('rebuilt: call shown', await text('.H2Row2 .H2RowTitle'), 'Call in progress');
+
 expect('font check line off by default', await page.evaluate(() => document.querySelector('.H2FontCheck') === null), true);
 
 // Lost focus and back
 await page.evaluate(() => ctrl.handleControllerEvent('lostFocus'));
-expect('lostFocus clears highlight', (await focusIndex()).highlighted, -1);
+expect('lostFocus clears highlight', (await state()).highlighted, -1);
 await page.evaluate(() => ctrl.handleControllerEvent('acceptFocusFromTop'));
-expect('focus restored', (await focusIndex()).highlighted >= 0, true);
+expect('focus restored', (await state()).highlighted >= 0, true);
 
-// cleanUp leaves no timers running
 await page.evaluate(() => ctrl.cleanUp());
 console.log(fails ? fails + ' FAILED' : 'ALL CHECKS PASSED');
 await browser.close();
+if (fails) process.exit(1);

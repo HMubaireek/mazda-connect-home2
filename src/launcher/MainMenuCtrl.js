@@ -1,6 +1,8 @@
 /*
  * Home 2.0 "Ember Glass" launcher for Mazda Connect (CMU 150, firmware 74.x)
- * Version @VERSION@ — see README.md
+ * Version @VERSION@, "Ember Glance" layout (live car, phone and media status) — see README.md
+ *
+ * The installer (run.sh) recognises an installed launcher by the first line above: keep it.
  *
  * Drop-in replacement for /jci/gui/apps/system/controls/MainMenu/js/MainMenuCtrl.js.
  * It keeps the public API the stock system app uses (constructor, handleControllerEvent,
@@ -18,8 +20,8 @@ log.addSrcFile("MainMenuCtrl.js", "system");
 var HOME2_CONFIG = {
     // Use Arabic-Indic digits (٠١٢٣) when the system language is Arabic.
     arabicDigits : true,
-    // How often to check whether a phone is connected (ms).
-    phonePollMs : 1000,
+    // How often to re-read the phone and car status from the system app (ms).
+    statusPollMs : 1000,
     // How often to refresh the clock (ms).
     clockMs : 5000,
     // Show a small line saying whether the Tajawal font loaded (for testing on the car).
@@ -29,16 +31,41 @@ var HOME2_CONFIG = {
 // Font family names, as written inside the installed .ttf files (see tools/rename_fonts.py).
 var HOME2_FONTS = ["Home2 Tajawal Bold", "Home2 Tajawal Medium", "Home2 Tajawal Light"];
 
+// Status the system app receives as messages but does not keep (see _hookSystemMessages).
+// Kept outside the control so it survives the home screen being rebuilt.
+var HOME2_LIVE = { call : null, audioSource : null, audioPlaying : false, audioPending : null };
+
 /* ---------- static text ---------- */
 var HOME2_TEXT = {
     ar : {
         labels : { nav : "الملاحة", ent : "الوسائط", com : "الهاتف", set : "الإعدادات", app : "التطبيقات" },
-        connect : "وصّل جوالك",
-        connectSub : "عبر USB لتشغيل أندرويد أوتو أو كاربلاي",
         androidauto : "أندرويد أوتو",
         carplay : "آبل كاربلاي",
-        open : "اضغط للفتح",
-        connected : "متصل",
+        phoneSub : "متصل · اضغط للفتح",
+        parked : "متوقفة",
+        driving : "أثناء القيادة",
+        carOk : "السيارة سليمة",
+        carOkSub : "لا تحذيرات · لا صيانة مستحقة",
+        warnings : ["تحذير واحد في السيارة", "تحذيران في السيارة", "تحذيرات في السيارة", "تحذيرًا في السيارة"],
+        serviceDue : "الصيانة مستحقة",
+        serviceAlso : "والصيانة مستحقة",
+        noService : "لا صيانة مستحقة",
+        serviceOnlySub : "لا تحذيرات · اضغط للتفاصيل",
+        call : "مكالمة جارية",
+        callSub : "اضغط للعودة",
+        phoneFallback : "الجوال",
+        noBt : "لا يوجد جوال بلوتوث",
+        noNews : "لا مكالمات أو رسائل جديدة",
+        missed : ["مكالمة فائتة", "مكالمتان فائتتان", "مكالمات فائتة", "مكالمة فائتة"],
+        texts : ["رسالة جديدة", "رسالتان جديدتان", "رسائل جديدة", "رسالة جديدة"],
+        sources : { FMRadio : "راديو FM", AMRadio : "راديو AM", DAB : "راديو DAB", USB_A : "USB", USB_B : "USB",
+                    BTAudio : "صوت بلوتوث", AndroidAuto : "أندرويد أوتو", CarPlay : "كاربلاي", AuxIn : "AUX", CD : "CD" },
+        sourceOther : "الوسائط",
+        playing : "يعمل الآن",
+        paused : "متوقف مؤقتًا",
+        audioOff : "الصوت متوقف",
+        audioOffSub : "اضغط لاختيار مصدر",
+        sep : " · ",
         am : "ص",
         pm : "م",
         days : ["الأحد", "الاثنين", "الثلاثاء", "الأربعاء", "الخميس", "الجمعة", "السبت"],
@@ -49,12 +76,33 @@ var HOME2_TEXT = {
     },
     en : {
         labels : { nav : "Navigation", ent : "Media", com : "Phone", set : "Settings", app : "Apps" },
-        connect : "Connect your phone",
-        connectSub : "USB · Android Auto or CarPlay",
         androidauto : "Android Auto",
         carplay : "Apple CarPlay",
-        open : "Tap to open",
-        connected : "Connected",
+        phoneSub : "Connected · tap to open",
+        parked : "Parked",
+        driving : "Driving",
+        carOk : "Car is OK",
+        carOkSub : "No warnings · no service due",
+        warnings : ["1 warning", "2 warnings", "warnings", "warnings"],
+        serviceDue : "Service due",
+        serviceAlso : "and service is due",
+        noService : "No service due",
+        serviceOnlySub : "No warnings · tap for details",
+        call : "Call in progress",
+        callSub : "tap to return",
+        phoneFallback : "Phone",
+        noBt : "No Bluetooth phone",
+        noNews : "No new calls or messages",
+        missed : ["1 missed call", "2 missed calls", "missed calls", "missed calls"],
+        texts : ["1 new message", "2 new messages", "new messages", "new messages"],
+        sources : { FMRadio : "FM radio", AMRadio : "AM radio", DAB : "DAB radio", USB_A : "USB", USB_B : "USB",
+                    BTAudio : "Bluetooth audio", AndroidAuto : "Android Auto", CarPlay : "CarPlay", AuxIn : "AUX", CD : "CD" },
+        sourceOther : "Media",
+        playing : "Playing",
+        paused : "Paused",
+        audioOff : "Audio off",
+        audioOffSub : "Tap to choose a source",
+        sep : " · ",
         am : "AM",
         pm : "PM",
         days : ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"],
@@ -64,6 +112,10 @@ var HOME2_TEXT = {
         dateSep : ", "
     }
 };
+
+// Media row chip for each audio source the system app reports.
+var HOME2_SOURCE_CHIP = { FMRadio : "radio", AMRadio : "radio", DAB : "radio", USB_A : "usb", USB_B : "usb",
+                          BTAudio : "btaudio", AndroidAuto : "aa", CarPlay : "cp" };
 
 /* ---------- constructor ---------- */
 function MainMenuCtrl(uiaId, parentDiv, controlId, properties)
@@ -85,17 +137,23 @@ function MainMenuCtrl(uiaId, parentDiv, controlId, properties)
         this.properties[i] = properties[i];
     }
 
-    // Item 0 is the phone card; 1-5 are the dock tiles.
+    // Focus order: Android Auto / CarPlay pill, the three status rows, then the dock.
     // "key" is the icon code the stock system app expects in the select callback.
     this._items =
     [
         { key : "phone", nameId : null },
+        { key : "app",   nameId : null, row : "car" },     // opens Applications (warnings, maintenance)
+        { key : "com",   nameId : null, row : "phone" },   // opens Communication (active call, call history, SMS)
+        { key : "ent",   nameId : null, row : "media" },   // opens Entertainment
         { key : "nav",   nameId : "NavigationTitle" },
         { key : "ent",   nameId : "Entertainment" },
         { key : "com",   nameId : "Communication" },
         { key : "set",   nameId : "Settings" },
         { key : "app",   nameId : "Applications" }
     ];
+    this._firstRow = 1;
+    this._lastRow = 3;
+    this._firstDock = 4;
 
     this._lang = this._detectLanguage();
     this._isArabic = (this._lang === "ar_SA");
@@ -103,6 +161,8 @@ function MainMenuCtrl(uiaId, parentDiv, controlId, properties)
     this._text = this._isArabic ? HOME2_TEXT.ar : HOME2_TEXT.en;
 
     this._phone = "none";               // "none" | "androidauto" | "carplay"
+    this._status = null;                // last status read from the system app
+    this._statusKey = "";               // to redraw only when something changed
     this._focus = 0;                    // index of the item with logical focus
     this._highlighted = -1;             // index visibly highlighted, -1 for none
     this._prvFocus = -1;                // focus remembered while another control has focus
@@ -115,8 +175,7 @@ function MainMenuCtrl(uiaId, parentDiv, controlId, properties)
     this._fastTiltStepIntervalId = null;
     this._fastTiltDirection = 0;
     this._clockTimerId = null;
-    this._phoneTimerId = null;
-    this._nudgeTimerId = null;
+    this._statusTimerId = null;
 
     this.createStructure();
     parentDiv.appendChild(this.divElt);
@@ -169,6 +228,14 @@ MainMenuCtrl.prototype._digits = function(str)
     return out;
 };
 
+// Count phrases: forms = [one, two, 3-10, 11+]. Arabic needs all four; English uses "<n> <word>" from 3 up.
+MainMenuCtrl.prototype._count = function(n, forms)
+{
+    if (n === 1) { return this._digits(forms[0]); }
+    if (n === 2) { return this._digits(forms[1]); }
+    return this._digits(String(n)) + " " + (n <= 10 ? forms[2] : forms[3]);
+};
+
 MainMenuCtrl.prototype._el = function(tag, className, parent, text)
 {
     var e = document.createElement(tag);
@@ -189,7 +256,7 @@ MainMenuCtrl.prototype.createStructure = function()
 {
     this.divElt = document.createElement("div");
     this.divElt.id = this.controlId;
-    this.divElt.className = "MainMenuCtrl H2Root " + (this._isRtl ? "H2Rtl" : "H2Ltr");
+    this.divElt.className = "MainMenuCtrl H2Root H2NoPhone " + (this._isRtl ? "H2Rtl" : "H2Ltr");
 
     // Clock + dates
     var clock = this._el("div", "H2Clock", this.divElt);
@@ -199,23 +266,49 @@ MainMenuCtrl.prototype.createStructure = function()
     this._dateEl = this._el("div", "H2Date", clock, "");
     this._hijriEl = this._el("div", "H2Hijri", clock, "");
 
-    // Phone card
-    var hero = this._el("div", "H2Card H2Hero H2PhoneNone", this.divElt);
-    this._el("div", "H2HeroChip", hero);
-    this._el("div", "H2HeroArrow", hero);
-    this._heroBadge = this._el("div", "H2HeroBadge", hero, this._text.connected);
-    this._heroTitle = this._el("div", "H2HeroTitle", hero, this._text.connect);
-    this._heroSub = this._el("div", "H2HeroSub", hero, this._text.connectSub);
-    this._items[0].div = hero;
+    // Driving / parked chip and the Android Auto / CarPlay pill, side by side under the date
+    var line = this._el("div", "H2StatusLine", this.divElt);
+    this._driveEl = this._el("div", "H2Drive H2Parked", line);
+    this._el("span", "H2DriveIcon", this._driveEl);
+    this._driveText = this._el("span", "H2DriveText", this._driveEl, this._text.parked);
+    var pill = this._el("div", "H2Card H2Pill", line);
+    this._pillChip = this._el("div", "H2PillChip", pill);
+    this._pillTitle = this._el("div", "H2PillTitle", pill, "");
+    this._el("div", "H2PillSub", pill, this._text.phoneSub);
+    this._items[0].div = pill;
+
+    // Status card: car, phone, media
+    var card = this._el("div", "H2Glance", this.divElt);
+    this._el("div", "H2Rule H2Rule1", card);
+    this._el("div", "H2Rule H2Rule2", card);
+    for (var r = this._firstRow; r <= this._lastRow; r++)
+    {
+        var item = this._items[r];
+        var row = this._el("div", "H2Card H2Row H2Row" + r, card);
+        item.chip = this._el("div", "H2RowChip", row);
+        item.title = this._el("div", "H2RowTitle", row, "");
+        item.sub = this._el("div", "H2RowSub", row, "");
+        item.badge = this._el("div", "H2Badge H2RowBadge", row, "");
+        if (item.row === "media")
+        {
+            var eq = this._el("div", "H2Eq", row);
+            this._el("div", "H2EqBar H2EqBar1", eq);
+            this._el("div", "H2EqBar H2EqBar2", eq);
+            this._el("div", "H2EqBar H2EqBar3", eq);
+            item.eq = eq;
+        }
+        item.div = row;
+    }
 
     // Dock tiles
-    for (var i = 1; i < this._items.length; i++)
+    for (var i = this._firstDock; i < this._items.length; i++)
     {
-        var item = this._items[i];
-        var tile = this._el("div", "H2Card H2Dock H2Dock" + i, this.divElt);
-        this._el("div", "H2DockChip H2Chip-" + item.key, tile);
-        this._el("div", "H2DockLabel", tile, this._label(item));
-        item.div = tile;
+        var d = this._items[i];
+        var tile = this._el("div", "H2Card H2Dock H2Dock" + (i - this._firstDock + 1), this.divElt);
+        this._el("div", "H2DockChip H2Chip-" + d.key, tile);
+        this._el("div", "H2DockLabel", tile, this._label(d));
+        d.badge = this._el("div", "H2Badge H2DockBadge", tile, "");
+        d.div = tile;
     }
 
     // Kept for API compatibility: the system app writes the CarPlay/Android Auto
@@ -227,7 +320,7 @@ MainMenuCtrl.prototype.createStructure = function()
         this._fontCheckEl = this._el("div", "H2FontCheck", this.divElt, "");
     }
 
-    this._applyPhoneState();
+    this._applyStatus(this._emptyStatus());
 };
 
 // Reports whether each Home 2.0 font is available, by comparing the width of a sample
@@ -268,11 +361,12 @@ MainMenuCtrl.prototype.init = function()
     this._updateClock();
     this._clockTimerId = setInterval(this._updateClock.bind(this), HOME2_CONFIG.clockMs);
 
-    this._pollPhone();
-    this._phoneTimerId = setInterval(this._pollPhone.bind(this), HOME2_CONFIG.phonePollMs);
+    this._hookSystemMessages();
+    this._pollStatus();
+    this._statusTimerId = setInterval(this._pollStatus.bind(this), HOME2_CONFIG.statusPollMs);
 
-    // Start on the phone card when a phone is connected, otherwise on Navigation.
-    this._setFocus(this._phone === "none" ? 1 : 0);
+    // Start on the Android Auto / CarPlay pill when a phone is connected, otherwise on Navigation.
+    this._setFocus(this._phone === "none" ? this._firstDock : 0);
 
     this._checkFonts();
     if (this._fontCheckEl)
@@ -354,8 +448,106 @@ MainMenuCtrl.prototype._updateClock = function()
     }
 };
 
-/* ---------- phone state ---------- */
-MainMenuCtrl.prototype._readPhoneState = function()
+/* ---------- status from the system app ---------- */
+MainMenuCtrl.prototype._sysApp = function()
+{
+    try
+    {
+        return framework._appInstances ? framework._appInstances[this.uiaId] : null;
+    }
+    catch (e) {}
+    return null;
+};
+
+MainMenuCtrl.prototype._findItem = function(list, mmuiEvent)
+{
+    if (!list || !list.items) { return null; }
+    for (var i = 0; i < list.items.length; i++)
+    {
+        var it = list.items[i];
+        if (it && it.appData && it.appData.mmuiEvent === mmuiEvent) { return it; }
+    }
+    return null;
+};
+
+MainMenuCtrl.prototype._labelCount = function(item)
+{
+    var n = item ? parseInt(item.label1, 10) : 0;
+    return isNaN(n) ? 0 : n;
+};
+
+// Two status messages are not kept by the system app in a form we can read back:
+// on firmware 74 its active-call handler never sets the Active Call item (its check can
+// never be true), and the audio message only leaves a "now playing" icon while playing.
+// Observe both messages on their way to the system app's own handlers, which still run.
+MainMenuCtrl.prototype._hookSystemMessages = function()
+{
+    var app = this._sysApp();
+    if (!app || !app._messageTable || app._messageTable._home2Hooked) { return; }
+
+    function observe(msgId, record)
+    {
+        var original = app._messageTable[msgId];
+        app._messageTable[msgId] = function(msg)
+        {
+            try { record(msg && msg.params ? msg.params.payload : null); } catch (e) {}
+            if (typeof original === "function") { return original(msg); }
+        };
+    }
+
+    observe("StatusPhoneCall", function(p)
+    {
+        if (p && p.phoneCallStatus)
+        {
+            HOME2_LIVE.call = (p.phoneCallStatus === "ActiveCall" || p.phoneCallStatus === "Connecting");
+        }
+    });
+    observe("StatusUpdateAudioSource", function(p)
+    {
+        if (p && p.statusAudio && p.statusAudio.audioSource)
+        {
+            var src = p.statusAudio.audioSource;
+            if (src === "CarPlayWifi") { src = "CarPlay"; }
+            var playing = (p.statusAudio.audioActive === "Play");
+            var live = HOME2_LIVE;
+            if (playing)
+            {
+                live.audioSource = src;
+                live.audioPlaying = true;
+                live.audioPending = null;
+            }
+            else if (src === live.audioSource)
+            {
+                // The current source stopped. If another source was chosen meanwhile, it is current now.
+                live.audioPlaying = false;
+                if (live.audioPending)
+                {
+                    live.audioSource = live.audioPending;
+                    live.audioPending = null;
+                }
+            }
+            else if (!live.audioPlaying)
+            {
+                live.audioSource = src;
+            }
+            else
+            {
+                // Messages can arrive in either order when switching sources: this one is either the
+                // new source (paused) or an old one switching off. Decide when the playing source stops.
+                live.audioPending = src;
+            }
+        }
+    });
+    app._messageTable._home2Hooked = true;
+};
+
+MainMenuCtrl.prototype._emptyStatus = function()
+{
+    return { phone : "none", warnings : 0, service : false, missed : 0, texts : 0, call : false,
+             btName : "", audioSource : "", audioPlaying : false, driving : false };
+};
+
+MainMenuCtrl.prototype._readPhoneState = function(app)
 {
     var state = "none";
 
@@ -372,12 +564,11 @@ MainMenuCtrl.prototype._readPhoneState = function()
     catch (e) {}
 
     // 2. Fallback: the system app's Entertainment list (filled even before the home screen exists).
-    if (state === "none")
+    if (state === "none" && app)
     {
         try
         {
-            var app = framework._appInstances ? framework._appInstances[this.uiaId] : null;
-            var list = app ? app._masterEntertainmentDataList : null;
+            var list = app._masterEntertainmentDataList;
             if (list && list.items)
             {
                 for (var i = 0; i < list.items.length; i++)
@@ -397,65 +588,195 @@ MainMenuCtrl.prototype._readPhoneState = function()
     return state;
 };
 
-MainMenuCtrl.prototype._pollPhone = function()
+// Everything the home screen shows, read from what the system app already keeps for its own menus.
+MainMenuCtrl.prototype._readStatus = function()
 {
-    var s = this._readPhoneState();
-    if (s !== this._phone)
+    var s = this._emptyStatus();
+    var app = this._sysApp();
+    s.phone = this._readPhoneState(app);
+
+    try { s.driving = (framework.common.getAtSpeedValue() === true); } catch (e) {}
+
+    if (!app) { return s; }
+    try
     {
-        this._phone = s;
-        this._applyPhoneState();
+        // Applications list: warning count on Warning Guidance; maintenance due flag.
+        s.warnings = this._labelCount(this._findItem(app._masterApplicationDataList, "SelectWarnGuide"));
+        s.service = (app._SchedMaintDueStatus === true);
+
+        // Communication list: missed calls on Call History, unread counts on SMS and Email.
+        var comm = app._communicationsDataList;
+        s.missed = this._labelCount(this._findItem(comm, "SelectCallHistory"));
+        s.texts = this._labelCount(this._findItem(comm, "SelectSms")) + this._labelCount(this._findItem(comm, "SelectEmail"));
+        var active = this._findItem(comm, "SelectActiveCall");
+        s.call = (HOME2_LIVE.call === true) || (HOME2_LIVE.call === null && active && active.appData.isVisible === true) || false;
+
+        // Entertainment list: the Bluetooth phone's name, and the source with the "now playing" icon.
+        var ent = app._masterEntertainmentDataList;
+        var bt = this._findItem(ent, "SelectBTAudio");
+        if (bt && bt.text1SubMap && typeof bt.text1SubMap.deviceName === "string")
+        {
+            s.btName = bt.text1SubMap.deviceName;
+        }
+        if (ent && ent.items)
+        {
+            for (var i = 0; i < ent.items.length; i++)
+            {
+                var it = ent.items[i];
+                if (it.image1 && String(it.image1).indexOf("NowPlaying") !== -1 && it.appData)
+                {
+                    s.audioSource = it.appData.audioSourceId === "CarPlayWifi" ? "CarPlay" : it.appData.audioSourceId;
+                    s.audioPlaying = true;
+                    break;
+                }
+            }
+        }
+    }
+    catch (e2) {}
+
+    if (HOME2_LIVE.audioSource)
+    {
+        s.audioSource = HOME2_LIVE.audioSource;
+        s.audioPlaying = HOME2_LIVE.audioPlaying;
+    }
+    return s;
+};
+
+MainMenuCtrl.prototype._pollStatus = function()
+{
+    var s = this._readStatus();
+    var key = [s.phone, s.warnings, s.service, s.missed, s.texts, s.call, s.btName, s.audioSource, s.audioPlaying, s.driving].join("|");
+    if (key !== this._statusKey)
+    {
+        this._statusKey = key;
+        this._applyStatus(s);
     }
 };
 
-MainMenuCtrl.prototype._applyPhoneState = function()
+MainMenuCtrl.prototype._setChip = function(el, base, name)
 {
-    var hero = this._items[0].div;
-    if (!hero) { return; }
+    el.className = base + " " + base + "-" + name;
+};
 
-    hero.classList.remove("H2PhoneNone");
-    hero.classList.remove("H2PhoneAA");
-    hero.classList.remove("H2PhoneCP");
+MainMenuCtrl.prototype._setClass = function(el, name, on)
+{
+    if (on) { el.classList.add(name); } else { el.classList.remove(name); }
+};
 
-    if (this._phone === "androidauto")
+MainMenuCtrl.prototype._setBadge = function(el, text, tone)
+{
+    this._setText(el, text);
+    el.className = el.className.replace(/ ?H2Badge(On|Call|Warn)/g, "");
+    if (text !== "")
     {
-        hero.classList.add("H2PhoneAA");
-        this._setText(this._heroTitle, this._text.androidauto);
-        this._setText(this._heroSub, this._text.open);
+        el.className += " H2BadgeOn" + (tone ? " H2Badge" + tone : "");
     }
-    else if (this._phone === "carplay")
-    {
-        hero.classList.add("H2PhoneCP");
-        this._setText(this._heroTitle, this._text.carplay);
-        this._setText(this._heroSub, this._text.open);
-    }
-    else
-    {
-        hero.classList.add("H2PhoneNone");
-        this._setText(this._heroTitle, this._text.connect);
-        this._setText(this._heroSub, this._text.connectSub);
-    }
+};
 
-    // No phone: the card is hidden and the clock takes the top of the screen.
-    if (this._phone === "none")
+MainMenuCtrl.prototype._applyStatus = function(s)
+{
+    var t = this._text;
+    this._status = s;
+
+    // Android Auto / CarPlay pill
+    var phoneChanged = (s.phone !== this._phone);
+    this._phone = s.phone;
+    this._setClass(this.divElt, "H2NoPhone", s.phone === "none");
+    this._setChip(this._pillChip, "H2PillChip", s.phone === "carplay" ? "cp" : "aa");
+    this._setText(this._pillTitle, s.phone === "carplay" ? t.carplay : t.androidauto);
+    if (s.phone === "none" && phoneChanged)
     {
-        this.divElt.classList.add("H2NoPhone");
+        // The pill went away: move focus off it.
         if (this._focus === 0)
         {
-            this._focus = 1;
-            if (this._highlighted === 0) { this._setHighlight(1); }
+            this._focus = this._firstDock;
+            if (this._highlighted === 0) { this._setHighlight(this._firstDock); }
         }
-        if (this._prvFocus === 0) { this._prvFocus = 1; }
+        if (this._prvFocus === 0) { this._prvFocus = this._firstDock; }
+    }
+
+    // Driving / parked
+    this._driveEl.className = "H2Drive " + (s.driving ? "H2Driving" : "H2Parked");
+    this._setText(this._driveText, s.driving ? t.driving : t.parked);
+
+    // Car row
+    var car = this._items[this._firstRow];
+    var carAlert = (s.warnings > 0 || s.service);
+    if (s.warnings > 0)
+    {
+        this._setChip(car.chip, "H2RowChip", "warn");
+        this._setText(car.title, this._count(s.warnings, t.warnings));
+        this._setText(car.sub, s.service ? t.serviceAlso : t.noService);
+    }
+    else if (s.service)
+    {
+        this._setChip(car.chip, "H2RowChip", "service");
+        this._setText(car.title, t.serviceDue);
+        this._setText(car.sub, t.serviceOnlySub);
     }
     else
     {
-        this.divElt.classList.remove("H2NoPhone");
+        this._setChip(car.chip, "H2RowChip", "ok");
+        this._setText(car.title, t.carOk);
+        this._setText(car.sub, t.carOkSub);
     }
+    this._setClass(car.div, "H2Alert", s.warnings > 0 || s.service);
+    this._setClass(car.div, "H2AlertSub", s.warnings > 0 && s.service);
+
+    // Phone row
+    var ph = this._items[this._firstRow + 1];
+    var news = s.missed + s.texts;
+    this._setClass(ph.div, "H2InCall", s.call);
+    this._setClass(ph.div, "H2HasNews", !s.call && news > 0);
+    this._setClass(ph.div, "H2Dim", !s.call && s.btName === "");
+    if (s.call)
+    {
+        this._setChip(ph.chip, "H2RowChip", "call");
+        this._setText(ph.title, t.call);
+        this._setText(ph.sub, (s.btName || t.phoneFallback) + t.sep + t.callSub);
+        this._setBadge(ph.badge, "");
+    }
+    else
+    {
+        this._setChip(ph.chip, "H2RowChip", s.btName ? "bt" : "btnone");
+        this._setText(ph.title, s.btName || t.noBt);
+        var parts = [];
+        if (s.missed > 0) { parts.push(this._count(s.missed, t.missed)); }
+        if (s.texts > 0) { parts.push(this._count(s.texts, t.texts)); }
+        this._setText(ph.sub, parts.length ? parts.join(t.sep) : t.noNews);
+        this._setBadge(ph.badge, news > 0 ? this._digits(String(news)) : "");
+    }
+
+    // Media row
+    var md = this._items[this._lastRow];
+    if (s.audioSource && s.audioSource !== "None" && s.audioSource !== "Off")
+    {
+        this._setChip(md.chip, "H2RowChip", HOME2_SOURCE_CHIP[s.audioSource] || "media");
+        this._setText(md.title, t.sources[s.audioSource] || t.sourceOther);
+        this._setText(md.sub, s.audioPlaying ? t.playing : t.paused);
+        this._setClass(md.div, "H2Dim", false);
+    }
+    else
+    {
+        this._setChip(md.chip, "H2RowChip", "off");
+        this._setText(md.title, t.audioOff);
+        this._setText(md.sub, t.audioOffSub);
+        this._setClass(md.div, "H2Dim", true);
+    }
+    this._setClass(md.div, "H2Playing", s.audioPlaying && !!s.audioSource);
+
+    // Dock badges: Phone shows the unread count (or a green dot during a call); Apps flags car alerts.
+    var comTile = this._items[this._firstDock + 2];
+    var appTile = this._items[this._firstDock + 4];
+    if (s.call) { this._setBadge(comTile.badge, "●", "Call"); }
+    else { this._setBadge(comTile.badge, news > 0 ? this._digits(String(news)) : ""); }
+    this._setBadge(appTile.badge, carAlert ? "!" : "", "Warn");
 };
 
-// The phone card can only take focus while a phone is connected.
+// The pill can only take focus while a phone is connected.
 MainMenuCtrl.prototype._firstIndex = function()
 {
-    return (this._phone === "none") ? 1 : 0;
+    return (this._phone === "none") ? this._firstRow : 0;
 };
 
 /* ---------- focus + highlight ---------- */
@@ -498,6 +819,12 @@ MainMenuCtrl.prototype._setHighlight = function(index)
     this._highlighted = index;
 };
 
+MainMenuCtrl.prototype._moveTo = function(index)
+{
+    this._setFocus(index);
+    this._setHighlight(index);
+};
+
 MainMenuCtrl.prototype._offsetFocus = function(direction)
 {
     var index = this._focus + direction;
@@ -506,8 +833,7 @@ MainMenuCtrl.prototype._offsetFocus = function(direction)
 
     if (index !== this._focus || this._highlighted !== index)
     {
-        this._setFocus(index);
-        this._setHighlight(index);
+        this._moveTo(index);
     }
 };
 
@@ -535,8 +861,7 @@ MainMenuCtrl.prototype._invokeSelectCallback = function(index)
         }.bind(this), 1000);
     }
 
-    this._setFocus(index);
-    this._setHighlight(index);
+    this._moveTo(index);
 
     if (index === 0)
     {
@@ -560,16 +885,6 @@ MainMenuCtrl.prototype._selectPhone = function()
     else if (this._phone === "carplay")
     {
         framework.sendEventToMmui(this.uiaId, "SelectCarPlay");
-    }
-    else
-    {
-        // No phone: give a short visual nudge instead of doing nothing.
-        var hero = this._items[0].div;
-        hero.classList.add("H2Nudge");
-        clearTimeout(this._nudgeTimerId);
-        this._nudgeTimerId = setTimeout(function() {
-            hero.classList.remove("H2Nudge");
-        }, 1200);
     }
 };
 
@@ -612,8 +927,7 @@ MainMenuCtrl.prototype._mouseDown = function(evt)
     document.body.addEventListener("mousemove", this._mouseMoveCallback);
     document.body.addEventListener("mouseup", this._mouseUpCallback);
 
-    this._setFocus(index);
-    this._setHighlight(index);
+    this._moveTo(index);
 };
 
 MainMenuCtrl.prototype._mouseMove = function(evt)
@@ -622,8 +936,7 @@ MainMenuCtrl.prototype._mouseMove = function(evt)
     if (index !== -1 && index !== this._pressedIndex)
     {
         this._pressedIndex = index;
-        this._setFocus(index);
-        this._setHighlight(index);
+        this._moveTo(index);
     }
 };
 
@@ -647,7 +960,7 @@ MainMenuCtrl.prototype._startTiltHoldTimer = function()
     this._cancelFastTilt();
     var f = this._focus;
     var d = this._tiltDirection(this._fastTiltDirection);
-    if ((d === -1 && f > 0) || (d === 1 && f < this._items.length - 1))
+    if ((d === -1 && f > this._firstIndex()) || (d === 1 && f < this._items.length - 1))
     {
         this._tiltHoldTimerId = setTimeout(this._startFastTiltInterval.bind(this), this.properties.tiltHoldTime);
     }
@@ -677,6 +990,7 @@ MainMenuCtrl.prototype._fastTiltStep = function()
 MainMenuCtrl.prototype.handleControllerEvent = function(eventId)
 {
     var response = "consumed";
+    var f = this._focus;
     switch (eventId)
     {
         case "lostFocus":
@@ -741,11 +1055,11 @@ MainMenuCtrl.prototype.handleControllerEvent = function(eventId)
             break;
 
         case "downStart":
-            // From the phone card, down moves into the dock.
-            if (this._allowInput && this._focus === 0)
+            // Pill -> car row, down the card, last row -> the dock.
+            if (this._allowInput && f < this._firstDock)
             {
                 this._lastControllerStartEvent = "";
-                this._offsetFocus(1);
+                this._moveTo(f + 1);
             }
             else
             {
@@ -773,15 +1087,19 @@ MainMenuCtrl.prototype.handleControllerEvent = function(eventId)
             if (this._allowInput)
             {
                 this._lastControllerStartEvent = "";
-                if (this._focus !== 0 && this._phone !== "none")
+                if (f >= this._firstDock)
                 {
-                    // From the dock, up moves to the phone card (only shown when a phone is connected).
-                    this._setFocus(0);
-                    this._setHighlight(0);
+                    // From the dock, up moves into the status card (bottom row).
+                    this._moveTo(this._lastRow);
+                }
+                else if (f > this._firstIndex())
+                {
+                    // Up the card; from the car row to the pill when a phone is connected.
+                    this._moveTo(f - 1);
                 }
                 else
                 {
-                    // From the top row, up goes to the status bar (stock behaviour).
+                    // From the top item, up goes to the status bar (stock behaviour).
                     response = "giveFocusUp";
                 }
             }
@@ -814,7 +1132,7 @@ MainMenuCtrl.prototype.getRemoteUiButtonStatus = function(enabled)
         this._focus = this._prvFocus;
         this._setHighlight(this._focus);
     }
-    this._pollPhone();
+    this._pollStatus();
 };
 
 MainMenuCtrl.prototype.startTransitionFrom = function()
@@ -856,8 +1174,7 @@ MainMenuCtrl.prototype.cleanUp = function()
     document.body.removeEventListener("mouseup", this._mouseUpCallback);
 
     clearInterval(this._clockTimerId);
-    clearInterval(this._phoneTimerId);
-    clearTimeout(this._nudgeTimerId);
+    clearInterval(this._statusTimerId);
     clearTimeout(this._fontCheckTimerId);
     if (this._allowInputTimerId)
     {

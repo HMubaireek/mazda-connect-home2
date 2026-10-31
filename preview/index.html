@@ -9,6 +9,9 @@
     lang  : ar_SA | en_US | fr_FR ...
     phone : none | androidauto | carplay
     fmt   : 12hrs | 24hrs
+    warnings=N  service=1  missed=N  texts=N  call=1  bt=<phone name>  source=FMRadio|USB_A|BTAudio|AndroidAuto|CarPlay|none
+    playing=0|1  driving=1
+  Live changes from the console: setStatus({warnings: 1, call: true, driving: true, ...})
   Keys: ← → tilt, [ ] rotate, ↑ ↓ up/down, Enter press.  Mouse = touch.
 -->
 <style>
@@ -39,6 +42,58 @@
   // Like the car: the OS clock may be wrong; the framework caches the real time. ?cached=<ms> overrides.
   var CACHED = q.get("cached") ? +q.get("cached") : Date.now();
   function say(t) { document.getElementById("log").textContent = t; }
+  function num(k, d) { return q.has(k) ? +q.get(k) : d; }
+
+  // Stand-in for Mazda's system app: the lists and flags the launcher reads, and the message
+  // table it observes. Shapes match /jci/gui/apps/system/js/systemApp.js on firmware 74.
+  var sysApp = {
+    _SchedMaintDueStatus: false,
+    _masterApplicationDataList: { items: [
+      { appData: { mmuiEvent: "SelectEcoEnergy" }, label1: "" },
+      { appData: { mmuiEvent: "SelectWarnGuide" }, label1: "" },
+      { appData: { mmuiEvent: "SelectSchedMaint" }, label1: "" } ] },
+    _communicationsDataList: { items: [
+      { appData: { mmuiEvent: "SelectActiveCall", isVisible: false } },
+      { appData: { mmuiEvent: "SelectCallHistory" }, label1: "" },
+      { appData: { mmuiEvent: "SelectSms" }, label1: "" },
+      { appData: { mmuiEvent: "SelectEmail" }, label1: "" } ] },
+    _masterEntertainmentDataList: { items: [
+      { appData: { mmuiEvent: "SelectRadioFM", audioSourceId: "FMRadio" }, image1: "" },
+      { appData: { mmuiEvent: "SelectBTAudio", audioSourceId: "BTAudio" }, text1Id: "Bluetooth", text1SubMap: null, image1: "" },
+      { appData: { mmuiEvent: "SelectAndroidAuto", audioSourceId: "AndroidAuto" }, text1Id: "USB1AndroidAuto", disabled: true, image1: "" },
+      { appData: { mmuiEvent: "SelectCarPlay", audioSourceId: "CarPlay" }, text1Id: "USB1CarPlay", disabled: true, image1: "" },
+      { appData: { mmuiEvent: "SelectUSBA", audioSourceId: "USB_A" }, image1: "" } ] },
+    _handled: 0,     // how many messages reached the system app's own handlers
+    _messageTable: {
+      StatusPhoneCall: function() { sysApp._handled++; },
+      StatusUpdateAudioSource: function() { sysApp._handled++; }
+    }
+  };
+  var atSpeed = false;
+  var curSource = "";
+  function item(list, ev) { return list.items.filter(function(i) { return i.appData.mmuiEvent === ev; })[0]; }
+  function sendMsg(msgId, payload) { sysApp._messageTable[msgId]({ msgId: msgId, params: { payload: payload } }); }
+  // Apply status the way the car delivers it: list labels for counts, messages for call and audio.
+  function setStatus(o) {
+    var a = sysApp;
+    if ("warnings" in o) { item(a._masterApplicationDataList, "SelectWarnGuide").label1 = o.warnings ? String(o.warnings) : ""; }
+    if ("service" in o) { a._SchedMaintDueStatus = !!o.service; }
+    if ("missed" in o) { item(a._communicationsDataList, "SelectCallHistory").label1 = o.missed ? String(o.missed) : ""; }
+    if ("texts" in o) { item(a._communicationsDataList, "SelectSms").label1 = o.texts ? String(o.texts) : ""; }
+    if ("bt" in o) { item(a._masterEntertainmentDataList, "SelectBTAudio").text1SubMap = o.bt ? { deviceName: o.bt } : null; }
+    if ("driving" in o) { atSpeed = !!o.driving; }
+    if ("call" in o) { sendMsg("StatusPhoneCall", { phoneCallStatus: o.call ? "ActiveCall" : "Idle" }); }
+    if ("source" in o) {
+      var playing = ("playing" in o) ? !!o.playing : true;
+      a._masterEntertainmentDataList.items.forEach(function(i) {
+        i.image1 = (playing && i.appData.audioSourceId === o.source) ? "common/images/icons/IcnListEntNowPlaying_En.png" : "";
+      });
+      // Like the car: the new source's message first, then "Off" for the old one (either order happens).
+      if (o.source !== "none") { sendMsg("StatusUpdateAudioSource", { statusAudio: { audioSource: o.source, audioActive: playing ? "Play" : "Pause" } }); }
+      if (curSource && curSource !== o.source) { sendMsg("StatusUpdateAudioSource", { statusAudio: { audioSource: curSource, audioActive: "Off" } }); }
+      curSource = o.source === "none" ? "" : o.source;
+    }
+  }
 
   window.log = { addSrcFile: function(){}, debug: function(){}, info: function(){}, warn: function(){}, error: function(){} };
   window.framework = {
@@ -50,10 +105,11 @@
     common: {
       _remoteUiBtns: { system: PHONE === "none" ? null : { appName: PHONE } },
       getCurrentTime: function() { return CACHED; },
+      getAtSpeedValue: function() { return atSpeed; },
       beep: function() {},
       stealFocus: function() {}
     },
-    _appInstances: {},
+    _appInstances: { system: sysApp },
     sendEventToMmui: function(uiaId, ev) { say("sendEventToMmui(" + uiaId + ", " + ev + ")"); },
     registerCtrlLoaded: function() {}
   };
@@ -67,6 +123,11 @@
   var ctrl = new MainMenuCtrl("system", document.getElementById("tmpl"), "MainMenuCtrl1", {
     selectCallback: function(c, appData, p) { say("selectCallback icon=" + p.icon); }
   });
+  setStatus({ warnings: num("warnings", 0), service: q.get("service") === "1", missed: num("missed", 0), texts: num("texts", 0),
+              bt: q.has("bt") ? q.get("bt") : "", driving: q.get("driving") === "1" });
+  if (q.get("call") === "1") { setStatus({ call: true }); }
+  if (q.has("source")) { setStatus({ source: q.get("source"), playing: q.get("playing") !== "0" }); }
+  ctrl._pollStatus();
   ctrl.handleControllerEvent("acceptFocusInit");
   if (FOCUS !== null) { ctrl._setFocus(+FOCUS); ctrl._setHighlight(+FOCUS); }
   ctrl.endTransitionTo();

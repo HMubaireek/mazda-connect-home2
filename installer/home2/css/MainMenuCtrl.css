@@ -1,5 +1,5 @@
 /*
- * Home 2.0 "Ember Glass" launcher — left-to-right layout.
+ * Home 2.0 "Ember Glance" launcher — left-to-right layout.
  * The framework loads MainMenuCtrl_rtl.css on top of this file for Arabic.
  * Area: 800 x 416 (the space under Mazda's 64px status bar).
  * Opera Presto: -o- prefixes, no flexbox.
@@ -29,10 +29,10 @@
 
 .H2TimeLine {
   font-family: "Home2 Tajawal Light", "Home2 Tajawal Bold", "Tipperary", Arial, sans-serif;
-  font-size: 104px;
+  font-size: 96px;
   font-weight: 300;
-  line-height: 112px;
-  letter-spacing: -3px;
+  line-height: 104px;
+  letter-spacing: -2px;
   white-space: nowrap;
 }
 
@@ -93,118 +93,285 @@
   opacity: 0.6;
 }
 
-/* ---------- phone card ---------- */
-.H2Hero {
-  left: 420px;
-  top: 14px;
-  width: 340px;
-  height: 220px;
-  border-radius: 30px;
-  box-shadow: none;
-}
-
-.H2HeroChip {
+/* ---------- driving chip + Android Auto / CarPlay pill ---------- */
+.H2StatusLine {
   position: absolute;
-  left: 12px;
-  top: 10px;
-  width: 96px;
-  height: 96px;
-  background: url(../images/home2/chip_none.png) no-repeat 0px 0px;
+  left: 40px;
+  top: 194px;
+  width: 400px;
+  height: 48px;
+  white-space: nowrap;
+  text-align: left;
 }
 
-.H2PhoneAA .H2HeroChip {
-  background-image: url(../images/home2/chip_aa.png);
-}
-
-.H2PhoneCP .H2HeroChip {
-  background-image: url(../images/home2/chip_cp.png);
-}
-
-.H2HeroArrow {
-  display: none;
-  position: absolute;
-  right: 24px;
-  top: 26px;
-  width: 28px;
-  height: 28px;
-  background: url(../images/home2/arrow_ltr.png) no-repeat 0px 0px;
-}
-
-.H2HeroBadge {
-  display: none;
-  position: absolute;
-  right: 62px;
-  top: 28px;
-  height: 26px;
-  line-height: 26px;
-  padding: 0px 11px;
-  border-radius: 13px;
-  background-color: rgba(74, 217, 139, 0.16);
-  color: #7DEBB0;
-  font-size: 14px;
-  font-weight: 700;
-}
-
-.H2PhoneAA .H2HeroArrow,
-.H2PhoneCP .H2HeroArrow,
-.H2PhoneAA .H2HeroBadge,
-.H2PhoneCP .H2HeroBadge {
-  display: block;
-}
-
-.H2HeroTitle {
-  position: absolute;
-  left: 28px;
-  right: 28px;
-  top: 116px;
-  font-size: 30px;
-  font-weight: 700;
+.H2Drive {
+  display: inline-block;
+  vertical-align: middle;
+  height: 40px;
   line-height: 40px;
+  padding: 0px 14px 0px 12px;
+  box-sizing: border-box;
+  border-radius: 20px;
+  border: 1px solid rgba(255, 255, 255, 0.14);
+  background-color: rgba(255, 255, 255, 0.07);
+  color: rgba(255, 255, 255, 0.75);
+  font-size: 15px;
+  font-weight: 700;
+}
+
+.H2DriveIcon {
+  display: inline-block;
+  vertical-align: middle;
+  width: 18px;
+  height: 18px;
+  margin: -3px 7px 0px 0px;
+  background: url(../images/home2/ic_park.png) no-repeat 0px 0px;
+}
+
+.H2Driving {
+  border-color: rgba(108, 139, 255, 0.45);
+  background-color: rgba(108, 139, 255, 0.16);
+  color: #A9BCFF;
+}
+
+.H2Driving .H2DriveIcon {
+  background-image: url(../images/home2/ic_drive.png);
+}
+
+.H2Pill {
+  position: relative;
+  display: inline-block;
+  vertical-align: middle;
+  width: 196px;
+  height: 48px;
+  margin: 0px 0px 0px 10px;
+  border-radius: 24px;
+  border-color: rgba(255, 255, 255, 0.16);
+  background-color: rgba(255, 255, 255, 0.09);
+  background-image: none;
+}
+
+.H2NoPhone .H2Pill {
+  display: none;
+}
+
+.H2PillChip {
+  position: absolute;
+  left: 5px;
+  top: 5px;
+  width: 35px;
+  height: 35px;
+  background: url(../images/home2/pill_aa.png) no-repeat 0px 0px;
+}
+
+.H2PillChip-cp {
+  background-image: url(../images/home2/pill_cp.png);
+}
+
+.H2PillTitle {
+  position: absolute;
+  left: 50px;
+  right: 8px;
+  top: 5px;
+  font-size: 16px;
+  font-weight: 700;
+  line-height: 21px;
   white-space: nowrap;
   overflow: hidden;
 }
 
-.H2HeroSub {
+.H2PillSub {
   position: absolute;
-  left: 28px;
-  right: 28px;
-  top: 160px;
+  left: 50px;
+  right: 8px;
+  top: 25px;
   font-family: "Home2 Tajawal Medium", "Home2 Tajawal Bold", "Tipperary", Arial, sans-serif;
-  font-size: 16px;
+  font-size: 12px;
   font-weight: 500;
-  line-height: 22px;
-  color: rgba(255, 255, 255, 0.62);
+  line-height: 16px;
+  white-space: nowrap;
+  color: #7DEBB0;
 }
 
-/* No phone: quieter, dashed card */
-.H2Hero.H2PhoneNone {
-  border-style: dashed;
-  border-color: rgba(255, 255, 255, 0.26);
-  background-color: rgba(255, 255, 255, 0.03);
+/* ---------- status card: car, phone, media ---------- */
+.H2Glance {
+  position: absolute;
+  left: 420px;
+  top: 16px;
+  width: 340px;
+  height: 248px;
+  box-sizing: border-box;
+  border-radius: 28px;
+  border: 1px solid rgba(255, 255, 255, 0.15);
+  background-color: rgba(255, 255, 255, 0.07);
+  background-image: -o-linear-gradient(top left, rgba(255, 255, 255, 0.13), rgba(255, 255, 255, 0.035));
+  background-image: linear-gradient(160deg, rgba(255, 255, 255, 0.13), rgba(255, 255, 255, 0.035));
+}
+
+.H2Rule {
+  position: absolute;
+  left: 24px;
+  width: 292px;
+  height: 1px;
+  background-color: rgba(255, 255, 255, 0.1);
+}
+
+.H2Rule1 { top: 83px; }
+.H2Rule2 { top: 163px; }
+
+.H2Row {
+  left: 6px;
+  width: 326px;
+  height: 76px;
+  border-radius: 22px;
+  border-color: transparent;
+  background-color: transparent;
+  background-image: none;
+}
+
+.H2Row1 { top: 6px; }
+.H2Row2 { top: 86px; }
+.H2Row3 { top: 166px; }
+
+.H2RowChip {
+  position: absolute;
+  left: 12px;
+  top: 16px;
+  width: 42px;
+  height: 42px;
+  background-repeat: no-repeat;
+  background-position: 0px 0px;
+}
+
+.H2RowChip-ok { background-image: url(../images/home2/row_ok.png); }
+.H2RowChip-warn { background-image: url(../images/home2/row_warn.png); }
+.H2RowChip-service { background-image: url(../images/home2/row_service.png); }
+.H2RowChip-bt { background-image: url(../images/home2/row_bt.png); }
+.H2RowChip-btnone { background-image: url(../images/home2/row_btnone.png); }
+.H2RowChip-call { background-image: url(../images/home2/row_call.png); }
+.H2RowChip-radio { background-image: url(../images/home2/row_radio.png); }
+.H2RowChip-usb { background-image: url(../images/home2/row_usb.png); }
+.H2RowChip-btaudio { background-image: url(../images/home2/row_btaudio.png); }
+.H2RowChip-aa { background-image: url(../images/home2/row_aa.png); }
+.H2RowChip-cp { background-image: url(../images/home2/row_cp.png); }
+.H2RowChip-media { background-image: url(../images/home2/row_media.png); }
+.H2RowChip-off { background-image: url(../images/home2/row_off.png); }
+
+.H2RowTitle {
+  position: absolute;
+  left: 66px;
+  right: 52px;
+  top: 12px;
+  font-size: 18px;
+  font-weight: 700;
+  line-height: 25px;
+  white-space: nowrap;
+  overflow: hidden;
+}
+
+.H2RowSub {
+  position: absolute;
+  left: 66px;
+  right: 52px;
+  top: 39px;
+  font-family: "Home2 Tajawal Medium", "Home2 Tajawal Bold", "Tipperary", Arial, sans-serif;
+  font-size: 14px;
+  font-weight: 500;
+  line-height: 20px;
+  white-space: nowrap;
+  overflow: hidden;
+  color: rgba(255, 255, 255, 0.6);
+}
+
+.H2Alert .H2RowTitle,
+.H2AlertSub .H2RowSub {
+  color: #FFD27A;
+}
+
+.H2HasNews .H2RowSub {
+  color: #FFB3AC;
+}
+
+.H2Dim .H2RowTitle {
+  color: rgba(255, 255, 255, 0.6);
+}
+
+.H2Row.H2InCall {
+  border-color: rgba(74, 217, 139, 0.45);
+  background-color: rgba(74, 217, 139, 0.12);
+}
+
+.H2InCall .H2RowTitle {
+  color: #7DEBB0;
+}
+
+.H2Row.H2Focus {
+  border-color: rgba(200, 212, 255, 0.85);
+  background-color: rgba(255, 255, 255, 0.14);
   background-image: none;
   box-shadow: none;
 }
 
-.H2Hero.H2PhoneNone.H2Focus {
-  border-color: rgba(200, 212, 255, 0.85);
-  box-shadow: 0px 0px 0px 4px rgba(110, 140, 255, 0.22);
+/* playing indicator (static bars) */
+.H2Eq {
+  display: none;
+  position: absolute;
+  right: 16px;
+  top: 27px;
+  width: 23px;
+  height: 22px;
 }
 
-.H2Hero.H2PhoneNone .H2HeroTitle {
-  color: rgba(255, 255, 255, 0.92);
+.H2Playing .H2Eq {
+  display: block;
 }
 
-/* Pressed with no phone connected */
-.H2Hero.H2Nudge {
-  border-color: #7DEBB0;
-  box-shadow: 0px 0px 0px 4px rgba(74, 217, 139, 0.25);
+.H2EqBar {
+  position: absolute;
+  bottom: 0px;
+  width: 5px;
+  border-radius: 2px;
+  background-color: #FFB547;
+}
+
+.H2EqBar1 { left: 0px; height: 12px; }
+.H2EqBar2 { left: 9px; height: 22px; }
+.H2EqBar3 { left: 18px; height: 16px; }
+
+/* count badges */
+.H2Badge {
+  display: none;
+  position: absolute;
+  box-sizing: border-box;
+  text-align: center;
+  font-weight: 700;
+  color: #FFFFFF;
+  background-color: #FF5A4E;
+}
+
+.H2Badge.H2BadgeOn {
+  display: block;
+}
+
+.H2BadgeCall { background-color: #2DBE73; }
+.H2BadgeWarn { background-color: #E88A12; }
+
+.H2RowBadge {
+  right: 14px;
+  top: 25px;
+  min-width: 26px;
+  height: 26px;
+  padding: 0px 7px;
+  border-radius: 13px;
+  font-size: 15px;
+  line-height: 27px;
 }
 
 /* ---------- dock ---------- */
 .H2Dock {
-  top: 272px;
+  top: 280px;
   width: 136px;
-  height: 104px;
+  height: 100px;
   border-radius: 24px;
 }
 
@@ -234,7 +401,7 @@
   position: absolute;
   left: 14px;
   right: 10px;
-  top: 66px;
+  top: 63px;
   font-size: 17px;
   font-weight: 700;
   line-height: 24px;
@@ -242,16 +409,15 @@
   overflow: hidden;
 }
 
-/* ---------- no phone connected: card hidden, clock centred ---------- */
-.H2NoPhone .H2Hero {
-  display: none;
-}
-
-.H2NoPhone .H2Clock {
-  left: 0px;
-  top: 40px;
-  width: 800px;
-  text-align: center;
+.H2DockBadge {
+  right: 14px;
+  top: 16px;
+  min-width: 24px;
+  height: 24px;
+  padding: 0px 6px;
+  border-radius: 12px;
+  font-size: 14px;
+  line-height: 25px;
 }
 
 /* ---------- font check line (testing builds) ---------- */

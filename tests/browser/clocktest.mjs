@@ -1,7 +1,6 @@
-import chromium from '@sparticuz/chromium';
-import puppeteer from 'puppeteer-core';
+import { launch } from './browser.mjs';
 const base = new URL('../../preview/index.html', import.meta.url).href;
-const browser = await puppeteer.launch({ executablePath: await chromium.executablePath(), args: chromium.args, headless: true, defaultViewport: { width: 900, height: 600 } });
+const browser = await launch();
 const page = await browser.newPage();
 let fails = 0;
 const t = (n, got, want) => { const ok = got === want; if (!ok) fails++; console.log((ok ? 'PASS ' : 'FAIL ') + n + ' -> ' + JSON.stringify(got) + (ok ? '' : ' want ' + JSON.stringify(want))); };
@@ -17,3 +16,4 @@ r = await read('lang=en_US&fmt=24hrs&cached=0');
 t('no valid time -> blank, not 1970', r.join('|'), '|||');
 console.log(fails ? fails + ' FAILED' : 'ALL CLOCK CHECKS PASSED');
 await browser.close();
+if (fails) process.exit(1);

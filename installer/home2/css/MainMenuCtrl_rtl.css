@@ -1,5 +1,5 @@
 /*
- * Home 2.0 "Ember Glass" launcher — right-to-left overrides (Arabic, Hebrew).
+ * Home 2.0 "Ember Glance" launcher — right-to-left overrides (Arabic, Hebrew).
  * Loaded automatically by the Mazda GUI framework after MainMenuCtrl.css
  * when the system language is right-to-left.
  */
@@ -14,31 +14,64 @@
   text-align: right;
 }
 
-.H2Hero {
+/* driving chip + pill: right-aligned under the date */
+.H2StatusLine {
+  left: 360px;
+  text-align: right;
+}
+
+.H2Drive {
+  padding: 0px 12px 0px 14px;
+}
+
+.H2DriveIcon {
+  margin: -3px 0px 0px 7px;
+}
+
+.H2Pill {
+  margin: 0px 10px 0px 0px;
+}
+
+.H2PillChip {
+  left: auto;
+  right: 5px;
+}
+
+.H2PillTitle,
+.H2PillSub {
+  left: 8px;
+  right: 50px;
+  text-align: right;
+}
+
+/* status card on the left */
+.H2Glance {
   left: 40px;
 }
 
-.H2HeroChip {
+.H2RowChip {
   left: auto;
   right: 12px;
 }
 
-.H2HeroArrow {
-  right: auto;
-  left: 24px;
-  background-image: url(../images/home2/arrow_rtl.png);
-}
-
-.H2HeroBadge {
-  right: auto;
-  left: 62px;
-}
-
-.H2HeroTitle,
-.H2HeroSub {
+.H2RowTitle,
+.H2RowSub {
+  left: 52px;
+  right: 66px;
   text-align: right;
 }
 
+.H2Eq {
+  right: auto;
+  left: 16px;
+}
+
+.H2RowBadge {
+  right: auto;
+  left: 14px;
+}
+
+/* dock: first tile on the right */
 .H2Dock1 { left: 624px; }
 .H2Dock2 { left: 478px; }
 .H2Dock3 { left: 332px; }
@@ -56,7 +89,7 @@
   text-align: right;
 }
 
-.H2NoPhone .H2Clock {
-  left: 0px;
-  text-align: center;
+.H2DockBadge {
+  right: auto;
+  left: 14px;
 }

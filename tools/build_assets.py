@@ -4,9 +4,10 @@ Render the Home 2.0 image assets (Midnight palette).
 
 Outputs to installer/home2/images/home2/:
   bg_ltr.png, bg_rtl.png            800x416 background under Mazda's status bar
-  chip_nav/ent/com/set/app.png      56x56 dock icon chips (40px chip + shadow)
-  chip_aa/cp/none.png               96x96 phone-card chips (64px chip + shadow)
-  arrow_ltr.png, arrow_rtl.png      28x28 "open" arrow
+  chip_nav/ent/com/set/app.png      56x56 dock icon chips (40px chip)
+  row_*.png                         42x42 status-card chips (car, phone, media)
+  pill_aa.png, pill_cp.png          35x35 round chips for the Android Auto / CarPlay pill
+  ic_park.png, ic_drive.png         18x18 parked / driving icons
 and docs/background_full.png (800x480, for the README).
 
 Requires: Pillow, numpy, cairosvg
@@ -110,7 +111,18 @@ ICONS = {
           '<polygon points="9.5 13.5 14.5 8.5 13 14.5 11.6 12.6 9.5 13.5"/>',
     "cp": '<path d="M19 17h2c.6 0 1-.4 1-1v-3c0-.9-.7-1.7-1.5-1.9C18.7 10.6 16 10 16 10s-1.3-1.4-2.2-2.3c-.5-.4-1.1-.7-1.8-.7H5c-.6 0-1.1.4-1.4.9l-1.4 2.9A3.7 3.7 0 0 0 2 12v4c0 .6.4 1 1 1h2"/>'
           '<circle cx="7" cy="17" r="2"/><path d="M9 17h6"/><circle cx="17" cy="17" r="2"/>',
-    "none": '<path d="M12 22v-5"/><path d="M9 8V2"/><path d="M15 8V2"/><path d="M18 8v5a4 4 0 0 1-4 4h-4a4 4 0 0 1-4-4V8Z"/>',
+    "shield": '<path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/><polyline points="9 12 11 14 15 10"/>',
+    "alert": '<path d="M10.3 3.9L1.8 18a2 2 0 0 0 1.7 3h17a2 2 0 0 0 1.7-3L13.7 3.9a2 2 0 0 0-3.4 0z"/>'
+             '<line x1="12" y1="9" x2="12" y2="13"/><line x1="12" y1="17" x2="12.01" y2="17"/>',
+    "wrench": '<path d="M14.7 6.3a1 1 0 0 0 0 1.4l1.6 1.6a1 1 0 0 0 1.4 0l3.77-3.77a6 6 0 0 1-7.94 7.94l-6.91 6.91'
+              'a2.12 2.12 0 0 1-3-3l6.91-6.91a6 6 0 0 1 7.94-7.94l-3.76 3.76z"/>',
+    "bt": '<polyline points="6.5 6.5 17.5 17.5 12 23 12 1 17.5 6.5 6.5 17.5"/>',
+    "radio": '<rect x="4" y="10" width="16" height="10" rx="2"/><line x1="8" y1="10" x2="17" y2="4"/>'
+             '<circle cx="14" cy="15" r="2"/><line x1="7" y1="14" x2="8" y2="14"/>',
+    "usb": '<path d="M12 2v14"/><polyline points="8 6 12 2 16 6"/><path d="M7 9v3l5 3 5-3V9"/><circle cx="12" cy="18" r="2"/>',
+    "steer": '<circle cx="12" cy="12" r="10"/><circle cx="12" cy="12" r="2"/>'
+             '<path d="M2.5 10.5L10 12"/><path d="M21.5 10.5L14 12"/><path d="M12 14v7.5"/>',
+    "park": '<circle cx="12" cy="12" r="10"/><path d="M9.5 17V7h3.5a3 3 0 0 1 0 6H9.5"/>',
 }
 
 # (gradient start, gradient end) for each chip
@@ -120,8 +132,20 @@ CHIP_COLOURS = {
     "com": ("#4AD98B", "#189C5F"),
     "set": ("#9AA0AA", "#5A606B"),
     "app": ("#9B8CFF", "#5B46E6"),
-    "aa": ("#6C8BFF", "#3A3FE0"),
-    "cp": ("#6C8BFF", "#3A3FE0"),
+}
+
+BLUE = ("#6C8BFF", "#3A3FE0")
+GREEN = ("#4AD98B", "#189C5F")
+AMBER = ("#FFC24A", "#E88A12")
+ORANGE = ("#FFB547", "#FF6A2E")
+BT_BLUE = ("#5B8CFF", "#2F5BD8")
+
+# status-card chips: output name -> (icon, colours or None for the grey "empty" look)
+ROW_CHIPS = {
+    "ok": ("shield", GREEN), "warn": ("alert", AMBER), "service": ("wrench", AMBER),
+    "bt": ("bt", BT_BLUE), "btnone": ("bt", None), "call": ("com", GREEN),
+    "radio": ("radio", ORANGE), "usb": ("usb", ORANGE), "btaudio": ("bt", ORANGE),
+    "aa": ("aa", ORANGE), "cp": ("cp", ORANGE), "media": ("ent", ORANGE), "off": ("ent", None),
 }
 
 
@@ -130,12 +154,14 @@ def svg_png(svg, size):
                                                     output_width=size, output_height=size))).convert("RGBA")
 
 
-def chip(name, canvas, chip_size, radius, icon_size, stroke, shadow_rgba, out_name):
+def chip(name, canvas, chip_size, radius, icon_size, stroke, shadow_rgba, out_name, colours="auto"):
     S = 4  # supersample
     c, cs, r, ic = canvas * S, chip_size * S, radius * S, icon_size * S
     off = (c - cs) // 2
-    if name in CHIP_COLOURS:
-        a, b = CHIP_COLOURS[name]
+    if colours == "auto":
+        colours = CHIP_COLOURS.get(name)
+    if colours:
+        a, b = colours
         fill = '<defs><linearGradient id="g" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="%s"/><stop offset="1" stop-color="%s"/></linearGradient></defs>' % (a, b)
         rect = '<rect x="%d" y="%d" width="%d" height="%d" rx="%d" fill="url(#g)"/>' % (off, off, cs, cs, r)
         icon_colour, icon_alpha = "#FFFFFF", 1.0
@@ -163,23 +189,22 @@ def chip(name, canvas, chip_size, radius, icon_size, stroke, shadow_rgba, out_na
     base.resize((canvas, canvas), Image.LANCZOS).save(os.path.join(OUT, out_name), optimize=True)
 
 
-def arrow(out_name, flip):
-    svg = ('<svg xmlns="http://www.w3.org/2000/svg" width="112" height="112" viewBox="0 0 24 24" fill="none" stroke="#FFFFFF" '
-           'stroke-opacity="0.7" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">'
-           '<line x1="7" y1="17" x2="17" y2="7"/><polyline points="8 7 17 7 17 16"/></svg>')
-    im = svg_png(svg, 112).resize((28, 28), Image.LANCZOS)
-    if flip:
-        im = im.transpose(Image.FLIP_LEFT_RIGHT)
-    im.save(os.path.join(OUT, out_name), optimize=True)
+def glyph(name, size, colour, opacity, out_name):
+    """A bare line icon (no chip), e.g. the parked / driving icons."""
+    svg = ('<svg xmlns="http://www.w3.org/2000/svg" width="%d" height="%d" viewBox="0 0 24 24" fill="none" stroke="%s" '
+           'stroke-opacity="%s" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">%s</svg>') % (
+        size * 4, size * 4, colour, opacity, ICONS[name])
+    svg_png(svg, size * 4).resize((size, size), Image.LANCZOS).save(os.path.join(OUT, out_name), optimize=True)
 
 
 if __name__ == "__main__":
     render_background()
     for k in ("nav", "ent", "com", "set", "app"):
         chip(k, 56, 40, 13, 22, 2.0, None, "chip_%s.png" % k)
-    chip("aa", 96, 64, 20, 34, 1.8, (58, 76, 255, 0.45), "chip_aa.png")
-    chip("cp", 96, 64, 20, 34, 1.8, (58, 76, 255, 0.45), "chip_cp.png")
-    chip("none", 96, 64, 20, 34, 1.8, None, "chip_none.png")
-    arrow("arrow_ltr.png", False)
-    arrow("arrow_rtl.png", True)
+    for out, (icon, colours) in ROW_CHIPS.items():
+        chip(icon, 42, 42, 14, 22, 2.0, None, "row_%s.png" % out, colours)
+    chip("aa", 35, 35, 17.5, 19, 2.0, None, "pill_aa.png", BLUE)
+    chip("cp", 35, 35, 17.5, 19, 2.0, None, "pill_cp.png", BLUE)
+    glyph("park", 18, "#FFFFFF", 0.75, "ic_park.png")
+    glyph("steer", 18, "#A9BCFF", 1.0, "ic_drive.png")
     print("assets written to", OUT)
