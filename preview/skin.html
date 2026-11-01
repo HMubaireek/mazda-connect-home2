@@ -6,7 +6,7 @@
 <!--
   Desktop preview of the system skin (src/skin/home2skin.css, + common_rtl.css in Arabic) on top of Mazda's own CSS.
   Needs Mazda's GUI files in preview/mazda/ first:  sh tools/copy_mazda_preview.sh <extracted jci/gui folder>
-  Options: ?lang=ar|en  &screen=settings|alert|home|icons|camera|mute  &skin=0 (stock look)  &alert=nav|bt|volume|msg  &phone=androidauto|carplay
+  Options: ?lang=ar|en  &screen=settings|alert|home|icons|camera|mute|media|fuel|dialpad|keyboard  &skin=0 (stock look)  &alert=nav|bt|volume|msg  &phone=androidauto|carplay
            &focus=btn (Android Auto button focused by the knob)
   The DOM below copies what Mazda's StatusBarCtrl, SbnCtrl, List2Ctrl and LeftBtnCtrl build on firmware 74.
 -->
@@ -30,10 +30,12 @@
   if (SKIN && AR) { css("../../installer/home2/skin/css/common_rtl.css"); }
   css("common/transitions/css/TransitionsGen.css");
   ["StatusBar", "Sbn", "List2", "LeftBtn", "Button", "Tabs", "Dialog3", "InCall2", "Ump3", "Tuner4", "Wink",
-   "ScreenSettings2", "NowPlaying4"].forEach(function(c) {
+   "ScreenSettings2", "NowPlaying4", "Keyboard", "DialPad2"].forEach(function(c) {
     css("common/controls/" + c + "/css/" + c + "Ctrl.css");
     if (AR) { css("common/controls/" + c + "/css/" + c + "Ctrl_rtl.css"); }   // not every control has one
   });
+  css("apps/ecoenergy/controls/FuelConsumption/css/FuelConsumptionCtrl.css");
+  if (AR) { css("apps/ecoenergy/controls/FuelConsumption/css/FuelConsumptionCtrl_rtl.css"); }
   css("../../installer/home2/css/MainMenuCtrl.css");
   if (AR) { css("../../installer/home2/css/MainMenuCtrl_rtl.css"); }
   if (SKIN) { css("../../installer/home2/skin/css/home2skin.css", "Home2Skin"); }
@@ -117,7 +119,55 @@
     var wink = el("div", "WinkCtrl WinkCtrlStyle05", document.body, "", "position: absolute; left: 0; top: 64px; width: 800px; height: 416px");
     el("div", "WinkStyle5Image1", wink, "", "position: absolute; left: 182px; top: 63px; width: 440px; height: 230px; background: url(common/images/icons/IcnWinkMute.png) 50% 50% no-repeat");
   }
-  if (!isHome && SCREEN !== "camera") {
+  if (SCREEN === "media") {
+    // Ump3Ctrl: the media / call button bar, 6 ButtonCtrl buttons with inline icons (Ump3Ctrl._setButtonIcon)
+    var ump = el("div", "Ump3Ctrl", document.body, "", "position: absolute; top: 340px");
+    el("div", "Ump3CtrlBackground", ump);
+    ["IcnUmpShuffle_On_En", "IcnUmpPreviousAudio_En", "IcnUmpPlayPause_Pause_En", "IcnUmpNextAudio_En", "IcnUmpRepeat_None_En",
+     "IcnUmpEqualizer_Ds"].forEach(function(name, i) {
+      var b = el("div", "Ump3Ctrl6Button" + (i === 2 ? "_focused" : "_En"), ump, "", "position: absolute; left: " + (i * 133) + "px");
+      el("div", "Ump3CtrlButtonIcon", b, "", "background-image: url(common/images/icons/" + name + ".png)");
+    });
+  }
+  if (SCREEN === "fuel") {
+    // ecoenergy FuelConsumptionCtrl: the per-minute graph (left) and the per-reset history (right)
+    var fc = el("div", "FuelConsumptionCtrl", document.body, "", "position: absolute; top: 64px");
+    var ga = el("div", "FuelConsumptionCtrlGraphsArea", fc);
+    var g1 = el("div", "FuelConsumptionCtrlCDFEGraph", ga);
+    var a1 = el("div", "FuelConsumptionCtrlCDFEGraphArea", el("div", "FuelConsumptionCtrlCDFEGraphClipMask", g1));
+    [40, 62, 55, 80, 70, 90, 66, 50, 74, 85].forEach(function(hgt, i) {
+      el("div", i === 9 ? "FuelConsumptionCtrlCDFEBarGraphCoreCurrent" : "FuelConsumptionCtrlCDFEBarGraphCore", a1, "",
+         "position: absolute; bottom: 0; left: " + (i * 24) + "px; height: " + hgt + "px");
+    });
+    var g2 = el("div", "FuelConsumptionCtrlCFERGraph", ga);
+    [60, 75, 52, 88, 70].forEach(function(hgt, i) {
+      el("div", i === 4 ? "FuelConsumptionCtrlCFERBarGraphCoreCurrent" : "FuelConsumptionCtrlCFERBarGraphCore", g2, "",
+         "position: absolute; bottom: 0; left: " + (20 + i * 79) + "px; height: " + hgt + "px");
+    });
+  }
+  if (SCREEN === "dialpad") {
+    // DialPad2Ctrl style 02: 12 keys and the green call button
+    var dp = el("div", "DialPad2Ctrl DialpadStyle02", document.body, "", "position: absolute; top: 64px; left: 0; width: 800px; height: 416px");
+    el("div", "ctrlBackground", dp);
+    "123456789*0#".split("").forEach(function(k, i) {
+      el("div", "btn" + (i === 4 ? " focused" : ""), dp, k, "left: " + (90 + (i % 3) * 130) + "px; top: " + (100 + Math.floor(i / 3) * 78) + "px");
+    });
+    el("div", "callBtn", dp);
+  }
+  if (SCREEN === "keyboard") {
+    // KeyboardCtrl, 5x10 layout: input box, letter keys, space bar
+    var kb = el("div", "KeyboardCtrl", document.body, "", "position: absolute; top: 64px; left: 0");
+    el("div", "inputBoxTouchActiveArea focused", kb, "");
+    var bw = el("div", "btnWrapper fiveTen", kb);
+    (AR ? "ضصثقفغعهخحجدشسيبلاتنمكطئءؤرىةوزظ" : "QWERTYUIOPASDFGHJKLZXCVBNM").split("").forEach(function(k, i) {
+      el("div", "btn" + (i === 3 ? " focused" : ""), bw, k);
+    });
+    var cw = el("div", "controlsWrapper", bw);
+    el("div", "", cw, "").id = "btnShift";
+    el("div", "", cw, "").id = "btnSpacebar";
+    el("div", "", cw, "").id = "btnOK";
+  }
+  if (!isHome && ["camera", "media", "fuel", "dialpad", "keyboard"].indexOf(SCREEN) < 0) {
     var tmpl = el("div", "TemplateWithStatusLeft List2Tmplt", document.getElementById("list"));
     var list = el("div", "List2Ctrl normalItems noTitle", tmpl);
     var mask = el("div", "List2CtrlMask", list);

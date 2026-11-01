@@ -72,6 +72,7 @@ check "skin style sheet installed" '[ "$(md5 "$SKIN")" = "$(md5 "$USB/home2/skin
 check "skin main sheet installed" '[ "$(md5 "$SKIN_MAIN")" = "$(md5 "$USB/home2/skin/css/home2skin.css")" ]'
 check "skin images installed" '[ -f "$SKIN_IMG/list_panel.png" ] && [ -f "$SKIN_IMG/sb_batt_05.png" ]'
 check "control images installed" '[ -f "$SKIN_IMG/ctl/Dialog3_Dialog_2Btn.png" ]'
+check "icons installed" '[ -f "$SKIN_IMG/icn/IcnUmpPlayPause_Play_En.png" ]'
 
 echo "--- 2. reinstall over itself keeps the original backup"
 rm -f "$T/rebooted"

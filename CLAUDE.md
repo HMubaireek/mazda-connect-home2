@@ -3,8 +3,8 @@
 A custom home screen ("Ember Glass") for Mazda Connect 1. Owner: Hussain (HMubaireek). His car is a
 **2019 Mazda CX-9, Saudi market, firmware 74.00.333A 4A N (ADR)**, system language **Arabic**.
 v1.0.4 ran in the car on 31 Oct 2026. v1.2.1 (Ember Glance home + "Floating Pills" skin) was installed on 1 Nov 2026;
-his photos showed the bugs fixed in v1.3.0 (camera/map hidden, menus not RTL, unstyled screens). v1.3.0 is built and
-tested but not yet confirmed in the car. Read this whole file before changing anything.
+his photos showed the bugs fixed in v1.3.0 (camera/map hidden, menus not RTL, unstyled screens). v1.3.0 and v1.4.0
+(remaining screens + icon set) are built and tested but not yet confirmed in the car. Read this whole file before changing anything.
 
 ## What the owner wants
 - Arabic first, right-to-left, Arabic-Indic digits, Hijri (Umm al-Qura) date under the Gregorian date.
@@ -91,6 +91,16 @@ All read from the system app instance `framework._appInstances.system` without c
   selectors; made by `tools/extract_skin_table.py` from the firmware). `src/skin/controls.generated.css` is generated;
   build.sh appends it to home2skin.css. Shared selectors: pressed/focus/selected rules are written last.
 - Mute box = `WinkCtrl` (`Notification_BG.png` + inline `IcnWinkMute.png`/`IcnWinkUnMute.png`).
+
+## v1.4.0 notes (1 Nov 2026)
+- `tools/extract_skin_table.py` also reads Keyboard, DialPad2, Messaging2, ScrollDetail, ClockSettings2 and the apps
+  ecoenergy, idm, vsm, emnavi (frames only; car/engine/energy-flow pictures stay Mazda's). It writes three files:
+  `skin_controls.json` (images, with Mazda's divider positions for screen panels and graph grids),
+  `skin_controls_layers.json` (rules that stack images, e.g. key icon + key: rewritten with every layer, Mazda's own
+  layers kept via `../../<gui path>`), `skin_controls_icons.json` (IcnUmp*/IcnList* names and sizes).
+- Icons: `tools/skin_icons.py` holds our glyphs; swapped with `[style*="/IcnUmpX_En.png"]` because Mazda's ButtonCtrl
+  and List2 set them as inline backgrounds. InCall2 contact pictures are `<img>` and can't be swapped by CSS.
+- Images go to `common/images/home2skin/ctl/` and `.../icn/`; run.sh copies and md5-verifies both.
 
 ## Repo layout
 - `src/launcher/MainMenuCtrl.js` (+ `hijri.js`, generated) — the launcher; `MainMenuCtrl.css`, `MainMenuCtrl_rtl.css`.

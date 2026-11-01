@@ -1,5 +1,364 @@
 [
  {
+  "control": "ClockSettings2",
+  "file": "ClockSettingBG.png",
+  "size": [
+   780,
+   417
+  ],
+  "bbox": [
+   0,
+   0,
+   780,
+   416
+  ],
+  "kind": "screen",
+  "selectors": [
+   ".ClockSettings2CtrlBodyFrame"
+  ],
+  "hlines": [
+   [
+    61,
+    62
+   ]
+  ],
+  "vlines": []
+ },
+ {
+  "control": "DialPad2",
+  "file": "BtnLeft_En.png",
+  "size": [
+   43,
+   57
+  ],
+  "bbox": [
+   1,
+   0,
+   43,
+   56
+  ],
+  "kind": "btn",
+  "selectors": [
+   ".DialPad2Ctrl .btn.leftBtn"
+  ]
+ },
+ {
+  "control": "DialPad2",
+  "file": "BtnLeft_Focus.png",
+  "size": [
+   69,
+   88
+  ],
+  "bbox": [
+   1,
+   4,
+   66,
+   84
+  ],
+  "kind": "btn_focus",
+  "selectors": [
+   ".DialPad2Ctrl .btn.leftBtn.focused"
+  ]
+ },
+ {
+  "control": "DialPad2",
+  "file": "BtnLeft_Press.png",
+  "size": [
+   69,
+   88
+  ],
+  "bbox": [
+   1,
+   4,
+   66,
+   84
+  ],
+  "kind": "btn_hit",
+  "selectors": [
+   ".DialPad2Ctrl .btn.leftBtn.active"
+  ]
+ },
+ {
+  "control": "DialPad2",
+  "file": "DialKey.png",
+  "size": [
+   126,
+   79
+  ],
+  "bbox": [
+   0,
+   0,
+   126,
+   79
+  ],
+  "kind": "btn",
+  "selectors": [
+   ".DialPad2Ctrl .btn",
+   ".DialPad2Ctrl .btn.active",
+   ".DialPad2Ctrl .btn.focused"
+  ]
+ },
+ {
+  "control": "DialPad2",
+  "file": "DialPadCloseDTMF_Focus.png",
+  "size": [
+   115,
+   100
+  ],
+  "bbox": [
+   1,
+   12,
+   115,
+   100
+  ],
+  "kind": "btn_focus",
+  "selectors": [
+   ".DialPad2Ctrl.DialpadStyle01 .btn.closeDtmf.focused"
+  ]
+ },
+ {
+  "control": "DialPad2",
+  "file": "DialPadCloseDTMF_Hit.png",
+  "size": [
+   115,
+   100
+  ],
+  "bbox": [
+   1,
+   12,
+   115,
+   100
+  ],
+  "kind": "btn_hit",
+  "selectors": [
+   ".DialPad2Ctrl.DialpadStyle01 .btn.closeDtmf.active"
+  ]
+ },
+ {
+  "control": "DialPad2",
+  "file": "DialPadKeystyle03_Bkgd.png",
+  "size": [
+   801,
+   417
+  ],
+  "bbox": [
+   0,
+   0,
+   801,
+   417
+  ],
+  "kind": "screen",
+  "selectors": [
+   ".DialPad2Ctrl.DialpadStyle03 .ctrlBackground"
+  ],
+  "hlines": [],
+  "vlines": []
+ },
+ {
+  "control": "DialPad2",
+  "file": "DialPadStyle01_Bkgd.png",
+  "size": [
+   573,
+   416
+  ],
+  "bbox": [
+   0,
+   0,
+   573,
+   416
+  ],
+  "kind": "screen",
+  "selectors": [
+   ".DialPad2Ctrl.DialpadStyle01 .ctrlBackground"
+  ],
+  "hlines": [
+   [
+    11,
+    11
+   ],
+   [
+    90,
+    90
+   ]
+  ],
+  "vlines": []
+ },
+ {
+  "control": "DialPad2",
+  "file": "DialPadStyle02_Bkgd.png",
+  "size": [
+   644,
+   415
+  ],
+  "bbox": [
+   0,
+   0,
+   644,
+   415
+  ],
+  "kind": "screen",
+  "selectors": [
+   ".DialPad2Ctrl.DialpadStyle02 .ctrlBackground"
+  ],
+  "hlines": [
+   [
+    11,
+    11
+   ],
+   [
+    90,
+    90
+   ]
+  ],
+  "vlines": []
+ },
+ {
+  "control": "DialPad2",
+  "file": "DialPad_CallBtn.png",
+  "size": [
+   127,
+   320
+  ],
+  "bbox": [
+   0,
+   0,
+   127,
+   320
+  ],
+  "kind": "btn_green",
+  "selectors": [
+   ".DialPad2Ctrl.DialpadStyle02 .callBtn"
+  ]
+ },
+ {
+  "control": "DialPad2",
+  "file": "DialPad_CallBtn_Focus.png",
+  "size": [
+   127,
+   320
+  ],
+  "bbox": [
+   0,
+   0,
+   127,
+   320
+  ],
+  "kind": "btn_green_focus",
+  "selectors": [
+   ".DialPad2Ctrl.DialpadStyle02 .callBtn.focused"
+  ]
+ },
+ {
+  "control": "DialPad2",
+  "file": "DialPad_CallBtn_Press.png",
+  "size": [
+   127,
+   320
+  ],
+  "bbox": [
+   0,
+   0,
+   127,
+   320
+  ],
+  "kind": "btn_green",
+  "selectors": [
+   ".DialPad2Ctrl.DialpadStyle02 .callBtn.active"
+  ]
+ },
+ {
+  "control": "DialPad2",
+  "file": "DialPad_CallIcon.png",
+  "size": [
+   50,
+   50
+  ],
+  "bbox": [
+   2,
+   2,
+   47,
+   47
+  ],
+  "kind": "icon_call",
+  "selectors": [
+   ".DialPad2Ctrl.DialpadStyle02 .callBtn",
+   ".DialPad2Ctrl.DialpadStyle02 .callBtn.active",
+   ".DialPad2Ctrl.DialpadStyle02 .callBtn.focused"
+  ]
+ },
+ {
+  "control": "DialPad2",
+  "file": "Key_Focus.png",
+  "size": [
+   126,
+   79
+  ],
+  "bbox": [
+   0,
+   0,
+   126,
+   79
+  ],
+  "kind": "btn_focus",
+  "selectors": [
+   ".DialPad2Ctrl .btn.focused"
+  ]
+ },
+ {
+  "control": "DialPad2",
+  "file": "Key_Hit.png",
+  "size": [
+   126,
+   79
+  ],
+  "bbox": [
+   0,
+   0,
+   126,
+   79
+  ],
+  "kind": "btn_hit",
+  "selectors": [
+   ".DialPad2Ctrl .btn.active"
+  ]
+ },
+ {
+  "control": "DialPad2",
+  "file": "UMP_Bg.png",
+  "size": [
+   800,
+   98
+  ],
+  "bbox": [
+   0,
+   0,
+   800,
+   98
+  ],
+  "kind": "dock",
+  "selectors": [
+   ".DialPad2Ctrl.DialpadStyle01 .DialPadFakeUmp"
+  ]
+ },
+ {
+  "control": "DialPad2",
+  "file": "UMP_Bg_Arch.png",
+  "size": [
+   801,
+   30
+  ],
+  "bbox": [
+   0,
+   0,
+   801,
+   30
+  ],
+  "kind": "clear",
+  "selectors": [
+   ".DialPad2Ctrl.DialpadStyle01 .DialPadFakeUmpArc"
+  ]
+ },
+ {
   "control": "Dialog3",
   "file": "DialogBG_AppLoadScreens.png",
   "size": [
@@ -458,6 +817,1744 @@
   ]
  },
  {
+  "control": "Keyboard",
+  "file": "Bkg_Small.png",
+  "size": [
+   780,
+   416
+  ],
+  "bbox": [
+   0,
+   0,
+   780,
+   416
+  ],
+  "kind": "screen",
+  "selectors": [
+   ".KeyboardCtrl"
+  ],
+  "hlines": [],
+  "vlines": []
+ },
+ {
+  "control": "Keyboard",
+  "file": "CharConv_Bg.png",
+  "size": [
+   614,
+   60
+  ],
+  "bbox": [
+   0,
+   0,
+   614,
+   60
+  ],
+  "kind": "btn",
+  "selectors": [
+   ".KeyboardCtrl .suggestionRowWrapper.fiveTen .suggestionBgDiv",
+   ".KeyboardCtrl .suggestionRowWrapper.sixTen .suggestionBgDiv",
+   ".KeyboardCtrl .suggestionRowWrapper.sixTwelve .suggestionBgDiv",
+   ".KeyboardCtrl .suggestionRowWrapper.suggFiveTen .suggestionBgDiv",
+   ".KeyboardCtrl .suggestionRowWrapper.suggSevenTen .suggestionBgDiv",
+   ".KeyboardCtrl .suggestionRowWrapper.suggSevenEleven .suggestionBgDiv"
+  ]
+ },
+ {
+  "control": "Keyboard",
+  "file": "CharConv_Divider.png",
+  "size": [
+   1,
+   59
+  ],
+  "bbox": [
+   0,
+   0,
+   1,
+   59
+  ],
+  "kind": "line",
+  "selectors": [
+   ".KeyboardCtrl .suggestionRowWrapper.fiveTen .suggestionBgDiv .suggestionWrapper .suggestionSpan",
+   ".KeyboardCtrl .suggestionRowWrapper.sixTen .suggestionBgDiv .suggestionWrapper .suggestionSpan",
+   ".KeyboardCtrl .suggestionRowWrapper.sixTwelve .suggestionBgDiv .suggestionWrapper .suggestionSpan",
+   ".KeyboardCtrl .suggestionRowWrapper.suggFiveTen .suggestionBgDiv .suggestionWrapper .suggestionSpan",
+   ".KeyboardCtrl .suggestionRowWrapper.suggSevenTen .suggestionBgDiv .suggestionWrapper .suggestionSpan",
+   ".KeyboardCtrl .suggestionRowWrapper.suggSevenEleven .suggestionBgDiv .suggestionWrapper .suggestionSpan"
+  ]
+ },
+ {
+  "control": "Keyboard",
+  "file": "Char_Input.png",
+  "size": [
+   691,
+   60
+  ],
+  "bbox": [
+   0,
+   0,
+   691,
+   60
+  ],
+  "kind": "btn",
+  "selectors": [
+   ".KeyboardCtrl .inputBoxTouchActiveArea",
+   ".KeyboardCtrl .inputBoxTouchActiveArea.disabled",
+   ".KeyboardCtrl .inputBoxTouchActiveArea.focused",
+   ".KeyboardCtrl .inputBoxTouchActiveArea.activeState"
+  ]
+ },
+ {
+  "control": "Keyboard",
+  "file": "Char_Input_Focus.png",
+  "size": [
+   691,
+   60
+  ],
+  "bbox": [
+   0,
+   0,
+   691,
+   60
+  ],
+  "kind": "btn_focus",
+  "selectors": [
+   ".KeyboardCtrl .inputBoxTouchActiveArea.focused",
+   ".KeyboardCtrl .suggestionRowWrapper.fiveTen .suggestionBgDiv .suggestionWrapper .suggestionSpan.focused",
+   ".KeyboardCtrl .suggestionRowWrapper.sixTen .suggestionBgDiv .suggestionWrapper .suggestionSpan.focused",
+   ".KeyboardCtrl .suggestionRowWrapper.sixTwelve .suggestionBgDiv .suggestionWrapper .suggestionSpan.focused",
+   ".KeyboardCtrl .suggestionRowWrapper.suggFiveTen .suggestionBgDiv .suggestionWrapper .suggestionSpan.focused",
+   ".KeyboardCtrl .suggestionRowWrapper.suggSevenTen .suggestionBgDiv .suggestionWrapper .suggestionSpan.focused",
+   ".KeyboardCtrl .suggestionRowWrapper.suggSevenEleven .suggestionBgDiv .suggestionWrapper .suggestionSpan.focused"
+  ]
+ },
+ {
+  "control": "Keyboard",
+  "file": "Char_Input_Hit.png",
+  "size": [
+   691,
+   60
+  ],
+  "bbox": [
+   0,
+   0,
+   691,
+   60
+  ],
+  "kind": "btn_hit",
+  "selectors": [
+   ".KeyboardCtrl .inputBoxTouchActiveArea.activeState",
+   ".KeyboardCtrl .suggestionRowWrapper.fiveTen .suggestionBgDiv .suggestionWrapper .suggestionSpan.activeState",
+   ".KeyboardCtrl .suggestionRowWrapper.sixTen .suggestionBgDiv .suggestionWrapper .suggestionSpan.activeState",
+   ".KeyboardCtrl .suggestionRowWrapper.sixTwelve .suggestionBgDiv .suggestionWrapper .suggestionSpan.activeState",
+   ".KeyboardCtrl .suggestionRowWrapper.suggFiveTen .suggestionBgDiv .suggestionWrapper .suggestionSpan.activeState",
+   ".KeyboardCtrl .suggestionRowWrapper.suggSevenTen .suggestionBgDiv .suggestionWrapper .suggestionSpan.activeState",
+   ".KeyboardCtrl .suggestionRowWrapper.suggSevenEleven .suggestionBgDiv .suggestionWrapper .suggestionSpan.activeState"
+  ]
+ },
+ {
+  "control": "Keyboard",
+  "file": "Char_Input_Opt_BG.png",
+  "size": [
+   28,
+   44
+  ],
+  "bbox": [
+   0,
+   0,
+   28,
+   44
+  ],
+  "kind": "btn",
+  "selectors": [
+   ".KeyboardCtrl .inputDiv.fiveTen .highlightedSpan",
+   ".KeyboardCtrl .inputDiv.sixTen .highlightedSpan",
+   ".KeyboardCtrl .inputDiv.sixTwelve .highlightedSpan",
+   ".KeyboardCtrl .inputDiv.suggFiveTen .highlightedSpan",
+   ".KeyboardCtrl .inputDiv.suggSevenTen .highlightedSpan",
+   ".KeyboardCtrl .inputDiv.suggSevenEleven .highlightedSpan"
+  ]
+ },
+ {
+  "control": "Keyboard",
+  "file": "Key01.png",
+  "size": [
+   62,
+   68
+  ],
+  "bbox": [
+   0,
+   0,
+   62,
+   68
+  ],
+  "kind": "btn",
+  "selectors": [
+   ".KeyboardCtrl .btnWrapper.sixTwelve .btn",
+   ".KeyboardCtrl .btnWrapper.sixTwelve .btn.focused",
+   ".KeyboardCtrl .btnWrapper.sixTwelve .btn.activeState"
+  ]
+ },
+ {
+  "control": "Keyboard",
+  "file": "Key01_Dead.png",
+  "size": [
+   62,
+   68
+  ],
+  "bbox": [
+   0,
+   0,
+   62,
+   68
+  ],
+  "kind": "btn_ds",
+  "selectors": [
+   ".KeyboardCtrl .btnWrapper.sixTwelve .btn.disabled"
+  ]
+ },
+ {
+  "control": "Keyboard",
+  "file": "Key01_Focus.png",
+  "size": [
+   64,
+   71
+  ],
+  "bbox": [
+   0,
+   1,
+   63,
+   70
+  ],
+  "kind": "btn_focus",
+  "selectors": [
+   ".KeyboardCtrl .btnWrapper.sixTwelve .btn.focused"
+  ]
+ },
+ {
+  "control": "Keyboard",
+  "file": "Key01_Hit.png",
+  "size": [
+   64,
+   70
+  ],
+  "bbox": [
+   0,
+   1,
+   63,
+   69
+  ],
+  "kind": "btn_hit",
+  "selectors": [
+   ".KeyboardCtrl .btnWrapper.sixTwelve .btn.activeState"
+  ]
+ },
+ {
+  "control": "Keyboard",
+  "file": "Key02.png",
+  "size": [
+   96,
+   68
+  ],
+  "bbox": [
+   0,
+   0,
+   96,
+   68
+  ],
+  "kind": "btn",
+  "selectors": [
+   ".KeyboardCtrl .btnWrapper.sixTwelve .controlsWrapper #btnShift",
+   ".KeyboardCtrl .btnWrapper.sixTwelve .controlsWrapper .focused#btnShift",
+   ".KeyboardCtrl .btnWrapper.sixTwelve .controlsWrapper .activeState#btnShift",
+   ".KeyboardCtrl .btnWrapper.sixTwelve .controlsWrapper .capsLock#btnShift",
+   ".KeyboardCtrl .btnWrapper.sixTwelve .controlsWrapper .capsLock.focused#btnShift",
+   ".KeyboardCtrl .btnWrapper.sixTwelve .controlsWrapper .capsLock.activeState#btnShift",
+   ".KeyboardCtrl .btnWrapper.sixTwelve .controlsWrapper #btnLayoutSwitch",
+   ".KeyboardCtrl .btnWrapper.sixTwelve .controlsWrapper .focused#btnLayoutSwitch",
+   ".KeyboardCtrl .btnWrapper.sixTwelve .controlsWrapper .activeState#btnLayoutSwitch",
+   ".KeyboardCtrl .btnWrapper.suggFiveTen .controlsWrapper .capsLock#btnShift",
+   ".KeyboardCtrl .btnWrapper.suggFiveTen .controlsWrapper .capsLock.focused#btnShift",
+   ".KeyboardCtrl .btnWrapper.suggFiveTen .controlsWrapper .capsLock.activeState#btnShift",
+   ".KeyboardCtrl .btnWrapper.suggSevenTen .controlsWrapper .capsLock#btnShift",
+   ".KeyboardCtrl .btnWrapper.suggSevenTen .controlsWrapper .capsLock.focused#btnShift",
+   ".KeyboardCtrl .btnWrapper.suggSevenTen .controlsWrapper .capsLock.activeState#btnShift",
+   ".KeyboardCtrl .btnWrapper.suggSevenEleven .controlsWrapper .capsLock#btnShift",
+   ".KeyboardCtrl .btnWrapper.suggSevenEleven .controlsWrapper .capsLock.focused#btnShift",
+   ".KeyboardCtrl .btnWrapper.suggSevenEleven .controlsWrapper .capsLock.activeState#btnShift"
+  ]
+ },
+ {
+  "control": "Keyboard",
+  "file": "Key02_Dead.png",
+  "size": [
+   95,
+   68
+  ],
+  "bbox": [
+   0,
+   0,
+   95,
+   68
+  ],
+  "kind": "btn_ds",
+  "selectors": [
+   ".KeyboardCtrl .btnWrapper.sixTwelve .controlsWrapper .disabled#btnShift",
+   ".KeyboardCtrl .btnWrapper.sixTwelve .controlsWrapper .capsLock.disabled#btnShift",
+   ".KeyboardCtrl .btnWrapper.sixTwelve .controlsWrapper .disabled#btnLayoutSwitch",
+   ".KeyboardCtrl .btnWrapper.suggFiveTen .controlsWrapper .capsLock.disabled#btnShift",
+   ".KeyboardCtrl .btnWrapper.suggSevenTen .controlsWrapper .capsLock.disabled#btnShift",
+   ".KeyboardCtrl .btnWrapper.suggSevenEleven .controlsWrapper .capsLock.disabled#btnShift"
+  ]
+ },
+ {
+  "control": "Keyboard",
+  "file": "Key02_Focus.png",
+  "size": [
+   96,
+   70
+  ],
+  "bbox": [
+   1,
+   1,
+   95,
+   69
+  ],
+  "kind": "btn_focus",
+  "selectors": [
+   ".KeyboardCtrl .btnWrapper.sixTwelve .controlsWrapper .focused#btnShift",
+   ".KeyboardCtrl .btnWrapper.sixTwelve .controlsWrapper .capsLock.focused#btnShift",
+   ".KeyboardCtrl .btnWrapper.sixTwelve .controlsWrapper .focused#btnLayoutSwitch",
+   ".KeyboardCtrl .btnWrapper.suggFiveTen .controlsWrapper .capsLock.focused#btnShift",
+   ".KeyboardCtrl .btnWrapper.suggSevenTen .controlsWrapper .capsLock.focused#btnShift",
+   ".KeyboardCtrl .btnWrapper.suggSevenEleven .controlsWrapper .capsLock.focused#btnShift"
+  ]
+ },
+ {
+  "control": "Keyboard",
+  "file": "Key02_Hit.png",
+  "size": [
+   96,
+   70
+  ],
+  "bbox": [
+   1,
+   1,
+   95,
+   69
+  ],
+  "kind": "btn_hit",
+  "selectors": [
+   ".KeyboardCtrl .btnWrapper.sixTwelve .controlsWrapper .activeState#btnShift",
+   ".KeyboardCtrl .btnWrapper.sixTwelve .controlsWrapper .capsLock.activeState#btnShift",
+   ".KeyboardCtrl .btnWrapper.sixTwelve .controlsWrapper .activeState#btnLayoutSwitch",
+   ".KeyboardCtrl .btnWrapper.suggFiveTen .controlsWrapper .capsLock.activeState#btnShift",
+   ".KeyboardCtrl .btnWrapper.suggSevenTen .controlsWrapper .capsLock.activeState#btnShift",
+   ".KeyboardCtrl .btnWrapper.suggSevenEleven .controlsWrapper .capsLock.activeState#btnShift"
+  ]
+ },
+ {
+  "control": "Keyboard",
+  "file": "Key03.png",
+  "size": [
+   75,
+   91
+  ],
+  "bbox": [
+   0,
+   0,
+   75,
+   91
+  ],
+  "kind": "btn",
+  "selectors": [
+   ".KeyboardCtrl .btnWrapper.fiveTen .btn",
+   ".KeyboardCtrl .btnWrapper.fiveTen .btn.focused",
+   ".KeyboardCtrl .btnWrapper.fiveTen .btn.activeState"
+  ]
+ },
+ {
+  "control": "Keyboard",
+  "file": "Key03_Dead.png",
+  "size": [
+   75,
+   91
+  ],
+  "bbox": [
+   0,
+   0,
+   75,
+   91
+  ],
+  "kind": "btn_ds",
+  "selectors": [
+   ".KeyboardCtrl .btnWrapper.fiveTen .btn.disabled"
+  ]
+ },
+ {
+  "control": "Keyboard",
+  "file": "Key03_Focus.png",
+  "size": [
+   77,
+   93
+  ],
+  "bbox": [
+   1,
+   1,
+   76,
+   93
+  ],
+  "kind": "btn_focus",
+  "selectors": [
+   ".KeyboardCtrl .btnWrapper.fiveTen .btn.focused"
+  ]
+ },
+ {
+  "control": "Keyboard",
+  "file": "Key03_Hit.png",
+  "size": [
+   77,
+   93
+  ],
+  "bbox": [
+   1,
+   1,
+   77,
+   92
+  ],
+  "kind": "btn_hit",
+  "selectors": [
+   ".KeyboardCtrl .btnWrapper.fiveTen .btn.activeState"
+  ]
+ },
+ {
+  "control": "Keyboard",
+  "file": "Key04.png",
+  "size": [
+   112,
+   91
+  ],
+  "bbox": [
+   0,
+   0,
+   112,
+   91
+  ],
+  "kind": "btn",
+  "selectors": [
+   ".KeyboardCtrl .btnWrapper.fiveTen .controlsWrapper #btnShift",
+   ".KeyboardCtrl .btnWrapper.fiveTen .controlsWrapper .focused#btnShift",
+   ".KeyboardCtrl .btnWrapper.fiveTen .controlsWrapper .activeState#btnShift",
+   ".KeyboardCtrl .btnWrapper.fiveTen .controlsWrapper .capsLock#btnShift",
+   ".KeyboardCtrl .btnWrapper.fiveTen .controlsWrapper .capsLock.focused#btnShift",
+   ".KeyboardCtrl .btnWrapper.fiveTen .controlsWrapper .capsLock.activeState#btnShift",
+   ".KeyboardCtrl .btnWrapper.fiveTen .controlsWrapper #btnLayoutSwitch",
+   ".KeyboardCtrl .btnWrapper.fiveTen .controlsWrapper .focused#btnLayoutSwitch",
+   ".KeyboardCtrl .btnWrapper.fiveTen .controlsWrapper .activeState#btnLayoutSwitch"
+  ]
+ },
+ {
+  "control": "Keyboard",
+  "file": "Key04_Dead.png",
+  "size": [
+   112,
+   91
+  ],
+  "bbox": [
+   0,
+   0,
+   112,
+   91
+  ],
+  "kind": "btn_ds",
+  "selectors": [
+   ".KeyboardCtrl .btnWrapper.fiveTen .controlsWrapper .disabled#btnShift",
+   ".KeyboardCtrl .btnWrapper.fiveTen .controlsWrapper .capsLock.disabled#btnShift",
+   ".KeyboardCtrl .btnWrapper.fiveTen .controlsWrapper .disabled#btnLayoutSwitch"
+  ]
+ },
+ {
+  "control": "Keyboard",
+  "file": "Key04_Focus.png",
+  "size": [
+   114,
+   93
+  ],
+  "bbox": [
+   0,
+   1,
+   113,
+   93
+  ],
+  "kind": "btn_focus",
+  "selectors": [
+   ".KeyboardCtrl .btnWrapper.fiveTen .controlsWrapper .focused#btnShift",
+   ".KeyboardCtrl .btnWrapper.fiveTen .controlsWrapper .capsLock.focused#btnShift",
+   ".KeyboardCtrl .btnWrapper.fiveTen .controlsWrapper .focused#btnLayoutSwitch"
+  ]
+ },
+ {
+  "control": "Keyboard",
+  "file": "Key04_Hit.png",
+  "size": [
+   115,
+   93
+  ],
+  "bbox": [
+   1,
+   1,
+   114,
+   93
+  ],
+  "kind": "btn_hit",
+  "selectors": [
+   ".KeyboardCtrl .btnWrapper.fiveTen .controlsWrapper .activeState#btnShift",
+   ".KeyboardCtrl .btnWrapper.fiveTen .controlsWrapper .capsLock.activeState#btnShift",
+   ".KeyboardCtrl .btnWrapper.fiveTen .controlsWrapper .activeState#btnLayoutSwitch"
+  ]
+ },
+ {
+  "control": "Keyboard",
+  "file": "Key05.png",
+  "size": [
+   75,
+   71
+  ],
+  "bbox": [
+   0,
+   0,
+   75,
+   71
+  ],
+  "kind": "btn",
+  "selectors": [
+   ".KeyboardCtrl .btnWrapper.suggFiveTen .btn",
+   ".KeyboardCtrl .btnWrapper.suggFiveTen .btn.focused",
+   ".KeyboardCtrl .btnWrapper.suggFiveTen .btn.activeState"
+  ]
+ },
+ {
+  "control": "Keyboard",
+  "file": "Key05_Dead.png",
+  "size": [
+   75,
+   71
+  ],
+  "bbox": [
+   0,
+   0,
+   75,
+   71
+  ],
+  "kind": "btn_ds",
+  "selectors": [
+   ".KeyboardCtrl .btnWrapper.suggFiveTen .btn.disabled"
+  ]
+ },
+ {
+  "control": "Keyboard",
+  "file": "Key05_Focus.png",
+  "size": [
+   77,
+   73
+  ],
+  "bbox": [
+   1,
+   1,
+   76,
+   72
+  ],
+  "kind": "btn_focus",
+  "selectors": [
+   ".KeyboardCtrl .btnWrapper.suggFiveTen .btn.focused"
+  ]
+ },
+ {
+  "control": "Keyboard",
+  "file": "Key05_Hit.png",
+  "size": [
+   77,
+   73
+  ],
+  "bbox": [
+   1,
+   1,
+   76,
+   73
+  ],
+  "kind": "btn_hit",
+  "selectors": [
+   ".KeyboardCtrl .btnWrapper.suggFiveTen .btn.activeState"
+  ]
+ },
+ {
+  "control": "Keyboard",
+  "file": "Key06.png",
+  "size": [
+   62,
+   64
+  ],
+  "bbox": [
+   0,
+   0,
+   62,
+   64
+  ],
+  "kind": "btn",
+  "selectors": [
+   ".KeyboardCtrl .btnWrapper.fiveTen .controlsWrapper #btnGlobe",
+   ".KeyboardCtrl .btnWrapper.fiveTen .controlsWrapper .focused#btnGlobe",
+   ".KeyboardCtrl .btnWrapper.fiveTen .controlsWrapper .activeState#btnGlobe",
+   ".KeyboardCtrl .btnWrapper.sixTen .controlsWrapper #btnGlobe",
+   ".KeyboardCtrl .btnWrapper.sixTen .controlsWrapper .focused#btnGlobe",
+   ".KeyboardCtrl .btnWrapper.sixTen .controlsWrapper .activeState#btnGlobe",
+   ".KeyboardCtrl .btnWrapper.sixTwelve .controlsWrapper #btnGlobe",
+   ".KeyboardCtrl .btnWrapper.sixTwelve .controlsWrapper .focused#btnGlobe",
+   ".KeyboardCtrl .btnWrapper.sixTwelve .controlsWrapper .activeState#btnGlobe",
+   ".KeyboardCtrl .btnWrapper.suggFiveTen .controlsWrapper #btnGlobe",
+   ".KeyboardCtrl .btnWrapper.suggFiveTen .controlsWrapper .focused#btnGlobe",
+   ".KeyboardCtrl .btnWrapper.suggFiveTen .controlsWrapper .activeState#btnGlobe"
+  ]
+ },
+ {
+  "control": "Keyboard",
+  "file": "Key06_Dead.png",
+  "size": [
+   62,
+   64
+  ],
+  "bbox": [
+   0,
+   0,
+   62,
+   64
+  ],
+  "kind": "btn_ds",
+  "selectors": [
+   ".KeyboardCtrl .btnWrapper.fiveTen .controlsWrapper .disabled#btnGlobe",
+   ".KeyboardCtrl .btnWrapper.sixTen .controlsWrapper .disabled#btnGlobe",
+   ".KeyboardCtrl .btnWrapper.sixTwelve .controlsWrapper .disabled#btnGlobe",
+   ".KeyboardCtrl .btnWrapper.suggFiveTen .controlsWrapper .disabled#btnGlobe"
+  ]
+ },
+ {
+  "control": "Keyboard",
+  "file": "Key06_Focus.png",
+  "size": [
+   64,
+   66
+  ],
+  "bbox": [
+   1,
+   1,
+   64,
+   65
+  ],
+  "kind": "btn_focus",
+  "selectors": [
+   ".KeyboardCtrl .btnWrapper.fiveTen .controlsWrapper .focused#btnGlobe",
+   ".KeyboardCtrl .btnWrapper.sixTen .controlsWrapper .focused#btnGlobe",
+   ".KeyboardCtrl .btnWrapper.sixTwelve .controlsWrapper .focused#btnGlobe",
+   ".KeyboardCtrl .btnWrapper.suggFiveTen .controlsWrapper .focused#btnGlobe"
+  ]
+ },
+ {
+  "control": "Keyboard",
+  "file": "Key06_Hit.png",
+  "size": [
+   64,
+   66
+  ],
+  "bbox": [
+   1,
+   1,
+   64,
+   65
+  ],
+  "kind": "btn_hit",
+  "selectors": [
+   ".KeyboardCtrl .btnWrapper.fiveTen .controlsWrapper .activeState#btnGlobe",
+   ".KeyboardCtrl .btnWrapper.sixTen .controlsWrapper .activeState#btnGlobe",
+   ".KeyboardCtrl .btnWrapper.sixTwelve .controlsWrapper .activeState#btnGlobe",
+   ".KeyboardCtrl .btnWrapper.suggFiveTen .controlsWrapper .activeState#btnGlobe"
+  ]
+ },
+ {
+  "control": "Keyboard",
+  "file": "Key07.png",
+  "size": [
+   75,
+   46
+  ],
+  "bbox": [
+   0,
+   0,
+   75,
+   46
+  ],
+  "kind": "btn",
+  "selectors": [
+   ".KeyboardCtrl .btnWrapper.fiveTen .controlsWrapper #btnMod",
+   ".KeyboardCtrl .btnWrapper.fiveTen .controlsWrapper .focused#btnMod",
+   ".KeyboardCtrl .btnWrapper.fiveTen .controlsWrapper #btnMod:active",
+   ".KeyboardCtrl .btnWrapper.fiveTen .controlsWrapper .activeState#btnMod",
+   ".KeyboardCtrl .btnWrapper.sixTen .controlsWrapper #btnMod",
+   ".KeyboardCtrl .btnWrapper.sixTen .controlsWrapper .focused#btnMod",
+   ".KeyboardCtrl .btnWrapper.sixTen .controlsWrapper #btnMod:active",
+   ".KeyboardCtrl .btnWrapper.sixTen .controlsWrapper .activeState#btnMod",
+   ".KeyboardCtrl .btnWrapper.sixTwelve .controlsWrapper #btnMod",
+   ".KeyboardCtrl .btnWrapper.sixTwelve .controlsWrapper .focused#btnMod",
+   ".KeyboardCtrl .btnWrapper.sixTwelve .controlsWrapper #btnMod:active",
+   ".KeyboardCtrl .btnWrapper.sixTwelve .controlsWrapper .activeState#btnMod",
+   ".KeyboardCtrl .btnWrapper.suggFiveTen .controlsWrapper #btnMod",
+   ".KeyboardCtrl .btnWrapper.suggFiveTen .controlsWrapper .focused#btnMod",
+   ".KeyboardCtrl .btnWrapper.suggFiveTen .controlsWrapper #btnMod:active",
+   ".KeyboardCtrl .btnWrapper.suggFiveTen .controlsWrapper .activeState#btnMod",
+   ".KeyboardCtrl .btnWrapper.suggSevenTen .btn",
+   ".KeyboardCtrl .btnWrapper.suggSevenTen .btn.focused",
+   ".KeyboardCtrl .btnWrapper.suggSevenTen .btn.activeState",
+   ".KeyboardCtrl .btnWrapper.suggSevenTen .controlsWrapper #btnShift",
+   ".KeyboardCtrl .btnWrapper.suggSevenTen .controlsWrapper .focused#btnShift",
+   ".KeyboardCtrl .btnWrapper.suggSevenTen .controlsWrapper .activeState#btnShift",
+   ".KeyboardCtrl .btnWrapper.suggSevenTen .controlsWrapper #btnLayoutSwitch",
+   ".KeyboardCtrl .btnWrapper.suggSevenTen .controlsWrapper .focused#btnLayoutSwitch",
+   ".KeyboardCtrl .btnWrapper.suggSevenTen .controlsWrapper .activeState#btnLayoutSwitch",
+   ".KeyboardCtrl .btnWrapper.suggSevenTen .controlsWrapper #btnCancel",
+   ".KeyboardCtrl .btnWrapper.suggSevenTen .controlsWrapper .focused#btnCancel",
+   ".KeyboardCtrl .btnWrapper.suggSevenTen .controlsWrapper .activeState#btnCancel",
+   ".KeyboardCtrl .btnWrapper.suggSevenTen .controlsWrapper #btnOK",
+   ".KeyboardCtrl .btnWrapper.suggSevenTen .controlsWrapper .disabled#btnOK",
+   ".KeyboardCtrl .btnWrapper.suggSevenTen .controlsWrapper .focused#btnOK",
+   ".KeyboardCtrl .btnWrapper.suggSevenTen .controlsWrapper #btnGlobe",
+   ".KeyboardCtrl .btnWrapper.suggSevenTen .controlsWrapper .focused#btnGlobe",
+   ".KeyboardCtrl .btnWrapper.suggSevenTen .controlsWrapper .activeState#btnGlobe",
+   ".KeyboardCtrl .btnWrapper.suggSevenTen .controlsWrapper #btnMod",
+   ".KeyboardCtrl .btnWrapper.suggSevenTen .controlsWrapper .focused#btnMod",
+   ".KeyboardCtrl .btnWrapper.suggSevenTen .controlsWrapper #btnMod:active",
+   ".KeyboardCtrl .btnWrapper.suggSevenTen .controlsWrapper .activeState#btnMod",
+   ".KeyboardCtrl .btnWrapper.suggSevenTen .controlsWrapper .disabled#btnMod",
+   ".KeyboardCtrl .btnWrapper.suggSevenEleven .btnExtended",
+   ".KeyboardCtrl .btnWrapper.suggSevenEleven .btnExtended.focused",
+   ".KeyboardCtrl .btnWrapper.suggSevenEleven .btnExtended.activeState",
+   ".KeyboardCtrl .btnWrapper.suggSevenEleven .controlsWrapper #btnLayoutSwitch",
+   ".KeyboardCtrl .btnWrapper.suggSevenEleven .controlsWrapper .focused#btnLayoutSwitch",
+   ".KeyboardCtrl .btnWrapper.suggSevenEleven .controlsWrapper .activeState#btnLayoutSwitch",
+   ".KeyboardCtrl .btnWrapper.suggSevenEleven .controlsWrapper #btnCancel",
+   ".KeyboardCtrl .btnWrapper.suggSevenEleven .controlsWrapper .focused#btnCancel",
+   ".KeyboardCtrl .btnWrapper.suggSevenEleven .controlsWrapper .activeState#btnCancel",
+   ".KeyboardCtrl .btnWrapper.suggSevenEleven .controlsWrapper #btnOK",
+   ".KeyboardCtrl .btnWrapper.suggSevenEleven .controlsWrapper .disabled#btnOK",
+   ".KeyboardCtrl .btnWrapper.suggSevenEleven .controlsWrapper .focused#btnOK",
+   ".KeyboardCtrl .btnWrapper.suggSevenEleven .controlsWrapper #btnGlobe",
+   ".KeyboardCtrl .btnWrapper.suggSevenEleven .controlsWrapper .focused#btnGlobe",
+   ".KeyboardCtrl .btnWrapper.suggSevenEleven .controlsWrapper .activeState#btnGlobe",
+   ".KeyboardCtrl .btnWrapper.suggSevenEleven .controlsWrapper #btnMod",
+   ".KeyboardCtrl .btnWrapper.suggSevenEleven .controlsWrapper .focused#btnMod",
+   ".KeyboardCtrl .btnWrapper.suggSevenEleven .controlsWrapper #btnMod:active",
+   ".KeyboardCtrl .btnWrapper.suggSevenEleven .controlsWrapper .activeState#btnMod"
+  ]
+ },
+ {
+  "control": "Keyboard",
+  "file": "Key07_Dead.png",
+  "size": [
+   75,
+   46
+  ],
+  "bbox": [
+   0,
+   0,
+   75,
+   46
+  ],
+  "kind": "btn_ds",
+  "selectors": [
+   ".KeyboardCtrl .btnWrapper.fiveTen .controlsWrapper .disabled#btnMod",
+   ".KeyboardCtrl .btnWrapper.sixTen .controlsWrapper .disabled#btnMod",
+   ".KeyboardCtrl .btnWrapper.sixTwelve .controlsWrapper .disabled#btnMod",
+   ".KeyboardCtrl .btnWrapper.suggFiveTen .controlsWrapper .disabled#btnMod",
+   ".KeyboardCtrl .btnWrapper.suggSevenTen .btn.disabled",
+   ".KeyboardCtrl .btnWrapper.suggSevenTen .controlsWrapper .disabled#btnShift",
+   ".KeyboardCtrl .btnWrapper.suggSevenTen .controlsWrapper .disabled#btnLayoutSwitch",
+   ".KeyboardCtrl .btnWrapper.suggSevenTen .controlsWrapper .disabled#btnCancel",
+   ".KeyboardCtrl .btnWrapper.suggSevenTen .controlsWrapper .disabled#btnOK",
+   ".KeyboardCtrl .btnWrapper.suggSevenTen .controlsWrapper .disabled#btnGlobe",
+   ".KeyboardCtrl .btnWrapper.suggSevenTen .controlsWrapper .disabled#btnMod",
+   ".KeyboardCtrl .btnWrapper.suggSevenEleven .btnExtended.disabled",
+   ".KeyboardCtrl .btnWrapper.suggSevenEleven .controlsWrapper .disabled#btnLayoutSwitch",
+   ".KeyboardCtrl .btnWrapper.suggSevenEleven .controlsWrapper .disabled#btnCancel",
+   ".KeyboardCtrl .btnWrapper.suggSevenEleven .controlsWrapper .disabled#btnOK",
+   ".KeyboardCtrl .btnWrapper.suggSevenEleven .controlsWrapper .disabled#btnGlobe",
+   ".KeyboardCtrl .btnWrapper.suggSevenEleven .controlsWrapper .disabled#btnMod"
+  ]
+ },
+ {
+  "control": "Keyboard",
+  "file": "Key07_Focus.png",
+  "size": [
+   77,
+   48
+  ],
+  "bbox": [
+   1,
+   1,
+   76,
+   47
+  ],
+  "kind": "btn_focus",
+  "selectors": [
+   ".KeyboardCtrl .btnWrapper.fiveTen .controlsWrapper .focused#btnMod",
+   ".KeyboardCtrl .btnWrapper.sixTen .controlsWrapper .focused#btnMod",
+   ".KeyboardCtrl .btnWrapper.sixTwelve .controlsWrapper .focused#btnMod",
+   ".KeyboardCtrl .btnWrapper.suggFiveTen .controlsWrapper .focused#btnMod",
+   ".KeyboardCtrl .btnWrapper.suggSevenTen .btn.focused",
+   ".KeyboardCtrl .btnWrapper.suggSevenTen .controlsWrapper .focused#btnShift",
+   ".KeyboardCtrl .btnWrapper.suggSevenTen .controlsWrapper .focused#btnLayoutSwitch",
+   ".KeyboardCtrl .btnWrapper.suggSevenTen .controlsWrapper .focused#btnCancel",
+   ".KeyboardCtrl .btnWrapper.suggSevenTen .controlsWrapper .focused#btnOK",
+   ".KeyboardCtrl .btnWrapper.suggSevenTen .controlsWrapper .focused#btnGlobe",
+   ".KeyboardCtrl .btnWrapper.suggSevenTen .controlsWrapper .focused#btnMod",
+   ".KeyboardCtrl .btnWrapper.suggSevenEleven .btnExtended.focused",
+   ".KeyboardCtrl .btnWrapper.suggSevenEleven .controlsWrapper .focused#btnLayoutSwitch",
+   ".KeyboardCtrl .btnWrapper.suggSevenEleven .controlsWrapper .focused#btnCancel",
+   ".KeyboardCtrl .btnWrapper.suggSevenEleven .controlsWrapper .focused#btnOK",
+   ".KeyboardCtrl .btnWrapper.suggSevenEleven .controlsWrapper .focused#btnGlobe",
+   ".KeyboardCtrl .btnWrapper.suggSevenEleven .controlsWrapper .focused#btnMod"
+  ]
+ },
+ {
+  "control": "Keyboard",
+  "file": "Key07_Hit.png",
+  "size": [
+   77,
+   48
+  ],
+  "bbox": [
+   1,
+   1,
+   76,
+   47
+  ],
+  "kind": "btn_hit",
+  "selectors": [
+   ".KeyboardCtrl .btnWrapper.fiveTen .controlsWrapper #btnMod:active",
+   ".KeyboardCtrl .btnWrapper.fiveTen .controlsWrapper .activeState#btnMod",
+   ".KeyboardCtrl .btnWrapper.sixTen .controlsWrapper #btnMod:active",
+   ".KeyboardCtrl .btnWrapper.sixTen .controlsWrapper .activeState#btnMod",
+   ".KeyboardCtrl .btnWrapper.sixTwelve .controlsWrapper #btnMod:active",
+   ".KeyboardCtrl .btnWrapper.sixTwelve .controlsWrapper .activeState#btnMod",
+   ".KeyboardCtrl .btnWrapper.suggFiveTen .controlsWrapper #btnMod:active",
+   ".KeyboardCtrl .btnWrapper.suggFiveTen .controlsWrapper .activeState#btnMod",
+   ".KeyboardCtrl .btnWrapper.suggSevenTen .btn.activeState",
+   ".KeyboardCtrl .btnWrapper.suggSevenTen .controlsWrapper .activeState#btnShift",
+   ".KeyboardCtrl .btnWrapper.suggSevenTen .controlsWrapper .activeState#btnLayoutSwitch",
+   ".KeyboardCtrl .btnWrapper.suggSevenTen .controlsWrapper .activeState#btnCancel",
+   ".KeyboardCtrl .btnWrapper.suggSevenTen .controlsWrapper .activeState#btnOK",
+   ".KeyboardCtrl .btnWrapper.suggSevenTen .controlsWrapper .activeState#btnGlobe",
+   ".KeyboardCtrl .btnWrapper.suggSevenTen .controlsWrapper #btnMod:active",
+   ".KeyboardCtrl .btnWrapper.suggSevenTen .controlsWrapper .activeState#btnMod",
+   ".KeyboardCtrl .btnWrapper.suggSevenEleven .btnExtended.activeState",
+   ".KeyboardCtrl .btnWrapper.suggSevenEleven .controlsWrapper .activeState#btnLayoutSwitch",
+   ".KeyboardCtrl .btnWrapper.suggSevenEleven .controlsWrapper .activeState#btnCancel",
+   ".KeyboardCtrl .btnWrapper.suggSevenEleven .controlsWrapper .activeState#btnOK",
+   ".KeyboardCtrl .btnWrapper.suggSevenEleven .controlsWrapper .activeState#btnGlobe",
+   ".KeyboardCtrl .btnWrapper.suggSevenEleven .controlsWrapper #btnMod:active",
+   ".KeyboardCtrl .btnWrapper.suggSevenEleven .controlsWrapper .activeState#btnMod"
+  ]
+ },
+ {
+  "control": "Keyboard",
+  "file": "Key08.png",
+  "size": [
+   67,
+   71
+  ],
+  "bbox": [
+   0,
+   0,
+   67,
+   71
+  ],
+  "kind": "btn",
+  "selectors": [
+   ".KeyboardCtrl .btnWrapper.suggFiveTen .btn.lastRow",
+   ".KeyboardCtrl .btnWrapper.suggFiveTen .btn.lastRow.focused",
+   ".KeyboardCtrl .btnWrapper.suggFiveTen .btn.lastRow.activeState"
+  ]
+ },
+ {
+  "control": "Keyboard",
+  "file": "Key08_Dead.png",
+  "size": [
+   67,
+   71
+  ],
+  "bbox": [
+   0,
+   0,
+   67,
+   71
+  ],
+  "kind": "btn_ds",
+  "selectors": [
+   ".KeyboardCtrl .btnWrapper.suggFiveTen .btn.lastRow.disabled"
+  ]
+ },
+ {
+  "control": "Keyboard",
+  "file": "Key08_Focus.png",
+  "size": [
+   69,
+   72
+  ],
+  "bbox": [
+   1,
+   1,
+   68,
+   72
+  ],
+  "kind": "btn_focus",
+  "selectors": [
+   ".KeyboardCtrl .btnWrapper.suggFiveTen .btn.lastRow.focused"
+  ]
+ },
+ {
+  "control": "Keyboard",
+  "file": "Key08_Hit.png",
+  "size": [
+   69,
+   73
+  ],
+  "bbox": [
+   1,
+   1,
+   68,
+   72
+  ],
+  "kind": "btn_hit",
+  "selectors": [
+   ".KeyboardCtrl .btnWrapper.suggFiveTen .btn.lastRow.activeState"
+  ]
+ },
+ {
+  "control": "Keyboard",
+  "file": "Key09.png",
+  "size": [
+   108,
+   71
+  ],
+  "bbox": [
+   0,
+   0,
+   108,
+   71
+  ],
+  "kind": "btn",
+  "selectors": [
+   ".KeyboardCtrl .btnWrapper.fiveTen .controlsWrapper .noIcon#btnShift",
+   ".KeyboardCtrl .btnWrapper.fiveTen .controlsWrapper .noIcon.focused#btnShift",
+   ".KeyboardCtrl .btnWrapper.fiveTen .controlsWrapper .noIcon.activeState#btnShift",
+   ".KeyboardCtrl .btnWrapper.sixTen .controlsWrapper .noIcon#btnShift",
+   ".KeyboardCtrl .btnWrapper.sixTen .controlsWrapper .noIcon.focused#btnShift",
+   ".KeyboardCtrl .btnWrapper.sixTen .controlsWrapper .noIcon.activeState#btnShift",
+   ".KeyboardCtrl .btnWrapper.sixTwelve .controlsWrapper .noIcon#btnShift",
+   ".KeyboardCtrl .btnWrapper.sixTwelve .controlsWrapper .noIcon.focused#btnShift",
+   ".KeyboardCtrl .btnWrapper.sixTwelve .controlsWrapper .noIcon.activeState#btnShift",
+   ".KeyboardCtrl .btnWrapper.suggFiveTen .controlsWrapper #btnShift",
+   ".KeyboardCtrl .btnWrapper.suggFiveTen .controlsWrapper .focused#btnShift",
+   ".KeyboardCtrl .btnWrapper.suggFiveTen .controlsWrapper .activeState#btnShift",
+   ".KeyboardCtrl .btnWrapper.suggFiveTen .controlsWrapper .noIcon#btnShift",
+   ".KeyboardCtrl .btnWrapper.suggFiveTen .controlsWrapper .noIcon.focused#btnShift",
+   ".KeyboardCtrl .btnWrapper.suggFiveTen .controlsWrapper .noIcon.activeState#btnShift",
+   ".KeyboardCtrl .btnWrapper.suggFiveTen .controlsWrapper #btnLayoutSwitch",
+   ".KeyboardCtrl .btnWrapper.suggFiveTen .controlsWrapper .focused#btnLayoutSwitch",
+   ".KeyboardCtrl .btnWrapper.suggFiveTen .controlsWrapper .activeState#btnLayoutSwitch",
+   ".KeyboardCtrl .btnWrapper.suggSevenTen .controlsWrapper .noIcon#btnShift",
+   ".KeyboardCtrl .btnWrapper.suggSevenTen .controlsWrapper .noIcon.focused#btnShift",
+   ".KeyboardCtrl .btnWrapper.suggSevenTen .controlsWrapper .noIcon.activeState#btnShift",
+   ".KeyboardCtrl .btnWrapper.suggSevenEleven .controlsWrapper .noIcon#btnShift",
+   ".KeyboardCtrl .btnWrapper.suggSevenEleven .controlsWrapper .noIcon.focused#btnShift",
+   ".KeyboardCtrl .btnWrapper.suggSevenEleven .controlsWrapper .noIcon.activeState#btnShift"
+  ]
+ },
+ {
+  "control": "Keyboard",
+  "file": "Key09_Dead.png",
+  "size": [
+   108,
+   71
+  ],
+  "bbox": [
+   0,
+   0,
+   108,
+   71
+  ],
+  "kind": "btn_ds",
+  "selectors": [
+   ".KeyboardCtrl .btnWrapper.fiveTen .controlsWrapper .noIcon.disabled#btnShift",
+   ".KeyboardCtrl .btnWrapper.fiveTen .controlsWrapper .disabled#btnCancel",
+   ".KeyboardCtrl .btnWrapper.fiveTen .controlsWrapper .disabled#btnOK",
+   ".KeyboardCtrl .btnWrapper.sixTen .controlsWrapper .noIcon.disabled#btnShift",
+   ".KeyboardCtrl .btnWrapper.sixTen .controlsWrapper .disabled#btnCancel",
+   ".KeyboardCtrl .btnWrapper.sixTen .controlsWrapper .disabled#btnOK",
+   ".KeyboardCtrl .btnWrapper.sixTwelve .controlsWrapper .noIcon.disabled#btnShift",
+   ".KeyboardCtrl .btnWrapper.sixTwelve .controlsWrapper .disabled#btnCancel",
+   ".KeyboardCtrl .btnWrapper.sixTwelve .controlsWrapper .disabled#btnOK",
+   ".KeyboardCtrl .btnWrapper.suggFiveTen .controlsWrapper .disabled#btnShift",
+   ".KeyboardCtrl .btnWrapper.suggFiveTen .controlsWrapper .noIcon.disabled#btnShift",
+   ".KeyboardCtrl .btnWrapper.suggFiveTen .controlsWrapper .disabled#btnLayoutSwitch",
+   ".KeyboardCtrl .btnWrapper.suggFiveTen .controlsWrapper .disabled#btnCancel",
+   ".KeyboardCtrl .btnWrapper.suggFiveTen .controlsWrapper .disabled#btnOK",
+   ".KeyboardCtrl .btnWrapper.suggSevenTen .controlsWrapper .noIcon.disabled#btnShift",
+   ".KeyboardCtrl .btnWrapper.suggSevenEleven .controlsWrapper .noIcon.disabled#btnShift"
+  ]
+ },
+ {
+  "control": "Keyboard",
+  "file": "Key09_Focus.png",
+  "size": [
+   110,
+   72
+  ],
+  "bbox": [
+   1,
+   1,
+   109,
+   72
+  ],
+  "kind": "btn_focus",
+  "selectors": [
+   ".KeyboardCtrl .btnWrapper.fiveTen .controlsWrapper .noIcon.focused#btnShift",
+   ".KeyboardCtrl .btnWrapper.sixTen .controlsWrapper .noIcon.focused#btnShift",
+   ".KeyboardCtrl .btnWrapper.sixTwelve .controlsWrapper .noIcon.focused#btnShift",
+   ".KeyboardCtrl .btnWrapper.suggFiveTen .controlsWrapper .focused#btnShift",
+   ".KeyboardCtrl .btnWrapper.suggFiveTen .controlsWrapper .noIcon.focused#btnShift",
+   ".KeyboardCtrl .btnWrapper.suggFiveTen .controlsWrapper .focused#btnLayoutSwitch",
+   ".KeyboardCtrl .btnWrapper.suggSevenTen .controlsWrapper .noIcon.focused#btnShift",
+   ".KeyboardCtrl .btnWrapper.suggSevenEleven .controlsWrapper .noIcon.focused#btnShift"
+  ]
+ },
+ {
+  "control": "Keyboard",
+  "file": "Key09_Hit.png",
+  "size": [
+   110,
+   73
+  ],
+  "bbox": [
+   1,
+   1,
+   109,
+   72
+  ],
+  "kind": "btn_hit",
+  "selectors": [
+   ".KeyboardCtrl .btnWrapper.fiveTen .controlsWrapper .noIcon.activeState#btnShift",
+   ".KeyboardCtrl .btnWrapper.sixTen .controlsWrapper .noIcon.activeState#btnShift",
+   ".KeyboardCtrl .btnWrapper.sixTwelve .controlsWrapper .noIcon.activeState#btnShift",
+   ".KeyboardCtrl .btnWrapper.suggFiveTen .controlsWrapper .activeState#btnShift",
+   ".KeyboardCtrl .btnWrapper.suggFiveTen .controlsWrapper .noIcon.activeState#btnShift",
+   ".KeyboardCtrl .btnWrapper.suggFiveTen .controlsWrapper .activeState#btnLayoutSwitch",
+   ".KeyboardCtrl .btnWrapper.suggSevenTen .controlsWrapper .noIcon.activeState#btnShift",
+   ".KeyboardCtrl .btnWrapper.suggSevenEleven .controlsWrapper .noIcon.activeState#btnShift"
+  ]
+ },
+ {
+  "control": "Keyboard",
+  "file": "Key10.png",
+  "size": [
+   76,
+   69
+  ],
+  "bbox": [
+   0,
+   0,
+   76,
+   69
+  ],
+  "kind": "btn",
+  "selectors": [
+   ".KeyboardCtrl .btnWrapper.sixTen .btn",
+   ".KeyboardCtrl .btnWrapper.sixTen .btn.focused",
+   ".KeyboardCtrl .btnWrapper.sixTen .btn.activeState"
+  ]
+ },
+ {
+  "control": "Keyboard",
+  "file": "Key10_Dead.png",
+  "size": [
+   75,
+   69
+  ],
+  "bbox": [
+   0,
+   0,
+   75,
+   69
+  ],
+  "kind": "btn_ds",
+  "selectors": [
+   ".KeyboardCtrl .btnWrapper.sixTen .btn.disabled"
+  ]
+ },
+ {
+  "control": "Keyboard",
+  "file": "Key10_Focus.png",
+  "size": [
+   77,
+   70
+  ],
+  "bbox": [
+   0,
+   1,
+   76,
+   70
+  ],
+  "kind": "btn_focus",
+  "selectors": [
+   ".KeyboardCtrl .btnWrapper.sixTen .btn.focused"
+  ]
+ },
+ {
+  "control": "Keyboard",
+  "file": "Key10_Hit.png",
+  "size": [
+   77,
+   70
+  ],
+  "bbox": [
+   0,
+   1,
+   76,
+   70
+  ],
+  "kind": "btn_hit",
+  "selectors": [
+   ".KeyboardCtrl .btnWrapper.sixTen .btn.activeState"
+  ]
+ },
+ {
+  "control": "Keyboard",
+  "file": "Key11.png",
+  "size": [
+   115,
+   69
+  ],
+  "bbox": [
+   0,
+   0,
+   115,
+   69
+  ],
+  "kind": "btn",
+  "selectors": [
+   ".KeyboardCtrl .btnWrapper.sixTen .controlsWrapper #btnShift",
+   ".KeyboardCtrl .btnWrapper.sixTen .controlsWrapper .focused#btnShift",
+   ".KeyboardCtrl .btnWrapper.sixTen .controlsWrapper .activeState#btnShift",
+   ".KeyboardCtrl .btnWrapper.sixTen .controlsWrapper .capsLock#btnShift",
+   ".KeyboardCtrl .btnWrapper.sixTen .controlsWrapper .capsLock.focused#btnShift",
+   ".KeyboardCtrl .btnWrapper.sixTen .controlsWrapper .capsLock.activeState#btnShift",
+   ".KeyboardCtrl .btnWrapper.sixTen .controlsWrapper #btnLayoutSwitch",
+   ".KeyboardCtrl .btnWrapper.sixTen .controlsWrapper .focused#btnLayoutSwitch",
+   ".KeyboardCtrl .btnWrapper.sixTen .controlsWrapper .activeState#btnLayoutSwitch"
+  ]
+ },
+ {
+  "control": "Keyboard",
+  "file": "Key11_Dead.png",
+  "size": [
+   115,
+   69
+  ],
+  "bbox": [
+   0,
+   0,
+   115,
+   69
+  ],
+  "kind": "btn_ds",
+  "selectors": [
+   ".KeyboardCtrl .btnWrapper.sixTen .controlsWrapper .disabled#btnShift",
+   ".KeyboardCtrl .btnWrapper.sixTen .controlsWrapper .capsLock.disabled#btnShift",
+   ".KeyboardCtrl .btnWrapper.sixTen .controlsWrapper .disabled#btnLayoutSwitch"
+  ]
+ },
+ {
+  "control": "Keyboard",
+  "file": "Key11_Focus.png",
+  "size": [
+   116,
+   70
+  ],
+  "bbox": [
+   0,
+   0,
+   115,
+   69
+  ],
+  "kind": "btn_focus",
+  "selectors": [
+   ".KeyboardCtrl .btnWrapper.sixTen .controlsWrapper .focused#btnShift",
+   ".KeyboardCtrl .btnWrapper.sixTen .controlsWrapper .capsLock.focused#btnShift",
+   ".KeyboardCtrl .btnWrapper.sixTen .controlsWrapper .focused#btnLayoutSwitch"
+  ]
+ },
+ {
+  "control": "Keyboard",
+  "file": "Key11_Hit.png",
+  "size": [
+   116,
+   71
+  ],
+  "bbox": [
+   0,
+   1,
+   115,
+   70
+  ],
+  "kind": "btn_hit",
+  "selectors": [
+   ".KeyboardCtrl .btnWrapper.sixTen .controlsWrapper .activeState#btnShift",
+   ".KeyboardCtrl .btnWrapper.sixTen .controlsWrapper .capsLock.activeState#btnShift",
+   ".KeyboardCtrl .btnWrapper.sixTen .controlsWrapper .activeState#btnLayoutSwitch"
+  ]
+ },
+ {
+  "control": "Keyboard",
+  "file": "Key12.png",
+  "size": [
+   75,
+   60
+  ],
+  "bbox": [
+   0,
+   0,
+   75,
+   60
+  ],
+  "kind": "btn",
+  "selectors": [
+   ".KeyboardCtrl .suggestionRowWrapper.fiveTen #arrowLeft",
+   ".KeyboardCtrl .suggestionRowWrapper.fiveTen #arrowRight",
+   ".KeyboardCtrl .suggestionRowWrapper.fiveTen .focused#arrowLeft",
+   ".KeyboardCtrl .suggestionRowWrapper.fiveTen .activeState#arrowLeft",
+   ".KeyboardCtrl .suggestionRowWrapper.fiveTen .focused#arrowRight",
+   ".KeyboardCtrl .suggestionRowWrapper.fiveTen .activeState#arrowRight",
+   ".KeyboardCtrl .suggestionRowWrapper.sixTen #arrowLeft",
+   ".KeyboardCtrl .suggestionRowWrapper.sixTen #arrowRight",
+   ".KeyboardCtrl .suggestionRowWrapper.sixTen .focused#arrowLeft",
+   ".KeyboardCtrl .suggestionRowWrapper.sixTen .activeState#arrowLeft",
+   ".KeyboardCtrl .suggestionRowWrapper.sixTen .focused#arrowRight",
+   ".KeyboardCtrl .suggestionRowWrapper.sixTen .activeState#arrowRight",
+   ".KeyboardCtrl .suggestionRowWrapper.sixTwelve #arrowLeft",
+   ".KeyboardCtrl .suggestionRowWrapper.sixTwelve #arrowRight",
+   ".KeyboardCtrl .suggestionRowWrapper.sixTwelve .focused#arrowLeft",
+   ".KeyboardCtrl .suggestionRowWrapper.sixTwelve .activeState#arrowLeft",
+   ".KeyboardCtrl .suggestionRowWrapper.sixTwelve .focused#arrowRight",
+   ".KeyboardCtrl .suggestionRowWrapper.sixTwelve .activeState#arrowRight",
+   ".KeyboardCtrl .suggestionRowWrapper.suggFiveTen #arrowLeft",
+   ".KeyboardCtrl .suggestionRowWrapper.suggFiveTen #arrowRight",
+   ".KeyboardCtrl .suggestionRowWrapper.suggFiveTen .focused#arrowLeft",
+   ".KeyboardCtrl .suggestionRowWrapper.suggFiveTen .activeState#arrowLeft",
+   ".KeyboardCtrl .suggestionRowWrapper.suggFiveTen .focused#arrowRight",
+   ".KeyboardCtrl .suggestionRowWrapper.suggFiveTen .activeState#arrowRight",
+   ".KeyboardCtrl .suggestionRowWrapper.suggSevenTen #arrowLeft",
+   ".KeyboardCtrl .suggestionRowWrapper.suggSevenTen #arrowRight",
+   ".KeyboardCtrl .suggestionRowWrapper.suggSevenTen .focused#arrowLeft",
+   ".KeyboardCtrl .suggestionRowWrapper.suggSevenTen .activeState#arrowLeft",
+   ".KeyboardCtrl .suggestionRowWrapper.suggSevenTen .focused#arrowRight",
+   ".KeyboardCtrl .suggestionRowWrapper.suggSevenTen .activeState#arrowRight",
+   ".KeyboardCtrl .suggestionRowWrapper.suggSevenEleven #arrowLeft",
+   ".KeyboardCtrl .suggestionRowWrapper.suggSevenEleven #arrowRight",
+   ".KeyboardCtrl .suggestionRowWrapper.suggSevenEleven .focused#arrowLeft",
+   ".KeyboardCtrl .suggestionRowWrapper.suggSevenEleven .activeState#arrowLeft",
+   ".KeyboardCtrl .suggestionRowWrapper.suggSevenEleven .focused#arrowRight",
+   ".KeyboardCtrl .suggestionRowWrapper.suggSevenEleven .activeState#arrowRight",
+   ".KeyboardCtrl .btnWrapper.fiveTen .controlsWrapper .KeyboardCtrlDeleteBtn_En",
+   ".KeyboardCtrl .btnWrapper.fiveTen .controlsWrapper .KeyboardCtrlDeleteBtn_Fs",
+   ".KeyboardCtrl .btnWrapper.fiveTen .controlsWrapper .KeyboardCtrlDeleteBtn_Dwn",
+   ".KeyboardCtrl .btnWrapper.fiveTen .controlsWrapper .KeyboardCtrlDeleteBtn_Hd",
+   ".KeyboardCtrl .btnWrapper.sixTen .controlsWrapper .KeyboardCtrlDeleteBtn_En",
+   ".KeyboardCtrl .btnWrapper.sixTen .controlsWrapper .KeyboardCtrlDeleteBtn_Fs",
+   ".KeyboardCtrl .btnWrapper.sixTen .controlsWrapper .KeyboardCtrlDeleteBtn_Dwn",
+   ".KeyboardCtrl .btnWrapper.sixTen .controlsWrapper .KeyboardCtrlDeleteBtn_Hd",
+   ".KeyboardCtrl .btnWrapper.sixTwelve .controlsWrapper .KeyboardCtrlDeleteBtn_En",
+   ".KeyboardCtrl .btnWrapper.sixTwelve .controlsWrapper .KeyboardCtrlDeleteBtn_Fs",
+   ".KeyboardCtrl .btnWrapper.sixTwelve .controlsWrapper .KeyboardCtrlDeleteBtn_Dwn",
+   ".KeyboardCtrl .btnWrapper.sixTwelve .controlsWrapper .KeyboardCtrlDeleteBtn_Hd",
+   ".KeyboardCtrl .btnWrapper.suggFiveTen .controlsWrapper .KeyboardCtrlDeleteBtn_En",
+   ".KeyboardCtrl .btnWrapper.suggFiveTen .controlsWrapper .KeyboardCtrlDeleteBtn_Fs",
+   ".KeyboardCtrl .btnWrapper.suggFiveTen .controlsWrapper .KeyboardCtrlDeleteBtn_Dwn",
+   ".KeyboardCtrl .btnWrapper.suggFiveTen .controlsWrapper .KeyboardCtrlDeleteBtn_Hd",
+   ".KeyboardCtrl .btnWrapper.suggSevenTen .controlsWrapper .KeyboardCtrlDeleteBtn_En",
+   ".KeyboardCtrl .btnWrapper.suggSevenTen .controlsWrapper .KeyboardCtrlDeleteBtn_Fs",
+   ".KeyboardCtrl .btnWrapper.suggSevenTen .controlsWrapper .KeyboardCtrlDeleteBtn_Dwn",
+   ".KeyboardCtrl .btnWrapper.suggSevenTen .controlsWrapper .KeyboardCtrlDeleteBtn_Hd",
+   ".KeyboardCtrl .btnWrapper.suggSevenEleven .controlsWrapper .KeyboardCtrlDeleteBtn_En",
+   ".KeyboardCtrl .btnWrapper.suggSevenEleven .controlsWrapper .KeyboardCtrlDeleteBtn_Fs",
+   ".KeyboardCtrl .btnWrapper.suggSevenEleven .controlsWrapper .KeyboardCtrlDeleteBtn_Dwn",
+   ".KeyboardCtrl .btnWrapper.suggSevenEleven .controlsWrapper .KeyboardCtrlDeleteBtn_Hd"
+  ]
+ },
+ {
+  "control": "Keyboard",
+  "file": "Key12_Dead.png",
+  "size": [
+   76,
+   60
+  ],
+  "bbox": [
+   0,
+   0,
+   76,
+   60
+  ],
+  "kind": "btn_ds",
+  "selectors": [
+   ".KeyboardCtrl .suggestionRowWrapper.fiveTen .disabled#arrowLeft",
+   ".KeyboardCtrl .suggestionRowWrapper.fiveTen .disabled#arrowRight",
+   ".KeyboardCtrl .suggestionRowWrapper.sixTen .disabled#arrowLeft",
+   ".KeyboardCtrl .suggestionRowWrapper.sixTen .disabled#arrowRight",
+   ".KeyboardCtrl .suggestionRowWrapper.sixTwelve .disabled#arrowLeft",
+   ".KeyboardCtrl .suggestionRowWrapper.sixTwelve .disabled#arrowRight",
+   ".KeyboardCtrl .suggestionRowWrapper.suggFiveTen .disabled#arrowLeft",
+   ".KeyboardCtrl .suggestionRowWrapper.suggFiveTen .disabled#arrowRight",
+   ".KeyboardCtrl .suggestionRowWrapper.suggSevenTen .disabled#arrowLeft",
+   ".KeyboardCtrl .suggestionRowWrapper.suggSevenTen .disabled#arrowRight",
+   ".KeyboardCtrl .suggestionRowWrapper.suggSevenEleven .disabled#arrowLeft",
+   ".KeyboardCtrl .suggestionRowWrapper.suggSevenEleven .disabled#arrowRight",
+   ".KeyboardCtrl .btnWrapper.fiveTen .controlsWrapper .KeyboardCtrlDeleteBtn_Ds",
+   ".KeyboardCtrl .btnWrapper.sixTen .controlsWrapper .KeyboardCtrlDeleteBtn_Ds",
+   ".KeyboardCtrl .btnWrapper.sixTwelve .controlsWrapper .KeyboardCtrlDeleteBtn_Ds",
+   ".KeyboardCtrl .btnWrapper.suggFiveTen .controlsWrapper .KeyboardCtrlDeleteBtn_Ds",
+   ".KeyboardCtrl .btnWrapper.suggSevenTen .controlsWrapper .KeyboardCtrlDeleteBtn_Ds",
+   ".KeyboardCtrl .btnWrapper.suggSevenEleven .controlsWrapper .KeyboardCtrlDeleteBtn_Ds"
+  ]
+ },
+ {
+  "control": "Keyboard",
+  "file": "Key12_Focus.png",
+  "size": [
+   77,
+   61
+  ],
+  "bbox": [
+   1,
+   1,
+   77,
+   61
+  ],
+  "kind": "btn_focus",
+  "selectors": [
+   ".KeyboardCtrl .suggestionRowWrapper.fiveTen .focused#arrowLeft",
+   ".KeyboardCtrl .suggestionRowWrapper.fiveTen .focused#arrowRight",
+   ".KeyboardCtrl .suggestionRowWrapper.sixTen .focused#arrowLeft",
+   ".KeyboardCtrl .suggestionRowWrapper.sixTen .focused#arrowRight",
+   ".KeyboardCtrl .suggestionRowWrapper.sixTwelve .focused#arrowLeft",
+   ".KeyboardCtrl .suggestionRowWrapper.sixTwelve .focused#arrowRight",
+   ".KeyboardCtrl .suggestionRowWrapper.suggFiveTen .focused#arrowLeft",
+   ".KeyboardCtrl .suggestionRowWrapper.suggFiveTen .focused#arrowRight",
+   ".KeyboardCtrl .suggestionRowWrapper.suggSevenTen .focused#arrowLeft",
+   ".KeyboardCtrl .suggestionRowWrapper.suggSevenTen .focused#arrowRight",
+   ".KeyboardCtrl .suggestionRowWrapper.suggSevenEleven .focused#arrowLeft",
+   ".KeyboardCtrl .suggestionRowWrapper.suggSevenEleven .focused#arrowRight",
+   ".KeyboardCtrl .btnWrapper.fiveTen .controlsWrapper .KeyboardCtrlDeleteBtn_Fs",
+   ".KeyboardCtrl .btnWrapper.sixTen .controlsWrapper .KeyboardCtrlDeleteBtn_Fs",
+   ".KeyboardCtrl .btnWrapper.sixTwelve .controlsWrapper .KeyboardCtrlDeleteBtn_Fs",
+   ".KeyboardCtrl .btnWrapper.suggFiveTen .controlsWrapper .KeyboardCtrlDeleteBtn_Fs",
+   ".KeyboardCtrl .btnWrapper.suggSevenTen .controlsWrapper .KeyboardCtrlDeleteBtn_Fs",
+   ".KeyboardCtrl .btnWrapper.suggSevenEleven .controlsWrapper .KeyboardCtrlDeleteBtn_Fs"
+  ]
+ },
+ {
+  "control": "Keyboard",
+  "file": "Key12_Hit.png",
+  "size": [
+   77,
+   61
+  ],
+  "bbox": [
+   1,
+   1,
+   77,
+   61
+  ],
+  "kind": "btn_hit",
+  "selectors": [
+   ".KeyboardCtrl .suggestionRowWrapper.fiveTen .activeState#arrowLeft",
+   ".KeyboardCtrl .suggestionRowWrapper.fiveTen .activeState#arrowRight",
+   ".KeyboardCtrl .suggestionRowWrapper.sixTen .activeState#arrowLeft",
+   ".KeyboardCtrl .suggestionRowWrapper.sixTen .activeState#arrowRight",
+   ".KeyboardCtrl .suggestionRowWrapper.sixTwelve .activeState#arrowLeft",
+   ".KeyboardCtrl .suggestionRowWrapper.sixTwelve .activeState#arrowRight",
+   ".KeyboardCtrl .suggestionRowWrapper.suggFiveTen .activeState#arrowLeft",
+   ".KeyboardCtrl .suggestionRowWrapper.suggFiveTen .activeState#arrowRight",
+   ".KeyboardCtrl .suggestionRowWrapper.suggSevenTen .activeState#arrowLeft",
+   ".KeyboardCtrl .suggestionRowWrapper.suggSevenTen .activeState#arrowRight",
+   ".KeyboardCtrl .suggestionRowWrapper.suggSevenEleven .activeState#arrowLeft",
+   ".KeyboardCtrl .suggestionRowWrapper.suggSevenEleven .activeState#arrowRight",
+   ".KeyboardCtrl .btnWrapper.fiveTen .controlsWrapper .KeyboardCtrlDeleteBtn_Dwn",
+   ".KeyboardCtrl .btnWrapper.fiveTen .controlsWrapper .KeyboardCtrlDeleteBtn_Hd",
+   ".KeyboardCtrl .btnWrapper.sixTen .controlsWrapper .KeyboardCtrlDeleteBtn_Dwn",
+   ".KeyboardCtrl .btnWrapper.sixTen .controlsWrapper .KeyboardCtrlDeleteBtn_Hd",
+   ".KeyboardCtrl .btnWrapper.sixTwelve .controlsWrapper .KeyboardCtrlDeleteBtn_Dwn",
+   ".KeyboardCtrl .btnWrapper.sixTwelve .controlsWrapper .KeyboardCtrlDeleteBtn_Hd",
+   ".KeyboardCtrl .btnWrapper.suggFiveTen .controlsWrapper .KeyboardCtrlDeleteBtn_Dwn",
+   ".KeyboardCtrl .btnWrapper.suggFiveTen .controlsWrapper .KeyboardCtrlDeleteBtn_Hd",
+   ".KeyboardCtrl .btnWrapper.suggSevenTen .controlsWrapper .KeyboardCtrlDeleteBtn_Dwn",
+   ".KeyboardCtrl .btnWrapper.suggSevenTen .controlsWrapper .KeyboardCtrlDeleteBtn_Hd",
+   ".KeyboardCtrl .btnWrapper.suggSevenEleven .controlsWrapper .KeyboardCtrlDeleteBtn_Dwn",
+   ".KeyboardCtrl .btnWrapper.suggSevenEleven .controlsWrapper .KeyboardCtrlDeleteBtn_Hd"
+  ]
+ },
+ {
+  "control": "Keyboard",
+  "file": "Key13_Dead.png",
+  "size": [
+   152,
+   91
+  ],
+  "bbox": [
+   0,
+   0,
+   152,
+   91
+  ],
+  "kind": "btn_ds",
+  "selectors": [
+   ".KeyboardCtrl .btnWrapper.fiveTen .controlsWrapper .disabled#btnSpacebar",
+   ".KeyboardCtrl .btnWrapper.sixTen .controlsWrapper .disabled#btnSpacebar",
+   ".KeyboardCtrl .btnWrapper.sixTwelve .controlsWrapper .disabled#btnSpacebar",
+   ".KeyboardCtrl .btnWrapper.suggFiveTen .controlsWrapper .disabled#btnSpacebar",
+   ".KeyboardCtrl .btnWrapper.suggSevenTen .controlsWrapper .disabled#btnSpacebar",
+   ".KeyboardCtrl .btnWrapper.suggSevenEleven .controlsWrapper .disabled#btnSpacebar"
+  ]
+ },
+ {
+  "control": "Keyboard",
+  "file": "Key14.png",
+  "size": [
+   93,
+   65
+  ],
+  "bbox": [
+   0,
+   0,
+   93,
+   65
+  ],
+  "kind": "btn",
+  "selectors": [
+   ".KeyboardCtrl .btnWrapper.fiveTen .controlsWrapper #btnCancel",
+   ".KeyboardCtrl .btnWrapper.fiveTen .controlsWrapper .focused#btnCancel",
+   ".KeyboardCtrl .btnWrapper.fiveTen .controlsWrapper .activeState#btnCancel",
+   ".KeyboardCtrl .btnWrapper.fiveTen .controlsWrapper #btnOK",
+   ".KeyboardCtrl .btnWrapper.fiveTen .controlsWrapper .focused#btnOK",
+   ".KeyboardCtrl .btnWrapper.fiveTen .controlsWrapper .activeState#btnOK",
+   ".KeyboardCtrl .btnWrapper.sixTen .controlsWrapper #btnCancel",
+   ".KeyboardCtrl .btnWrapper.sixTen .controlsWrapper .focused#btnCancel",
+   ".KeyboardCtrl .btnWrapper.sixTen .controlsWrapper .activeState#btnCancel",
+   ".KeyboardCtrl .btnWrapper.sixTen .controlsWrapper #btnOK",
+   ".KeyboardCtrl .btnWrapper.sixTen .controlsWrapper .focused#btnOK",
+   ".KeyboardCtrl .btnWrapper.sixTen .controlsWrapper .activeState#btnOK",
+   ".KeyboardCtrl .btnWrapper.sixTwelve .controlsWrapper #btnCancel",
+   ".KeyboardCtrl .btnWrapper.sixTwelve .controlsWrapper .focused#btnCancel",
+   ".KeyboardCtrl .btnWrapper.sixTwelve .controlsWrapper .activeState#btnCancel",
+   ".KeyboardCtrl .btnWrapper.sixTwelve .controlsWrapper #btnOK",
+   ".KeyboardCtrl .btnWrapper.sixTwelve .controlsWrapper .focused#btnOK",
+   ".KeyboardCtrl .btnWrapper.sixTwelve .controlsWrapper .activeState#btnOK",
+   ".KeyboardCtrl .btnWrapper.suggFiveTen .controlsWrapper #btnCancel",
+   ".KeyboardCtrl .btnWrapper.suggFiveTen .controlsWrapper .focused#btnCancel",
+   ".KeyboardCtrl .btnWrapper.suggFiveTen .controlsWrapper .activeState#btnCancel",
+   ".KeyboardCtrl .btnWrapper.suggFiveTen .controlsWrapper #btnOK",
+   ".KeyboardCtrl .btnWrapper.suggFiveTen .controlsWrapper .focused#btnOK",
+   ".KeyboardCtrl .btnWrapper.suggFiveTen .controlsWrapper .activeState#btnOK"
+  ]
+ },
+ {
+  "control": "Keyboard",
+  "file": "Key14_Focus.png",
+  "size": [
+   95,
+   66
+  ],
+  "bbox": [
+   1,
+   0,
+   94,
+   65
+  ],
+  "kind": "btn_focus",
+  "selectors": [
+   ".KeyboardCtrl .btnWrapper.fiveTen .controlsWrapper .focused#btnCancel",
+   ".KeyboardCtrl .btnWrapper.fiveTen .controlsWrapper .focused#btnOK",
+   ".KeyboardCtrl .btnWrapper.sixTen .controlsWrapper .focused#btnCancel",
+   ".KeyboardCtrl .btnWrapper.sixTen .controlsWrapper .focused#btnOK",
+   ".KeyboardCtrl .btnWrapper.sixTwelve .controlsWrapper .focused#btnCancel",
+   ".KeyboardCtrl .btnWrapper.sixTwelve .controlsWrapper .focused#btnOK",
+   ".KeyboardCtrl .btnWrapper.suggFiveTen .controlsWrapper .focused#btnCancel",
+   ".KeyboardCtrl .btnWrapper.suggFiveTen .controlsWrapper .focused#btnOK"
+  ]
+ },
+ {
+  "control": "Keyboard",
+  "file": "Key14_Hit.png",
+  "size": [
+   95,
+   66
+  ],
+  "bbox": [
+   0,
+   0,
+   94,
+   65
+  ],
+  "kind": "btn_hit",
+  "selectors": [
+   ".KeyboardCtrl .btnWrapper.fiveTen .controlsWrapper .activeState#btnCancel",
+   ".KeyboardCtrl .btnWrapper.fiveTen .controlsWrapper .activeState#btnOK",
+   ".KeyboardCtrl .btnWrapper.sixTen .controlsWrapper .activeState#btnCancel",
+   ".KeyboardCtrl .btnWrapper.sixTen .controlsWrapper .activeState#btnOK",
+   ".KeyboardCtrl .btnWrapper.sixTwelve .controlsWrapper .activeState#btnCancel",
+   ".KeyboardCtrl .btnWrapper.sixTwelve .controlsWrapper .activeState#btnOK",
+   ".KeyboardCtrl .btnWrapper.suggFiveTen .controlsWrapper .activeState#btnCancel",
+   ".KeyboardCtrl .btnWrapper.suggFiveTen .controlsWrapper .activeState#btnOK"
+  ]
+ },
+ {
+  "control": "Keyboard",
+  "file": "Key15.png",
+  "size": [
+   68,
+   46
+  ],
+  "bbox": [
+   0,
+   1,
+   68,
+   46
+  ],
+  "kind": "btn",
+  "selectors": [
+   ".KeyboardCtrl .btnWrapper.suggSevenEleven .btn",
+   ".KeyboardCtrl .btnWrapper.suggSevenEleven .btn.focused",
+   ".KeyboardCtrl .btnWrapper.suggSevenEleven .btn.activeState",
+   ".KeyboardCtrl .btnWrapper.suggSevenEleven .controlsWrapper #btnShift",
+   ".KeyboardCtrl .btnWrapper.suggSevenEleven .controlsWrapper .focused#btnShift",
+   ".KeyboardCtrl .btnWrapper.suggSevenEleven .controlsWrapper .activeState#btnShift"
+  ]
+ },
+ {
+  "control": "Keyboard",
+  "file": "Key15_Dead.png",
+  "size": [
+   68,
+   46
+  ],
+  "bbox": [
+   0,
+   0,
+   68,
+   46
+  ],
+  "kind": "btn_ds",
+  "selectors": [
+   ".KeyboardCtrl .btnWrapper.suggSevenEleven .btn.disabled",
+   ".KeyboardCtrl .btnWrapper.suggSevenEleven .controlsWrapper .disabled#btnShift"
+  ]
+ },
+ {
+  "control": "Keyboard",
+  "file": "Key15_Focus.png",
+  "size": [
+   70,
+   48
+  ],
+  "bbox": [
+   1,
+   1,
+   70,
+   47
+  ],
+  "kind": "btn_focus",
+  "selectors": [
+   ".KeyboardCtrl .btnWrapper.suggSevenEleven .btn.focused",
+   ".KeyboardCtrl .btnWrapper.suggSevenEleven .controlsWrapper .focused#btnShift"
+  ]
+ },
+ {
+  "control": "Keyboard",
+  "file": "Key15_Hit.png",
+  "size": [
+   70,
+   48
+  ],
+  "bbox": [
+   1,
+   1,
+   70,
+   47
+  ],
+  "kind": "btn_hit",
+  "selectors": [
+   ".KeyboardCtrl .btnWrapper.suggSevenEleven .btn.activeState",
+   ".KeyboardCtrl .btnWrapper.suggSevenEleven .controlsWrapper .activeState#btnShift"
+  ]
+ },
+ {
+  "control": "Keyboard",
+  "file": "KeySpace01.png",
+  "size": [
+   511,
+   64
+  ],
+  "bbox": [
+   0,
+   0,
+   511,
+   64
+  ],
+  "kind": "btn",
+  "selectors": [
+   ".KeyboardCtrl .btnWrapper.fiveTen .controlsWrapper #btnSpacebar",
+   ".KeyboardCtrl .btnWrapper.fiveTen .controlsWrapper .focused#btnSpacebar",
+   ".KeyboardCtrl .btnWrapper.fiveTen .controlsWrapper .activeState#btnSpacebar",
+   ".KeyboardCtrl .btnWrapper.sixTen .controlsWrapper #btnSpacebar",
+   ".KeyboardCtrl .btnWrapper.sixTen .controlsWrapper .focused#btnSpacebar",
+   ".KeyboardCtrl .btnWrapper.sixTen .controlsWrapper .activeState#btnSpacebar",
+   ".KeyboardCtrl .btnWrapper.sixTwelve .controlsWrapper #btnSpacebar",
+   ".KeyboardCtrl .btnWrapper.sixTwelve .controlsWrapper .focused#btnSpacebar",
+   ".KeyboardCtrl .btnWrapper.sixTwelve .controlsWrapper .activeState#btnSpacebar",
+   ".KeyboardCtrl .btnWrapper.suggFiveTen .controlsWrapper #btnSpacebar",
+   ".KeyboardCtrl .btnWrapper.suggFiveTen .controlsWrapper .focused#btnSpacebar",
+   ".KeyboardCtrl .btnWrapper.suggFiveTen .controlsWrapper .activeState#btnSpacebar"
+  ]
+ },
+ {
+  "control": "Keyboard",
+  "file": "KeySpace01_Focus.png",
+  "size": [
+   511,
+   64
+  ],
+  "bbox": [
+   0,
+   0,
+   511,
+   64
+  ],
+  "kind": "btn_focus",
+  "selectors": [
+   ".KeyboardCtrl .btnWrapper.fiveTen .controlsWrapper .focused#btnSpacebar",
+   ".KeyboardCtrl .btnWrapper.sixTen .controlsWrapper .focused#btnSpacebar",
+   ".KeyboardCtrl .btnWrapper.sixTwelve .controlsWrapper .focused#btnSpacebar",
+   ".KeyboardCtrl .btnWrapper.suggFiveTen .controlsWrapper .focused#btnSpacebar"
+  ]
+ },
+ {
+  "control": "Keyboard",
+  "file": "KeySpace01_Hit.png",
+  "size": [
+   511,
+   64
+  ],
+  "bbox": [
+   0,
+   0,
+   511,
+   64
+  ],
+  "kind": "btn_hit",
+  "selectors": [
+   ".KeyboardCtrl .btnWrapper.fiveTen .controlsWrapper .activeState#btnSpacebar",
+   ".KeyboardCtrl .btnWrapper.sixTen .controlsWrapper .activeState#btnSpacebar",
+   ".KeyboardCtrl .btnWrapper.sixTwelve .controlsWrapper .activeState#btnSpacebar",
+   ".KeyboardCtrl .btnWrapper.suggFiveTen .controlsWrapper .activeState#btnSpacebar"
+  ]
+ },
+ {
+  "control": "Keyboard",
+  "file": "KeySpace02.png",
+  "size": [
+   460,
+   47
+  ],
+  "bbox": [
+   0,
+   0,
+   460,
+   47
+  ],
+  "kind": "btn",
+  "selectors": [
+   ".KeyboardCtrl .btnWrapper.suggSevenTen .controlsWrapper #btnSpacebar",
+   ".KeyboardCtrl .btnWrapper.suggSevenTen .controlsWrapper .focused#btnSpacebar",
+   ".KeyboardCtrl .btnWrapper.suggSevenTen .controlsWrapper .activeState#btnSpacebar",
+   ".KeyboardCtrl .btnWrapper.suggSevenEleven .controlsWrapper #btnSpacebar",
+   ".KeyboardCtrl .btnWrapper.suggSevenEleven .controlsWrapper .focused#btnSpacebar",
+   ".KeyboardCtrl .btnWrapper.suggSevenEleven .controlsWrapper .activeState#btnSpacebar"
+  ]
+ },
+ {
+  "control": "Keyboard",
+  "file": "KeySpace02_Focus.png",
+  "size": [
+   460,
+   47
+  ],
+  "bbox": [
+   0,
+   0,
+   460,
+   47
+  ],
+  "kind": "btn_focus",
+  "selectors": [
+   ".KeyboardCtrl .btnWrapper.suggSevenTen .controlsWrapper .focused#btnSpacebar",
+   ".KeyboardCtrl .btnWrapper.suggSevenEleven .controlsWrapper .focused#btnSpacebar"
+  ]
+ },
+ {
+  "control": "Keyboard",
+  "file": "KeySpace02_Hit.png",
+  "size": [
+   460,
+   47
+  ],
+  "bbox": [
+   0,
+   0,
+   460,
+   47
+  ],
+  "kind": "btn_hit",
+  "selectors": [
+   ".KeyboardCtrl .btnWrapper.suggSevenTen .controlsWrapper .activeState#btnSpacebar",
+   ".KeyboardCtrl .btnWrapper.suggSevenEleven .controlsWrapper .activeState#btnSpacebar"
+  ]
+ },
+ {
+  "control": "List2",
+  "file": "Caret.png",
+  "size": [
+   10,
+   21
+  ],
+  "bbox": [
+   0,
+   0,
+   10,
+   20
+  ],
+  "kind": "caret",
+  "selectors": [
+   ".List2Ctrl.normalItems .ListItem.hasCaret .caret",
+   ".List2Ctrl.normalItems.smallItemText .ListItem.hasCaret .caret",
+   ".List2Ctrl.thickItems .ListItem.hasCaret .caret",
+   ".List2Ctrl.thickItems.smallItemText .ListItem.hasCaret .caret"
+  ]
+ },
+ {
   "control": "List2",
   "file": "IcnListCheck_Checked_Ds.png",
   "size": [
@@ -880,6 +2977,178 @@
  },
  {
   "control": "List2",
+  "file": "IndexedListBg.png",
+  "size": [
+   100,
+   416
+  ],
+  "bbox": [
+   0,
+   1,
+   100,
+   416
+  ],
+  "kind": "panel",
+  "selectors": [
+   ".List2CtrlLetterIndexWrapper"
+  ]
+ },
+ {
+  "control": "List2",
+  "file": "IndexedList_Divider.png",
+  "size": [
+   56,
+   1
+  ],
+  "bbox": [
+   5,
+   0,
+   53,
+   1
+  ],
+  "kind": "line",
+  "selectors": [
+   ".List2CtrlLetterIndex .letter",
+   ".List2CtrlLetterIndex .letter.hit",
+   ".List2CtrlLetterIndex .letter.focus"
+  ]
+ },
+ {
+  "control": "List2",
+  "file": "IndexedList_Focus.png",
+  "size": [
+   64,
+   66
+  ],
+  "bbox": [
+   5,
+   0,
+   64,
+   66
+  ],
+  "kind": "btn_focus",
+  "selectors": [
+   ".List2CtrlLetterIndex .letter.focus"
+  ]
+ },
+ {
+  "control": "List2",
+  "file": "IndexedList_Hit.png",
+  "size": [
+   64,
+   66
+  ],
+  "bbox": [
+   5,
+   0,
+   64,
+   66
+  ],
+  "kind": "btn_hit",
+  "selectors": [
+   ".List2CtrlLetterIndex .letter.hit"
+  ]
+ },
+ {
+  "control": "List2",
+  "file": "ListBottomShadow.png",
+  "size": [
+   730,
+   24
+  ],
+  "bbox": [
+   0,
+   4,
+   730,
+   24
+  ],
+  "kind": "clear",
+  "selectors": [
+   ".List2CtrlActiveArea"
+  ]
+ },
+ {
+  "control": "List2",
+  "file": "ListItemBg_Gray.png",
+  "size": [
+   738,
+   64
+  ],
+  "bbox": [
+   0,
+   0,
+   738,
+   64
+  ],
+  "kind": "panel",
+  "selectors": [
+   ".List2Ctrl.normalItems .ListItem.bgLightGrey",
+   ".List2Ctrl.normalItems .ListItem.bgLightGrey.disabled"
+  ]
+ },
+ {
+  "control": "List2",
+  "file": "ListItemBg_Gray_Thick.png",
+  "size": [
+   738,
+   82
+  ],
+  "bbox": [
+   0,
+   0,
+   738,
+   82
+  ],
+  "kind": "panel",
+  "selectors": [
+   ".List2Ctrl.thickItems .ListItem.bgLightGrey",
+   ".List2Ctrl.thickItems .ListItem.bgLightGrey.disabled"
+  ]
+ },
+ {
+  "control": "List2",
+  "file": "ListItem_MaintSet_Bg.png",
+  "size": [
+   180,
+   48
+  ],
+  "bbox": [
+   0,
+   0,
+   180,
+   48
+  ],
+  "kind": "btn",
+  "selectors": [
+   ".List2Ctrl.normalItems .ListItem.styleStep.secondaryFocus .label2",
+   ".List2Ctrl.normalItems.smallItemText .ListItem.styleStep.secondaryFocus .label2",
+   ".List2Ctrl.thickItems .ListItem.styleStep.secondaryFocus .label2",
+   ".List2Ctrl.thickItems.smallItemText .ListItem.styleStep.secondaryFocus .label2"
+  ]
+ },
+ {
+  "control": "List2",
+  "file": "ListItem_MaintSet_Bg_Focus.png",
+  "size": [
+   180,
+   48
+  ],
+  "bbox": [
+   0,
+   0,
+   180,
+   48
+  ],
+  "kind": "btn_focus",
+  "selectors": [
+   ".List2Ctrl.normalItems .ListItem.styleStep.secondaryFocus .label2",
+   ".List2Ctrl.normalItems.smallItemText .ListItem.styleStep.secondaryFocus .label2",
+   ".List2Ctrl.thickItems .ListItem.styleStep.secondaryFocus .label2",
+   ".List2Ctrl.thickItems.smallItemText .ListItem.styleStep.secondaryFocus .label2"
+  ]
+ },
+ {
+  "control": "List2",
   "file": "ListItem_Slider-1.png",
   "size": [
    344,
@@ -1037,6 +3306,138 @@
    ".List2Ctrl.thickItems.smallItemText .ListItem.style12 .List2CtrlSliderCtrlFocusedHandle",
    ".List2Ctrl.thickItems.smallItemText .ListItem.style13 .List2CtrlSliderCtrlFocusedHandle",
    ".List2Ctrl.thickItems.smallItemText .ListItem.style28 .List2CtrlSliderCtrlFocusedHandle"
+  ]
+ },
+ {
+  "control": "Messaging2",
+  "file": "MessageBG.png",
+  "size": [
+   780,
+   417
+  ],
+  "bbox": [
+   0,
+   0,
+   780,
+   416
+  ],
+  "kind": "screen",
+  "selectors": [
+   ".Messaging2CtrlBackground"
+  ],
+  "hlines": [],
+  "vlines": []
+ },
+ {
+  "control": "Messaging2",
+  "file": "MessageBG_Focus.png",
+  "size": [
+   780,
+   417
+  ],
+  "bbox": [
+   0,
+   0,
+   780,
+   417
+  ],
+  "kind": "screen_focus",
+  "selectors": [
+   ".Messaging2CtrlBackground.focus"
+  ],
+  "hlines": [],
+  "vlines": []
+ },
+ {
+  "control": "Messaging2",
+  "file": "MessageList_Divider01.png",
+  "size": [
+   767,
+   1
+  ],
+  "bbox": [
+   45,
+   0,
+   508,
+   1
+  ],
+  "kind": "line",
+  "selectors": [
+   ".Messaging2CtrlFromLineDivider",
+   ".Messaging2CtrlRecipientsLineDivider",
+   ".Messaging2CtrlRecipientsCcLineDivider"
+  ]
+ },
+ {
+  "control": "Messaging2",
+  "file": "MessageList_Divider02.png",
+  "size": [
+   767,
+   2
+  ],
+  "bbox": [
+   36,
+   0,
+   559,
+   2
+  ],
+  "kind": "line",
+  "selectors": [
+   ".Messaging2CtrlSubjectLineDivider"
+  ]
+ },
+ {
+  "control": "Messaging2",
+  "file": "MessageScrollbar.png",
+  "size": [
+   6,
+   414
+  ],
+  "bbox": [
+   0,
+   0,
+   6,
+   414
+  ],
+  "kind": "fill",
+  "selectors": [
+   ".Messaging2CtrlScrollIndicator"
+  ]
+ },
+ {
+  "control": "Messaging2",
+  "file": "MessageScrollbar_Bg.png",
+  "size": [
+   11,
+   416
+  ],
+  "bbox": [
+   0,
+   0,
+   11,
+   416
+  ],
+  "kind": "track",
+  "selectors": [
+   ".Messaging2CtrlScrollIndicatorWrapper"
+  ]
+ },
+ {
+  "control": "Messaging2",
+  "file": "MessageScrollbar_Focus.png",
+  "size": [
+   6,
+   414
+  ],
+  "bbox": [
+   0,
+   0,
+   6,
+   414
+  ],
+  "kind": "fill",
+  "selectors": [
+   ".Messaging2CtrlScrollIndicator.focus"
   ]
  },
  {
@@ -1764,6 +4165,87 @@
   "selectors": [
    ".ScreenSettings2Ctrl_Bottom_RHD_AdjustBtn_Down",
    ".ScreenSettings2Ctrl_Bottom_LHD_AdjustBtn_Down"
+  ]
+ },
+ {
+  "control": "ScrollDetail",
+  "file": "ScrollDetailBackground.png",
+  "size": [
+   725,
+   418
+  ],
+  "bbox": [
+   0,
+   1,
+   725,
+   417
+  ],
+  "kind": "screen",
+  "selectors": [
+   ".ScrollDetailCtrlBackground"
+  ],
+  "hlines": [],
+  "vlines": []
+ },
+ {
+  "control": "ScrollDetail",
+  "file": "ScrollDetailBackground_Focus.png",
+  "size": [
+   725,
+   418
+  ],
+  "bbox": [
+   0,
+   0,
+   725,
+   418
+  ],
+  "kind": "screen_focus",
+  "selectors": [
+   ".ScrollDetailCtrlBackground.focus"
+  ],
+  "hlines": [],
+  "vlines": [
+   [
+    8,
+    14
+   ]
+  ]
+ },
+ {
+  "control": "ScrollDetail",
+  "file": "ScrollDetailBottomShadow.png",
+  "size": [
+   730,
+   24
+  ],
+  "bbox": [
+   0,
+   4,
+   730,
+   24
+  ],
+  "kind": "clear",
+  "selectors": [
+   ".ScrollDetailCtrlBodyShadow"
+  ]
+ },
+ {
+  "control": "ScrollDetail",
+  "file": "ScrollDetailHeadBack_Bg.png",
+  "size": [
+   730,
+   118
+  ],
+  "bbox": [
+   0,
+   0,
+   730,
+   118
+  ],
+  "kind": "panel",
+  "selectors": [
+   ".ScrollDetailCtrlHeadBack"
   ]
  },
  {
@@ -2850,5 +5332,782 @@
    ".WinkCtrl",
    ".WinkCtrlStyle05"
   ]
+ },
+ {
+  "control": "ecoenergy",
+  "file": "AdjustBtn3_Focus.png",
+  "size": [
+   60,
+   70
+  ],
+  "bbox": [
+   0,
+   0,
+   60,
+   70
+  ],
+  "kind": "btn_focus",
+  "selectors": [
+   ".switchElementBtn",
+   ".switchElementBtnHit",
+   ".EcoFlowCtrlShowUmp",
+   ".EcoFlowCtrlShowUmpHit",
+   ".EcoStatusCtrl_SwitchView",
+   ".EcoStatusCtrl_SwitchView_Hit",
+   ".FuelConsumptionCtrlSwitchView",
+   ".FuelConsumptionCtrlSwitchViewDown"
+  ]
+ },
+ {
+  "control": "ecoenergy",
+  "file": "EcoEnergyBg.png",
+  "size": [
+   800,
+   416
+  ],
+  "bbox": [
+   0,
+   0,
+   800,
+   416
+  ],
+  "kind": "screen",
+  "selectors": [
+   ".EcoStatusCtrl",
+   ".EcoStatusCtrl_iEloop_Container"
+  ],
+  "hlines": [],
+  "vlines": []
+ },
+ {
+  "control": "ecoenergy",
+  "file": "EcoEnergy_IstopBannerBg.png",
+  "size": [
+   800,
+   88
+  ],
+  "bbox": [
+   0,
+   0,
+   800,
+   88
+  ],
+  "kind": "panel",
+  "selectors": [
+   ".EcoFlowCtrlBottomContainer",
+   ".EcoStatusCtrl_iStop_Container",
+   ".EcoStatusCtrl_iEloopOnly_FuelEfficiency_Container",
+   ".EcoStatusCtrl_mHybridOnly_FuelEfficiency_Container"
+  ]
+ },
+ {
+  "control": "ecoenergy",
+  "file": "EcoEnergy_IstopBannerDivider.png",
+  "size": [
+   2,
+   84
+  ],
+  "bbox": [
+   0,
+   3,
+   2,
+   82
+  ],
+  "kind": "line",
+  "selectors": [
+   ".EcoStatusCtrl_iStop_Time_Bg_Left",
+   ".EcoStatusCtrl_iStop_Time_Bg_Right"
+  ]
+ },
+ {
+  "control": "ecoenergy",
+  "file": "Effectiveness_Bg.png",
+  "size": [
+   780,
+   416
+  ],
+  "bbox": [
+   0,
+   0,
+   780,
+   416
+  ],
+  "kind": "screen",
+  "selectors": [
+   ".EcoEffectCtrl"
+  ],
+  "hlines": [
+   [
+    140,
+    140
+   ],
+   [
+    223,
+    224
+   ]
+  ],
+  "vlines": []
+ },
+ {
+  "control": "ecoenergy",
+  "file": "FuelConsBG.png",
+  "size": [
+   780,
+   416
+  ],
+  "bbox": [
+   0,
+   0,
+   780,
+   416
+  ],
+  "kind": "screen",
+  "selectors": [
+   ".FuelConsumptionCtrl"
+  ],
+  "hlines": [
+   [
+    205,
+    205
+   ]
+  ],
+  "vlines": [
+   [
+    632,
+    632
+   ]
+  ]
+ },
+ {
+  "control": "ecoenergy",
+  "file": "FuelConsBarCap_Narrow.png",
+  "size": [
+   21,
+   2
+  ],
+  "bbox": [
+   0,
+   0,
+   21,
+   2
+  ],
+  "kind": "clear",
+  "selectors": [
+   ".FuelConsumptionCtrlCDFEBarGraphCap"
+  ]
+ },
+ {
+  "control": "ecoenergy",
+  "file": "FuelConsBarCap_wide.png",
+  "size": [
+   44,
+   2
+  ],
+  "bbox": [
+   0,
+   0,
+   44,
+   2
+  ],
+  "kind": "clear",
+  "selectors": [
+   ".FuelConsumptionCtrlCDFEBarGraphCapRight",
+   ".FuelConsumptionCtrlCFERBarGraphCap"
+  ]
+ },
+ {
+  "control": "ecoenergy",
+  "file": "FuelConsBar_Narrow.png",
+  "size": [
+   21,
+   106
+  ],
+  "bbox": [
+   0,
+   0,
+   21,
+   106
+  ],
+  "kind": "vbar",
+  "selectors": [
+   ".FuelConsumptionCtrlCDFEBarGraphCore"
+  ]
+ },
+ {
+  "control": "ecoenergy",
+  "file": "FuelConsBar_NarrowCurrent.png",
+  "size": [
+   21,
+   106
+  ],
+  "bbox": [
+   0,
+   0,
+   21,
+   106
+  ],
+  "kind": "vbar",
+  "selectors": [
+   ".FuelConsumptionCtrlCDFEBarGraphCoreCurrent"
+  ]
+ },
+ {
+  "control": "ecoenergy",
+  "file": "FuelConsBar_NarrowGreen.png",
+  "size": [
+   21,
+   106
+  ],
+  "bbox": [
+   0,
+   0,
+   21,
+   106
+  ],
+  "kind": "vbar",
+  "selectors": [
+   ".FuelConsumptionCtrlCDFEBarGraphCoreCurrentGreen"
+  ]
+ },
+ {
+  "control": "ecoenergy",
+  "file": "FuelConsBar_NarrowGreenCurrent.png",
+  "size": [
+   21,
+   106
+  ],
+  "bbox": [
+   0,
+   0,
+   21,
+   106
+  ],
+  "kind": "vbar",
+  "selectors": [
+   ".FuelConsumptionCtrlCDFEBarGraphCoreCurrentGreenHighLighted"
+  ]
+ },
+ {
+  "control": "ecoenergy",
+  "file": "FuelConsBar_WideCurrent.png",
+  "size": [
+   44,
+   106
+  ],
+  "bbox": [
+   0,
+   0,
+   44,
+   106
+  ],
+  "kind": "vbar",
+  "selectors": [
+   ".FuelConsumptionCtrlCFERBarGraphCoreCurrent"
+  ]
+ },
+ {
+  "control": "ecoenergy",
+  "file": "FuelConsBar_wide.png",
+  "size": [
+   44,
+   106
+  ],
+  "bbox": [
+   0,
+   0,
+   44,
+   106
+  ],
+  "kind": "vbar",
+  "selectors": [
+   ".FuelConsumptionCtrlCDFEBarGraphCoreRight",
+   ".FuelConsumptionCtrlCFERBarGraphCore"
+  ]
+ },
+ {
+  "control": "ecoenergy",
+  "file": "FuelConsBar_wide_green.png",
+  "size": [
+   44,
+   106
+  ],
+  "bbox": [
+   0,
+   0,
+   44,
+   106
+  ],
+  "kind": "vbar",
+  "selectors": [
+   ".FuelConsumptionCtrlCDFEBarGraphCoreGreenRight"
+  ]
+ },
+ {
+  "control": "ecoenergy",
+  "file": "FuelConsBgBars1.png",
+  "size": [
+   473,
+   109
+  ],
+  "bbox": [
+   0,
+   0,
+   473,
+   109
+  ],
+  "kind": "grid",
+  "selectors": [
+   ".FuelConsumptionCtrlCDFEGraph"
+  ],
+  "hlines": [],
+  "vlines": [
+   [
+    48,
+    48
+   ],
+   [
+    95,
+    95
+   ],
+   [
+    142,
+    142
+   ],
+   [
+    189,
+    189
+   ],
+   [
+    236,
+    236
+   ]
+  ]
+ },
+ {
+  "control": "ecoenergy",
+  "file": "FuelConsBgBars2.png",
+  "size": [
+   473,
+   109
+  ],
+  "bbox": [
+   0,
+   0,
+   473,
+   109
+  ],
+  "kind": "grid",
+  "selectors": [
+   ".FuelConsumptionCtrlCFERGraph"
+  ],
+  "hlines": [],
+  "vlines": [
+   [
+    80,
+    80
+   ],
+   [
+    158,
+    158
+   ],
+   [
+    236,
+    236
+   ],
+   [
+    314,
+    314
+   ],
+   [
+    392,
+    392
+   ]
+  ]
+ },
+ {
+  "control": "emnavi",
+  "file": "CompassBg.png",
+  "size": [
+   773,
+   416
+  ],
+  "bbox": [
+   0,
+   0,
+   773,
+   416
+  ],
+  "kind": "screen",
+  "selectors": [
+   ".CompassCtrl"
+  ],
+  "hlines": [],
+  "vlines": []
+ },
+ {
+  "control": "emnavi",
+  "file": "GreyRail.png",
+  "size": [
+   701,
+   20
+  ],
+  "bbox": [
+   0,
+   0,
+   701,
+   20
+  ],
+  "kind": "track",
+  "selectors": [
+   ".CompassCtrl .compassRail"
+  ]
+ },
+ {
+  "control": "emnavi",
+  "file": "WhiteLine.png",
+  "size": [
+   800,
+   3
+  ],
+  "bbox": [
+   0,
+   0,
+   800,
+   3
+  ],
+  "kind": "line",
+  "selectors": [
+   ".CompassCtrl .compassInfo"
+  ]
+ },
+ {
+  "control": "idm",
+  "file": "Button.png",
+  "size": [
+   60,
+   70
+  ],
+  "bbox": [
+   0,
+   0,
+   60,
+   70
+  ],
+  "kind": "btn",
+  "selectors": [
+   ".IdmStatusCtrl_SwitchView",
+   ".IdmStatusCtrl_SwitchView_Hit"
+  ]
+ },
+ {
+  "control": "idm",
+  "file": "FuelConsBarCap_wide.png",
+  "size": [
+   44,
+   2
+  ],
+  "bbox": [
+   0,
+   0,
+   44,
+   2
+  ],
+  "kind": "clear",
+  "selectors": [
+   ".IdmCtrlBarGraphCoreCap"
+  ]
+ },
+ {
+  "control": "idm",
+  "file": "bg_training.png",
+  "size": [
+   801,
+   417
+  ],
+  "bbox": [
+   0,
+   0,
+   801,
+   417
+  ],
+  "kind": "screen",
+  "selectors": [
+   ".EndingBackground"
+  ],
+  "hlines": [],
+  "vlines": []
+ },
+ {
+  "control": "idm",
+  "file": "iDM_EndingModeSimple_BG.png",
+  "size": [
+   780,
+   416
+  ],
+  "bbox": [
+   0,
+   0,
+   780,
+   416
+  ],
+  "kind": "screen",
+  "selectors": [
+   ".IdmCtrlEndingSimple"
+  ],
+  "hlines": [],
+  "vlines": [
+   [
+    358,
+    358
+   ]
+  ]
+ },
+ {
+  "control": "idm",
+  "file": "iDM_EndingTrainingMode_BG1.png",
+  "size": [
+   800,
+   418
+  ],
+  "bbox": [
+   0,
+   0,
+   800,
+   418
+  ],
+  "kind": "screen",
+  "selectors": [
+   ".IdmCtrlEndingTraining"
+  ],
+  "hlines": [
+   [
+    225,
+    226
+   ]
+  ],
+  "vlines": [
+   [
+    9,
+    10
+   ],
+   [
+    368,
+    368
+   ],
+   [
+    789,
+    790
+   ]
+  ]
+ },
+ {
+  "control": "idm",
+  "file": "iDM_ScoreTransition_BarPurple.png",
+  "size": [
+   30,
+   239
+  ],
+  "bbox": [
+   0,
+   0,
+   30,
+   239
+  ],
+  "kind": "vbar",
+  "selectors": [
+   ".IdmCtrlBarGraphCore"
+  ]
+ },
+ {
+  "control": "idm",
+  "file": "iDM_ScoreTransition_BarSilver.png",
+  "size": [
+   30,
+   256
+  ],
+  "bbox": [
+   0,
+   0,
+   30,
+   256
+  ],
+  "kind": "vbar",
+  "selectors": [
+   ".IdmCtrlBarGraphCurrentCore"
+  ]
+ },
+ {
+  "control": "idm",
+  "file": "iDM_SimpleMode_BG.png",
+  "size": [
+   780,
+   416
+  ],
+  "bbox": [
+   0,
+   0,
+   780,
+   416
+  ],
+  "kind": "screen",
+  "selectors": [
+   ".IdmCtrlSimpleMode"
+  ],
+  "hlines": [],
+  "vlines": [
+   [
+    289,
+    289
+   ]
+  ]
+ },
+ {
+  "control": "idm",
+  "file": "iDM_SimpleTrainingMode_BG1.png",
+  "size": [
+   801,
+   416
+  ],
+  "bbox": [
+   0,
+   0,
+   801,
+   416
+  ],
+  "kind": "screen",
+  "selectors": [
+   ".IdmCtrlSimpleTraining"
+  ],
+  "hlines": [
+   [
+    224,
+    225
+   ]
+  ],
+  "vlines": [
+   [
+    9,
+    10
+   ],
+   [
+    299,
+    299
+   ],
+   [
+    789,
+    790
+   ]
+  ]
+ },
+ {
+  "control": "vsm",
+  "file": "OilLevelBarCap.png",
+  "size": [
+   29,
+   3
+  ],
+  "bbox": [
+   0,
+   0,
+   29,
+   3
+  ],
+  "kind": "clear",
+  "selectors": [
+   ".capOverBar"
+  ]
+ },
+ {
+  "control": "vsm",
+  "file": "OilLevelBar_Blue.png",
+  "size": [
+   29,
+   189
+  ],
+  "bbox": [
+   0,
+   0,
+   29,
+   189
+  ],
+  "kind": "vbar",
+  "selectors": [
+   ".barVariation"
+  ]
+ },
+ {
+  "control": "vsm",
+  "file": "OilLevelBar_Umber.png",
+  "size": [
+   29,
+   189
+  ],
+  "bbox": [
+   0,
+   0,
+   29,
+   189
+  ],
+  "kind": "vbar",
+  "selectors": [
+   ".barVariation1"
+  ]
+ },
+ {
+  "control": "vsm",
+  "file": "OilLevelGraph_BG.png",
+  "size": [
+   734,
+   416
+  ],
+  "bbox": [
+   0,
+   0,
+   725,
+   416
+  ],
+  "kind": "screen",
+  "selectors": [
+   ".oilLevelGraph"
+  ],
+  "hlines": [
+   [
+    177,
+    177
+   ],
+   [
+    201,
+    201
+   ],
+   [
+    225,
+    225
+   ],
+   [
+    248,
+    248
+   ],
+   [
+    272,
+    272
+   ],
+   [
+    296,
+    296
+   ],
+   [
+    319,
+    319
+   ],
+   [
+    343,
+    343
+   ],
+   [
+    367,
+    367
+   ]
+  ],
+  "vlines": []
  }
 ]

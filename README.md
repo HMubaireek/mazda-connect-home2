@@ -20,6 +20,11 @@ opens **Android Auto** or **Apple CarPlay** when a phone is plugged in.
 | **Arabic** | ![Settings menu](docs/skin_ar_settings.png) | ![Navigation alert](docs/skin_ar_alert.png) | ![Home, Android Auto](docs/skin_ar_home.png) | ![All icons](docs/skin_ar_icons.png) |
 | **English** | ![Settings menu](docs/skin_en_settings.png) | ![Navigation alert](docs/skin_en_alert.png) | ![Home, Android Auto](docs/skin_en_home.png) | ![All icons](docs/skin_en_icons.png) |
 
+| | Media bar | Fuel economy | Phone keypad | Keyboard |
+|---|---|---|---|---|
+| **Arabic** | ![Media bar](docs/skin_ar_media.png) | ![Fuel economy](docs/skin_ar_fuel.png) | ![Keypad](docs/skin_ar_dialpad.png) | ![Keyboard](docs/skin_ar_keyboard.png) |
+| **English** | ![Media bar](docs/skin_en_media.png) | ![Fuel economy](docs/skin_en_fuel.png) | ![Keypad](docs/skin_en_dialpad.png) | ![Keyboard](docs/skin_en_keyboard.png) |
+
 ![Mute box](docs/skin_ar_mute.png)
 
 > Screenshots come from the desktop preview (`preview/index.html`). The top bar is Mazda's own
@@ -27,9 +32,20 @@ opens **Android Auto** or **Apple CarPlay** when a phone is plugged in.
 
 ## Status
 
-**v1.3.0 — fixes from the first drive with the skin, every Mazda screen restyled.** Not yet tried in the car.
+**v1.4.0 — the rest of Mazda's screens and a new icon set.** Not yet tried in the car.
 v1.0.4 (the first layout) runs in a 2019 CX-9 on firmware 74.00.333A (ADR / 4A N).
 
+- v1.4.0 restyles the screens v1.3.0 left in Mazda's look:
+  - **Fuel economy** (graphs, bars, i-stop banner), **i-ACTIVSENSE** driving scores, **oil level**, **compass**:
+    one glass panel per screen, Mazda's dividers as faint lines, new graph bars. The car pictures stay Mazda's.
+  - **Phone keypad** (green call button), **on-screen keyboard** (Arabic and English), **messages**, **long text
+    screens**, **clock setting**, the A–Z index, grey header rows and maintenance steppers in lists.
+  - **New icons** for the media and call bar (play, pause, next, shuffle, repeat, scan, favourites, mute, hang up,
+    keypad, ...) and the list rows (calls, contacts, messages, Bluetooth, radio, USB, songs, folders, car health,
+    Wi-Fi, ...): 315 icons drawn for Home 2.0. Icons for services not sold here (Pandora, Stitcher, SiriusXM, HD Radio)
+    stay Mazda's.
+  - Where Mazda stacks an icon over a key (keyboard keys, call button), both layers are kept.
+  - 285 Mazda images redrawn in all (v1.3.0: 144).
 - v1.3.0 fixes what the car showed with v1.2.x:
   - **Map, reversing camera, Android Auto and CarPlay** were hidden behind the skin's background. Screens that show
     video ask Mazda's framework for a transparent background; the skin now leaves those alone.
@@ -58,10 +74,10 @@ v1.0.4 (the first layout) runs in a 2019 CX-9 on firmware 74.00.333A (ADR / 4A N
   earlier versions used `/jci/fonts`, which the browser never scans). Confirmed in the car: Tajawal loads.
 - v1.0.4 turns off the "Font check" test line.
 - The system skin passes 56 checks against Mazda's own CSS, in Arabic and English (fonts, alignment, focus, icons,
-  alerts, transparent video screens, and every one of the 144 redrawn control images).
+  alerts, transparent video screens, and the 285 redrawn control images).
 - The launcher passes 70 automated behaviour checks (knob, tilt, touch, every status state and its Arabic wording,
   phone hot-plug, focus hand-off, call and audio messages) and 9 clock checks.
-- The installer passes 46 automated checks against a simulated car file system (install, reinstall, remove,
+- The installer passes 47 automated checks against a simulated car file system (install, reinstall, remove,
   wrong firmware, damaged USB copy, cancel, an existing `common_rtl.css`).
 
 Treat it as experimental. Removing it is one step (see [Remove](#remove)).

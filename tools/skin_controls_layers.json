@@ -1,0 +1,1404 @@
+{
+ ".DialPad2Ctrl .btn.active": [
+  "ctl:DialPad2_Key_Hit.png",
+  "ctl:DialPad2_DialKey.png"
+ ],
+ ".DialPad2Ctrl .btn.focused": [
+  "ctl:DialPad2_Key_Focus.png",
+  "ctl:DialPad2_DialKey.png"
+ ],
+ ".DialPad2Ctrl.DialpadStyle02 .callBtn": [
+  "ctl:DialPad2_DialPad_CallIcon.png",
+  "ctl:DialPad2_DialPad_CallBtn.png"
+ ],
+ ".DialPad2Ctrl.DialpadStyle02 .callBtn.active": [
+  "ctl:DialPad2_DialPad_CallIcon.png",
+  "ctl:DialPad2_DialPad_CallBtn_Press.png"
+ ],
+ ".DialPad2Ctrl.DialpadStyle02 .callBtn.focused": [
+  "ctl:DialPad2_DialPad_CallIcon.png",
+  "ctl:DialPad2_DialPad_CallBtn_Focus.png"
+ ],
+ ".KeyboardCtrl .btnWrapper.fiveTen .btn.activeState": [
+  "ctl:Keyboard_Key03_Hit.png",
+  "ctl:Keyboard_Key03.png"
+ ],
+ ".KeyboardCtrl .btnWrapper.fiveTen .btn.focused": [
+  "ctl:Keyboard_Key03_Focus.png",
+  "ctl:Keyboard_Key03.png"
+ ],
+ ".KeyboardCtrl .btnWrapper.fiveTen .controlsWrapper #btnCancel": [
+  "gui:common/controls/Keyboard/images/Icn_Cancel_En.png",
+  "ctl:Keyboard_Key14.png"
+ ],
+ ".KeyboardCtrl .btnWrapper.fiveTen .controlsWrapper #btnGlobe": [
+  "gui:common/controls/Keyboard/images/Icn_Globe.png",
+  "ctl:Keyboard_Key06.png"
+ ],
+ ".KeyboardCtrl .btnWrapper.fiveTen .controlsWrapper #btnMod": [
+  "gui:common/controls/Keyboard/images/Icn_Small_En.png",
+  "ctl:Keyboard_Key07.png"
+ ],
+ ".KeyboardCtrl .btnWrapper.fiveTen .controlsWrapper #btnMod:active": [
+  "gui:common/controls/Keyboard/images/Icn_Small_En.png",
+  "ctl:Keyboard_Key07_Hit.png",
+  "ctl:Keyboard_Key07.png"
+ ],
+ ".KeyboardCtrl .btnWrapper.fiveTen .controlsWrapper #btnOK": [
+  "gui:common/controls/Keyboard/images/Icn_Send.png",
+  "ctl:Keyboard_Key14.png"
+ ],
+ ".KeyboardCtrl .btnWrapper.fiveTen .controlsWrapper #btnShift": [
+  "gui:common/controls/Keyboard/images/IcnKbdShift_Off.png",
+  "ctl:Keyboard_Key04.png"
+ ],
+ ".KeyboardCtrl .btnWrapper.fiveTen .controlsWrapper .KeyboardCtrlDeleteBtn_Ds": [
+  "gui:common/controls/Keyboard/images/Delete_Btn_Ds.png",
+  "ctl:Keyboard_Key12_Dead.png"
+ ],
+ ".KeyboardCtrl .btnWrapper.fiveTen .controlsWrapper .KeyboardCtrlDeleteBtn_Dwn": [
+  "gui:common/controls/Keyboard/images/Delete_Btn_En.png",
+  "ctl:Keyboard_Key12_Hit.png",
+  "ctl:Keyboard_Key12.png"
+ ],
+ ".KeyboardCtrl .btnWrapper.fiveTen .controlsWrapper .KeyboardCtrlDeleteBtn_En": [
+  "gui:common/controls/Keyboard/images/Delete_Btn_En.png",
+  "ctl:Keyboard_Key12.png"
+ ],
+ ".KeyboardCtrl .btnWrapper.fiveTen .controlsWrapper .KeyboardCtrlDeleteBtn_Fs": [
+  "gui:common/controls/Keyboard/images/Delete_Btn_En.png",
+  "ctl:Keyboard_Key12_Focus.png",
+  "ctl:Keyboard_Key12.png"
+ ],
+ ".KeyboardCtrl .btnWrapper.fiveTen .controlsWrapper .KeyboardCtrlDeleteBtn_Hd": [
+  "gui:common/controls/Keyboard/images/Delete_Btn_En.png",
+  "ctl:Keyboard_Key12_Hit.png",
+  "ctl:Keyboard_Key12.png"
+ ],
+ ".KeyboardCtrl .btnWrapper.fiveTen .controlsWrapper .activeState#btnCancel": [
+  "gui:common/controls/Keyboard/images/Icn_Cancel_En.png",
+  "ctl:Keyboard_Key14_Hit.png",
+  "ctl:Keyboard_Key14.png"
+ ],
+ ".KeyboardCtrl .btnWrapper.fiveTen .controlsWrapper .activeState#btnGlobe": [
+  "gui:common/controls/Keyboard/images/Icn_Globe.png",
+  "ctl:Keyboard_Key06_Hit.png",
+  "ctl:Keyboard_Key06.png"
+ ],
+ ".KeyboardCtrl .btnWrapper.fiveTen .controlsWrapper .activeState#btnLayoutSwitch": [
+  "ctl:Keyboard_Key04_Hit.png",
+  "ctl:Keyboard_Key04.png"
+ ],
+ ".KeyboardCtrl .btnWrapper.fiveTen .controlsWrapper .activeState#btnMod": [
+  "gui:common/controls/Keyboard/images/Icn_Small_En.png",
+  "ctl:Keyboard_Key07_Hit.png",
+  "ctl:Keyboard_Key07.png"
+ ],
+ ".KeyboardCtrl .btnWrapper.fiveTen .controlsWrapper .activeState#btnOK": [
+  "gui:common/controls/Keyboard/images/Icn_Send.png",
+  "ctl:Keyboard_Key14_Hit.png",
+  "ctl:Keyboard_Key14.png"
+ ],
+ ".KeyboardCtrl .btnWrapper.fiveTen .controlsWrapper .activeState#btnShift": [
+  "gui:common/controls/Keyboard/images/IcnKbdShift_Off.png",
+  "ctl:Keyboard_Key04_Hit.png",
+  "ctl:Keyboard_Key04.png"
+ ],
+ ".KeyboardCtrl .btnWrapper.fiveTen .controlsWrapper .activeState#btnSpacebar": [
+  "ctl:Keyboard_KeySpace01_Hit.png",
+  "ctl:Keyboard_KeySpace01.png"
+ ],
+ ".KeyboardCtrl .btnWrapper.fiveTen .controlsWrapper .capsLock#btnShift": [
+  "gui:common/controls/Keyboard/images/IcnKbdShift_On.png",
+  "ctl:Keyboard_Key04.png"
+ ],
+ ".KeyboardCtrl .btnWrapper.fiveTen .controlsWrapper .capsLock.activeState#btnShift": [
+  "gui:common/controls/Keyboard/images/IcnKbdShift_On.png",
+  "ctl:Keyboard_Key04_Hit.png",
+  "ctl:Keyboard_Key04.png"
+ ],
+ ".KeyboardCtrl .btnWrapper.fiveTen .controlsWrapper .capsLock.disabled#btnShift": [
+  "gui:common/controls/Keyboard/images/IcnKbdShift_Disabled.png",
+  "ctl:Keyboard_Key04_Dead.png"
+ ],
+ ".KeyboardCtrl .btnWrapper.fiveTen .controlsWrapper .capsLock.focused#btnShift": [
+  "gui:common/controls/Keyboard/images/IcnKbdShift_On.png",
+  "ctl:Keyboard_Key04_Focus.png",
+  "ctl:Keyboard_Key04.png"
+ ],
+ ".KeyboardCtrl .btnWrapper.fiveTen .controlsWrapper .disabled#btnCancel": [
+  "gui:common/controls/Keyboard/images/Icn_Cancel_Ds.png",
+  "ctl:Keyboard_Key09_Dead.png"
+ ],
+ ".KeyboardCtrl .btnWrapper.fiveTen .controlsWrapper .disabled#btnGlobe": [
+  "gui:common/controls/Keyboard/images/Icn_Globe_Ds.png",
+  "ctl:Keyboard_Key06_Dead.png"
+ ],
+ ".KeyboardCtrl .btnWrapper.fiveTen .controlsWrapper .disabled#btnMod": [
+  "gui:common/controls/Keyboard/images/Icn_Small_Ds.png",
+  "ctl:Keyboard_Key07_Dead.png"
+ ],
+ ".KeyboardCtrl .btnWrapper.fiveTen .controlsWrapper .disabled#btnOK": [
+  "gui:common/controls/Keyboard/images/Icn_Send_Ds.png",
+  "ctl:Keyboard_Key09_Dead.png"
+ ],
+ ".KeyboardCtrl .btnWrapper.fiveTen .controlsWrapper .disabled#btnShift": [
+  "gui:common/controls/Keyboard/images/IcnKbdShift_Disabled.png",
+  "ctl:Keyboard_Key04_Dead.png"
+ ],
+ ".KeyboardCtrl .btnWrapper.fiveTen .controlsWrapper .focused#btnCancel": [
+  "gui:common/controls/Keyboard/images/Icn_Cancel_En.png",
+  "ctl:Keyboard_Key14_Focus.png",
+  "ctl:Keyboard_Key14.png"
+ ],
+ ".KeyboardCtrl .btnWrapper.fiveTen .controlsWrapper .focused#btnGlobe": [
+  "gui:common/controls/Keyboard/images/Icn_Globe.png",
+  "ctl:Keyboard_Key06_Focus.png",
+  "ctl:Keyboard_Key06.png"
+ ],
+ ".KeyboardCtrl .btnWrapper.fiveTen .controlsWrapper .focused#btnLayoutSwitch": [
+  "ctl:Keyboard_Key04_Focus.png",
+  "ctl:Keyboard_Key04.png"
+ ],
+ ".KeyboardCtrl .btnWrapper.fiveTen .controlsWrapper .focused#btnMod": [
+  "gui:common/controls/Keyboard/images/Icn_Small_En.png",
+  "ctl:Keyboard_Key07_Focus.png",
+  "ctl:Keyboard_Key07.png"
+ ],
+ ".KeyboardCtrl .btnWrapper.fiveTen .controlsWrapper .focused#btnOK": [
+  "gui:common/controls/Keyboard/images/Icn_Send.png",
+  "ctl:Keyboard_Key14_Focus.png",
+  "ctl:Keyboard_Key14.png"
+ ],
+ ".KeyboardCtrl .btnWrapper.fiveTen .controlsWrapper .focused#btnShift": [
+  "gui:common/controls/Keyboard/images/IcnKbdShift_Off.png",
+  "ctl:Keyboard_Key04_Focus.png",
+  "ctl:Keyboard_Key04.png"
+ ],
+ ".KeyboardCtrl .btnWrapper.fiveTen .controlsWrapper .focused#btnSpacebar": [
+  "ctl:Keyboard_KeySpace01_Focus.png",
+  "ctl:Keyboard_KeySpace01.png"
+ ],
+ ".KeyboardCtrl .btnWrapper.fiveTen .controlsWrapper .noIcon.activeState#btnShift": [
+  "ctl:Keyboard_Key09_Hit.png",
+  "ctl:Keyboard_Key09.png"
+ ],
+ ".KeyboardCtrl .btnWrapper.fiveTen .controlsWrapper .noIcon.focused#btnShift": [
+  "ctl:Keyboard_Key09_Focus.png",
+  "ctl:Keyboard_Key09.png"
+ ],
+ ".KeyboardCtrl .btnWrapper.sixTen .btn.activeState": [
+  "ctl:Keyboard_Key10_Hit.png",
+  "ctl:Keyboard_Key10.png"
+ ],
+ ".KeyboardCtrl .btnWrapper.sixTen .btn.focused": [
+  "ctl:Keyboard_Key10_Focus.png",
+  "ctl:Keyboard_Key10.png"
+ ],
+ ".KeyboardCtrl .btnWrapper.sixTen .controlsWrapper #btnCancel": [
+  "gui:common/controls/Keyboard/images/Icn_Cancel_En.png",
+  "ctl:Keyboard_Key14.png"
+ ],
+ ".KeyboardCtrl .btnWrapper.sixTen .controlsWrapper #btnGlobe": [
+  "gui:common/controls/Keyboard/images/Icn_Globe.png",
+  "ctl:Keyboard_Key06.png"
+ ],
+ ".KeyboardCtrl .btnWrapper.sixTen .controlsWrapper #btnMod": [
+  "gui:common/controls/Keyboard/images/Icn_Small_En.png",
+  "ctl:Keyboard_Key07.png"
+ ],
+ ".KeyboardCtrl .btnWrapper.sixTen .controlsWrapper #btnMod:active": [
+  "gui:common/controls/Keyboard/images/Icn_Small_En.png",
+  "ctl:Keyboard_Key07_Hit.png",
+  "ctl:Keyboard_Key07.png"
+ ],
+ ".KeyboardCtrl .btnWrapper.sixTen .controlsWrapper #btnOK": [
+  "gui:common/controls/Keyboard/images/Icn_Send.png",
+  "ctl:Keyboard_Key14.png"
+ ],
+ ".KeyboardCtrl .btnWrapper.sixTen .controlsWrapper #btnShift": [
+  "gui:common/controls/Keyboard/images/IcnKbdShift_Off.png",
+  "ctl:Keyboard_Key11.png"
+ ],
+ ".KeyboardCtrl .btnWrapper.sixTen .controlsWrapper .KeyboardCtrlDeleteBtn_Ds": [
+  "gui:common/controls/Keyboard/images/Delete_Btn_Ds.png",
+  "ctl:Keyboard_Key12_Dead.png"
+ ],
+ ".KeyboardCtrl .btnWrapper.sixTen .controlsWrapper .KeyboardCtrlDeleteBtn_Dwn": [
+  "gui:common/controls/Keyboard/images/Delete_Btn_En.png",
+  "ctl:Keyboard_Key12_Hit.png",
+  "ctl:Keyboard_Key12.png"
+ ],
+ ".KeyboardCtrl .btnWrapper.sixTen .controlsWrapper .KeyboardCtrlDeleteBtn_En": [
+  "gui:common/controls/Keyboard/images/Delete_Btn_En.png",
+  "ctl:Keyboard_Key12.png"
+ ],
+ ".KeyboardCtrl .btnWrapper.sixTen .controlsWrapper .KeyboardCtrlDeleteBtn_Fs": [
+  "gui:common/controls/Keyboard/images/Delete_Btn_En.png",
+  "ctl:Keyboard_Key12_Focus.png",
+  "ctl:Keyboard_Key12.png"
+ ],
+ ".KeyboardCtrl .btnWrapper.sixTen .controlsWrapper .KeyboardCtrlDeleteBtn_Hd": [
+  "gui:common/controls/Keyboard/images/Delete_Btn_En.png",
+  "ctl:Keyboard_Key12_Hit.png",
+  "ctl:Keyboard_Key12.png"
+ ],
+ ".KeyboardCtrl .btnWrapper.sixTen .controlsWrapper .activeState#btnCancel": [
+  "gui:common/controls/Keyboard/images/Icn_Cancel_En.png",
+  "ctl:Keyboard_Key14_Hit.png",
+  "ctl:Keyboard_Key14.png"
+ ],
+ ".KeyboardCtrl .btnWrapper.sixTen .controlsWrapper .activeState#btnGlobe": [
+  "gui:common/controls/Keyboard/images/Icn_Globe.png",
+  "ctl:Keyboard_Key06_Hit.png",
+  "ctl:Keyboard_Key06.png"
+ ],
+ ".KeyboardCtrl .btnWrapper.sixTen .controlsWrapper .activeState#btnLayoutSwitch": [
+  "ctl:Keyboard_Key11_Hit.png",
+  "ctl:Keyboard_Key11.png"
+ ],
+ ".KeyboardCtrl .btnWrapper.sixTen .controlsWrapper .activeState#btnMod": [
+  "gui:common/controls/Keyboard/images/Icn_Small_En.png",
+  "ctl:Keyboard_Key07_Hit.png",
+  "ctl:Keyboard_Key07.png"
+ ],
+ ".KeyboardCtrl .btnWrapper.sixTen .controlsWrapper .activeState#btnOK": [
+  "gui:common/controls/Keyboard/images/Icn_Send.png",
+  "ctl:Keyboard_Key14_Hit.png",
+  "ctl:Keyboard_Key14.png"
+ ],
+ ".KeyboardCtrl .btnWrapper.sixTen .controlsWrapper .activeState#btnShift": [
+  "gui:common/controls/Keyboard/images/IcnKbdShift_Off.png",
+  "ctl:Keyboard_Key11_Hit.png",
+  "ctl:Keyboard_Key11.png"
+ ],
+ ".KeyboardCtrl .btnWrapper.sixTen .controlsWrapper .activeState#btnSpacebar": [
+  "ctl:Keyboard_KeySpace01_Hit.png",
+  "ctl:Keyboard_KeySpace01.png"
+ ],
+ ".KeyboardCtrl .btnWrapper.sixTen .controlsWrapper .capsLock#btnShift": [
+  "gui:common/controls/Keyboard/images/IcnKbdShift_On.png",
+  "ctl:Keyboard_Key11.png"
+ ],
+ ".KeyboardCtrl .btnWrapper.sixTen .controlsWrapper .capsLock.activeState#btnShift": [
+  "gui:common/controls/Keyboard/images/IcnKbdShift_On.png",
+  "ctl:Keyboard_Key11_Hit.png",
+  "ctl:Keyboard_Key11.png"
+ ],
+ ".KeyboardCtrl .btnWrapper.sixTen .controlsWrapper .capsLock.disabled#btnShift": [
+  "gui:common/controls/Keyboard/images/IcnKbdShift_Disabled.png",
+  "ctl:Keyboard_Key11_Dead.png"
+ ],
+ ".KeyboardCtrl .btnWrapper.sixTen .controlsWrapper .capsLock.focused#btnShift": [
+  "gui:common/controls/Keyboard/images/IcnKbdShift_On.png",
+  "ctl:Keyboard_Key11_Focus.png",
+  "ctl:Keyboard_Key11.png"
+ ],
+ ".KeyboardCtrl .btnWrapper.sixTen .controlsWrapper .disabled#btnCancel": [
+  "gui:common/controls/Keyboard/images/Icn_Cancel_Ds.png",
+  "ctl:Keyboard_Key09_Dead.png"
+ ],
+ ".KeyboardCtrl .btnWrapper.sixTen .controlsWrapper .disabled#btnGlobe": [
+  "gui:common/controls/Keyboard/images/Icn_Globe_Ds.png",
+  "ctl:Keyboard_Key06_Dead.png"
+ ],
+ ".KeyboardCtrl .btnWrapper.sixTen .controlsWrapper .disabled#btnMod": [
+  "gui:common/controls/Keyboard/images/Icn_Small_Ds.png",
+  "ctl:Keyboard_Key07_Dead.png"
+ ],
+ ".KeyboardCtrl .btnWrapper.sixTen .controlsWrapper .disabled#btnOK": [
+  "gui:common/controls/Keyboard/images/Icn_Send_Ds.png",
+  "ctl:Keyboard_Key09_Dead.png"
+ ],
+ ".KeyboardCtrl .btnWrapper.sixTen .controlsWrapper .disabled#btnShift": [
+  "gui:common/controls/Keyboard/images/IcnKbdShift_Disabled.png",
+  "ctl:Keyboard_Key11_Dead.png"
+ ],
+ ".KeyboardCtrl .btnWrapper.sixTen .controlsWrapper .focused#btnCancel": [
+  "gui:common/controls/Keyboard/images/Icn_Cancel_En.png",
+  "ctl:Keyboard_Key14_Focus.png",
+  "ctl:Keyboard_Key14.png"
+ ],
+ ".KeyboardCtrl .btnWrapper.sixTen .controlsWrapper .focused#btnGlobe": [
+  "gui:common/controls/Keyboard/images/Icn_Globe.png",
+  "ctl:Keyboard_Key06_Focus.png",
+  "ctl:Keyboard_Key06.png"
+ ],
+ ".KeyboardCtrl .btnWrapper.sixTen .controlsWrapper .focused#btnLayoutSwitch": [
+  "ctl:Keyboard_Key11_Focus.png",
+  "ctl:Keyboard_Key11.png"
+ ],
+ ".KeyboardCtrl .btnWrapper.sixTen .controlsWrapper .focused#btnMod": [
+  "gui:common/controls/Keyboard/images/Icn_Small_En.png",
+  "ctl:Keyboard_Key07_Focus.png",
+  "ctl:Keyboard_Key07.png"
+ ],
+ ".KeyboardCtrl .btnWrapper.sixTen .controlsWrapper .focused#btnOK": [
+  "gui:common/controls/Keyboard/images/Icn_Send.png",
+  "ctl:Keyboard_Key14_Focus.png",
+  "ctl:Keyboard_Key14.png"
+ ],
+ ".KeyboardCtrl .btnWrapper.sixTen .controlsWrapper .focused#btnShift": [
+  "gui:common/controls/Keyboard/images/IcnKbdShift_Off.png",
+  "ctl:Keyboard_Key11_Focus.png",
+  "ctl:Keyboard_Key11.png"
+ ],
+ ".KeyboardCtrl .btnWrapper.sixTen .controlsWrapper .focused#btnSpacebar": [
+  "ctl:Keyboard_KeySpace01_Focus.png",
+  "ctl:Keyboard_KeySpace01.png"
+ ],
+ ".KeyboardCtrl .btnWrapper.sixTen .controlsWrapper .noIcon.activeState#btnShift": [
+  "ctl:Keyboard_Key09_Hit.png",
+  "ctl:Keyboard_Key09.png"
+ ],
+ ".KeyboardCtrl .btnWrapper.sixTen .controlsWrapper .noIcon.focused#btnShift": [
+  "ctl:Keyboard_Key09_Focus.png",
+  "ctl:Keyboard_Key09.png"
+ ],
+ ".KeyboardCtrl .btnWrapper.sixTwelve .btn.activeState": [
+  "ctl:Keyboard_Key01_Hit.png",
+  "ctl:Keyboard_Key01.png"
+ ],
+ ".KeyboardCtrl .btnWrapper.sixTwelve .btn.focused": [
+  "ctl:Keyboard_Key01_Focus.png",
+  "ctl:Keyboard_Key01.png"
+ ],
+ ".KeyboardCtrl .btnWrapper.sixTwelve .controlsWrapper #btnCancel": [
+  "gui:common/controls/Keyboard/images/Icn_Cancel_En.png",
+  "ctl:Keyboard_Key14.png"
+ ],
+ ".KeyboardCtrl .btnWrapper.sixTwelve .controlsWrapper #btnGlobe": [
+  "gui:common/controls/Keyboard/images/Icn_Globe.png",
+  "ctl:Keyboard_Key06.png"
+ ],
+ ".KeyboardCtrl .btnWrapper.sixTwelve .controlsWrapper #btnMod": [
+  "gui:common/controls/Keyboard/images/Icn_Small_En.png",
+  "ctl:Keyboard_Key07.png"
+ ],
+ ".KeyboardCtrl .btnWrapper.sixTwelve .controlsWrapper #btnMod:active": [
+  "gui:common/controls/Keyboard/images/Icn_Small_En.png",
+  "ctl:Keyboard_Key07_Hit.png",
+  "ctl:Keyboard_Key07.png"
+ ],
+ ".KeyboardCtrl .btnWrapper.sixTwelve .controlsWrapper #btnOK": [
+  "gui:common/controls/Keyboard/images/Icn_Send.png",
+  "ctl:Keyboard_Key14.png"
+ ],
+ ".KeyboardCtrl .btnWrapper.sixTwelve .controlsWrapper #btnShift": [
+  "gui:common/controls/Keyboard/images/IcnKbdShift_Off.png",
+  "ctl:Keyboard_Key02.png"
+ ],
+ ".KeyboardCtrl .btnWrapper.sixTwelve .controlsWrapper .KeyboardCtrlDeleteBtn_Ds": [
+  "gui:common/controls/Keyboard/images/Delete_Btn_Ds.png",
+  "ctl:Keyboard_Key12_Dead.png"
+ ],
+ ".KeyboardCtrl .btnWrapper.sixTwelve .controlsWrapper .KeyboardCtrlDeleteBtn_Dwn": [
+  "gui:common/controls/Keyboard/images/Delete_Btn_En.png",
+  "ctl:Keyboard_Key12_Hit.png",
+  "ctl:Keyboard_Key12.png"
+ ],
+ ".KeyboardCtrl .btnWrapper.sixTwelve .controlsWrapper .KeyboardCtrlDeleteBtn_En": [
+  "gui:common/controls/Keyboard/images/Delete_Btn_En.png",
+  "ctl:Keyboard_Key12.png"
+ ],
+ ".KeyboardCtrl .btnWrapper.sixTwelve .controlsWrapper .KeyboardCtrlDeleteBtn_Fs": [
+  "gui:common/controls/Keyboard/images/Delete_Btn_En.png",
+  "ctl:Keyboard_Key12_Focus.png",
+  "ctl:Keyboard_Key12.png"
+ ],
+ ".KeyboardCtrl .btnWrapper.sixTwelve .controlsWrapper .KeyboardCtrlDeleteBtn_Hd": [
+  "gui:common/controls/Keyboard/images/Delete_Btn_En.png",
+  "ctl:Keyboard_Key12_Hit.png",
+  "ctl:Keyboard_Key12.png"
+ ],
+ ".KeyboardCtrl .btnWrapper.sixTwelve .controlsWrapper .activeState#btnCancel": [
+  "gui:common/controls/Keyboard/images/Icn_Cancel_En.png",
+  "ctl:Keyboard_Key14_Hit.png",
+  "ctl:Keyboard_Key14.png"
+ ],
+ ".KeyboardCtrl .btnWrapper.sixTwelve .controlsWrapper .activeState#btnGlobe": [
+  "gui:common/controls/Keyboard/images/Icn_Globe.png",
+  "ctl:Keyboard_Key06_Hit.png",
+  "ctl:Keyboard_Key06.png"
+ ],
+ ".KeyboardCtrl .btnWrapper.sixTwelve .controlsWrapper .activeState#btnLayoutSwitch": [
+  "ctl:Keyboard_Key02_Hit.png",
+  "ctl:Keyboard_Key02.png"
+ ],
+ ".KeyboardCtrl .btnWrapper.sixTwelve .controlsWrapper .activeState#btnMod": [
+  "gui:common/controls/Keyboard/images/Icn_Small_En.png",
+  "ctl:Keyboard_Key07_Hit.png",
+  "ctl:Keyboard_Key07.png"
+ ],
+ ".KeyboardCtrl .btnWrapper.sixTwelve .controlsWrapper .activeState#btnOK": [
+  "gui:common/controls/Keyboard/images/Icn_Send.png",
+  "ctl:Keyboard_Key14_Hit.png",
+  "ctl:Keyboard_Key14.png"
+ ],
+ ".KeyboardCtrl .btnWrapper.sixTwelve .controlsWrapper .activeState#btnShift": [
+  "gui:common/controls/Keyboard/images/IcnKbdShift_Off.png",
+  "ctl:Keyboard_Key02_Hit.png",
+  "ctl:Keyboard_Key02.png"
+ ],
+ ".KeyboardCtrl .btnWrapper.sixTwelve .controlsWrapper .activeState#btnSpacebar": [
+  "ctl:Keyboard_KeySpace01_Hit.png",
+  "ctl:Keyboard_KeySpace01.png"
+ ],
+ ".KeyboardCtrl .btnWrapper.sixTwelve .controlsWrapper .capsLock#btnShift": [
+  "gui:common/controls/Keyboard/images/IcnKbdShift_On.png",
+  "ctl:Keyboard_Key02.png"
+ ],
+ ".KeyboardCtrl .btnWrapper.sixTwelve .controlsWrapper .capsLock.activeState#btnShift": [
+  "gui:common/controls/Keyboard/images/IcnKbdShift_On.png",
+  "ctl:Keyboard_Key02_Hit.png",
+  "ctl:Keyboard_Key02.png"
+ ],
+ ".KeyboardCtrl .btnWrapper.sixTwelve .controlsWrapper .capsLock.disabled#btnShift": [
+  "gui:common/controls/Keyboard/images/IcnKbdShift_Disabled.png",
+  "ctl:Keyboard_Key02_Dead.png"
+ ],
+ ".KeyboardCtrl .btnWrapper.sixTwelve .controlsWrapper .capsLock.focused#btnShift": [
+  "gui:common/controls/Keyboard/images/IcnKbdShift_On.png",
+  "ctl:Keyboard_Key02_Focus.png",
+  "ctl:Keyboard_Key02.png"
+ ],
+ ".KeyboardCtrl .btnWrapper.sixTwelve .controlsWrapper .disabled#btnCancel": [
+  "gui:common/controls/Keyboard/images/Icn_Cancel_Ds.png",
+  "ctl:Keyboard_Key09_Dead.png"
+ ],
+ ".KeyboardCtrl .btnWrapper.sixTwelve .controlsWrapper .disabled#btnGlobe": [
+  "gui:common/controls/Keyboard/images/Icn_Globe_Ds.png",
+  "ctl:Keyboard_Key06_Dead.png"
+ ],
+ ".KeyboardCtrl .btnWrapper.sixTwelve .controlsWrapper .disabled#btnMod": [
+  "gui:common/controls/Keyboard/images/Icn_Small_Ds.png",
+  "ctl:Keyboard_Key07_Dead.png"
+ ],
+ ".KeyboardCtrl .btnWrapper.sixTwelve .controlsWrapper .disabled#btnOK": [
+  "gui:common/controls/Keyboard/images/Icn_Send_Ds.png",
+  "ctl:Keyboard_Key09_Dead.png"
+ ],
+ ".KeyboardCtrl .btnWrapper.sixTwelve .controlsWrapper .disabled#btnShift": [
+  "gui:common/controls/Keyboard/images/IcnKbdShift_Disabled.png",
+  "ctl:Keyboard_Key02_Dead.png"
+ ],
+ ".KeyboardCtrl .btnWrapper.sixTwelve .controlsWrapper .focused#btnCancel": [
+  "gui:common/controls/Keyboard/images/Icn_Cancel_En.png",
+  "ctl:Keyboard_Key14_Focus.png",
+  "ctl:Keyboard_Key14.png"
+ ],
+ ".KeyboardCtrl .btnWrapper.sixTwelve .controlsWrapper .focused#btnGlobe": [
+  "gui:common/controls/Keyboard/images/Icn_Globe.png",
+  "ctl:Keyboard_Key06_Focus.png",
+  "ctl:Keyboard_Key06.png"
+ ],
+ ".KeyboardCtrl .btnWrapper.sixTwelve .controlsWrapper .focused#btnLayoutSwitch": [
+  "ctl:Keyboard_Key02_Focus.png",
+  "ctl:Keyboard_Key02.png"
+ ],
+ ".KeyboardCtrl .btnWrapper.sixTwelve .controlsWrapper .focused#btnMod": [
+  "gui:common/controls/Keyboard/images/Icn_Small_En.png",
+  "ctl:Keyboard_Key07_Focus.png",
+  "ctl:Keyboard_Key07.png"
+ ],
+ ".KeyboardCtrl .btnWrapper.sixTwelve .controlsWrapper .focused#btnOK": [
+  "gui:common/controls/Keyboard/images/Icn_Send.png",
+  "ctl:Keyboard_Key14_Focus.png",
+  "ctl:Keyboard_Key14.png"
+ ],
+ ".KeyboardCtrl .btnWrapper.sixTwelve .controlsWrapper .focused#btnShift": [
+  "gui:common/controls/Keyboard/images/IcnKbdShift_Off.png",
+  "ctl:Keyboard_Key02_Focus.png",
+  "ctl:Keyboard_Key02.png"
+ ],
+ ".KeyboardCtrl .btnWrapper.sixTwelve .controlsWrapper .focused#btnSpacebar": [
+  "ctl:Keyboard_KeySpace01_Focus.png",
+  "ctl:Keyboard_KeySpace01.png"
+ ],
+ ".KeyboardCtrl .btnWrapper.sixTwelve .controlsWrapper .noIcon.activeState#btnShift": [
+  "ctl:Keyboard_Key09_Hit.png",
+  "ctl:Keyboard_Key09.png"
+ ],
+ ".KeyboardCtrl .btnWrapper.sixTwelve .controlsWrapper .noIcon.focused#btnShift": [
+  "ctl:Keyboard_Key09_Focus.png",
+  "ctl:Keyboard_Key09.png"
+ ],
+ ".KeyboardCtrl .btnWrapper.suggFiveTen .btn.activeState": [
+  "ctl:Keyboard_Key05_Hit.png",
+  "ctl:Keyboard_Key05.png"
+ ],
+ ".KeyboardCtrl .btnWrapper.suggFiveTen .btn.focused": [
+  "ctl:Keyboard_Key05_Focus.png",
+  "ctl:Keyboard_Key05.png"
+ ],
+ ".KeyboardCtrl .btnWrapper.suggFiveTen .btn.lastRow.activeState": [
+  "ctl:Keyboard_Key08_Hit.png",
+  "ctl:Keyboard_Key08.png"
+ ],
+ ".KeyboardCtrl .btnWrapper.suggFiveTen .btn.lastRow.focused": [
+  "ctl:Keyboard_Key08_Focus.png",
+  "ctl:Keyboard_Key08.png"
+ ],
+ ".KeyboardCtrl .btnWrapper.suggFiveTen .controlsWrapper #btnCancel": [
+  "gui:common/controls/Keyboard/images/Icn_Cancel_En.png",
+  "ctl:Keyboard_Key14.png"
+ ],
+ ".KeyboardCtrl .btnWrapper.suggFiveTen .controlsWrapper #btnGlobe": [
+  "gui:common/controls/Keyboard/images/Icn_Globe.png",
+  "ctl:Keyboard_Key06.png"
+ ],
+ ".KeyboardCtrl .btnWrapper.suggFiveTen .controlsWrapper #btnMod": [
+  "gui:common/controls/Keyboard/images/Icn_Small_En.png",
+  "ctl:Keyboard_Key07.png"
+ ],
+ ".KeyboardCtrl .btnWrapper.suggFiveTen .controlsWrapper #btnMod:active": [
+  "gui:common/controls/Keyboard/images/Icn_Small_En.png",
+  "ctl:Keyboard_Key07_Hit.png",
+  "ctl:Keyboard_Key07.png"
+ ],
+ ".KeyboardCtrl .btnWrapper.suggFiveTen .controlsWrapper #btnOK": [
+  "gui:common/controls/Keyboard/images/Icn_Send.png",
+  "ctl:Keyboard_Key14.png"
+ ],
+ ".KeyboardCtrl .btnWrapper.suggFiveTen .controlsWrapper #btnShift": [
+  "gui:common/controls/Keyboard/images/IcnKbdShift_Off.png",
+  "ctl:Keyboard_Key09.png"
+ ],
+ ".KeyboardCtrl .btnWrapper.suggFiveTen .controlsWrapper .KeyboardCtrlDeleteBtn_Ds": [
+  "gui:common/controls/Keyboard/images/Delete_Btn_Ds.png",
+  "ctl:Keyboard_Key12_Dead.png"
+ ],
+ ".KeyboardCtrl .btnWrapper.suggFiveTen .controlsWrapper .KeyboardCtrlDeleteBtn_Dwn": [
+  "gui:common/controls/Keyboard/images/Delete_Btn_En.png",
+  "ctl:Keyboard_Key12_Hit.png",
+  "ctl:Keyboard_Key12.png"
+ ],
+ ".KeyboardCtrl .btnWrapper.suggFiveTen .controlsWrapper .KeyboardCtrlDeleteBtn_En": [
+  "gui:common/controls/Keyboard/images/Delete_Btn_En.png",
+  "ctl:Keyboard_Key12.png"
+ ],
+ ".KeyboardCtrl .btnWrapper.suggFiveTen .controlsWrapper .KeyboardCtrlDeleteBtn_Fs": [
+  "gui:common/controls/Keyboard/images/Delete_Btn_En.png",
+  "ctl:Keyboard_Key12_Focus.png",
+  "ctl:Keyboard_Key12.png"
+ ],
+ ".KeyboardCtrl .btnWrapper.suggFiveTen .controlsWrapper .KeyboardCtrlDeleteBtn_Hd": [
+  "gui:common/controls/Keyboard/images/Delete_Btn_En.png",
+  "ctl:Keyboard_Key12_Hit.png",
+  "ctl:Keyboard_Key12.png"
+ ],
+ ".KeyboardCtrl .btnWrapper.suggFiveTen .controlsWrapper .activeState#btnCancel": [
+  "gui:common/controls/Keyboard/images/Icn_Cancel_En.png",
+  "ctl:Keyboard_Key14_Hit.png",
+  "ctl:Keyboard_Key14.png"
+ ],
+ ".KeyboardCtrl .btnWrapper.suggFiveTen .controlsWrapper .activeState#btnGlobe": [
+  "gui:common/controls/Keyboard/images/Icn_Globe.png",
+  "ctl:Keyboard_Key06_Hit.png",
+  "ctl:Keyboard_Key06.png"
+ ],
+ ".KeyboardCtrl .btnWrapper.suggFiveTen .controlsWrapper .activeState#btnLayoutSwitch": [
+  "ctl:Keyboard_Key09_Hit.png",
+  "ctl:Keyboard_Key09.png"
+ ],
+ ".KeyboardCtrl .btnWrapper.suggFiveTen .controlsWrapper .activeState#btnMod": [
+  "gui:common/controls/Keyboard/images/Icn_Small_En.png",
+  "ctl:Keyboard_Key07_Hit.png",
+  "ctl:Keyboard_Key07.png"
+ ],
+ ".KeyboardCtrl .btnWrapper.suggFiveTen .controlsWrapper .activeState#btnOK": [
+  "gui:common/controls/Keyboard/images/Icn_Send.png",
+  "ctl:Keyboard_Key14_Hit.png",
+  "ctl:Keyboard_Key14.png"
+ ],
+ ".KeyboardCtrl .btnWrapper.suggFiveTen .controlsWrapper .activeState#btnShift": [
+  "gui:common/controls/Keyboard/images/IcnKbdShift_Off.png",
+  "ctl:Keyboard_Key09_Hit.png",
+  "ctl:Keyboard_Key09.png"
+ ],
+ ".KeyboardCtrl .btnWrapper.suggFiveTen .controlsWrapper .activeState#btnSpacebar": [
+  "ctl:Keyboard_KeySpace01_Hit.png",
+  "ctl:Keyboard_KeySpace01.png"
+ ],
+ ".KeyboardCtrl .btnWrapper.suggFiveTen .controlsWrapper .capsLock#btnShift": [
+  "gui:common/controls/Keyboard/images/IcnKbdShift_On.png",
+  "ctl:Keyboard_Key02.png"
+ ],
+ ".KeyboardCtrl .btnWrapper.suggFiveTen .controlsWrapper .capsLock.activeState#btnShift": [
+  "gui:common/controls/Keyboard/images/IcnKbdShift_On.png",
+  "ctl:Keyboard_Key02_Hit.png",
+  "ctl:Keyboard_Key02.png"
+ ],
+ ".KeyboardCtrl .btnWrapper.suggFiveTen .controlsWrapper .capsLock.disabled#btnShift": [
+  "gui:common/controls/Keyboard/images/IcnKbdShift_Disabled.png",
+  "ctl:Keyboard_Key02_Dead.png"
+ ],
+ ".KeyboardCtrl .btnWrapper.suggFiveTen .controlsWrapper .capsLock.focused#btnShift": [
+  "gui:common/controls/Keyboard/images/IcnKbdShift_On.png",
+  "ctl:Keyboard_Key02_Focus.png",
+  "ctl:Keyboard_Key02.png"
+ ],
+ ".KeyboardCtrl .btnWrapper.suggFiveTen .controlsWrapper .disabled#btnCancel": [
+  "gui:common/controls/Keyboard/images/Icn_Cancel_Ds.png",
+  "ctl:Keyboard_Key09_Dead.png"
+ ],
+ ".KeyboardCtrl .btnWrapper.suggFiveTen .controlsWrapper .disabled#btnGlobe": [
+  "gui:common/controls/Keyboard/images/Icn_Globe_Ds.png",
+  "ctl:Keyboard_Key06_Dead.png"
+ ],
+ ".KeyboardCtrl .btnWrapper.suggFiveTen .controlsWrapper .disabled#btnMod": [
+  "gui:common/controls/Keyboard/images/Icn_Small_Ds.png",
+  "ctl:Keyboard_Key07_Dead.png"
+ ],
+ ".KeyboardCtrl .btnWrapper.suggFiveTen .controlsWrapper .disabled#btnOK": [
+  "gui:common/controls/Keyboard/images/Icn_Send_Ds.png",
+  "ctl:Keyboard_Key09_Dead.png"
+ ],
+ ".KeyboardCtrl .btnWrapper.suggFiveTen .controlsWrapper .disabled#btnShift": [
+  "gui:common/controls/Keyboard/images/IcnKbdShift_Disabled.png",
+  "ctl:Keyboard_Key09_Dead.png"
+ ],
+ ".KeyboardCtrl .btnWrapper.suggFiveTen .controlsWrapper .focused#btnCancel": [
+  "gui:common/controls/Keyboard/images/Icn_Cancel_En.png",
+  "ctl:Keyboard_Key14_Focus.png",
+  "ctl:Keyboard_Key14.png"
+ ],
+ ".KeyboardCtrl .btnWrapper.suggFiveTen .controlsWrapper .focused#btnGlobe": [
+  "gui:common/controls/Keyboard/images/Icn_Globe.png",
+  "ctl:Keyboard_Key06_Focus.png",
+  "ctl:Keyboard_Key06.png"
+ ],
+ ".KeyboardCtrl .btnWrapper.suggFiveTen .controlsWrapper .focused#btnLayoutSwitch": [
+  "ctl:Keyboard_Key09_Focus.png",
+  "ctl:Keyboard_Key09.png"
+ ],
+ ".KeyboardCtrl .btnWrapper.suggFiveTen .controlsWrapper .focused#btnMod": [
+  "gui:common/controls/Keyboard/images/Icn_Small_En.png",
+  "ctl:Keyboard_Key07_Focus.png",
+  "ctl:Keyboard_Key07.png"
+ ],
+ ".KeyboardCtrl .btnWrapper.suggFiveTen .controlsWrapper .focused#btnOK": [
+  "gui:common/controls/Keyboard/images/Icn_Send.png",
+  "ctl:Keyboard_Key14_Focus.png",
+  "ctl:Keyboard_Key14.png"
+ ],
+ ".KeyboardCtrl .btnWrapper.suggFiveTen .controlsWrapper .focused#btnShift": [
+  "gui:common/controls/Keyboard/images/IcnKbdShift_Off.png",
+  "ctl:Keyboard_Key09_Focus.png",
+  "ctl:Keyboard_Key09.png"
+ ],
+ ".KeyboardCtrl .btnWrapper.suggFiveTen .controlsWrapper .focused#btnSpacebar": [
+  "ctl:Keyboard_KeySpace01_Focus.png",
+  "ctl:Keyboard_KeySpace01.png"
+ ],
+ ".KeyboardCtrl .btnWrapper.suggFiveTen .controlsWrapper .noIcon.activeState#btnShift": [
+  "ctl:Keyboard_Key09_Hit.png",
+  "ctl:Keyboard_Key09.png"
+ ],
+ ".KeyboardCtrl .btnWrapper.suggFiveTen .controlsWrapper .noIcon.focused#btnShift": [
+  "ctl:Keyboard_Key09_Focus.png",
+  "ctl:Keyboard_Key09.png"
+ ],
+ ".KeyboardCtrl .btnWrapper.suggSevenEleven .btn.activeState": [
+  "ctl:Keyboard_Key15_Hit.png",
+  "ctl:Keyboard_Key15.png"
+ ],
+ ".KeyboardCtrl .btnWrapper.suggSevenEleven .btn.focused": [
+  "ctl:Keyboard_Key15_Focus.png",
+  "ctl:Keyboard_Key15.png"
+ ],
+ ".KeyboardCtrl .btnWrapper.suggSevenEleven .btnExtended.activeState": [
+  "ctl:Keyboard_Key07_Hit.png",
+  "ctl:Keyboard_Key07.png"
+ ],
+ ".KeyboardCtrl .btnWrapper.suggSevenEleven .btnExtended.focused": [
+  "ctl:Keyboard_Key07_Focus.png",
+  "ctl:Keyboard_Key07.png"
+ ],
+ ".KeyboardCtrl .btnWrapper.suggSevenEleven .controlsWrapper #btnCancel": [
+  "gui:common/controls/Keyboard/images/Icn_Cancel_En.png",
+  "ctl:Keyboard_Key07.png"
+ ],
+ ".KeyboardCtrl .btnWrapper.suggSevenEleven .controlsWrapper #btnGlobe": [
+  "gui:common/controls/Keyboard/images/Icn_Globe.png",
+  "ctl:Keyboard_Key07.png"
+ ],
+ ".KeyboardCtrl .btnWrapper.suggSevenEleven .controlsWrapper #btnMod:active": [
+  "ctl:Keyboard_Key07_Hit.png",
+  "ctl:Keyboard_Key07.png"
+ ],
+ ".KeyboardCtrl .btnWrapper.suggSevenEleven .controlsWrapper #btnOK": [
+  "gui:common/controls/Keyboard/images/Icn_Send.png",
+  "ctl:Keyboard_Key07.png"
+ ],
+ ".KeyboardCtrl .btnWrapper.suggSevenEleven .controlsWrapper #btnShift": [
+  "gui:common/controls/Keyboard/images/IcnKbdShift_Off.png",
+  "ctl:Keyboard_Key15.png"
+ ],
+ ".KeyboardCtrl .btnWrapper.suggSevenEleven .controlsWrapper .KeyboardCtrlDeleteBtn_Ds": [
+  "gui:common/controls/Keyboard/images/Delete_Btn_Ds.png",
+  "ctl:Keyboard_Key12_Dead.png"
+ ],
+ ".KeyboardCtrl .btnWrapper.suggSevenEleven .controlsWrapper .KeyboardCtrlDeleteBtn_Dwn": [
+  "gui:common/controls/Keyboard/images/Delete_Btn_En.png",
+  "ctl:Keyboard_Key12_Hit.png",
+  "ctl:Keyboard_Key12.png"
+ ],
+ ".KeyboardCtrl .btnWrapper.suggSevenEleven .controlsWrapper .KeyboardCtrlDeleteBtn_En": [
+  "gui:common/controls/Keyboard/images/Delete_Btn_En.png",
+  "ctl:Keyboard_Key12.png"
+ ],
+ ".KeyboardCtrl .btnWrapper.suggSevenEleven .controlsWrapper .KeyboardCtrlDeleteBtn_Fs": [
+  "gui:common/controls/Keyboard/images/Delete_Btn_En.png",
+  "ctl:Keyboard_Key12_Focus.png",
+  "ctl:Keyboard_Key12.png"
+ ],
+ ".KeyboardCtrl .btnWrapper.suggSevenEleven .controlsWrapper .KeyboardCtrlDeleteBtn_Hd": [
+  "gui:common/controls/Keyboard/images/Delete_Btn_En.png",
+  "ctl:Keyboard_Key12_Hit.png",
+  "ctl:Keyboard_Key12.png"
+ ],
+ ".KeyboardCtrl .btnWrapper.suggSevenEleven .controlsWrapper .activeState#btnCancel": [
+  "gui:common/controls/Keyboard/images/Icn_Cancel_En.png",
+  "ctl:Keyboard_Key07_Hit.png",
+  "ctl:Keyboard_Key07.png"
+ ],
+ ".KeyboardCtrl .btnWrapper.suggSevenEleven .controlsWrapper .activeState#btnGlobe": [
+  "gui:common/controls/Keyboard/images/Icn_Globe.png",
+  "ctl:Keyboard_Key07_Hit.png",
+  "ctl:Keyboard_Key07.png"
+ ],
+ ".KeyboardCtrl .btnWrapper.suggSevenEleven .controlsWrapper .activeState#btnLayoutSwitch": [
+  "ctl:Keyboard_Key07_Hit.png",
+  "ctl:Keyboard_Key07.png"
+ ],
+ ".KeyboardCtrl .btnWrapper.suggSevenEleven .controlsWrapper .activeState#btnMod": [
+  "ctl:Keyboard_Key07_Hit.png",
+  "ctl:Keyboard_Key07.png"
+ ],
+ ".KeyboardCtrl .btnWrapper.suggSevenEleven .controlsWrapper .activeState#btnOK": [
+  "gui:common/controls/Keyboard/images/Icn_Send.png",
+  "ctl:Keyboard_Key07_Hit.png"
+ ],
+ ".KeyboardCtrl .btnWrapper.suggSevenEleven .controlsWrapper .activeState#btnShift": [
+  "gui:common/controls/Keyboard/images/IcnKbdShift_Off.png",
+  "ctl:Keyboard_Key15_Hit.png",
+  "ctl:Keyboard_Key15.png"
+ ],
+ ".KeyboardCtrl .btnWrapper.suggSevenEleven .controlsWrapper .activeState#btnSpacebar": [
+  "ctl:Keyboard_KeySpace02_Hit.png",
+  "ctl:Keyboard_KeySpace02.png"
+ ],
+ ".KeyboardCtrl .btnWrapper.suggSevenEleven .controlsWrapper .capsLock#btnShift": [
+  "gui:common/controls/Keyboard/images/IcnKbdShift_On.png",
+  "ctl:Keyboard_Key02.png"
+ ],
+ ".KeyboardCtrl .btnWrapper.suggSevenEleven .controlsWrapper .capsLock.activeState#btnShift": [
+  "gui:common/controls/Keyboard/images/IcnKbdShift_On.png",
+  "ctl:Keyboard_Key02_Hit.png",
+  "ctl:Keyboard_Key02.png"
+ ],
+ ".KeyboardCtrl .btnWrapper.suggSevenEleven .controlsWrapper .capsLock.disabled#btnShift": [
+  "gui:common/controls/Keyboard/images/IcnKbdShift_Disabled.png",
+  "ctl:Keyboard_Key02_Dead.png"
+ ],
+ ".KeyboardCtrl .btnWrapper.suggSevenEleven .controlsWrapper .capsLock.focused#btnShift": [
+  "gui:common/controls/Keyboard/images/IcnKbdShift_On.png",
+  "ctl:Keyboard_Key02_Focus.png",
+  "ctl:Keyboard_Key02.png"
+ ],
+ ".KeyboardCtrl .btnWrapper.suggSevenEleven .controlsWrapper .disabled#btnCancel": [
+  "gui:common/controls/Keyboard/images/Icn_Cancel_Ds.png",
+  "ctl:Keyboard_Key07_Dead.png"
+ ],
+ ".KeyboardCtrl .btnWrapper.suggSevenEleven .controlsWrapper .disabled#btnGlobe": [
+  "gui:common/controls/Keyboard/images/Icn_Globe_Ds.png",
+  "ctl:Keyboard_Key07_Dead.png"
+ ],
+ ".KeyboardCtrl .btnWrapper.suggSevenEleven .controlsWrapper .disabled#btnOK": [
+  "gui:common/controls/Keyboard/images/Icn_Send_Ds.png",
+  "ctl:Keyboard_Key07_Dead.png",
+  "ctl:Keyboard_Key07.png"
+ ],
+ ".KeyboardCtrl .btnWrapper.suggSevenEleven .controlsWrapper .disabled#btnShift": [
+  "gui:common/controls/Keyboard/images/IcnKbdShift_Disabled.png",
+  "ctl:Keyboard_Key15_Dead.png"
+ ],
+ ".KeyboardCtrl .btnWrapper.suggSevenEleven .controlsWrapper .focused#btnCancel": [
+  "gui:common/controls/Keyboard/images/Icn_Cancel_En.png",
+  "ctl:Keyboard_Key07_Focus.png",
+  "ctl:Keyboard_Key07.png"
+ ],
+ ".KeyboardCtrl .btnWrapper.suggSevenEleven .controlsWrapper .focused#btnGlobe": [
+  "gui:common/controls/Keyboard/images/Icn_Globe.png",
+  "ctl:Keyboard_Key07_Focus.png",
+  "ctl:Keyboard_Key07.png"
+ ],
+ ".KeyboardCtrl .btnWrapper.suggSevenEleven .controlsWrapper .focused#btnLayoutSwitch": [
+  "ctl:Keyboard_Key07_Focus.png",
+  "ctl:Keyboard_Key07.png"
+ ],
+ ".KeyboardCtrl .btnWrapper.suggSevenEleven .controlsWrapper .focused#btnMod": [
+  "ctl:Keyboard_Key07_Focus.png",
+  "ctl:Keyboard_Key07.png"
+ ],
+ ".KeyboardCtrl .btnWrapper.suggSevenEleven .controlsWrapper .focused#btnOK": [
+  "gui:common/controls/Keyboard/images/Icn_Send.png",
+  "ctl:Keyboard_Key07_Focus.png",
+  "ctl:Keyboard_Key07.png"
+ ],
+ ".KeyboardCtrl .btnWrapper.suggSevenEleven .controlsWrapper .focused#btnShift": [
+  "gui:common/controls/Keyboard/images/IcnKbdShift_Off.png",
+  "ctl:Keyboard_Key15_Focus.png",
+  "ctl:Keyboard_Key15.png"
+ ],
+ ".KeyboardCtrl .btnWrapper.suggSevenEleven .controlsWrapper .focused#btnSpacebar": [
+  "ctl:Keyboard_KeySpace02_Focus.png",
+  "ctl:Keyboard_KeySpace02.png"
+ ],
+ ".KeyboardCtrl .btnWrapper.suggSevenEleven .controlsWrapper .noIcon.activeState#btnShift": [
+  "ctl:Keyboard_Key09_Hit.png",
+  "ctl:Keyboard_Key09.png"
+ ],
+ ".KeyboardCtrl .btnWrapper.suggSevenEleven .controlsWrapper .noIcon.focused#btnShift": [
+  "ctl:Keyboard_Key09_Focus.png",
+  "ctl:Keyboard_Key09.png"
+ ],
+ ".KeyboardCtrl .btnWrapper.suggSevenTen .btn.activeState": [
+  "ctl:Keyboard_Key07_Hit.png",
+  "ctl:Keyboard_Key07.png"
+ ],
+ ".KeyboardCtrl .btnWrapper.suggSevenTen .btn.focused": [
+  "ctl:Keyboard_Key07_Focus.png",
+  "ctl:Keyboard_Key07.png"
+ ],
+ ".KeyboardCtrl .btnWrapper.suggSevenTen .controlsWrapper #btnCancel": [
+  "gui:common/controls/Keyboard/images/Icn_Cancel_En.png",
+  "ctl:Keyboard_Key07.png"
+ ],
+ ".KeyboardCtrl .btnWrapper.suggSevenTen .controlsWrapper #btnGlobe": [
+  "gui:common/controls/Keyboard/images/Icn_Globe.png",
+  "ctl:Keyboard_Key07.png"
+ ],
+ ".KeyboardCtrl .btnWrapper.suggSevenTen .controlsWrapper #btnMod": [
+  "gui:common/controls/Keyboard/images/Icn_Small_En.png",
+  "ctl:Keyboard_Key07.png"
+ ],
+ ".KeyboardCtrl .btnWrapper.suggSevenTen .controlsWrapper #btnMod:active": [
+  "gui:common/controls/Keyboard/images/Icn_Small_En.png",
+  "ctl:Keyboard_Key07_Hit.png",
+  "ctl:Keyboard_Key07.png"
+ ],
+ ".KeyboardCtrl .btnWrapper.suggSevenTen .controlsWrapper #btnOK": [
+  "gui:common/controls/Keyboard/images/Icn_Send.png",
+  "ctl:Keyboard_Key07.png"
+ ],
+ ".KeyboardCtrl .btnWrapper.suggSevenTen .controlsWrapper #btnShift": [
+  "gui:common/controls/Keyboard/images/IcnKbdShift_Off.png",
+  "ctl:Keyboard_Key07.png"
+ ],
+ ".KeyboardCtrl .btnWrapper.suggSevenTen .controlsWrapper .KeyboardCtrlDeleteBtn_Ds": [
+  "gui:common/controls/Keyboard/images/Delete_Btn_Ds.png",
+  "ctl:Keyboard_Key12_Dead.png"
+ ],
+ ".KeyboardCtrl .btnWrapper.suggSevenTen .controlsWrapper .KeyboardCtrlDeleteBtn_Dwn": [
+  "gui:common/controls/Keyboard/images/Delete_Btn_En.png",
+  "ctl:Keyboard_Key12_Hit.png",
+  "ctl:Keyboard_Key12.png"
+ ],
+ ".KeyboardCtrl .btnWrapper.suggSevenTen .controlsWrapper .KeyboardCtrlDeleteBtn_En": [
+  "gui:common/controls/Keyboard/images/Delete_Btn_En.png",
+  "ctl:Keyboard_Key12.png"
+ ],
+ ".KeyboardCtrl .btnWrapper.suggSevenTen .controlsWrapper .KeyboardCtrlDeleteBtn_Fs": [
+  "gui:common/controls/Keyboard/images/Delete_Btn_En.png",
+  "ctl:Keyboard_Key12_Focus.png",
+  "ctl:Keyboard_Key12.png"
+ ],
+ ".KeyboardCtrl .btnWrapper.suggSevenTen .controlsWrapper .KeyboardCtrlDeleteBtn_Hd": [
+  "gui:common/controls/Keyboard/images/Delete_Btn_En.png",
+  "ctl:Keyboard_Key12_Hit.png",
+  "ctl:Keyboard_Key12.png"
+ ],
+ ".KeyboardCtrl .btnWrapper.suggSevenTen .controlsWrapper .activeState#btnCancel": [
+  "gui:common/controls/Keyboard/images/Icn_Cancel_En.png",
+  "ctl:Keyboard_Key07_Hit.png",
+  "ctl:Keyboard_Key07.png"
+ ],
+ ".KeyboardCtrl .btnWrapper.suggSevenTen .controlsWrapper .activeState#btnGlobe": [
+  "gui:common/controls/Keyboard/images/Icn_Globe.png",
+  "ctl:Keyboard_Key07_Hit.png",
+  "ctl:Keyboard_Key07.png"
+ ],
+ ".KeyboardCtrl .btnWrapper.suggSevenTen .controlsWrapper .activeState#btnLayoutSwitch": [
+  "ctl:Keyboard_Key07_Hit.png",
+  "ctl:Keyboard_Key07.png"
+ ],
+ ".KeyboardCtrl .btnWrapper.suggSevenTen .controlsWrapper .activeState#btnMod": [
+  "gui:common/controls/Keyboard/images/Icn_Small_En.png",
+  "ctl:Keyboard_Key07_Hit.png",
+  "ctl:Keyboard_Key07.png"
+ ],
+ ".KeyboardCtrl .btnWrapper.suggSevenTen .controlsWrapper .activeState#btnOK": [
+  "gui:common/controls/Keyboard/images/Icn_Send.png",
+  "ctl:Keyboard_Key07_Hit.png"
+ ],
+ ".KeyboardCtrl .btnWrapper.suggSevenTen .controlsWrapper .activeState#btnShift": [
+  "gui:common/controls/Keyboard/images/IcnKbdShift_Off.png",
+  "ctl:Keyboard_Key07_Hit.png",
+  "ctl:Keyboard_Key07.png"
+ ],
+ ".KeyboardCtrl .btnWrapper.suggSevenTen .controlsWrapper .activeState#btnSpacebar": [
+  "ctl:Keyboard_KeySpace02_Hit.png",
+  "ctl:Keyboard_KeySpace02.png"
+ ],
+ ".KeyboardCtrl .btnWrapper.suggSevenTen .controlsWrapper .capsLock#btnShift": [
+  "gui:common/controls/Keyboard/images/IcnKbdShift_On.png",
+  "ctl:Keyboard_Key02.png"
+ ],
+ ".KeyboardCtrl .btnWrapper.suggSevenTen .controlsWrapper .capsLock.activeState#btnShift": [
+  "gui:common/controls/Keyboard/images/IcnKbdShift_On.png",
+  "ctl:Keyboard_Key02_Hit.png",
+  "ctl:Keyboard_Key02.png"
+ ],
+ ".KeyboardCtrl .btnWrapper.suggSevenTen .controlsWrapper .capsLock.disabled#btnShift": [
+  "gui:common/controls/Keyboard/images/IcnKbdShift_Disabled.png",
+  "ctl:Keyboard_Key02_Dead.png"
+ ],
+ ".KeyboardCtrl .btnWrapper.suggSevenTen .controlsWrapper .capsLock.focused#btnShift": [
+  "gui:common/controls/Keyboard/images/IcnKbdShift_On.png",
+  "ctl:Keyboard_Key02_Focus.png",
+  "ctl:Keyboard_Key02.png"
+ ],
+ ".KeyboardCtrl .btnWrapper.suggSevenTen .controlsWrapper .disabled#btnCancel": [
+  "gui:common/controls/Keyboard/images/Icn_Cancel_Ds.png",
+  "ctl:Keyboard_Key07_Dead.png"
+ ],
+ ".KeyboardCtrl .btnWrapper.suggSevenTen .controlsWrapper .disabled#btnGlobe": [
+  "gui:common/controls/Keyboard/images/Icn_Globe_Ds.png",
+  "ctl:Keyboard_Key07_Dead.png"
+ ],
+ ".KeyboardCtrl .btnWrapper.suggSevenTen .controlsWrapper .disabled#btnMod": [
+  "gui:common/controls/Keyboard/images/Icn_Small_Ds.png",
+  "ctl:Keyboard_Key07_Dead.png",
+  "ctl:Keyboard_Key07.png"
+ ],
+ ".KeyboardCtrl .btnWrapper.suggSevenTen .controlsWrapper .disabled#btnOK": [
+  "gui:common/controls/Keyboard/images/Icn_Send_Ds.png",
+  "ctl:Keyboard_Key07_Dead.png",
+  "ctl:Keyboard_Key07.png"
+ ],
+ ".KeyboardCtrl .btnWrapper.suggSevenTen .controlsWrapper .disabled#btnShift": [
+  "gui:common/controls/Keyboard/images/IcnKbdShift_Disabled.png",
+  "ctl:Keyboard_Key07_Dead.png"
+ ],
+ ".KeyboardCtrl .btnWrapper.suggSevenTen .controlsWrapper .focused#btnCancel": [
+  "gui:common/controls/Keyboard/images/Icn_Cancel_En.png",
+  "ctl:Keyboard_Key07_Focus.png",
+  "ctl:Keyboard_Key07.png"
+ ],
+ ".KeyboardCtrl .btnWrapper.suggSevenTen .controlsWrapper .focused#btnGlobe": [
+  "gui:common/controls/Keyboard/images/Icn_Globe.png",
+  "ctl:Keyboard_Key07_Focus.png",
+  "ctl:Keyboard_Key07.png"
+ ],
+ ".KeyboardCtrl .btnWrapper.suggSevenTen .controlsWrapper .focused#btnLayoutSwitch": [
+  "ctl:Keyboard_Key07_Focus.png",
+  "ctl:Keyboard_Key07.png"
+ ],
+ ".KeyboardCtrl .btnWrapper.suggSevenTen .controlsWrapper .focused#btnMod": [
+  "gui:common/controls/Keyboard/images/Icn_Small_En.png",
+  "ctl:Keyboard_Key07_Focus.png",
+  "ctl:Keyboard_Key07.png"
+ ],
+ ".KeyboardCtrl .btnWrapper.suggSevenTen .controlsWrapper .focused#btnOK": [
+  "gui:common/controls/Keyboard/images/Icn_Send.png",
+  "ctl:Keyboard_Key07_Focus.png",
+  "ctl:Keyboard_Key07.png"
+ ],
+ ".KeyboardCtrl .btnWrapper.suggSevenTen .controlsWrapper .focused#btnShift": [
+  "gui:common/controls/Keyboard/images/IcnKbdShift_Off.png",
+  "ctl:Keyboard_Key07_Focus.png",
+  "ctl:Keyboard_Key07.png"
+ ],
+ ".KeyboardCtrl .btnWrapper.suggSevenTen .controlsWrapper .focused#btnSpacebar": [
+  "ctl:Keyboard_KeySpace02_Focus.png",
+  "ctl:Keyboard_KeySpace02.png"
+ ],
+ ".KeyboardCtrl .btnWrapper.suggSevenTen .controlsWrapper .noIcon.activeState#btnShift": [
+  "ctl:Keyboard_Key09_Hit.png",
+  "ctl:Keyboard_Key09.png"
+ ],
+ ".KeyboardCtrl .btnWrapper.suggSevenTen .controlsWrapper .noIcon.focused#btnShift": [
+  "ctl:Keyboard_Key09_Focus.png",
+  "ctl:Keyboard_Key09.png"
+ ],
+ ".KeyboardCtrl .inputBoxTouchActiveArea.activeState": [
+  "ctl:Keyboard_Char_Input_Hit.png",
+  "ctl:Keyboard_Char_Input.png"
+ ],
+ ".KeyboardCtrl .inputBoxTouchActiveArea.focused": [
+  "ctl:Keyboard_Char_Input_Focus.png",
+  "ctl:Keyboard_Char_Input.png"
+ ],
+ ".KeyboardCtrl .suggestionRowWrapper.fiveTen #arrowLeft": [
+  "gui:common/controls/Keyboard/images/Icn_Bck.png",
+  "ctl:Keyboard_Key12.png"
+ ],
+ ".KeyboardCtrl .suggestionRowWrapper.fiveTen #arrowRight": [
+  "gui:common/controls/Keyboard/images/Icn_Fwd.png",
+  "ctl:Keyboard_Key12.png"
+ ],
+ ".KeyboardCtrl .suggestionRowWrapper.fiveTen .activeState#arrowLeft": [
+  "gui:common/controls/Keyboard/images/Icn_Bck.png",
+  "ctl:Keyboard_Key12_Hit.png",
+  "ctl:Keyboard_Key12.png"
+ ],
+ ".KeyboardCtrl .suggestionRowWrapper.fiveTen .activeState#arrowRight": [
+  "gui:common/controls/Keyboard/images/Icn_Fwd.png",
+  "ctl:Keyboard_Key12_Hit.png",
+  "ctl:Keyboard_Key12.png"
+ ],
+ ".KeyboardCtrl .suggestionRowWrapper.fiveTen .disabled#arrowLeft": [
+  "gui:common/controls/Keyboard/images/Icn_Bck.png",
+  "ctl:Keyboard_Key12_Dead.png"
+ ],
+ ".KeyboardCtrl .suggestionRowWrapper.fiveTen .disabled#arrowRight": [
+  "gui:common/controls/Keyboard/images/Icn_Fwd.png",
+  "ctl:Keyboard_Key12_Dead.png"
+ ],
+ ".KeyboardCtrl .suggestionRowWrapper.fiveTen .focused#arrowLeft": [
+  "gui:common/controls/Keyboard/images/Icn_Bck.png",
+  "ctl:Keyboard_Key12_Focus.png",
+  "ctl:Keyboard_Key12.png"
+ ],
+ ".KeyboardCtrl .suggestionRowWrapper.fiveTen .focused#arrowRight": [
+  "gui:common/controls/Keyboard/images/Icn_Fwd.png",
+  "ctl:Keyboard_Key12_Focus.png",
+  "ctl:Keyboard_Key12.png"
+ ],
+ ".KeyboardCtrl .suggestionRowWrapper.sixTen #arrowLeft": [
+  "gui:common/controls/Keyboard/images/Icn_Bck.png",
+  "ctl:Keyboard_Key12.png"
+ ],
+ ".KeyboardCtrl .suggestionRowWrapper.sixTen #arrowRight": [
+  "gui:common/controls/Keyboard/images/Icn_Fwd.png",
+  "ctl:Keyboard_Key12.png"
+ ],
+ ".KeyboardCtrl .suggestionRowWrapper.sixTen .activeState#arrowLeft": [
+  "gui:common/controls/Keyboard/images/Icn_Bck.png",
+  "ctl:Keyboard_Key12_Hit.png",
+  "ctl:Keyboard_Key12.png"
+ ],
+ ".KeyboardCtrl .suggestionRowWrapper.sixTen .activeState#arrowRight": [
+  "gui:common/controls/Keyboard/images/Icn_Fwd.png",
+  "ctl:Keyboard_Key12_Hit.png",
+  "ctl:Keyboard_Key12.png"
+ ],
+ ".KeyboardCtrl .suggestionRowWrapper.sixTen .disabled#arrowLeft": [
+  "gui:common/controls/Keyboard/images/Icn_Bck.png",
+  "ctl:Keyboard_Key12_Dead.png"
+ ],
+ ".KeyboardCtrl .suggestionRowWrapper.sixTen .disabled#arrowRight": [
+  "gui:common/controls/Keyboard/images/Icn_Fwd.png",
+  "ctl:Keyboard_Key12_Dead.png"
+ ],
+ ".KeyboardCtrl .suggestionRowWrapper.sixTen .focused#arrowLeft": [
+  "gui:common/controls/Keyboard/images/Icn_Bck.png",
+  "ctl:Keyboard_Key12_Focus.png",
+  "ctl:Keyboard_Key12.png"
+ ],
+ ".KeyboardCtrl .suggestionRowWrapper.sixTen .focused#arrowRight": [
+  "gui:common/controls/Keyboard/images/Icn_Fwd.png",
+  "ctl:Keyboard_Key12_Focus.png",
+  "ctl:Keyboard_Key12.png"
+ ],
+ ".KeyboardCtrl .suggestionRowWrapper.sixTwelve #arrowLeft": [
+  "gui:common/controls/Keyboard/images/Icn_Bck.png",
+  "ctl:Keyboard_Key12.png"
+ ],
+ ".KeyboardCtrl .suggestionRowWrapper.sixTwelve #arrowRight": [
+  "gui:common/controls/Keyboard/images/Icn_Fwd.png",
+  "ctl:Keyboard_Key12.png"
+ ],
+ ".KeyboardCtrl .suggestionRowWrapper.sixTwelve .activeState#arrowLeft": [
+  "gui:common/controls/Keyboard/images/Icn_Bck.png",
+  "ctl:Keyboard_Key12_Hit.png",
+  "ctl:Keyboard_Key12.png"
+ ],
+ ".KeyboardCtrl .suggestionRowWrapper.sixTwelve .activeState#arrowRight": [
+  "gui:common/controls/Keyboard/images/Icn_Fwd.png",
+  "ctl:Keyboard_Key12_Hit.png",
+  "ctl:Keyboard_Key12.png"
+ ],
+ ".KeyboardCtrl .suggestionRowWrapper.sixTwelve .disabled#arrowLeft": [
+  "gui:common/controls/Keyboard/images/Icn_Bck.png",
+  "ctl:Keyboard_Key12_Dead.png"
+ ],
+ ".KeyboardCtrl .suggestionRowWrapper.sixTwelve .disabled#arrowRight": [
+  "gui:common/controls/Keyboard/images/Icn_Fwd.png",
+  "ctl:Keyboard_Key12_Dead.png"
+ ],
+ ".KeyboardCtrl .suggestionRowWrapper.sixTwelve .focused#arrowLeft": [
+  "gui:common/controls/Keyboard/images/Icn_Bck.png",
+  "ctl:Keyboard_Key12_Focus.png",
+  "ctl:Keyboard_Key12.png"
+ ],
+ ".KeyboardCtrl .suggestionRowWrapper.sixTwelve .focused#arrowRight": [
+  "gui:common/controls/Keyboard/images/Icn_Fwd.png",
+  "ctl:Keyboard_Key12_Focus.png",
+  "ctl:Keyboard_Key12.png"
+ ],
+ ".KeyboardCtrl .suggestionRowWrapper.suggFiveTen #arrowLeft": [
+  "gui:common/controls/Keyboard/images/Icn_Bck.png",
+  "ctl:Keyboard_Key12.png"
+ ],
+ ".KeyboardCtrl .suggestionRowWrapper.suggFiveTen #arrowRight": [
+  "gui:common/controls/Keyboard/images/Icn_Fwd.png",
+  "ctl:Keyboard_Key12.png"
+ ],
+ ".KeyboardCtrl .suggestionRowWrapper.suggFiveTen .activeState#arrowLeft": [
+  "gui:common/controls/Keyboard/images/Icn_Bck.png",
+  "ctl:Keyboard_Key12_Hit.png",
+  "ctl:Keyboard_Key12.png"
+ ],
+ ".KeyboardCtrl .suggestionRowWrapper.suggFiveTen .activeState#arrowRight": [
+  "gui:common/controls/Keyboard/images/Icn_Fwd.png",
+  "ctl:Keyboard_Key12_Hit.png",
+  "ctl:Keyboard_Key12.png"
+ ],
+ ".KeyboardCtrl .suggestionRowWrapper.suggFiveTen .disabled#arrowLeft": [
+  "gui:common/controls/Keyboard/images/Icn_Bck.png",
+  "ctl:Keyboard_Key12_Dead.png"
+ ],
+ ".KeyboardCtrl .suggestionRowWrapper.suggFiveTen .disabled#arrowRight": [
+  "gui:common/controls/Keyboard/images/Icn_Fwd.png",
+  "ctl:Keyboard_Key12_Dead.png"
+ ],
+ ".KeyboardCtrl .suggestionRowWrapper.suggFiveTen .focused#arrowLeft": [
+  "gui:common/controls/Keyboard/images/Icn_Bck.png",
+  "ctl:Keyboard_Key12_Focus.png",
+  "ctl:Keyboard_Key12.png"
+ ],
+ ".KeyboardCtrl .suggestionRowWrapper.suggFiveTen .focused#arrowRight": [
+  "gui:common/controls/Keyboard/images/Icn_Fwd.png",
+  "ctl:Keyboard_Key12_Focus.png",
+  "ctl:Keyboard_Key12.png"
+ ],
+ ".KeyboardCtrl .suggestionRowWrapper.suggSevenEleven #arrowLeft": [
+  "gui:common/controls/Keyboard/images/Icn_Bck.png",
+  "ctl:Keyboard_Key12.png"
+ ],
+ ".KeyboardCtrl .suggestionRowWrapper.suggSevenEleven #arrowRight": [
+  "gui:common/controls/Keyboard/images/Icn_Fwd.png",
+  "ctl:Keyboard_Key12.png"
+ ],
+ ".KeyboardCtrl .suggestionRowWrapper.suggSevenEleven .activeState#arrowLeft": [
+  "gui:common/controls/Keyboard/images/Icn_Bck.png",
+  "ctl:Keyboard_Key12_Hit.png",
+  "ctl:Keyboard_Key12.png"
+ ],
+ ".KeyboardCtrl .suggestionRowWrapper.suggSevenEleven .activeState#arrowRight": [
+  "gui:common/controls/Keyboard/images/Icn_Fwd.png",
+  "ctl:Keyboard_Key12_Hit.png",
+  "ctl:Keyboard_Key12.png"
+ ],
+ ".KeyboardCtrl .suggestionRowWrapper.suggSevenEleven .disabled#arrowLeft": [
+  "gui:common/controls/Keyboard/images/Icn_Bck.png",
+  "ctl:Keyboard_Key12_Dead.png"
+ ],
+ ".KeyboardCtrl .suggestionRowWrapper.suggSevenEleven .disabled#arrowRight": [
+  "gui:common/controls/Keyboard/images/Icn_Fwd.png",
+  "ctl:Keyboard_Key12_Dead.png"
+ ],
+ ".KeyboardCtrl .suggestionRowWrapper.suggSevenEleven .focused#arrowLeft": [
+  "gui:common/controls/Keyboard/images/Icn_Bck.png",
+  "ctl:Keyboard_Key12_Focus.png",
+  "ctl:Keyboard_Key12.png"
+ ],
+ ".KeyboardCtrl .suggestionRowWrapper.suggSevenEleven .focused#arrowRight": [
+  "gui:common/controls/Keyboard/images/Icn_Fwd.png",
+  "ctl:Keyboard_Key12_Focus.png",
+  "ctl:Keyboard_Key12.png"
+ ],
+ ".KeyboardCtrl .suggestionRowWrapper.suggSevenTen #arrowLeft": [
+  "gui:common/controls/Keyboard/images/Icn_Bck.png",
+  "ctl:Keyboard_Key12.png"
+ ],
+ ".KeyboardCtrl .suggestionRowWrapper.suggSevenTen #arrowRight": [
+  "gui:common/controls/Keyboard/images/Icn_Fwd.png",
+  "ctl:Keyboard_Key12.png"
+ ],
+ ".KeyboardCtrl .suggestionRowWrapper.suggSevenTen .activeState#arrowLeft": [
+  "gui:common/controls/Keyboard/images/Icn_Bck.png",
+  "ctl:Keyboard_Key12_Hit.png",
+  "ctl:Keyboard_Key12.png"
+ ],
+ ".KeyboardCtrl .suggestionRowWrapper.suggSevenTen .activeState#arrowRight": [
+  "gui:common/controls/Keyboard/images/Icn_Fwd.png",
+  "ctl:Keyboard_Key12_Hit.png",
+  "ctl:Keyboard_Key12.png"
+ ],
+ ".KeyboardCtrl .suggestionRowWrapper.suggSevenTen .disabled#arrowLeft": [
+  "gui:common/controls/Keyboard/images/Icn_Bck.png",
+  "ctl:Keyboard_Key12_Dead.png"
+ ],
+ ".KeyboardCtrl .suggestionRowWrapper.suggSevenTen .disabled#arrowRight": [
+  "gui:common/controls/Keyboard/images/Icn_Fwd.png",
+  "ctl:Keyboard_Key12_Dead.png"
+ ],
+ ".KeyboardCtrl .suggestionRowWrapper.suggSevenTen .focused#arrowLeft": [
+  "gui:common/controls/Keyboard/images/Icn_Bck.png",
+  "ctl:Keyboard_Key12_Focus.png",
+  "ctl:Keyboard_Key12.png"
+ ],
+ ".KeyboardCtrl .suggestionRowWrapper.suggSevenTen .focused#arrowRight": [
+  "gui:common/controls/Keyboard/images/Icn_Fwd.png",
+  "ctl:Keyboard_Key12_Focus.png",
+  "ctl:Keyboard_Key12.png"
+ ],
+ ".List2Ctrl.normalItems .ListItem.style12 .List2CtrlSliderCtrlFocusedFill": [
+  "ctl:List2_ListItem_Slider-1.png",
+  "ctl:List2_ListItem_Slider_Focus-1.png"
+ ],
+ ".List2Ctrl.normalItems .ListItem.style12 .List2CtrlSliderCtrlFocusedHandle": [
+  "ctl:List2_ListItem_Slider_Knob.png",
+  "ctl:List2_ListItem_Slider_KnobFocus-1.png"
+ ],
+ ".List2Ctrl.normalItems .ListItem.style13 .List2CtrlSliderCtrlFocusedHandle": [
+  "ctl:List2_ListItem_Slider_Knob.png",
+  "ctl:List2_ListItem_Slider_KnobFocus-1.png"
+ ],
+ ".List2Ctrl.normalItems .ListItem.style28 .List2CtrlSliderCtrlFocusedFill": [
+  "ctl:List2_ListItem_Slider-1.png",
+  "ctl:List2_ListItem_Slider_Focus-1.png"
+ ],
+ ".List2Ctrl.normalItems .ListItem.style28 .List2CtrlSliderCtrlFocusedHandle": [
+  "ctl:List2_ListItem_Slider_Knob.png",
+  "ctl:List2_ListItem_Slider_KnobFocus-1.png"
+ ],
+ ".List2Ctrl.normalItems .ListItem.styleStep.secondaryFocus .label2": [
+  "ctl:List2_ListItem_MaintSet_Bg_Focus.png",
+  "ctl:List2_ListItem_MaintSet_Bg.png"
+ ],
+ ".List2Ctrl.normalItems.smallItemText .ListItem.style12 .List2CtrlSliderCtrlFocusedFill": [
+  "ctl:List2_ListItem_Slider-1.png",
+  "ctl:List2_ListItem_Slider_Focus-1.png"
+ ],
+ ".List2Ctrl.normalItems.smallItemText .ListItem.style12 .List2CtrlSliderCtrlFocusedHandle": [
+  "ctl:List2_ListItem_Slider_Knob.png",
+  "ctl:List2_ListItem_Slider_KnobFocus-1.png"
+ ],
+ ".List2Ctrl.normalItems.smallItemText .ListItem.style13 .List2CtrlSliderCtrlFocusedHandle": [
+  "ctl:List2_ListItem_Slider_Knob.png",
+  "ctl:List2_ListItem_Slider_KnobFocus-1.png"
+ ],
+ ".List2Ctrl.normalItems.smallItemText .ListItem.style28 .List2CtrlSliderCtrlFocusedFill": [
+  "ctl:List2_ListItem_Slider-1.png",
+  "ctl:List2_ListItem_Slider_Focus-1.png"
+ ],
+ ".List2Ctrl.normalItems.smallItemText .ListItem.style28 .List2CtrlSliderCtrlFocusedHandle": [
+  "ctl:List2_ListItem_Slider_Knob.png",
+  "ctl:List2_ListItem_Slider_KnobFocus-1.png"
+ ],
+ ".List2Ctrl.normalItems.smallItemText .ListItem.styleStep.secondaryFocus .label2": [
+  "ctl:List2_ListItem_MaintSet_Bg_Focus.png",
+  "ctl:List2_ListItem_MaintSet_Bg.png"
+ ],
+ ".List2Ctrl.thickItems .ListItem.style12 .List2CtrlSliderCtrlFocusedFill": [
+  "ctl:List2_ListItem_Slider-1.png",
+  "ctl:List2_ListItem_Slider_Focus-1.png"
+ ],
+ ".List2Ctrl.thickItems .ListItem.style12 .List2CtrlSliderCtrlFocusedHandle": [
+  "ctl:List2_ListItem_Slider_Knob.png",
+  "ctl:List2_ListItem_Slider_KnobFocus-1.png"
+ ],
+ ".List2Ctrl.thickItems .ListItem.style13 .List2CtrlSliderCtrlFocusedHandle": [
+  "ctl:List2_ListItem_Slider_Knob.png",
+  "ctl:List2_ListItem_Slider_KnobFocus-1.png"
+ ],
+ ".List2Ctrl.thickItems .ListItem.style28 .List2CtrlSliderCtrlFocusedFill": [
+  "ctl:List2_ListItem_Slider-1.png",
+  "ctl:List2_ListItem_Slider_Focus-1.png"
+ ],
+ ".List2Ctrl.thickItems .ListItem.style28 .List2CtrlSliderCtrlFocusedHandle": [
+  "ctl:List2_ListItem_Slider_Knob.png",
+  "ctl:List2_ListItem_Slider_KnobFocus-1.png"
+ ],
+ ".List2Ctrl.thickItems .ListItem.styleStep.secondaryFocus .label2": [
+  "ctl:List2_ListItem_MaintSet_Bg_Focus.png",
+  "ctl:List2_ListItem_MaintSet_Bg.png"
+ ],
+ ".List2Ctrl.thickItems.smallItemText .ListItem.style12 .List2CtrlSliderCtrlFocusedFill": [
+  "ctl:List2_ListItem_Slider-1.png",
+  "ctl:List2_ListItem_Slider_Focus-1.png"
+ ],
+ ".List2Ctrl.thickItems.smallItemText .ListItem.style12 .List2CtrlSliderCtrlFocusedHandle": [
+  "ctl:List2_ListItem_Slider_Knob.png",
+  "ctl:List2_ListItem_Slider_KnobFocus-1.png"
+ ],
+ ".List2Ctrl.thickItems.smallItemText .ListItem.style13 .List2CtrlSliderCtrlFocusedHandle": [
+  "ctl:List2_ListItem_Slider_Knob.png",
+  "ctl:List2_ListItem_Slider_KnobFocus-1.png"
+ ],
+ ".List2Ctrl.thickItems.smallItemText .ListItem.style28 .List2CtrlSliderCtrlFocusedFill": [
+  "ctl:List2_ListItem_Slider-1.png",
+  "ctl:List2_ListItem_Slider_Focus-1.png"
+ ],
+ ".List2Ctrl.thickItems.smallItemText .ListItem.style28 .List2CtrlSliderCtrlFocusedHandle": [
+  "ctl:List2_ListItem_Slider_Knob.png",
+  "ctl:List2_ListItem_Slider_KnobFocus-1.png"
+ ],
+ ".List2Ctrl.thickItems.smallItemText .ListItem.styleStep.secondaryFocus .label2": [
+  "ctl:List2_ListItem_MaintSet_Bg_Focus.png",
+  "ctl:List2_ListItem_MaintSet_Bg.png"
+ ],
+ ".List2CtrlLetterIndex .letter.focus": [
+  "ctl:List2_IndexedList_Divider.png",
+  "ctl:List2_IndexedList_Focus.png"
+ ],
+ ".List2CtrlLetterIndex .letter.hit": [
+  "ctl:List2_IndexedList_Divider.png",
+  "ctl:List2_IndexedList_Hit.png"
+ ],
+ ".ScreenSettings2CtrlSliderContainer .ScreenSettings2CtrlSliderFill": [
+  "gui:common/controls/ScreenSettings2/images/UMP_Scrubber_Mask01.png",
+  "ctl:ScreenSettings2_UMP_Scrubber_Fill.png"
+ ],
+ ".ScreenSettings2CtrlSliderContainer .ScreenSettings2CtrlSliderFill_Ds": [
+  "gui:common/controls/ScreenSettings2/images/UMP_Scrubber_Mask01.png",
+  "ctl:ScreenSettings2_UMP_Scrubber_Fill.png"
+ ],
+ ".ScreenSettings2CtrlSliderContainer .ScreenSettings2CtrlSliderFill_Focused": [
+  "gui:common/controls/ScreenSettings2/images/UMP_Scrubber_Mask01.png",
+  "ctl:ScreenSettings2_UMP_Scrubber_Fill_Focus.png"
+ ],
+ ".TabsCtrlStyle2ButtonDown": [
+  "ctl:Tabs_TabPress_Style02.png",
+  "ctl:Tabs_Tab_Style02.png"
+ ],
+ ".TabsCtrlStyle2ButtonDownCurrent": [
+  "ctl:Tabs_TabPress_Style02.png",
+  "ctl:Tabs_TabHighlight_Style02.png"
+ ],
+ ".TabsCtrlStyle3ButtonDown": [
+  "ctl:Tabs_TabPress_Style03.png",
+  "ctl:Tabs_Tab_Style03.png"
+ ],
+ ".TabsCtrlStyle3ButtonDownCurrent": [
+  "ctl:Tabs_TabPress_Style03.png",
+  "ctl:Tabs_TabHighlight_Style03.png"
+ ],
+ ".TabsCtrlStyle4ButtonDown": [
+  "ctl:Tabs_TabPress_Style04.png",
+  "ctl:Tabs_Tab_Style04.png"
+ ],
+ ".TabsCtrlStyle4ButtonDownCurrent": [
+  "ctl:Tabs_TabPress_Style04.png",
+  "ctl:Tabs_TabHighlight_Style04.png"
+ ],
+ ".TabsCtrlStyle4PrevNextBtnHit": [
+  "ctl:Tabs_TabPress_Arrow.png",
+  "ctl:Tabs_Tab_StyleArrow.png"
+ ]
+}
