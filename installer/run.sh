@@ -182,8 +182,9 @@ then
     cp "${PAYLOAD}/css/MainMenuCtrl_rtl.css" "${CTRL}/css/MainMenuCtrl_rtl.css" &&
     cp "${PAYLOAD}"/images/home2/*.png "${CTRL}/images/home2/" &&
     cp "${PAYLOAD}"/fonts/Home2Tajawal-*.ttf "${FONTS}/" &&
-    mkdir -p "${SKIN_IMG}" &&
+    mkdir -p "${SKIN_IMG}/ctl" &&
     cp "${PAYLOAD}"/skin/images/home2skin/*.png "${SKIN_IMG}/" &&
+    cp "${PAYLOAD}"/skin/images/home2skin/ctl/*.png "${SKIN_IMG}/ctl/" &&
     cp "${PAYLOAD}/skin/css/home2skin.css" "${SKIN_MAIN}" &&
     cp "${PAYLOAD}/skin/css/common_rtl.css" "${SKIN_CSS}"
     COPY_OK=$?
@@ -207,6 +208,9 @@ then
     [ "$(md5 "${SKIN_MAIN}")" = "$(md5 "${PAYLOAD}/skin/css/home2skin.css")" ] || VERIFY_OK=1
     for p in "${PAYLOAD}"/skin/images/home2skin/*.png; do
         [ "$(md5 "${SKIN_IMG}/$(basename "$p")")" = "$(md5 "$p")" ] || VERIFY_OK=1
+    done
+    for p in "${PAYLOAD}"/skin/images/home2skin/ctl/*.png; do
+        [ "$(md5 "${SKIN_IMG}/ctl/$(basename "$p")")" = "$(md5 "$p")" ] || VERIFY_OK=1
     done
 
     if [ ${COPY_OK} -ne 0 ] || [ ${VERIFY_OK} -ne 0 ]; then

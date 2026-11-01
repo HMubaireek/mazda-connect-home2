@@ -1,0 +1,2854 @@
+[
+ {
+  "control": "Dialog3",
+  "file": "DialogBG_AppLoadScreens.png",
+  "size": [
+   800,
+   416
+  ],
+  "bbox": [
+   0,
+   0,
+   800,
+   416
+  ],
+  "kind": "dim",
+  "selectors": [
+   ".Dialog3Ctrl_BG_AppLoadScreens"
+  ]
+ },
+ {
+  "control": "Dialog3",
+  "file": "DialogBG_Style01.png",
+  "size": [
+   800,
+   416
+  ],
+  "bbox": [
+   0,
+   0,
+   800,
+   416
+  ],
+  "kind": "dim",
+  "selectors": [
+   ".Dialog3Ctrl",
+   ".Dialog3Ctrl_BG_Style01"
+  ]
+ },
+ {
+  "control": "Dialog3",
+  "file": "DialogBG_Style02.png",
+  "size": [
+   800,
+   480
+  ],
+  "bbox": [
+   0,
+   0,
+   800,
+   480
+  ],
+  "kind": "dim",
+  "selectors": [
+   ".Dialog3CtrlFs",
+   ".Dialog3Ctrl_BG_Style02"
+  ]
+ },
+ {
+  "control": "Dialog3",
+  "file": "Dialog_1Btn.png",
+  "size": [
+   662,
+   80
+  ],
+  "bbox": [
+   0,
+   0,
+   662,
+   80
+  ],
+  "kind": "btn",
+  "selectors": [
+   ".Dialog3Ctrl_ButtonStyle01_En",
+   ".Dialog3Ctrl_ButtonStyle01_Ds"
+  ]
+ },
+ {
+  "control": "Dialog3",
+  "file": "Dialog_1Btn_Focus.png",
+  "size": [
+   662,
+   80
+  ],
+  "bbox": [
+   0,
+   0,
+   662,
+   80
+  ],
+  "kind": "btn_focus",
+  "selectors": [
+   ".Dialog3Ctrl_ButtonStyle01_focused"
+  ]
+ },
+ {
+  "control": "Dialog3",
+  "file": "Dialog_1Btn_Hit.png",
+  "size": [
+   662,
+   80
+  ],
+  "bbox": [
+   0,
+   0,
+   662,
+   80
+  ],
+  "kind": "btn_hit",
+  "selectors": [
+   ".Dialog3Ctrl_ButtonStyle01_down"
+  ]
+ },
+ {
+  "control": "Dialog3",
+  "file": "Dialog_2Btn.png",
+  "size": [
+   330,
+   80
+  ],
+  "bbox": [
+   0,
+   0,
+   330,
+   80
+  ],
+  "kind": "btn",
+  "selectors": [
+   ".Dialog3Ctrl_ButtonStyle02_En",
+   ".Dialog3Ctrl_ButtonStyle02_Ds"
+  ]
+ },
+ {
+  "control": "Dialog3",
+  "file": "Dialog_2Btn_Focus.png",
+  "size": [
+   330,
+   80
+  ],
+  "bbox": [
+   0,
+   0,
+   330,
+   80
+  ],
+  "kind": "btn_focus",
+  "selectors": [
+   ".Dialog3Ctrl_ButtonStyle02_focused"
+  ]
+ },
+ {
+  "control": "Dialog3",
+  "file": "Dialog_2Btn_Hit.png",
+  "size": [
+   330,
+   80
+  ],
+  "bbox": [
+   0,
+   0,
+   330,
+   80
+  ],
+  "kind": "btn_hit",
+  "selectors": [
+   ".Dialog3Ctrl_ButtonStyle02_down"
+  ]
+ },
+ {
+  "control": "Dialog3",
+  "file": "Dialog_3Btn.png",
+  "size": [
+   220,
+   80
+  ],
+  "bbox": [
+   0,
+   0,
+   220,
+   80
+  ],
+  "kind": "btn",
+  "selectors": [
+   ".Dialog3Ctrl_ButtonStyle03_En",
+   ".Dialog3Ctrl_ButtonStyle03_Ds"
+  ]
+ },
+ {
+  "control": "Dialog3",
+  "file": "Dialog_3Btn_Focus.png",
+  "size": [
+   220,
+   80
+  ],
+  "bbox": [
+   0,
+   0,
+   220,
+   80
+  ],
+  "kind": "btn_focus",
+  "selectors": [
+   ".Dialog3Ctrl_ButtonStyle03_focused"
+  ]
+ },
+ {
+  "control": "Dialog3",
+  "file": "Dialog_3Btn_Hit.png",
+  "size": [
+   220,
+   80
+  ],
+  "bbox": [
+   0,
+   0,
+   220,
+   80
+  ],
+  "kind": "btn_hit",
+  "selectors": [
+   ".Dialog3Ctrl_ButtonStyle03_down"
+  ]
+ },
+ {
+  "control": "Dialog3",
+  "file": "Dialog_4Btn.png",
+  "size": [
+   165,
+   80
+  ],
+  "bbox": [
+   0,
+   0,
+   165,
+   80
+  ],
+  "kind": "btn",
+  "selectors": [
+   ".Dialog3Ctrl_ButtonStyle04_En",
+   ".Dialog3Ctrl_ButtonStyle04_Ds"
+  ]
+ },
+ {
+  "control": "Dialog3",
+  "file": "Dialog_4Btn_Focus.png",
+  "size": [
+   165,
+   80
+  ],
+  "bbox": [
+   0,
+   0,
+   165,
+   80
+  ],
+  "kind": "btn_focus",
+  "selectors": [
+   ".Dialog3Ctrl_ButtonStyle04_focused"
+  ]
+ },
+ {
+  "control": "Dialog3",
+  "file": "Dialog_4Btn_Hit.png",
+  "size": [
+   165,
+   80
+  ],
+  "bbox": [
+   0,
+   0,
+   165,
+   80
+  ],
+  "kind": "btn_hit",
+  "selectors": [
+   ".Dialog3Ctrl_ButtonStyle04_down"
+  ]
+ },
+ {
+  "control": "Dialog3",
+  "file": "Dialog_5Btn_Green.png",
+  "size": [
+   220,
+   80
+  ],
+  "bbox": [
+   0,
+   0,
+   220,
+   80
+  ],
+  "kind": "btn_green",
+  "selectors": [
+   ".Dialog3Ctrl_ButtonStyle03_Green_En"
+  ]
+ },
+ {
+  "control": "Dialog3",
+  "file": "Dialog_5Btn_Red.png",
+  "size": [
+   220,
+   80
+  ],
+  "bbox": [
+   0,
+   0,
+   220,
+   80
+  ],
+  "kind": "btn_red",
+  "selectors": [
+   ".Dialog3Ctrl_ButtonStyle03_Red_En"
+  ]
+ },
+ {
+  "control": "Dialog3",
+  "file": "Dialog_6Btn_Green.png",
+  "size": [
+   330,
+   80
+  ],
+  "bbox": [
+   0,
+   0,
+   330,
+   80
+  ],
+  "kind": "btn_green",
+  "selectors": [
+   ".Dialog3Ctrl_ButtonStyle02_Green_En"
+  ]
+ },
+ {
+  "control": "Dialog3",
+  "file": "Dialog_6Btn_Red.png",
+  "size": [
+   330,
+   80
+  ],
+  "bbox": [
+   0,
+   0,
+   330,
+   80
+  ],
+  "kind": "btn_red",
+  "selectors": [
+   ".Dialog3Ctrl_ButtonStyle02_Red_En"
+  ]
+ },
+ {
+  "control": "Dialog3",
+  "file": "Dialog_ProgressBar_Background.png",
+  "size": [
+   642,
+   12
+  ],
+  "bbox": [
+   0,
+   0,
+   642,
+   12
+  ],
+  "kind": "track",
+  "selectors": [
+   ".Dialog3Ctrl_Determinate_Meter_01",
+   ".Dialog3Ctrl_Determinate_Meter_02"
+  ]
+ },
+ {
+  "control": "Dialog3",
+  "file": "Dialog_ProgressBar_Highlight.png",
+  "size": [
+   640,
+   8
+  ],
+  "bbox": [
+   0,
+   0,
+   640,
+   8
+  ],
+  "kind": "fill",
+  "selectors": [
+   ".Dialog3Ctrl_Determinate_Meter_01_Highlight",
+   ".Dialog3Ctrl_Determinate_Meter_02_Highlight"
+  ]
+ },
+ {
+  "control": "Dialog3",
+  "file": "TitleSeparatorLine-1.png",
+  "size": [
+   681,
+   1
+  ],
+  "bbox": [
+   0,
+   0,
+   681,
+   1
+  ],
+  "kind": "clear",
+  "selectors": [
+   ".Dialog3Ctrl_Title_Separator"
+  ]
+ },
+ {
+  "control": "InCall2",
+  "file": "Active_Call_Bkg.png",
+  "size": [
+   774,
+   134
+  ],
+  "bbox": [
+   0,
+   0,
+   774,
+   134
+  ],
+  "kind": "panel",
+  "selectors": [
+   ".InCall2ContactActiveBkg"
+  ]
+ },
+ {
+  "control": "InCall2",
+  "file": "NowPlayingBG.png",
+  "size": [
+   780,
+   417
+  ],
+  "bbox": [
+   0,
+   0,
+   780,
+   416
+  ],
+  "kind": "clear",
+  "selectors": [
+   ".InCall2InCallBG"
+  ]
+ },
+ {
+  "control": "InCall2",
+  "file": "NowPlayingImageFrame.png",
+  "size": [
+   146,
+   146
+  ],
+  "bbox": [
+   0,
+   0,
+   146,
+   146
+  ],
+  "kind": "panel",
+  "selectors": [
+   ".InCall2ContactImageFrame"
+  ]
+ },
+ {
+  "control": "List2",
+  "file": "IcnListCheck_Checked_Ds.png",
+  "size": [
+   36,
+   36
+  ],
+  "bbox": [
+   0,
+   0,
+   36,
+   36
+  ],
+  "kind": "check_on_ds",
+  "selectors": [
+   ".List2Ctrl.normalItems .ListItem.styleOnOff.disabled.checked .image2",
+   ".List2Ctrl.normalItems.smallItemText .ListItem.styleOnOff.disabled.checked .image2",
+   ".List2Ctrl.thickItems .ListItem.styleOnOff.disabled.checked .image2",
+   ".List2Ctrl.thickItems.smallItemText .ListItem.styleOnOff.disabled.checked .image2"
+  ]
+ },
+ {
+  "control": "List2",
+  "file": "IcnListCheck_Checked_En.png",
+  "size": [
+   36,
+   36
+  ],
+  "bbox": [
+   0,
+   0,
+   36,
+   36
+  ],
+  "kind": "check_on",
+  "selectors": [
+   ".List2Ctrl.normalItems .ListItem.styleOnOff.checked .image2",
+   ".List2Ctrl.normalItems.smallItemText .ListItem.styleOnOff.checked .image2",
+   ".List2Ctrl.thickItems .ListItem.styleOnOff.checked .image2",
+   ".List2Ctrl.thickItems.smallItemText .ListItem.styleOnOff.checked .image2"
+  ]
+ },
+ {
+  "control": "List2",
+  "file": "IcnListCheck_Unchecked_Ds.png",
+  "size": [
+   36,
+   36
+  ],
+  "bbox": [
+   0,
+   0,
+   36,
+   36
+  ],
+  "kind": "check_off_ds",
+  "selectors": [
+   ".List2Ctrl.normalItems .ListItem.styleOnOff.disabled .image2",
+   ".List2Ctrl.normalItems.smallItemText .ListItem.styleOnOff.disabled .image2",
+   ".List2Ctrl.thickItems .ListItem.styleOnOff.disabled .image2",
+   ".List2Ctrl.thickItems.smallItemText .ListItem.styleOnOff.disabled .image2"
+  ]
+ },
+ {
+  "control": "List2",
+  "file": "IcnListCheck_Unchecked_En.png",
+  "size": [
+   36,
+   36
+  ],
+  "bbox": [
+   0,
+   0,
+   36,
+   36
+  ],
+  "kind": "check_off",
+  "selectors": [
+   ".List2Ctrl.normalItems .ListItem.styleOnOff .image2",
+   ".List2Ctrl.normalItems.smallItemText .ListItem.styleOnOff .image2",
+   ".List2Ctrl.thickItems .ListItem.styleOnOff .image2",
+   ".List2Ctrl.thickItems.smallItemText .ListItem.styleOnOff .image2"
+  ]
+ },
+ {
+  "control": "List2",
+  "file": "IcnListCheckbox_Checked.png",
+  "size": [
+   36,
+   36
+  ],
+  "bbox": [
+   1,
+   1,
+   36,
+   36
+  ],
+  "kind": "check_on",
+  "selectors": [
+   ".List2Ctrl.normalItems .ListItem.style03.checked.checkbox .image1",
+   ".List2Ctrl.normalItems .ListItem.style03a.checked.checkbox .image1",
+   ".List2Ctrl.normalItems.smallItemText .ListItem.style03.checked.checkbox .image1",
+   ".List2Ctrl.normalItems.smallItemText .ListItem.style03a.checked.checkbox .image1",
+   ".List2Ctrl.thickItems .ListItem.style03.checked.checkbox .image1",
+   ".List2Ctrl.thickItems .ListItem.style03a.checked.checkbox .image1",
+   ".List2Ctrl.thickItems.smallItemText .ListItem.style03.checked.checkbox .image1",
+   ".List2Ctrl.thickItems.smallItemText .ListItem.style03a.checked.checkbox .image1"
+  ]
+ },
+ {
+  "control": "List2",
+  "file": "IcnListCheckbox_Unchecked.png",
+  "size": [
+   36,
+   36
+  ],
+  "bbox": [
+   1,
+   9,
+   28,
+   36
+  ],
+  "kind": "check_off",
+  "selectors": [
+   ".List2Ctrl.normalItems .ListItem.style03.checkbox .image1",
+   ".List2Ctrl.normalItems .ListItem.style03a.checkbox .image1",
+   ".List2Ctrl.normalItems.smallItemText .ListItem.style03.checkbox .image1",
+   ".List2Ctrl.normalItems.smallItemText .ListItem.style03a.checkbox .image1",
+   ".List2Ctrl.thickItems .ListItem.style03.checkbox .image1",
+   ".List2Ctrl.thickItems .ListItem.style03a.checkbox .image1",
+   ".List2Ctrl.thickItems.smallItemText .ListItem.style03.checkbox .image1",
+   ".List2Ctrl.thickItems.smallItemText .ListItem.style03a.checkbox .image1"
+  ]
+ },
+ {
+  "control": "List2",
+  "file": "IcnListCheckmark.png",
+  "size": [
+   36,
+   36
+  ],
+  "bbox": [
+   5,
+   4,
+   31,
+   32
+  ],
+  "kind": "checkmark",
+  "selectors": [
+   ".List2Ctrl.normalItems .ListItem.style03.checked.tick .image1",
+   ".List2Ctrl.normalItems .ListItem.style03a.checked.tick .image1",
+   ".List2Ctrl.normalItems.smallItemText .ListItem.style03.checked.tick .image1",
+   ".List2Ctrl.normalItems.smallItemText .ListItem.style03a.checked.tick .image1",
+   ".List2Ctrl.thickItems .ListItem.style03.checked.tick .image1",
+   ".List2Ctrl.thickItems .ListItem.style03a.checked.tick .image1",
+   ".List2Ctrl.thickItems.smallItemText .ListItem.style03.checked.tick .image1",
+   ".List2Ctrl.thickItems.smallItemText .ListItem.style03a.checked.tick .image1"
+  ]
+ },
+ {
+  "control": "List2",
+  "file": "IcnListRadio_Checked_Ds.png",
+  "size": [
+   36,
+   36
+  ],
+  "bbox": [
+   5,
+   5,
+   32,
+   32
+  ],
+  "kind": "radio_on_ds",
+  "selectors": [
+   ".List2Ctrl.normalItems .ListItem.style03.disabled.checked.radio .image1",
+   ".List2Ctrl.normalItems .ListItem.style03a.disabled.checked.radio .image1",
+   ".List2Ctrl.normalItems.smallItemText .ListItem.style03.disabled.checked.radio .image1",
+   ".List2Ctrl.normalItems.smallItemText .ListItem.style03a.disabled.checked.radio .image1",
+   ".List2Ctrl.thickItems .ListItem.style03.disabled.checked.radio .image1",
+   ".List2Ctrl.thickItems .ListItem.style03a.disabled.checked.radio .image1",
+   ".List2Ctrl.thickItems.smallItemText .ListItem.style03.disabled.checked.radio .image1",
+   ".List2Ctrl.thickItems.smallItemText .ListItem.style03a.disabled.checked.radio .image1"
+  ]
+ },
+ {
+  "control": "List2",
+  "file": "IcnListRadio_Checked_En.png",
+  "size": [
+   36,
+   36
+  ],
+  "bbox": [
+   5,
+   5,
+   32,
+   32
+  ],
+  "kind": "radio_on",
+  "selectors": [
+   ".List2Ctrl.normalItems .ListItem.style03.checked.radio .image1",
+   ".List2Ctrl.normalItems .ListItem.style03a.checked.radio .image1",
+   ".List2Ctrl.normalItems.smallItemText .ListItem.style03.checked.radio .image1",
+   ".List2Ctrl.normalItems.smallItemText .ListItem.style03a.checked.radio .image1",
+   ".List2Ctrl.thickItems .ListItem.style03.checked.radio .image1",
+   ".List2Ctrl.thickItems .ListItem.style03a.checked.radio .image1",
+   ".List2Ctrl.thickItems.smallItemText .ListItem.style03.checked.radio .image1",
+   ".List2Ctrl.thickItems.smallItemText .ListItem.style03a.checked.radio .image1"
+  ]
+ },
+ {
+  "control": "List2",
+  "file": "IcnListRadio_Unchecked_Ds.png",
+  "size": [
+   36,
+   36
+  ],
+  "bbox": [
+   5,
+   5,
+   32,
+   32
+  ],
+  "kind": "radio_off_ds",
+  "selectors": [
+   ".List2Ctrl.normalItems .ListItem.style03.disabled.radio .image1",
+   ".List2Ctrl.normalItems .ListItem.style03a.disabled.radio .image1",
+   ".List2Ctrl.normalItems.smallItemText .ListItem.style03.disabled.radio .image1",
+   ".List2Ctrl.normalItems.smallItemText .ListItem.style03a.disabled.radio .image1",
+   ".List2Ctrl.thickItems .ListItem.style03.disabled.radio .image1",
+   ".List2Ctrl.thickItems .ListItem.style03a.disabled.radio .image1",
+   ".List2Ctrl.thickItems.smallItemText .ListItem.style03.disabled.radio .image1",
+   ".List2Ctrl.thickItems.smallItemText .ListItem.style03a.disabled.radio .image1"
+  ]
+ },
+ {
+  "control": "List2",
+  "file": "IcnListRadio_Unchecked_En.png",
+  "size": [
+   36,
+   36
+  ],
+  "bbox": [
+   5,
+   5,
+   32,
+   32
+  ],
+  "kind": "radio_off",
+  "selectors": [
+   ".List2Ctrl.normalItems .ListItem.style03.radio .image1",
+   ".List2Ctrl.normalItems .ListItem.style03a.radio .image1",
+   ".List2Ctrl.normalItems.smallItemText .ListItem.style03.radio .image1",
+   ".List2Ctrl.normalItems.smallItemText .ListItem.style03a.radio .image1",
+   ".List2Ctrl.thickItems .ListItem.style03.radio .image1",
+   ".List2Ctrl.thickItems .ListItem.style03a.radio .image1",
+   ".List2Ctrl.thickItems.smallItemText .ListItem.style03.radio .image1",
+   ".List2Ctrl.thickItems.smallItemText .ListItem.style03a.radio .image1"
+  ]
+ },
+ {
+  "control": "List2",
+  "file": "InLineButton.png",
+  "size": [
+   120,
+   49
+  ],
+  "bbox": [
+   0,
+   0,
+   120,
+   49
+  ],
+  "kind": "btn",
+  "selectors": [
+   ".List2Ctrl.normalItems .ListItem.style10 .button",
+   ".List2Ctrl.normalItems .ListItem.style11 .button",
+   ".List2Ctrl.normalItems .ListItem.draggable .button",
+   ".List2Ctrl.normalItems.smallItemText .ListItem.style10 .button",
+   ".List2Ctrl.normalItems.smallItemText .ListItem.style11 .button",
+   ".List2Ctrl.normalItems.smallItemText .ListItem.draggable .button",
+   ".List2Ctrl.thickItems .ListItem.style10 .button",
+   ".List2Ctrl.thickItems .ListItem.style11 .button",
+   ".List2Ctrl.thickItems .ListItem.draggable .button",
+   ".List2Ctrl.thickItems.smallItemText .ListItem.style10 .button",
+   ".List2Ctrl.thickItems.smallItemText .ListItem.style11 .button",
+   ".List2Ctrl.thickItems.smallItemText .ListItem.draggable .button"
+  ]
+ },
+ {
+  "control": "List2",
+  "file": "InLineButton_Focus.png",
+  "size": [
+   120,
+   49
+  ],
+  "bbox": [
+   0,
+   0,
+   120,
+   49
+  ],
+  "kind": "btn_focus",
+  "selectors": [
+   ".List2Ctrl.normalItems .ListItem.draggable .button.focussed",
+   ".List2Ctrl.normalItems.smallItemText .ListItem.draggable .button.focussed",
+   ".List2Ctrl.thickItems .ListItem.draggable .button.focussed",
+   ".List2Ctrl.thickItems.smallItemText .ListItem.draggable .button.focussed"
+  ]
+ },
+ {
+  "control": "List2",
+  "file": "InLineButton_Hit.png",
+  "size": [
+   120,
+   49
+  ],
+  "bbox": [
+   0,
+   0,
+   120,
+   49
+  ],
+  "kind": "btn_hit",
+  "selectors": [
+   ".List2Ctrl.normalItems .ListItem.style10 .button.hit",
+   ".List2Ctrl.normalItems .ListItem.style10 .button.active.hit",
+   ".List2Ctrl.normalItems .ListItem.style11 .button.hit",
+   ".List2Ctrl.normalItems .ListItem.style11 .button.active.hit",
+   ".List2Ctrl.normalItems.smallItemText .ListItem.style10 .button.hit",
+   ".List2Ctrl.normalItems.smallItemText .ListItem.style10 .button.active.hit",
+   ".List2Ctrl.normalItems.smallItemText .ListItem.style11 .button.hit",
+   ".List2Ctrl.normalItems.smallItemText .ListItem.style11 .button.active.hit",
+   ".List2Ctrl.thickItems .ListItem.style10 .button.hit",
+   ".List2Ctrl.thickItems .ListItem.style10 .button.active.hit",
+   ".List2Ctrl.thickItems .ListItem.style11 .button.hit",
+   ".List2Ctrl.thickItems .ListItem.style11 .button.active.hit",
+   ".List2Ctrl.thickItems.smallItemText .ListItem.style10 .button.hit",
+   ".List2Ctrl.thickItems.smallItemText .ListItem.style10 .button.active.hit",
+   ".List2Ctrl.thickItems.smallItemText .ListItem.style11 .button.hit",
+   ".List2Ctrl.thickItems.smallItemText .ListItem.style11 .button.active.hit"
+  ]
+ },
+ {
+  "control": "List2",
+  "file": "InLineButton_Selected.png",
+  "size": [
+   120,
+   49
+  ],
+  "bbox": [
+   0,
+   0,
+   120,
+   49
+  ],
+  "kind": "btn_on",
+  "selectors": [
+   ".List2Ctrl.normalItems .ListItem.style10 .button.active",
+   ".List2Ctrl.normalItems .ListItem.style11 .button.active",
+   ".List2Ctrl.normalItems .ListItem.draggable .button.hit",
+   ".List2Ctrl.normalItems .ListItem.draggable .button.active",
+   ".List2Ctrl.normalItems .ListItem.draggable .button.active.hit",
+   ".List2Ctrl.normalItems.smallItemText .ListItem.style10 .button.active",
+   ".List2Ctrl.normalItems.smallItemText .ListItem.style11 .button.active",
+   ".List2Ctrl.normalItems.smallItemText .ListItem.draggable .button.hit",
+   ".List2Ctrl.normalItems.smallItemText .ListItem.draggable .button.active",
+   ".List2Ctrl.normalItems.smallItemText .ListItem.draggable .button.active.hit",
+   ".List2Ctrl.thickItems .ListItem.style10 .button.active",
+   ".List2Ctrl.thickItems .ListItem.style11 .button.active",
+   ".List2Ctrl.thickItems .ListItem.draggable .button.hit",
+   ".List2Ctrl.thickItems .ListItem.draggable .button.active",
+   ".List2Ctrl.thickItems .ListItem.draggable .button.active.hit",
+   ".List2Ctrl.thickItems.smallItemText .ListItem.style10 .button.active",
+   ".List2Ctrl.thickItems.smallItemText .ListItem.style11 .button.active",
+   ".List2Ctrl.thickItems.smallItemText .ListItem.draggable .button.hit",
+   ".List2Ctrl.thickItems.smallItemText .ListItem.draggable .button.active",
+   ".List2Ctrl.thickItems.smallItemText .ListItem.draggable .button.active.hit"
+  ]
+ },
+ {
+  "control": "List2",
+  "file": "InListBtn.png",
+  "size": [
+   701,
+   51
+  ],
+  "bbox": [
+   0,
+   0,
+   701,
+   51
+  ],
+  "kind": "btn",
+  "selectors": [
+   ".List2Ctrl.normalItems .ListItem.style20 .button1",
+   ".List2Ctrl.normalItems.smallItemText .ListItem.style20 .button1",
+   ".List2Ctrl.thickItems .ListItem.style20 .button1",
+   ".List2Ctrl.thickItems.smallItemText .ListItem.style20 .button1"
+  ]
+ },
+ {
+  "control": "List2",
+  "file": "InListBtn_Focus.png",
+  "size": [
+   701,
+   51
+  ],
+  "bbox": [
+   0,
+   0,
+   700,
+   50
+  ],
+  "kind": "btn_focus",
+  "selectors": [
+   ".List2Ctrl.normalItems .ListItem.style20.focus .button1",
+   ".List2Ctrl.normalItems.smallItemText .ListItem.style20.focus .button1",
+   ".List2Ctrl.thickItems .ListItem.style20.focus .button1",
+   ".List2Ctrl.thickItems.smallItemText .ListItem.style20.focus .button1"
+  ]
+ },
+ {
+  "control": "List2",
+  "file": "ListItem_Slider-1.png",
+  "size": [
+   344,
+   8
+  ],
+  "bbox": [
+   0,
+   0,
+   344,
+   8
+  ],
+  "kind": "track",
+  "selectors": [
+   ".List2Ctrl.normalItems .ListItem.style12 .List2CtrlSliderCtrlFill",
+   ".List2Ctrl.normalItems .ListItem.style12 .List2CtrlSliderCtrlFocusedFill",
+   ".List2Ctrl.normalItems .ListItem.style13 .List2CtrlSliderCtrlFill",
+   ".List2Ctrl.normalItems .ListItem.style28 .List2CtrlSliderCtrlFill",
+   ".List2Ctrl.normalItems .ListItem.style28 .List2CtrlSliderCtrlFocusedFill",
+   ".List2Ctrl.normalItems.smallItemText .ListItem.style12 .List2CtrlSliderCtrlFill",
+   ".List2Ctrl.normalItems.smallItemText .ListItem.style12 .List2CtrlSliderCtrlFocusedFill",
+   ".List2Ctrl.normalItems.smallItemText .ListItem.style13 .List2CtrlSliderCtrlFill",
+   ".List2Ctrl.normalItems.smallItemText .ListItem.style28 .List2CtrlSliderCtrlFill",
+   ".List2Ctrl.normalItems.smallItemText .ListItem.style28 .List2CtrlSliderCtrlFocusedFill",
+   ".List2Ctrl.thickItems .ListItem.style12 .List2CtrlSliderCtrlFill",
+   ".List2Ctrl.thickItems .ListItem.style12 .List2CtrlSliderCtrlFocusedFill",
+   ".List2Ctrl.thickItems .ListItem.style13 .List2CtrlSliderCtrlFill",
+   ".List2Ctrl.thickItems .ListItem.style28 .List2CtrlSliderCtrlFill",
+   ".List2Ctrl.thickItems .ListItem.style28 .List2CtrlSliderCtrlFocusedFill",
+   ".List2Ctrl.thickItems.smallItemText .ListItem.style12 .List2CtrlSliderCtrlFill",
+   ".List2Ctrl.thickItems.smallItemText .ListItem.style12 .List2CtrlSliderCtrlFocusedFill",
+   ".List2Ctrl.thickItems.smallItemText .ListItem.style13 .List2CtrlSliderCtrlFill",
+   ".List2Ctrl.thickItems.smallItemText .ListItem.style28 .List2CtrlSliderCtrlFill",
+   ".List2Ctrl.thickItems.smallItemText .ListItem.style28 .List2CtrlSliderCtrlFocusedFill"
+  ]
+ },
+ {
+  "control": "List2",
+  "file": "ListItem_SliderBG-1.png",
+  "size": [
+   346,
+   13
+  ],
+  "bbox": [
+   0,
+   0,
+   346,
+   13
+  ],
+  "kind": "track",
+  "selectors": [
+   ".List2Ctrl.normalItems .ListItem.style12 .List2CtrlSliderCtrl",
+   ".List2Ctrl.normalItems .ListItem.style13 .List2CtrlSliderCtrl",
+   ".List2Ctrl.normalItems .ListItem.style28 .List2CtrlSliderCtrl",
+   ".List2Ctrl.normalItems.smallItemText .ListItem.style12 .List2CtrlSliderCtrl",
+   ".List2Ctrl.normalItems.smallItemText .ListItem.style13 .List2CtrlSliderCtrl",
+   ".List2Ctrl.normalItems.smallItemText .ListItem.style28 .List2CtrlSliderCtrl",
+   ".List2Ctrl.thickItems .ListItem.style12 .List2CtrlSliderCtrl",
+   ".List2Ctrl.thickItems .ListItem.style13 .List2CtrlSliderCtrl",
+   ".List2Ctrl.thickItems .ListItem.style28 .List2CtrlSliderCtrl",
+   ".List2Ctrl.thickItems.smallItemText .ListItem.style12 .List2CtrlSliderCtrl",
+   ".List2Ctrl.thickItems.smallItemText .ListItem.style13 .List2CtrlSliderCtrl",
+   ".List2Ctrl.thickItems.smallItemText .ListItem.style28 .List2CtrlSliderCtrl"
+  ]
+ },
+ {
+  "control": "List2",
+  "file": "ListItem_Slider_Focus-1.png",
+  "size": [
+   344,
+   8
+  ],
+  "bbox": [
+   0,
+   0,
+   344,
+   8
+  ],
+  "kind": "halo",
+  "selectors": [
+   ".List2Ctrl.normalItems .ListItem.style12 .List2CtrlSliderCtrlFocusedFill",
+   ".List2Ctrl.normalItems .ListItem.style28 .List2CtrlSliderCtrlFocusedFill",
+   ".List2Ctrl.normalItems.smallItemText .ListItem.style12 .List2CtrlSliderCtrlFocusedFill",
+   ".List2Ctrl.normalItems.smallItemText .ListItem.style28 .List2CtrlSliderCtrlFocusedFill",
+   ".List2Ctrl.thickItems .ListItem.style12 .List2CtrlSliderCtrlFocusedFill",
+   ".List2Ctrl.thickItems .ListItem.style28 .List2CtrlSliderCtrlFocusedFill",
+   ".List2Ctrl.thickItems.smallItemText .ListItem.style12 .List2CtrlSliderCtrlFocusedFill",
+   ".List2Ctrl.thickItems.smallItemText .ListItem.style28 .List2CtrlSliderCtrlFocusedFill"
+  ]
+ },
+ {
+  "control": "List2",
+  "file": "ListItem_Slider_Knob.png",
+  "size": [
+   22,
+   22
+  ],
+  "bbox": [
+   0,
+   0,
+   22,
+   22
+  ],
+  "kind": "knob",
+  "selectors": [
+   ".List2Ctrl.normalItems .ListItem.style12 .List2CtrlSliderCtrlHandle",
+   ".List2Ctrl.normalItems .ListItem.style12 .List2CtrlSliderCtrlFocusedHandle",
+   ".List2Ctrl.normalItems .ListItem.style13 .List2CtrlSliderCtrlHandle",
+   ".List2Ctrl.normalItems .ListItem.style13 .List2CtrlSliderCtrlFocusedHandle",
+   ".List2Ctrl.normalItems .ListItem.style28 .List2CtrlSliderCtrlHandle",
+   ".List2Ctrl.normalItems .ListItem.style28 .List2CtrlSliderCtrlFocusedHandle",
+   ".List2Ctrl.normalItems.smallItemText .ListItem.style12 .List2CtrlSliderCtrlHandle",
+   ".List2Ctrl.normalItems.smallItemText .ListItem.style12 .List2CtrlSliderCtrlFocusedHandle",
+   ".List2Ctrl.normalItems.smallItemText .ListItem.style13 .List2CtrlSliderCtrlHandle",
+   ".List2Ctrl.normalItems.smallItemText .ListItem.style13 .List2CtrlSliderCtrlFocusedHandle",
+   ".List2Ctrl.normalItems.smallItemText .ListItem.style28 .List2CtrlSliderCtrlHandle",
+   ".List2Ctrl.normalItems.smallItemText .ListItem.style28 .List2CtrlSliderCtrlFocusedHandle",
+   ".List2Ctrl.thickItems .ListItem.style12 .List2CtrlSliderCtrlHandle",
+   ".List2Ctrl.thickItems .ListItem.style12 .List2CtrlSliderCtrlFocusedHandle",
+   ".List2Ctrl.thickItems .ListItem.style13 .List2CtrlSliderCtrlHandle",
+   ".List2Ctrl.thickItems .ListItem.style13 .List2CtrlSliderCtrlFocusedHandle",
+   ".List2Ctrl.thickItems .ListItem.style28 .List2CtrlSliderCtrlHandle",
+   ".List2Ctrl.thickItems .ListItem.style28 .List2CtrlSliderCtrlFocusedHandle",
+   ".List2Ctrl.thickItems.smallItemText .ListItem.style12 .List2CtrlSliderCtrlHandle",
+   ".List2Ctrl.thickItems.smallItemText .ListItem.style12 .List2CtrlSliderCtrlFocusedHandle",
+   ".List2Ctrl.thickItems.smallItemText .ListItem.style13 .List2CtrlSliderCtrlHandle",
+   ".List2Ctrl.thickItems.smallItemText .ListItem.style13 .List2CtrlSliderCtrlFocusedHandle",
+   ".List2Ctrl.thickItems.smallItemText .ListItem.style28 .List2CtrlSliderCtrlHandle",
+   ".List2Ctrl.thickItems.smallItemText .ListItem.style28 .List2CtrlSliderCtrlFocusedHandle"
+  ]
+ },
+ {
+  "control": "List2",
+  "file": "ListItem_Slider_KnobFocus-1.png",
+  "size": [
+   44,
+   44
+  ],
+  "bbox": [
+   3,
+   2,
+   42,
+   41
+  ],
+  "kind": "knob",
+  "selectors": [
+   ".List2Ctrl.normalItems .ListItem.style12 .List2CtrlSliderCtrlFocusedHandle",
+   ".List2Ctrl.normalItems .ListItem.style13 .List2CtrlSliderCtrlFocusedHandle",
+   ".List2Ctrl.normalItems .ListItem.style28 .List2CtrlSliderCtrlFocusedHandle",
+   ".List2Ctrl.normalItems.smallItemText .ListItem.style12 .List2CtrlSliderCtrlFocusedHandle",
+   ".List2Ctrl.normalItems.smallItemText .ListItem.style13 .List2CtrlSliderCtrlFocusedHandle",
+   ".List2Ctrl.normalItems.smallItemText .ListItem.style28 .List2CtrlSliderCtrlFocusedHandle",
+   ".List2Ctrl.thickItems .ListItem.style12 .List2CtrlSliderCtrlFocusedHandle",
+   ".List2Ctrl.thickItems .ListItem.style13 .List2CtrlSliderCtrlFocusedHandle",
+   ".List2Ctrl.thickItems .ListItem.style28 .List2CtrlSliderCtrlFocusedHandle",
+   ".List2Ctrl.thickItems.smallItemText .ListItem.style12 .List2CtrlSliderCtrlFocusedHandle",
+   ".List2Ctrl.thickItems.smallItemText .ListItem.style13 .List2CtrlSliderCtrlFocusedHandle",
+   ".List2Ctrl.thickItems.smallItemText .ListItem.style28 .List2CtrlSliderCtrlFocusedHandle"
+  ]
+ },
+ {
+  "control": "NowPlaying4",
+  "file": "NowPlayingBG.png",
+  "size": [
+   780,
+   416
+  ],
+  "bbox": [
+   0,
+   0,
+   780,
+   416
+  ],
+  "kind": "clear",
+  "selectors": [
+   ".NowPlaying4Ctrl"
+  ]
+ },
+ {
+  "control": "NowPlaying4",
+  "file": "NowPlayingImageFrame.png",
+  "size": [
+   146,
+   146
+  ],
+  "bbox": [
+   0,
+   0,
+   146,
+   146
+  ],
+  "kind": "panel",
+  "selectors": [
+   ".NowPlaying4CtrlArtworkImageBorder"
+  ]
+ },
+ {
+  "control": "Sbn",
+  "file": "SBLoadBar.png",
+  "size": [
+   250,
+   9
+  ],
+  "bbox": [
+   0,
+   0,
+   250,
+   9
+  ],
+  "kind": "fill",
+  "selectors": [
+   ".SbnCtrl_Style06_Meter_Highlight"
+  ]
+ },
+ {
+  "control": "Sbn",
+  "file": "SBLoadBarBg.png",
+  "size": [
+   252,
+   11
+  ],
+  "bbox": [
+   0,
+   0,
+   252,
+   11
+  ],
+  "kind": "track",
+  "selectors": [
+   ".SbnCtrl_Style06_Meter"
+  ]
+ },
+ {
+  "control": "ScreenSettings2",
+  "file": "AdjustBtn_Bg.png",
+  "size": [
+   74,
+   140
+  ],
+  "bbox": [
+   0,
+   0,
+   74,
+   140
+  ],
+  "kind": "panel",
+  "selectors": [
+   ".ScreenSettings2CtrlCloseBtn_Bg"
+  ]
+ },
+ {
+  "control": "ScreenSettings2",
+  "file": "AdjustmentSettingsBG.png",
+  "size": [
+   726,
+   140
+  ],
+  "bbox": [
+   0,
+   0,
+   726,
+   140
+  ],
+  "kind": "panel",
+  "selectors": [
+   ".ScreenSettings2CtrlTabsBg"
+  ]
+ },
+ {
+  "control": "ScreenSettings2",
+  "file": "CVCBtn1_Ds.png",
+  "size": [
+   80,
+   70
+  ],
+  "bbox": [
+   0,
+   0,
+   80,
+   70
+  ],
+  "kind": "btn_ds",
+  "selectors": [
+   ".ScreenSettings2CtrlRHDCVCBtn_Ds",
+   ".ScreenSettings2CtrlLHDCVCBtn_Ds"
+  ]
+ },
+ {
+  "control": "ScreenSettings2",
+  "file": "CVCBtn1_En.png",
+  "size": [
+   80,
+   71
+  ],
+  "bbox": [
+   0,
+   0,
+   80,
+   71
+  ],
+  "kind": "btn",
+  "selectors": [
+   ".ScreenSettings2CtrlRHDCVCBtn_En",
+   ".ScreenSettings2CtrlLHDCVCBtn_En"
+  ]
+ },
+ {
+  "control": "ScreenSettings2",
+  "file": "CVCBtn1_Focus.png",
+  "size": [
+   81,
+   70
+  ],
+  "bbox": [
+   0,
+   0,
+   81,
+   70
+  ],
+  "kind": "btn_focus",
+  "selectors": [
+   ".ScreenSettings2CtrlRHDCVCBtn_Focused",
+   ".ScreenSettings2CtrlLHDCVCBtn_Focused"
+  ]
+ },
+ {
+  "control": "ScreenSettings2",
+  "file": "CVCBtn1_Hit.png",
+  "size": [
+   80,
+   70
+  ],
+  "bbox": [
+   0,
+   0,
+   80,
+   70
+  ],
+  "kind": "btn_hit",
+  "selectors": [
+   ".ScreenSettings2CtrlRHDCVCBtn_Down",
+   ".ScreenSettings2CtrlLHDCVCBtn_Down"
+  ]
+ },
+ {
+  "control": "ScreenSettings2",
+  "file": "CloseBtn1_En.png",
+  "size": [
+   60,
+   71
+  ],
+  "bbox": [
+   0,
+   0,
+   60,
+   71
+  ],
+  "kind": "btn",
+  "selectors": [
+   ".ScreenSettings2CtrlCloseBtn_En",
+   ".ScreenSettings2Ctrl_Bottom_CloseBtn_En",
+   ".ScreenSettings2Ctrl_Bottom_RHD_CloseBtn_En"
+  ]
+ },
+ {
+  "control": "ScreenSettings2",
+  "file": "CloseBtn1_Focus.png",
+  "size": [
+   61,
+   70
+  ],
+  "bbox": [
+   0,
+   0,
+   61,
+   70
+  ],
+  "kind": "btn_focus",
+  "selectors": [
+   ".ScreenSettings2CtrlCloseBtn_Focused",
+   ".ScreenSettings2Ctrl_Bottom_CloseBtn_Focused",
+   ".ScreenSettings2Ctrl_Bottom_RHD_CloseBtn_Focused"
+  ]
+ },
+ {
+  "control": "ScreenSettings2",
+  "file": "CloseBtn1_Hit.png",
+  "size": [
+   60,
+   70
+  ],
+  "bbox": [
+   0,
+   0,
+   60,
+   70
+  ],
+  "kind": "btn_hit",
+  "selectors": [
+   ".ScreenSettings2CtrlCloseBtn_Down",
+   ".ScreenSettings2Ctrl_Bottom_CloseBtn_Down",
+   ".ScreenSettings2Ctrl_Bottom_RHD_CloseBtn_Down"
+  ]
+ },
+ {
+  "control": "ScreenSettings2",
+  "file": "PSMClose_Ds.png",
+  "size": [
+   60,
+   70
+  ],
+  "bbox": [
+   0,
+   0,
+   60,
+   70
+  ],
+  "kind": "btn_ds",
+  "selectors": [
+   ".ScreenSettings2CtrlSecondaryCloseBtn_Ds"
+  ]
+ },
+ {
+  "control": "ScreenSettings2",
+  "file": "PSMClose_En.png",
+  "size": [
+   60,
+   70
+  ],
+  "bbox": [
+   0,
+   0,
+   60,
+   70
+  ],
+  "kind": "btn",
+  "selectors": [
+   ".ScreenSettings2CtrlSecondaryCloseBtn_En"
+  ]
+ },
+ {
+  "control": "ScreenSettings2",
+  "file": "PSMClose_Focus.png",
+  "size": [
+   60,
+   70
+  ],
+  "bbox": [
+   0,
+   0,
+   60,
+   70
+  ],
+  "kind": "btn_focus",
+  "selectors": [
+   ".ScreenSettings2CtrlSecondaryCloseBtn_Focused"
+  ]
+ },
+ {
+  "control": "ScreenSettings2",
+  "file": "PSMClose_Hit.png",
+  "size": [
+   60,
+   70
+  ],
+  "bbox": [
+   0,
+   0,
+   60,
+   70
+  ],
+  "kind": "btn_hit",
+  "selectors": [
+   ".ScreenSettings2CtrlSecondaryCloseBtn_Down"
+  ]
+ },
+ {
+  "control": "ScreenSettings2",
+  "file": "PSMOpen_Ds.png",
+  "size": [
+   60,
+   70
+  ],
+  "bbox": [
+   0,
+   0,
+   60,
+   70
+  ],
+  "kind": "btn_ds",
+  "selectors": [
+   ".ScreenSettings2CtrlBackBtn_Ds",
+   ".ScreenSettings2CtrlSecondaryOpenBtn_Ds"
+  ]
+ },
+ {
+  "control": "ScreenSettings2",
+  "file": "PSMOpen_En.png",
+  "size": [
+   60,
+   70
+  ],
+  "bbox": [
+   0,
+   0,
+   60,
+   70
+  ],
+  "kind": "btn",
+  "selectors": [
+   ".ScreenSettings2CtrlBackBtn_En",
+   ".ScreenSettings2CtrlSecondaryOpenBtn_En"
+  ]
+ },
+ {
+  "control": "ScreenSettings2",
+  "file": "PSMOpen_Focus.png",
+  "size": [
+   60,
+   70
+  ],
+  "bbox": [
+   0,
+   0,
+   60,
+   70
+  ],
+  "kind": "btn_focus",
+  "selectors": [
+   ".ScreenSettings2CtrlBackBtn_Focused",
+   ".ScreenSettings2CtrlSecondaryOpenBtn_Focused"
+  ]
+ },
+ {
+  "control": "ScreenSettings2",
+  "file": "PSMOpen_Hit.png",
+  "size": [
+   60,
+   70
+  ],
+  "bbox": [
+   0,
+   0,
+   60,
+   70
+  ],
+  "kind": "btn_hit",
+  "selectors": [
+   ".ScreenSettings2CtrlBackBtn_Down",
+   ".ScreenSettings2CtrlSecondaryOpenBtn_Down"
+  ]
+ },
+ {
+  "control": "ScreenSettings2",
+  "file": "ResetBtn.png",
+  "size": [
+   414,
+   52
+  ],
+  "bbox": [
+   0,
+   0,
+   414,
+   52
+  ],
+  "kind": "btn",
+  "selectors": [
+   ".ScreenSettings2CtrlOneBtn_En",
+   ".ScreenSettings2CtrlOneBtn_Ds"
+  ]
+ },
+ {
+  "control": "ScreenSettings2",
+  "file": "ResetBtn_Focus.png",
+  "size": [
+   412,
+   52
+  ],
+  "bbox": [
+   0,
+   0,
+   412,
+   52
+  ],
+  "kind": "btn_focus",
+  "selectors": [
+   ".ScreenSettings2CtrlOneBtn_Focused"
+  ]
+ },
+ {
+  "control": "ScreenSettings2",
+  "file": "ResetBtn_Hit.png",
+  "size": [
+   412,
+   52
+  ],
+  "bbox": [
+   0,
+   0,
+   412,
+   52
+  ],
+  "kind": "btn_hit",
+  "selectors": [
+   ".ScreenSettings2CtrlOneBtn_Down"
+  ]
+ },
+ {
+  "control": "ScreenSettings2",
+  "file": "SettingsBtn1_Ds.png",
+  "size": [
+   61,
+   70
+  ],
+  "bbox": [
+   0,
+   0,
+   61,
+   70
+  ],
+  "kind": "btn_ds",
+  "selectors": [
+   ".ScreenSettings2CtrlAdjustBtn_Ds",
+   ".ScreenSettings2Ctrl_Bottom_AdjustBtn_Ds"
+  ]
+ },
+ {
+  "control": "ScreenSettings2",
+  "file": "SettingsBtn1_En.png",
+  "size": [
+   60,
+   71
+  ],
+  "bbox": [
+   0,
+   0,
+   60,
+   71
+  ],
+  "kind": "btn",
+  "selectors": [
+   ".ScreenSettings2CtrlAdjustBtn_En",
+   ".ScreenSettings2Ctrl_Bottom_AdjustBtn_En"
+  ]
+ },
+ {
+  "control": "ScreenSettings2",
+  "file": "SettingsBtn1_Focus.png",
+  "size": [
+   61,
+   70
+  ],
+  "bbox": [
+   0,
+   0,
+   61,
+   70
+  ],
+  "kind": "btn_focus",
+  "selectors": [
+   ".ScreenSettings2CtrlAdjustBtn_Focused",
+   ".ScreenSettings2Ctrl_Bottom_AdjustBtn_Focused"
+  ]
+ },
+ {
+  "control": "ScreenSettings2",
+  "file": "SettingsBtn1_Hit.png",
+  "size": [
+   61,
+   70
+  ],
+  "bbox": [
+   0,
+   0,
+   61,
+   70
+  ],
+  "kind": "btn_hit",
+  "selectors": [
+   ".ScreenSettings2CtrlAdjustBtn_Down",
+   ".ScreenSettings2Ctrl_Bottom_AdjustBtn_Down"
+  ]
+ },
+ {
+  "control": "ScreenSettings2",
+  "file": "Tab_Press.png",
+  "size": [
+   141,
+   57
+  ],
+  "bbox": [
+   0,
+   0,
+   141,
+   57
+  ],
+  "kind": "btn_hit",
+  "selectors": [
+   ".ScreenSettings2CtrlTabBtn_Down"
+  ]
+ },
+ {
+  "control": "ScreenSettings2",
+  "file": "Tab_Selected.png",
+  "size": [
+   141,
+   57
+  ],
+  "bbox": [
+   0,
+   0,
+   141,
+   57
+  ],
+  "kind": "btn_on",
+  "selectors": [
+   ".ScreenSettings2CtrlTabBtn_Selected"
+  ]
+ },
+ {
+  "control": "ScreenSettings2",
+  "file": "UMP_ScrubberBg01.png",
+  "size": [
+   670,
+   12
+  ],
+  "bbox": [
+   0,
+   0,
+   670,
+   12
+  ],
+  "kind": "track",
+  "selectors": [
+   ".ScreenSettings2CtrlSliderContainer .ScreenSettings2CtrlSliderBg"
+  ]
+ },
+ {
+  "control": "ScreenSettings2",
+  "file": "UMP_ScrubberHighlight.png",
+  "size": [
+   65,
+   65
+  ],
+  "bbox": [
+   6,
+   5,
+   60,
+   59
+  ],
+  "kind": "halo",
+  "selectors": [
+   ".ScreenSettings2CtrlSliderContainer .ScreenSettings2CtrlSliderHandle_Focused"
+  ]
+ },
+ {
+  "control": "ScreenSettings2",
+  "file": "UMP_ScrubberKnob.png",
+  "size": [
+   22,
+   22
+  ],
+  "bbox": [
+   0,
+   0,
+   22,
+   22
+  ],
+  "kind": "knob",
+  "selectors": [
+   ".ScreenSettings2CtrlSliderContainer .ScreenSettings2CtrlSliderHandle",
+   ".ScreenSettings2CtrlSliderContainer .ScreenSettings2CtrlSliderHandle_Ds"
+  ]
+ },
+ {
+  "control": "ScreenSettings2",
+  "file": "UMP_Scrubber_Fill.png",
+  "size": [
+   293,
+   8
+  ],
+  "bbox": [
+   0,
+   0,
+   293,
+   8
+  ],
+  "kind": "fill",
+  "selectors": [
+   ".ScreenSettings2CtrlSliderContainer .ScreenSettings2CtrlSliderFill",
+   ".ScreenSettings2CtrlSliderContainer .ScreenSettings2CtrlSliderFill_Ds"
+  ]
+ },
+ {
+  "control": "ScreenSettings2",
+  "file": "UMP_Scrubber_Fill_Focus.png",
+  "size": [
+   294,
+   8
+  ],
+  "bbox": [
+   0,
+   0,
+   294,
+   8
+  ],
+  "kind": "fill",
+  "selectors": [
+   ".ScreenSettings2CtrlSliderContainer .ScreenSettings2CtrlSliderFill_Focused"
+  ]
+ },
+ {
+  "control": "ScreenSettings2",
+  "file": "VideoSettingsBtn1_Ds.png",
+  "size": [
+   80,
+   70
+  ],
+  "bbox": [
+   0,
+   0,
+   80,
+   70
+  ],
+  "kind": "btn_ds",
+  "selectors": [
+   ".ScreenSettings2Ctrl_Bottom_RHD_AdjustBtn_Ds",
+   ".ScreenSettings2Ctrl_Bottom_LHD_AdjustBtn_Ds"
+  ]
+ },
+ {
+  "control": "ScreenSettings2",
+  "file": "VideoSettingsBtn1_En.png",
+  "size": [
+   80,
+   70
+  ],
+  "bbox": [
+   0,
+   0,
+   80,
+   70
+  ],
+  "kind": "btn",
+  "selectors": [
+   ".ScreenSettings2Ctrl_Bottom_RHD_AdjustBtn_En",
+   ".ScreenSettings2Ctrl_Bottom_LHD_AdjustBtn_En"
+  ]
+ },
+ {
+  "control": "ScreenSettings2",
+  "file": "VideoSettingsBtn1_Focus.png",
+  "size": [
+   80,
+   70
+  ],
+  "bbox": [
+   0,
+   0,
+   80,
+   70
+  ],
+  "kind": "btn_focus",
+  "selectors": [
+   ".ScreenSettings2Ctrl_Bottom_RHD_AdjustBtn_Focused",
+   ".ScreenSettings2Ctrl_Bottom_LHD_AdjustBtn_Focused"
+  ]
+ },
+ {
+  "control": "ScreenSettings2",
+  "file": "VideoSettingsBtn1_Hit.png",
+  "size": [
+   80,
+   70
+  ],
+  "bbox": [
+   0,
+   0,
+   80,
+   70
+  ],
+  "kind": "btn_hit",
+  "selectors": [
+   ".ScreenSettings2Ctrl_Bottom_RHD_AdjustBtn_Down",
+   ".ScreenSettings2Ctrl_Bottom_LHD_AdjustBtn_Down"
+  ]
+ },
+ {
+  "control": "Tabs",
+  "file": "TabBottomMask.png",
+  "size": [
+   749,
+   1
+  ],
+  "bbox": [
+   1,
+   0,
+   748,
+   1
+  ],
+  "kind": "clear",
+  "selectors": [
+   ".TabsCtrlBottomMask"
+  ]
+ },
+ {
+  "control": "Tabs",
+  "file": "TabHighlight_Style02.png",
+  "size": [
+   354,
+   60
+  ],
+  "bbox": [
+   0,
+   0,
+   354,
+   60
+  ],
+  "kind": "btn_on",
+  "selectors": [
+   ".TabsCtrlStyle2ButtonEnabledCurrent",
+   ".TabsCtrlStyle2ButtonDownCurrent"
+  ]
+ },
+ {
+  "control": "Tabs",
+  "file": "TabHighlight_Style03.png",
+  "size": [
+   238,
+   60
+  ],
+  "bbox": [
+   0,
+   0,
+   238,
+   60
+  ],
+  "kind": "btn_on",
+  "selectors": [
+   ".TabsCtrlStyle3ButtonEnabledCurrent",
+   ".TabsCtrlStyle3ButtonDownCurrent"
+  ]
+ },
+ {
+  "control": "Tabs",
+  "file": "TabHighlight_Style04.png",
+  "size": [
+   143,
+   59
+  ],
+  "bbox": [
+   0,
+   0,
+   143,
+   59
+  ],
+  "kind": "btn_on",
+  "selectors": [
+   ".TabsCtrlStyle4ButtonEnabledCurrent",
+   ".TabsCtrlStyle4ButtonDownCurrent"
+  ]
+ },
+ {
+  "control": "Tabs",
+  "file": "TabPress_Arrow.png",
+  "size": [
+   84,
+   60
+  ],
+  "bbox": [
+   0,
+   0,
+   84,
+   28
+  ],
+  "kind": "btn_hit",
+  "selectors": [
+   ".TabsCtrlStyle4PrevNextBtnHit"
+  ]
+ },
+ {
+  "control": "Tabs",
+  "file": "TabPress_Style02.png",
+  "size": [
+   352,
+   60
+  ],
+  "bbox": [
+   0,
+   0,
+   352,
+   46
+  ],
+  "kind": "btn_hit",
+  "selectors": [
+   ".TabsCtrlStyle2ButtonDown",
+   ".TabsCtrlStyle2ButtonDownCurrent"
+  ]
+ },
+ {
+  "control": "Tabs",
+  "file": "TabPress_Style03.png",
+  "size": [
+   234,
+   60
+  ],
+  "bbox": [
+   0,
+   0,
+   234,
+   36
+  ],
+  "kind": "btn_hit",
+  "selectors": [
+   ".TabsCtrlStyle3ButtonDown",
+   ".TabsCtrlStyle3ButtonDownCurrent"
+  ]
+ },
+ {
+  "control": "Tabs",
+  "file": "TabPress_Style04.png",
+  "size": [
+   142,
+   60
+  ],
+  "bbox": [
+   0,
+   0,
+   142,
+   31
+  ],
+  "kind": "btn_hit",
+  "selectors": [
+   ".TabsCtrlStyle4ButtonDown",
+   ".TabsCtrlStyle4ButtonDownCurrent"
+  ]
+ },
+ {
+  "control": "Tabs",
+  "file": "Tab_Style02.png",
+  "size": [
+   354,
+   60
+  ],
+  "bbox": [
+   0,
+   0,
+   354,
+   60
+  ],
+  "kind": "btn",
+  "selectors": [
+   ".TabsCtrlStyle2ButtonEnabled",
+   ".TabsCtrlStyle2ButtonDown"
+  ]
+ },
+ {
+  "control": "Tabs",
+  "file": "Tab_Style03.png",
+  "size": [
+   238,
+   60
+  ],
+  "bbox": [
+   0,
+   0,
+   238,
+   60
+  ],
+  "kind": "btn",
+  "selectors": [
+   ".TabsCtrlStyle3ButtonEnabled",
+   ".TabsCtrlStyle3ButtonDown"
+  ]
+ },
+ {
+  "control": "Tabs",
+  "file": "Tab_Style04.png",
+  "size": [
+   143,
+   60
+  ],
+  "bbox": [
+   0,
+   0,
+   143,
+   60
+  ],
+  "kind": "btn",
+  "selectors": [
+   ".TabsCtrlStyle4ButtonEnabled",
+   ".TabsCtrlStyle4ButtonDown"
+  ]
+ },
+ {
+  "control": "Tabs",
+  "file": "Tab_StyleArrow.png",
+  "size": [
+   86,
+   62
+  ],
+  "bbox": [
+   0,
+   2,
+   84,
+   62
+  ],
+  "kind": "btn",
+  "selectors": [
+   ".TabsCtrlStyle4PrevBtn",
+   ".TabsCtrlStyle4NextBtn",
+   ".TabsCtrlStyle4PrevNextBtnHit"
+  ]
+ },
+ {
+  "control": "Tuner4",
+  "file": "BgDial.png",
+  "size": [
+   496,
+   416
+  ],
+  "bbox": [
+   31,
+   20,
+   466,
+   416
+  ],
+  "kind": "dial",
+  "selectors": [
+   ".Tuner4CtrlBackgroundDialBg",
+   ".Tuner4CtrlDialBg"
+  ]
+ },
+ {
+  "control": "Tuner4",
+  "file": "BgDial_Focus.png",
+  "size": [
+   496,
+   416
+  ],
+  "bbox": [
+   31,
+   20,
+   466,
+   416
+  ],
+  "kind": "dial_focus",
+  "selectors": [
+   ".Tuner4CtrlDialBg_Focus"
+  ]
+ },
+ {
+  "control": "Tuner4",
+  "file": "BgDial_Held.png",
+  "size": [
+   496,
+   416
+  ],
+  "bbox": [
+   31,
+   20,
+   466,
+   416
+  ],
+  "kind": "dial_hit",
+  "selectors": [
+   ".Tuner4CtrlDialBg_Held"
+  ]
+ },
+ {
+  "control": "Tuner4",
+  "file": "BgDial_Hit.png",
+  "size": [
+   496,
+   416
+  ],
+  "bbox": [
+   31,
+   20,
+   466,
+   416
+  ],
+  "kind": "dial_hit",
+  "selectors": [
+   ".Tuner4CtrlDialBg_Hit"
+  ]
+ },
+ {
+  "control": "Tuner4",
+  "file": "BtnLeft_En.png",
+  "size": [
+   42,
+   58
+  ],
+  "bbox": [
+   0,
+   0,
+   41,
+   57
+  ],
+  "kind": "btn",
+  "selectors": [
+   ".Tuner4CtrlLeftButtonEnabled"
+  ]
+ },
+ {
+  "control": "Tuner4",
+  "file": "BtnLeft_Focus.png",
+  "size": [
+   69,
+   88
+  ],
+  "bbox": [
+   1,
+   3,
+   66,
+   84
+  ],
+  "kind": "btn_focus",
+  "selectors": [
+   ".Tuner4CtrlLeftButtonFocused"
+  ]
+ },
+ {
+  "control": "Tuner4",
+  "file": "BtnLeft_Press.png",
+  "size": [
+   69,
+   88
+  ],
+  "bbox": [
+   1,
+   3,
+   67,
+   84
+  ],
+  "kind": "btn_hit",
+  "selectors": [
+   ".Tuner4CtrlLeftButtonDown"
+  ]
+ },
+ {
+  "control": "Tuner4",
+  "file": "TunerCtrl_Bg.png",
+  "size": [
+   800,
+   417
+  ],
+  "bbox": [
+   0,
+   1,
+   800,
+   417
+  ],
+  "kind": "clear",
+  "selectors": [
+   ".Tuner4Ctrl"
+  ]
+ },
+ {
+  "control": "Tuner4",
+  "file": "TunerCtrl_Button.png",
+  "size": [
+   384,
+   57
+  ],
+  "bbox": [
+   0,
+   0,
+   384,
+   57
+  ],
+  "kind": "btn",
+  "selectors": [
+   ".Tuner4CtrlPrevButtonEnabled",
+   ".Tuner4CtrlNextButtonEnabled"
+  ]
+ },
+ {
+  "control": "Tuner4",
+  "file": "TunerCtrl_ButtonFocus.png",
+  "size": [
+   384,
+   57
+  ],
+  "bbox": [
+   0,
+   0,
+   384,
+   57
+  ],
+  "kind": "btn_focus",
+  "selectors": [
+   ".Tuner4CtrlPrevButtonFocused",
+   ".Tuner4CtrlPrevButtonDown",
+   ".Tuner4CtrlPrevButtonHeld",
+   ".Tuner4CtrlNextButtonFocused",
+   ".Tuner4CtrlNextButtonDown",
+   ".Tuner4CtrlNextButtonHeld"
+  ]
+ },
+ {
+  "control": "Ump3",
+  "file": "UMP_Bg.png",
+  "size": [
+   800,
+   99
+  ],
+  "bbox": [
+   0,
+   0,
+   800,
+   99
+  ],
+  "kind": "dock",
+  "selectors": [
+   ".Ump3CtrlBackground"
+  ]
+ },
+ {
+  "control": "Ump3",
+  "file": "UMP_Bg_Arch.png",
+  "size": [
+   801,
+   30
+  ],
+  "bbox": [
+   0,
+   0,
+   801,
+   30
+  ],
+  "kind": "clear",
+  "selectors": [
+   ".Ump3CtrlBgArch"
+  ]
+ },
+ {
+  "control": "Ump3",
+  "file": "UMP_Btn_Separator.png",
+  "size": [
+   3,
+   83
+  ],
+  "bbox": [
+   0,
+   2,
+   3,
+   83
+  ],
+  "kind": "clear",
+  "selectors": [
+   ".Ump3CtrlSeparator"
+  ]
+ },
+ {
+  "control": "Ump3",
+  "file": "UMP_Buffer.png",
+  "size": [
+   752,
+   8
+  ],
+  "bbox": [
+   0,
+   0,
+   752,
+   8
+  ],
+  "kind": "track",
+  "selectors": [
+   ".Ump3CtrlBufferStyle01",
+   ".Ump3CtrlBufferStyle02",
+   ".Ump3CtrlBufferStyle03",
+   ".Ump3CtrlBufferStyle04",
+   ".Ump3CtrlBufferStyle05"
+  ]
+ },
+ {
+  "control": "Ump3",
+  "file": "UMP_Focus_10.png",
+  "size": [
+   80,
+   100
+  ],
+  "bbox": [
+   0,
+   14,
+   80,
+   100
+  ],
+  "kind": "btn_focus",
+  "selectors": [
+   ".Ump3Ctrl10Button_Ds.Ump3Ctrl10Button_focused",
+   ".Ump3Ctrl10Button_focused"
+  ]
+ },
+ {
+  "control": "Ump3",
+  "file": "UMP_Focus_2.png",
+  "size": [
+   399,
+   100
+  ],
+  "bbox": [
+   0,
+   8,
+   399,
+   100
+  ],
+  "kind": "btn_focus",
+  "selectors": [
+   ".Ump3Ctrl2Button_Ds.Ump3Ctrl2Button_focused",
+   ".Ump3Ctrl2Button_focused"
+  ]
+ },
+ {
+  "control": "Ump3",
+  "file": "UMP_Focus_3.png",
+  "size": [
+   266,
+   100
+  ],
+  "bbox": [
+   0,
+   8,
+   266,
+   100
+  ],
+  "kind": "btn_focus",
+  "selectors": [
+   ".Ump3Ctrl3Button_Ds.Ump3Ctrl3Button_focused",
+   ".Ump3Ctrl3Button_focused"
+  ]
+ },
+ {
+  "control": "Ump3",
+  "file": "UMP_Focus_4.png",
+  "size": [
+   199,
+   100
+  ],
+  "bbox": [
+   0,
+   8,
+   199,
+   100
+  ],
+  "kind": "btn_focus",
+  "selectors": [
+   ".Ump3Ctrl4Button_Ds.Ump3Ctrl4Button_focused",
+   ".Ump3Ctrl4Button_focused"
+  ]
+ },
+ {
+  "control": "Ump3",
+  "file": "UMP_Focus_5.png",
+  "size": [
+   160,
+   100
+  ],
+  "bbox": [
+   0,
+   8,
+   160,
+   100
+  ],
+  "kind": "btn_focus",
+  "selectors": [
+   ".Ump3Ctrl5Button_Ds.Ump3Ctrl5Button_focused",
+   ".Ump3Ctrl5Button_focused"
+  ]
+ },
+ {
+  "control": "Ump3",
+  "file": "UMP_Focus_6.png",
+  "size": [
+   133,
+   100
+  ],
+  "bbox": [
+   0,
+   8,
+   133,
+   100
+  ],
+  "kind": "btn_focus",
+  "selectors": [
+   ".Ump3Ctrl6Button_Ds.Ump3Ctrl6Button_focused",
+   ".Ump3Ctrl6Button_focused"
+  ]
+ },
+ {
+  "control": "Ump3",
+  "file": "UMP_Focus_7.png",
+  "size": [
+   114,
+   100
+  ],
+  "bbox": [
+   0,
+   12,
+   114,
+   100
+  ],
+  "kind": "btn_focus",
+  "selectors": [
+   ".Ump3Ctrl7Button_Ds.Ump3Ctrl7Button_focused",
+   ".Ump3Ctrl7Button_focused"
+  ]
+ },
+ {
+  "control": "Ump3",
+  "file": "UMP_Focus_8.png",
+  "size": [
+   101,
+   100
+  ],
+  "bbox": [
+   0,
+   12,
+   100,
+   100
+  ],
+  "kind": "btn_focus",
+  "selectors": [
+   ".Ump3Ctrl8Button_Ds.Ump3Ctrl8Button_focused",
+   ".Ump3Ctrl8Button_focused"
+  ]
+ },
+ {
+  "control": "Ump3",
+  "file": "UMP_Focus_9.png",
+  "size": [
+   89,
+   100
+  ],
+  "bbox": [
+   0,
+   12,
+   89,
+   100
+  ],
+  "kind": "btn_focus",
+  "selectors": [
+   ".Ump3Ctrl9Button_Ds.Ump3Ctrl9Button_focused",
+   ".Ump3Ctrl9Button_focused"
+  ]
+ },
+ {
+  "control": "Ump3",
+  "file": "UMP_Hit_10.png",
+  "size": [
+   80,
+   100
+  ],
+  "bbox": [
+   0,
+   14,
+   80,
+   100
+  ],
+  "kind": "btn_hit",
+  "selectors": [
+   ".Ump3Ctrl10Button_down"
+  ]
+ },
+ {
+  "control": "Ump3",
+  "file": "UMP_Hit_2.png",
+  "size": [
+   399,
+   100
+  ],
+  "bbox": [
+   0,
+   8,
+   399,
+   100
+  ],
+  "kind": "btn_hit",
+  "selectors": [
+   ".Ump3Ctrl2Button_down"
+  ]
+ },
+ {
+  "control": "Ump3",
+  "file": "UMP_Hit_3.png",
+  "size": [
+   266,
+   100
+  ],
+  "bbox": [
+   0,
+   8,
+   266,
+   100
+  ],
+  "kind": "btn_hit",
+  "selectors": [
+   ".Ump3Ctrl3Button_down"
+  ]
+ },
+ {
+  "control": "Ump3",
+  "file": "UMP_Hit_4.png",
+  "size": [
+   200,
+   100
+  ],
+  "bbox": [
+   0,
+   8,
+   199,
+   100
+  ],
+  "kind": "btn_hit",
+  "selectors": [
+   ".Ump3Ctrl4Button_down"
+  ]
+ },
+ {
+  "control": "Ump3",
+  "file": "UMP_Hit_5.png",
+  "size": [
+   160,
+   100
+  ],
+  "bbox": [
+   0,
+   8,
+   160,
+   100
+  ],
+  "kind": "btn_hit",
+  "selectors": [
+   ".Ump3Ctrl5Button_down"
+  ]
+ },
+ {
+  "control": "Ump3",
+  "file": "UMP_Hit_6.png",
+  "size": [
+   133,
+   100
+  ],
+  "bbox": [
+   0,
+   8,
+   133,
+   100
+  ],
+  "kind": "btn_hit",
+  "selectors": [
+   ".Ump3Ctrl6Button_down"
+  ]
+ },
+ {
+  "control": "Ump3",
+  "file": "UMP_Hit_7.png",
+  "size": [
+   114,
+   100
+  ],
+  "bbox": [
+   0,
+   12,
+   114,
+   100
+  ],
+  "kind": "btn_hit",
+  "selectors": [
+   ".Ump3Ctrl7Button_down"
+  ]
+ },
+ {
+  "control": "Ump3",
+  "file": "UMP_Hit_8.png",
+  "size": [
+   101,
+   100
+  ],
+  "bbox": [
+   0,
+   12,
+   100,
+   100
+  ],
+  "kind": "btn_hit",
+  "selectors": [
+   ".Ump3Ctrl8Button_down"
+  ]
+ },
+ {
+  "control": "Ump3",
+  "file": "UMP_Hit_9.png",
+  "size": [
+   89,
+   100
+  ],
+  "bbox": [
+   0,
+   12,
+   89,
+   100
+  ],
+  "kind": "btn_hit",
+  "selectors": [
+   ".Ump3Ctrl9Button_down"
+  ]
+ },
+ {
+  "control": "Ump3",
+  "file": "UMP_ScrubberBg01.png",
+  "size": [
+   582,
+   12
+  ],
+  "bbox": [
+   0,
+   0,
+   582,
+   12
+  ],
+  "kind": "track",
+  "selectors": [
+   ".UmpScrubberStyle01",
+   ".UmpScrubberStyle06"
+  ]
+ },
+ {
+  "control": "Ump3",
+  "file": "UMP_ScrubberBg02.png",
+  "size": [
+   668,
+   12
+  ],
+  "bbox": [
+   0,
+   0,
+   668,
+   12
+  ],
+  "kind": "track",
+  "selectors": [
+   ".UmpScrubberStyle02"
+  ]
+ },
+ {
+  "control": "Ump3",
+  "file": "UMP_ScrubberBg03.png",
+  "size": [
+   754,
+   12
+  ],
+  "bbox": [
+   0,
+   0,
+   754,
+   12
+  ],
+  "kind": "track",
+  "selectors": [
+   ".UmpScrubberStyle03"
+  ]
+ },
+ {
+  "control": "Ump3",
+  "file": "UMP_ScrubberHighlight.png",
+  "size": [
+   65,
+   66
+  ],
+  "bbox": [
+   5,
+   6,
+   60,
+   60
+  ],
+  "kind": "halo",
+  "selectors": [
+   ".UmpScrubberFocusedHandleStyle01",
+   ".UmpScrubberFocusedHandleStyle02",
+   ".UmpScrubberFocusedHandleStyle03",
+   ".UmpScrubberFocusedHandleStyle06"
+  ]
+ },
+ {
+  "control": "Ump3",
+  "file": "UMP_ScrubberKnob.png",
+  "size": [
+   22,
+   22
+  ],
+  "bbox": [
+   0,
+   0,
+   22,
+   22
+  ],
+  "kind": "knob",
+  "selectors": [
+   ".UmpScrubberHandleStyle01",
+   ".UmpScrubberHandleStyle02",
+   ".UmpScrubberHandleStyle03",
+   ".UmpScrubberHandleStyle06"
+  ]
+ },
+ {
+  "control": "Ump3",
+  "file": "UMP_Scrubber_DarFill.png",
+  "size": [
+   580,
+   10
+  ],
+  "bbox": [
+   0,
+   0,
+   580,
+   10
+  ],
+  "kind": "fill",
+  "selectors": [
+   ".Ump3CtrlDarStyle06"
+  ]
+ },
+ {
+  "control": "Ump3",
+  "file": "UMP_Scrubber_Fill.png",
+  "size": [
+   377,
+   8
+  ],
+  "bbox": [
+   0,
+   0,
+   377,
+   8
+  ],
+  "kind": "fill",
+  "selectors": [
+   ".Ump3CtrlDarDisabledStyle06"
+  ]
+ },
+ {
+  "control": "Ump3",
+  "file": "UMP_Scrubber_Fill01.png",
+  "size": [
+   578,
+   8
+  ],
+  "bbox": [
+   0,
+   0,
+   578,
+   8
+  ],
+  "kind": "fill",
+  "selectors": [
+   ".UmpScrubberFillStyle01",
+   ".UmpScrubberFillStyle06"
+  ]
+ },
+ {
+  "control": "Ump3",
+  "file": "UMP_Scrubber_Fill02.png",
+  "size": [
+   664,
+   8
+  ],
+  "bbox": [
+   0,
+   0,
+   664,
+   8
+  ],
+  "kind": "fill",
+  "selectors": [
+   ".UmpScrubberFillStyle02"
+  ]
+ },
+ {
+  "control": "Ump3",
+  "file": "UMP_Scrubber_Fill03.png",
+  "size": [
+   750,
+   8
+  ],
+  "bbox": [
+   0,
+   0,
+   750,
+   8
+  ],
+  "kind": "fill",
+  "selectors": [
+   ".UmpScrubberFillStyle03"
+  ]
+ },
+ {
+  "control": "Ump3",
+  "file": "UMP_Scrubber_Fill_Focus01.png",
+  "size": [
+   578,
+   8
+  ],
+  "bbox": [
+   0,
+   0,
+   578,
+   8
+  ],
+  "kind": "fill",
+  "selectors": [
+   ".UmpScrubberFocusedFillStyle01",
+   ".UmpScrubberFocusedFillStyle06"
+  ]
+ },
+ {
+  "control": "Ump3",
+  "file": "UMP_Scrubber_Fill_Focus02.png",
+  "size": [
+   664,
+   8
+  ],
+  "bbox": [
+   0,
+   0,
+   664,
+   8
+  ],
+  "kind": "fill",
+  "selectors": [
+   ".UmpScrubberFocusedFillStyle02"
+  ]
+ },
+ {
+  "control": "Ump3",
+  "file": "UMP_Scrubber_Fill_Focus03.png",
+  "size": [
+   750,
+   8
+  ],
+  "bbox": [
+   0,
+   0,
+   750,
+   8
+  ],
+  "kind": "fill",
+  "selectors": [
+   ".UmpScrubberFocusedFillStyle03"
+  ]
+ },
+ {
+  "control": "Wink",
+  "file": "Notification_BG.png",
+  "size": [
+   800,
+   416
+  ],
+  "bbox": [
+   0,
+   0,
+   800,
+   416
+  ],
+  "kind": "winkbox",
+  "selectors": [
+   ".WinkCtrl",
+   ".WinkCtrlStyle05"
+  ]
+ }
+]

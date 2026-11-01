@@ -5,29 +5,44 @@ Arabic-first with full right-to-left layout, Tajawal font and Hijri date. A live
 warnings and service, your phone's missed calls, messages and active call, and what's playing. A small pill
 opens **Android Auto** or **Apple CarPlay** when a phone is plugged in.
 
-| Arabic · parked, everything showing | Arabic · driving, on a call, CarPlay |
+| Arabic · warnings, service due, missed calls | Arabic · on a call, CarPlay, fuel economy |
 |---|---|
-| ![Arabic, 2 warnings, service due, missed calls, FM playing](docs/shot_ar_glance.png) | ![Arabic, driving, call in progress, CarPlay](docs/shot_ar_drive_call.png) |
-| **Arabic · all clear, no phone plugged in** | **English · parked, everything showing** |
+| ![Arabic, 2 warnings, service due, missed calls](docs/shot_ar_glance.png) | ![Arabic, call in progress, CarPlay](docs/shot_ar_drive_call.png) |
+| **Arabic · all clear, next service, no phone plugged in** | **English · warnings, service due, missed calls** |
 | ![Arabic, car OK, USB playing](docs/shot_ar_allclear.png) | ![English, same state as the first](docs/shot_en_glance.png) |
-| **English · driving, on a call, CarPlay** | **English · all clear, no phone plugged in** |
-| ![English, driving, call in progress, CarPlay](docs/shot_en_drive_call.png) | ![English, car OK, USB playing](docs/shot_en_allclear.png) |
+| **English · on a call, CarPlay, fuel economy** | **English · all clear, next service, no phone plugged in** |
+| ![English, call in progress, CarPlay](docs/shot_en_drive_call.png) | ![English, car OK, next service](docs/shot_en_allclear.png) |
 
-**System skin** — Mazda's own top bar, alerts and menus, restyled to match, in Arabic and English:
+**System skin** — Mazda's own screens restyled to match, in Arabic (right to left) and English:
 
 | | Settings menu | Navigation alert | Home with Android Auto | All top-bar icons |
 |---|---|---|---|---|
 | **Arabic** | ![Settings menu](docs/skin_ar_settings.png) | ![Navigation alert](docs/skin_ar_alert.png) | ![Home, Android Auto](docs/skin_ar_home.png) | ![All icons](docs/skin_ar_icons.png) |
 | **English** | ![Settings menu](docs/skin_en_settings.png) | ![Navigation alert](docs/skin_en_alert.png) | ![Home, Android Auto](docs/skin_en_home.png) | ![All icons](docs/skin_en_icons.png) |
 
+![Mute box](docs/skin_ar_mute.png)
+
 > Screenshots come from the desktop preview (`preview/index.html`). The top bar is Mazda's own
 > status bar, which this project does not change.
 
 ## Status
 
-**v1.2.1 — Ember Glance home screen plus the "Floating Pills" system skin, in every language.** Not yet tried in the car.
+**v1.3.0 — fixes from the first drive with the skin, every Mazda screen restyled.** Not yet tried in the car.
 v1.0.4 (the first layout) runs in a 2019 CX-9 on firmware 74.00.333A (ADR / 4A N).
 
+- v1.3.0 fixes what the car showed with v1.2.x:
+  - **Map, reversing camera, Android Auto and CarPlay** were hidden behind the skin's background. Screens that show
+    video ask Mazda's framework for a transparent background; the skin now leaves those alone.
+  - Arabic menus read right to left (text on the right, switches, values and checkboxes on the left), with smaller
+    text, a rounded focus that looks the same on the first and last row, the scroll bar on the left and a small round
+    back button.
+  - Alerts (navigation, volume, Bluetooth, messages) are right to left in Arabic, as tall as the top-bar pills, with
+    smaller text and new icons. New screen icons in the top bar.
+  - Restyled: tabs, switches, checkboxes, dialogs, the call screen, the media bar, the tuner, the mute box, the camera
+    adjustment controls and progress bars (144 Mazda images redrawn at their original size).
+  - Home: the car row shows the trip's average fuel economy; the media row is replaced by **next maintenance**
+    (km and months to the next service, oil life). The parked / driving chip is gone (the car never sends the speed
+    signal it needs). Turning the knob follows the screen direction in Arabic.
 - v1.2.1 applies the system skin in English (and every other language) too, mirrored for Arabic.
 - v1.2.0 adds the system skin for Mazda's own screens (see [System skin](#system-skin)):
   Tajawal everywhere, a top bar of floating glass pills with a new icon set, glass alerts, and menus in one
@@ -42,10 +57,11 @@ v1.0.4 (the first layout) runs in a 2019 CX-9 on firmware 74.00.333A (ADR / 4A N
 - v1.0.3 installs the fonts into the folder the browser really reads (`/jci/fonts/CHN` on firmware 74;
   earlier versions used `/jci/fonts`, which the browser never scans). Confirmed in the car: Tajawal loads.
 - v1.0.4 turns off the "Font check" test line.
-- The system skin passes 40 checks against Mazda's own CSS, in Arabic and English (fonts, alignment, focus, icons, alerts).
-- The launcher passes 64 automated behaviour checks (knob, tilt, touch, every status state and its Arabic wording,
+- The system skin passes 56 checks against Mazda's own CSS, in Arabic and English (fonts, alignment, focus, icons,
+  alerts, transparent video screens, and every one of the 144 redrawn control images).
+- The launcher passes 70 automated behaviour checks (knob, tilt, touch, every status state and its Arabic wording,
   phone hot-plug, focus hand-off, call and audio messages) and 9 clock checks.
-- The installer passes 45 automated checks against a simulated car file system (install, reinstall, remove,
+- The installer passes 46 automated checks against a simulated car file system (install, reinstall, remove,
   wrong firmware, damaged USB copy, cancel, an existing `common_rtl.css`).
 
 Treat it as experimental. Removing it is one step (see [Remove](#remove)).
@@ -53,10 +69,9 @@ Treat it as experimental. Removing it is one step (see [Remove](#remove)).
 ## Features
 
 - **Live status card** with three rows (see [Live status](#live-status)):
-  - **Car:** number of warnings and whether maintenance is due, or "the car is OK". Opens Applications.
+  - **Car:** number of warnings, or "the car is OK" with the trip's average fuel economy. Opens Applications.
   - **Phone:** the Bluetooth phone's name with missed calls and new messages, or "call in progress". Opens Communication.
-  - **Media:** the audio source and whether it's playing or paused. Opens Entertainment.
-- **Parked / driving** chip under the date.
+  - **Maintenance:** "service due", or the next service in km and months, with oil life. Opens Applications.
 - **Android Auto / CarPlay pill** next to it, only while a phone is plugged in. Tapping it opens Android Auto / CarPlay.
 - **Badges** on the dock: unread count (or a green dot during a call) on Phone, "!" on Apps when the car needs attention.
 - **System skin**: Mazda's top bar, alerts, menus and back button restyled to match, all in Tajawal, in every language.
@@ -113,13 +128,14 @@ Everything on the status card comes from data the system app already keeps for i
 | Maintenance due | the system app's `_SchedMaintDueStatus` flag (`StatusUpdateSchedMaint` message) |
 | Missed calls, new messages | the count badges on **Call History**, **SMS** and **Email** in the Communication list |
 | Bluetooth phone name | the **Bluetooth** item in the Entertainment list |
-| Audio source, playing | the "now playing" icon in the Entertainment list, plus the `StatusUpdateAudioSource` message |
+| Fuel economy | the trip average kept by Mazda's fuel economy app (`ecoenergy`) once it has data |
+| Next service, oil life | the "due in" values kept by Mazda's maintenance app (`schedmaint`) once it has data |
 | Active call | the `StatusPhoneCall` message |
-| Driving / parked | `framework.common.getAtSpeedValue()` (Mazda's speed threshold) |
 
-On firmware 74 the system app's own active-call handler never records the call (its check can't be true),
-and it only keeps an icon for the audio source while it plays. So the launcher also observes those two
-messages on their way to the system app's handlers, which still run unchanged.
+On firmware 74 the system app's own active-call handler never records the call (its check can't be true), so the
+launcher also observes that message on its way to the system app's handler, which still runs unchanged.
+Fuel economy and the maintenance values appear once Mazda's own apps have received them from the car; until
+then the card shows the warning count and the "service due" flag.
 
 ### System skin
 
@@ -264,9 +280,9 @@ cd tests/browser && CHROME_PATH="C:/Program Files/Google/Chrome/Application/chro
 Open `preview/index.html` in a desktop browser to try the launcher (keys: ← → tilt, `[` `]` rotate,
 ↑ ↓, Enter; the mouse acts as touch). URL options: `?lang=ar_SA|en_US`, `&phone=none|androidauto|carplay`,
 `&fmt=12hrs|24hrs`, and for the status card `&warnings=2&service=1&missed=3&texts=1&call=1&bt=<name>`
-`&source=FMRadio|USB_A|BTAudio|AndroidAuto|CarPlay&playing=0|1&driving=1`. Plugging and unplugging a phone can be
+`&fuel=10.4&maintkm=3200&maintmonths=4&oil=75`. Plugging and unplugging a phone can be
 tried from the browser console: `framework.common._remoteUiBtns.system = {appName: 'carplay'}` or `= null`;
-status changes with `setStatus({warnings: 1, call: true, driving: true})`.
+status changes with `setStatus({warnings: 1, call: true, fuel: "9.8"})`.
 
 The car's browser is Opera Presto: launcher code must stay **ES5** with no flexbox.
 

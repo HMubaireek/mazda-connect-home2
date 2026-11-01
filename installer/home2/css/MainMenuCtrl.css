@@ -93,7 +93,7 @@
   opacity: 0.6;
 }
 
-/* ---------- driving chip + Android Auto / CarPlay pill ---------- */
+/* ---------- Android Auto / CarPlay pill ---------- */
 .H2StatusLine {
   position: absolute;
   left: 40px;
@@ -104,47 +104,13 @@
   text-align: left;
 }
 
-.H2Drive {
-  display: inline-block;
-  vertical-align: middle;
-  height: 40px;
-  line-height: 40px;
-  padding: 0px 14px 0px 12px;
-  box-sizing: border-box;
-  border-radius: 20px;
-  border: 1px solid rgba(255, 255, 255, 0.14);
-  background-color: rgba(255, 255, 255, 0.07);
-  color: rgba(255, 255, 255, 0.75);
-  font-size: 15px;
-  font-weight: 700;
-}
-
-.H2DriveIcon {
-  display: inline-block;
-  vertical-align: middle;
-  width: 18px;
-  height: 18px;
-  margin: -3px 7px 0px 0px;
-  background: url(../images/home2/ic_park.png) no-repeat 0px 0px;
-}
-
-.H2Driving {
-  border-color: rgba(108, 139, 255, 0.45);
-  background-color: rgba(108, 139, 255, 0.16);
-  color: #A9BCFF;
-}
-
-.H2Driving .H2DriveIcon {
-  background-image: url(../images/home2/ic_drive.png);
-}
-
 .H2Pill {
   position: relative;
   display: inline-block;
   vertical-align: middle;
   width: 196px;
   height: 48px;
-  margin: 0px 0px 0px 10px;
+  margin: 0px;
   border-radius: 24px;
   border-color: rgba(255, 255, 255, 0.16);
   background-color: rgba(255, 255, 255, 0.09);
@@ -249,13 +215,7 @@
 .H2RowChip-bt { background-image: url(../images/home2/row_bt.png); }
 .H2RowChip-btnone { background-image: url(../images/home2/row_btnone.png); }
 .H2RowChip-call { background-image: url(../images/home2/row_call.png); }
-.H2RowChip-radio { background-image: url(../images/home2/row_radio.png); }
-.H2RowChip-usb { background-image: url(../images/home2/row_usb.png); }
-.H2RowChip-btaudio { background-image: url(../images/home2/row_btaudio.png); }
-.H2RowChip-aa { background-image: url(../images/home2/row_aa.png); }
-.H2RowChip-cp { background-image: url(../images/home2/row_cp.png); }
-.H2RowChip-media { background-image: url(../images/home2/row_media.png); }
-.H2RowChip-off { background-image: url(../images/home2/row_off.png); }
+.H2RowChip-maint { background-image: url(../images/home2/row_maint.png); }
 
 .H2RowTitle {
   position: absolute;
@@ -312,31 +272,17 @@
   box-shadow: none;
 }
 
-/* playing indicator (static bars) */
-.H2Eq {
-  display: none;
+/* small value at the end of a row (oil life) */
+.H2RowEnd {
   position: absolute;
   right: 16px;
-  top: 27px;
-  width: 23px;
-  height: 22px;
+  top: 26px;
+  font-size: 15px;
+  font-weight: 700;
+  line-height: 24px;
+  white-space: nowrap;
+  color: #FFD58F;
 }
-
-.H2Playing .H2Eq {
-  display: block;
-}
-
-.H2EqBar {
-  position: absolute;
-  bottom: 0px;
-  width: 5px;
-  border-radius: 2px;
-  background-color: #FFB547;
-}
-
-.H2EqBar1 { left: 0px; height: 12px; }
-.H2EqBar2 { left: 9px; height: 22px; }
-.H2EqBar3 { left: 18px; height: 16px; }
 
 /* count badges */
 .H2Badge {

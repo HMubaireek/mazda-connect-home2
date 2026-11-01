@@ -1,6 +1,6 @@
 /*
  * Home 2.0 "Ember Glass" launcher for Mazda Connect (CMU 150, firmware 74.x)
- * Version 1.2.1, "Ember Glance" layout (live car, phone and media status) — see README.md
+ * Version 1.3.0, "Ember Glance" layout (live car, phone and maintenance status) — see README.md
  *
  * The installer (run.sh) recognises an installed launcher by the first line above: keep it.
  *
@@ -33,7 +33,7 @@ var HOME2_FONTS = ["Home2 Tajawal Bold", "Home2 Tajawal Medium", "Home2 Tajawal 
 
 // Status the system app receives as messages but does not keep (see _hookSystemMessages).
 // Kept outside the control so it survives the home screen being rebuilt.
-var HOME2_LIVE = { call : null, audioSource : null, audioPlaying : false, audioPending : null };
+var HOME2_LIVE = { call : null };
 
 /* ---------- static text ---------- */
 var HOME2_TEXT = {
@@ -42,15 +42,23 @@ var HOME2_TEXT = {
         androidauto : "أندرويد أوتو",
         carplay : "آبل كاربلاي",
         phoneSub : "متصل · اضغط للفتح",
-        parked : "متوقفة",
-        driving : "أثناء القيادة",
         carOk : "السيارة سليمة",
-        carOkSub : "لا تحذيرات · لا صيانة مستحقة",
+        noWarnings : "لا تحذيرات",
         warnings : ["تحذير واحد في السيارة", "تحذيران في السيارة", "تحذيرات في السيارة", "تحذيرًا في السيارة"],
+        warningsSub : "اضغط لعرض دليل التحذيرات",
+        fuel : "متوسط الاستهلاك",
+        fuelUnits : { l100 : "لتر/١٠٠ كم", kml : "كم/لتر", mpg : "ميل/غالون" },
         serviceDue : "الصيانة مستحقة",
-        serviceAlso : "والصيانة مستحقة",
+        serviceNext : "الصيانة القادمة",
         noService : "لا صيانة مستحقة",
-        serviceOnlySub : "لا تحذيرات · اضغط للتفاصيل",
+        serviceUnknown : "تظهر المواعيد بعد فتح شاشة الصيانة",
+        serviceTap : "اضغط للتفاصيل",
+        serviceIn : "بعد",
+        km : "كم",
+        miles : "ميل",
+        monthCount : ["شهر", "شهران", "أشهر", "شهرًا"],
+        dayCount : ["يوم", "يومان", "أيام", "يومًا"],
+        oil : "زيت",
         call : "مكالمة جارية",
         callSub : "اضغط للعودة",
         phoneFallback : "الجوال",
@@ -58,17 +66,10 @@ var HOME2_TEXT = {
         noNews : "لا مكالمات أو رسائل جديدة",
         missed : ["مكالمة فائتة", "مكالمتان فائتتان", "مكالمات فائتة", "مكالمة فائتة"],
         texts : ["رسالة جديدة", "رسالتان جديدتان", "رسائل جديدة", "رسالة جديدة"],
-        sources : { FMRadio : "راديو FM", AMRadio : "راديو AM", DAB : "راديو DAB", USB_A : "USB", USB_B : "USB",
-                    BTAudio : "صوت بلوتوث", AndroidAuto : "أندرويد أوتو", CarPlay : "كاربلاي", AuxIn : "AUX", CD : "CD" },
-        sourceOther : "الوسائط",
-        playing : "يعمل الآن",
-        paused : "متوقف مؤقتًا",
-        audioOff : "الصوت متوقف",
-        audioOffSub : "اضغط لاختيار مصدر",
         sep : " · ",
         am : "ص",
         pm : "م",
-        days : ["الأحد", "الاثنين", "الثلاثاء", "الأربعاء", "الخميس", "الجمعة", "السبت"],
+        weekdays : ["الأحد", "الاثنين", "الثلاثاء", "الأربعاء", "الخميس", "الجمعة", "السبت"],
         months : ["يناير", "فبراير", "مارس", "أبريل", "مايو", "يونيو", "يوليو", "أغسطس", "سبتمبر", "أكتوبر", "نوفمبر", "ديسمبر"],
         hijriMonths : ["محرم", "صفر", "ربيع الأول", "ربيع الآخر", "جمادى الأولى", "جمادى الآخرة", "رجب", "شعبان", "رمضان", "شوال", "ذو القعدة", "ذو الحجة"],
         hijriSuffix : " هـ",
@@ -79,15 +80,23 @@ var HOME2_TEXT = {
         androidauto : "Android Auto",
         carplay : "Apple CarPlay",
         phoneSub : "Connected · tap to open",
-        parked : "Parked",
-        driving : "Driving",
         carOk : "Car is OK",
-        carOkSub : "No warnings · no service due",
+        noWarnings : "No warnings",
         warnings : ["1 warning", "2 warnings", "warnings", "warnings"],
+        warningsSub : "Tap for warning guidance",
+        fuel : "Average",
+        fuelUnits : { l100 : "L/100km", kml : "km/L", mpg : "mpg" },
         serviceDue : "Service due",
-        serviceAlso : "and service is due",
+        serviceNext : "Next service",
         noService : "No service due",
-        serviceOnlySub : "No warnings · tap for details",
+        serviceUnknown : "Details appear after opening Maintenance",
+        serviceTap : "Tap for details",
+        serviceIn : "in",
+        km : "km",
+        miles : "mi",
+        monthCount : ["1 month", "2 months", "months", "months"],
+        dayCount : ["1 day", "2 days", "days", "days"],
+        oil : "Oil",
         call : "Call in progress",
         callSub : "tap to return",
         phoneFallback : "Phone",
@@ -95,17 +104,10 @@ var HOME2_TEXT = {
         noNews : "No new calls or messages",
         missed : ["1 missed call", "2 missed calls", "missed calls", "missed calls"],
         texts : ["1 new message", "2 new messages", "new messages", "new messages"],
-        sources : { FMRadio : "FM radio", AMRadio : "AM radio", DAB : "DAB radio", USB_A : "USB", USB_B : "USB",
-                    BTAudio : "Bluetooth audio", AndroidAuto : "Android Auto", CarPlay : "CarPlay", AuxIn : "AUX", CD : "CD" },
-        sourceOther : "Media",
-        playing : "Playing",
-        paused : "Paused",
-        audioOff : "Audio off",
-        audioOffSub : "Tap to choose a source",
         sep : " · ",
         am : "AM",
         pm : "PM",
-        days : ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"],
+        weekdays : ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"],
         months : ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"],
         hijriMonths : ["Muharram", "Safar", "Rabi al-Awwal", "Rabi al-Thani", "Jumada al-Awwal", "Jumada al-Thani", "Rajab", "Shaban", "Ramadan", "Shawwal", "Dhu al-Qadah", "Dhu al-Hijjah"],
         hijriSuffix : " AH",
@@ -113,9 +115,6 @@ var HOME2_TEXT = {
     }
 };
 
-// Media row chip for each audio source the system app reports.
-var HOME2_SOURCE_CHIP = { FMRadio : "radio", AMRadio : "radio", DAB : "radio", USB_A : "usb", USB_B : "usb",
-                          BTAudio : "btaudio", AndroidAuto : "aa", CarPlay : "cp" };
 
 /* ---------- constructor ---------- */
 function MainMenuCtrl(uiaId, parentDiv, controlId, properties)
@@ -142,9 +141,9 @@ function MainMenuCtrl(uiaId, parentDiv, controlId, properties)
     this._items =
     [
         { key : "phone", nameId : null },
-        { key : "app",   nameId : null, row : "car" },     // opens Applications (warnings, maintenance)
+        { key : "app",   nameId : null, row : "car" },     // opens Applications (warning guidance, fuel economy)
         { key : "com",   nameId : null, row : "phone" },   // opens Communication (active call, call history, SMS)
-        { key : "ent",   nameId : null, row : "media" },   // opens Entertainment
+        { key : "app",   nameId : null, row : "maint" },   // opens Applications (maintenance)
         { key : "nav",   nameId : "NavigationTitle" },
         { key : "ent",   nameId : "Entertainment" },
         { key : "com",   nameId : "Communication" },
@@ -266,18 +265,15 @@ MainMenuCtrl.prototype.createStructure = function()
     this._dateEl = this._el("div", "H2Date", clock, "");
     this._hijriEl = this._el("div", "H2Hijri", clock, "");
 
-    // Driving / parked chip and the Android Auto / CarPlay pill, side by side under the date
+    // Android Auto / CarPlay pill under the date
     var line = this._el("div", "H2StatusLine", this.divElt);
-    this._driveEl = this._el("div", "H2Drive H2Parked", line);
-    this._el("span", "H2DriveIcon", this._driveEl);
-    this._driveText = this._el("span", "H2DriveText", this._driveEl, this._text.parked);
     var pill = this._el("div", "H2Card H2Pill", line);
     this._pillChip = this._el("div", "H2PillChip", pill);
     this._pillTitle = this._el("div", "H2PillTitle", pill, "");
     this._el("div", "H2PillSub", pill, this._text.phoneSub);
     this._items[0].div = pill;
 
-    // Status card: car, phone, media
+    // Status card: car, phone, maintenance
     var card = this._el("div", "H2Glance", this.divElt);
     this._el("div", "H2Rule H2Rule1", card);
     this._el("div", "H2Rule H2Rule2", card);
@@ -289,14 +285,7 @@ MainMenuCtrl.prototype.createStructure = function()
         item.title = this._el("div", "H2RowTitle", row, "");
         item.sub = this._el("div", "H2RowSub", row, "");
         item.badge = this._el("div", "H2Badge H2RowBadge", row, "");
-        if (item.row === "media")
-        {
-            var eq = this._el("div", "H2Eq", row);
-            this._el("div", "H2EqBar H2EqBar1", eq);
-            this._el("div", "H2EqBar H2EqBar2", eq);
-            this._el("div", "H2EqBar H2EqBar3", eq);
-            item.eq = eq;
-        }
+        item.end = this._el("div", "H2RowEnd", row, "");
         item.div = row;
     }
 
@@ -435,7 +424,7 @@ MainMenuCtrl.prototype._updateClock = function()
     this._setText(this._ampmEl, ampm);
 
     var t = this._text;
-    var dateStr = t.days[now.getDay()] + t.dateSep + now.getDate() + " " + t.months[now.getMonth()];
+    var dateStr = t.weekdays[now.getDay()] + t.dateSep + now.getDate() + " " + t.months[now.getMonth()];
     this._setText(this._dateEl, this._digits(dateStr));
 
     var hj = (typeof Home2Hijri !== "undefined") ? Home2Hijri.fromDate(now) : null;
@@ -477,75 +466,72 @@ MainMenuCtrl.prototype._labelCount = function(item)
     return isNaN(n) ? 0 : n;
 };
 
-// Two status messages are not kept by the system app in a form we can read back:
-// on firmware 74 its active-call handler never sets the Active Call item (its check can
-// never be true), and the audio message only leaves a "now playing" icon while playing.
-// Observe both messages on their way to the system app's own handlers, which still run.
+// The system app does not keep the active call in a form we can read back: on firmware 74 its
+// active-call handler never sets the Active Call item (its check can never be true). Observe the
+// message on its way to the system app's own handler, which still runs.
 MainMenuCtrl.prototype._hookSystemMessages = function()
 {
     var app = this._sysApp();
     if (!app || !app._messageTable || app._messageTable._home2Hooked) { return; }
 
-    function observe(msgId, record)
+    var original = app._messageTable.StatusPhoneCall;
+    app._messageTable.StatusPhoneCall = function(msg)
     {
-        var original = app._messageTable[msgId];
-        app._messageTable[msgId] = function(msg)
+        try
         {
-            try { record(msg && msg.params ? msg.params.payload : null); } catch (e) {}
-            if (typeof original === "function") { return original(msg); }
-        };
-    }
-
-    observe("StatusPhoneCall", function(p)
-    {
-        if (p && p.phoneCallStatus)
-        {
-            HOME2_LIVE.call = (p.phoneCallStatus === "ActiveCall" || p.phoneCallStatus === "Connecting");
-        }
-    });
-    observe("StatusUpdateAudioSource", function(p)
-    {
-        if (p && p.statusAudio && p.statusAudio.audioSource)
-        {
-            var src = p.statusAudio.audioSource;
-            if (src === "CarPlayWifi") { src = "CarPlay"; }
-            var playing = (p.statusAudio.audioActive === "Play");
-            var live = HOME2_LIVE;
-            if (playing)
+            var p = msg && msg.params ? msg.params.payload : null;
+            if (p && p.phoneCallStatus)
             {
-                live.audioSource = src;
-                live.audioPlaying = true;
-                live.audioPending = null;
-            }
-            else if (src === live.audioSource)
-            {
-                // The current source stopped. If another source was chosen meanwhile, it is current now.
-                live.audioPlaying = false;
-                if (live.audioPending)
-                {
-                    live.audioSource = live.audioPending;
-                    live.audioPending = null;
-                }
-            }
-            else if (!live.audioPlaying)
-            {
-                live.audioSource = src;
-            }
-            else
-            {
-                // Messages can arrive in either order when switching sources: this one is either the
-                // new source (paused) or an old one switching off. Decide when the playing source stops.
-                live.audioPending = src;
+                HOME2_LIVE.call = (p.phoneCallStatus === "ActiveCall" || p.phoneCallStatus === "Connecting");
             }
         }
-    });
+        catch (e) {}
+        if (typeof original === "function") { return original(msg); }
+    };
     app._messageTable._home2Hooked = true;
 };
 
 MainMenuCtrl.prototype._emptyStatus = function()
 {
-    return { phone : "none", warnings : 0, service : false, missed : 0, texts : 0, call : false,
-             btName : "", audioSource : "", audioPlaying : false, driving : false };
+    return { phone : "none", warnings : 0, service : false, missed : 0, texts : 0, call : false, btName : "",
+             fuel : "", fuelUnit : "", maintKnown : false, maintDist : 0, maintTime : 0, maintTimeUnit : "",
+             oil : -1, miles : false };
+};
+
+// Numbers kept by Mazda's own apps once they have loaded (they get their data from the car then).
+// Fuel economy: the ecoenergy app's trip average. Maintenance: the schedmaint app's "due in" values.
+MainMenuCtrl.prototype._readCarApps = function(s)
+{
+    var apps = framework._appInstances || {};
+    try
+    {
+        var eco = apps.ecoenergy;
+        var fe = eco && eco._cached_fuelEfficiencyData;
+        if (fe && fe.fuelEfficiency !== null && fe.fuelEfficiency !== undefined && fe.fuelEfficiency !== "")
+        {
+            s.fuel = String(fe.fuelEfficiency);
+            var u = String(fe.fuelEfficiencyUnit || "").toLowerCase();
+            s.fuelUnit = (u.indexOf("mpg") !== -1) ? "mpg" : ((u.indexOf("100") !== -1) ? "l100" : "kml");
+        }
+    }
+    catch (e) {}
+    try
+    {
+        var sm = apps.schedmaint;
+        if (sm)
+        {
+            var dist = parseInt(sm._schedmaintDistance, 10);
+            var time = parseInt(sm._schedmaintTime, 10);
+            var oil = parseInt(sm._oilDeteriorationLevel, 10);
+            s.maintDist = (dist > 0) ? dist : 0;
+            s.maintTime = (time > 0) ? time : 0;
+            s.maintTimeUnit = (sm._timeUnit === "days") ? "days" : "months";
+            s.oil = (oil >= 0 && oil <= 100) ? oil : -1;
+            s.miles = (String(sm._distanceUnit || "").toLowerCase().indexOf("mile") !== -1);
+            s.maintKnown = (s.maintDist > 0 || s.maintTime > 0 || s.oil >= 0);
+        }
+    }
+    catch (e2) {}
 };
 
 MainMenuCtrl.prototype._readPhoneState = function(app)
@@ -595,8 +581,7 @@ MainMenuCtrl.prototype._readStatus = function()
     var s = this._emptyStatus();
     var app = this._sysApp();
     s.phone = this._readPhoneState(app);
-
-    try { s.driving = (framework.common.getAtSpeedValue() === true); } catch (e) {}
+    this._readCarApps(s);
 
     if (!app) { return s; }
     try
@@ -612,41 +597,22 @@ MainMenuCtrl.prototype._readStatus = function()
         var active = this._findItem(comm, "SelectActiveCall");
         s.call = (HOME2_LIVE.call === true) || (HOME2_LIVE.call === null && active && active.appData.isVisible === true) || false;
 
-        // Entertainment list: the Bluetooth phone's name, and the source with the "now playing" icon.
-        var ent = app._masterEntertainmentDataList;
-        var bt = this._findItem(ent, "SelectBTAudio");
+        // Entertainment list: the Bluetooth phone's name.
+        var bt = this._findItem(app._masterEntertainmentDataList, "SelectBTAudio");
         if (bt && bt.text1SubMap && typeof bt.text1SubMap.deviceName === "string")
         {
             s.btName = bt.text1SubMap.deviceName;
         }
-        if (ent && ent.items)
-        {
-            for (var i = 0; i < ent.items.length; i++)
-            {
-                var it = ent.items[i];
-                if (it.image1 && String(it.image1).indexOf("NowPlaying") !== -1 && it.appData)
-                {
-                    s.audioSource = it.appData.audioSourceId === "CarPlayWifi" ? "CarPlay" : it.appData.audioSourceId;
-                    s.audioPlaying = true;
-                    break;
-                }
-            }
-        }
     }
     catch (e2) {}
-
-    if (HOME2_LIVE.audioSource)
-    {
-        s.audioSource = HOME2_LIVE.audioSource;
-        s.audioPlaying = HOME2_LIVE.audioPlaying;
-    }
     return s;
 };
 
 MainMenuCtrl.prototype._pollStatus = function()
 {
     var s = this._readStatus();
-    var key = [s.phone, s.warnings, s.service, s.missed, s.texts, s.call, s.btName, s.audioSource, s.audioPlaying, s.driving].join("|");
+    var key = [s.phone, s.warnings, s.service, s.missed, s.texts, s.call, s.btName, s.fuel, s.fuelUnit,
+               s.maintDist, s.maintTime, s.maintTimeUnit, s.oil, s.miles].join("|");
     if (key !== this._statusKey)
     {
         this._statusKey = key;
@@ -696,33 +662,27 @@ MainMenuCtrl.prototype._applyStatus = function(s)
         if (this._prvFocus === 0) { this._prvFocus = this._firstDock; }
     }
 
-    // Driving / parked
-    this._driveEl.className = "H2Drive " + (s.driving ? "H2Driving" : "H2Parked");
-    this._setText(this._driveText, s.driving ? t.driving : t.parked);
-
-    // Car row
+    // Car row: warnings, and the trip's average fuel economy once Mazda's fuel economy app knows it
     var car = this._items[this._firstRow];
     var carAlert = (s.warnings > 0 || s.service);
+    var fuelText = "";
+    if (s.fuel)
+    {
+        fuelText = t.fuel + " " + this._digits(this._isArabic ? s.fuel.replace(".", "٫") : s.fuel) + " " + t.fuelUnits[s.fuelUnit];
+    }
     if (s.warnings > 0)
     {
         this._setChip(car.chip, "H2RowChip", "warn");
         this._setText(car.title, this._count(s.warnings, t.warnings));
-        this._setText(car.sub, s.service ? t.serviceAlso : t.noService);
-    }
-    else if (s.service)
-    {
-        this._setChip(car.chip, "H2RowChip", "service");
-        this._setText(car.title, t.serviceDue);
-        this._setText(car.sub, t.serviceOnlySub);
+        this._setText(car.sub, t.warningsSub);
     }
     else
     {
         this._setChip(car.chip, "H2RowChip", "ok");
         this._setText(car.title, t.carOk);
-        this._setText(car.sub, t.carOkSub);
+        this._setText(car.sub, fuelText || t.noWarnings);
     }
-    this._setClass(car.div, "H2Alert", s.warnings > 0 || s.service);
-    this._setClass(car.div, "H2AlertSub", s.warnings > 0 && s.service);
+    this._setClass(car.div, "H2Alert", s.warnings > 0);
 
     // Phone row
     var ph = this._items[this._firstRow + 1];
@@ -748,23 +708,30 @@ MainMenuCtrl.prototype._applyStatus = function(s)
         this._setBadge(ph.badge, news > 0 ? this._digits(String(news)) : "");
     }
 
-    // Media row
-    var md = this._items[this._lastRow];
-    if (s.audioSource && s.audioSource !== "None" && s.audioSource !== "Off")
+    // Maintenance row: due flag from the system app; "due in" values once the maintenance app has them
+    var mt = this._items[this._lastRow];
+    var when = [];
+    if (s.maintDist > 0) { when.push(this._digits(String(s.maintDist)) + " " + (s.miles ? t.miles : t.km)); }
+    if (s.maintTime > 0) { when.push(this._count(s.maintTime, s.maintTimeUnit === "days" ? t.dayCount : t.monthCount)); }
+    var whenText = when.length ? t.serviceIn + " " + when.join(t.sep) : "";
+    this._setChip(mt.chip, "H2RowChip", s.service ? "service" : "maint");
+    if (s.service)
     {
-        this._setChip(md.chip, "H2RowChip", HOME2_SOURCE_CHIP[s.audioSource] || "media");
-        this._setText(md.title, t.sources[s.audioSource] || t.sourceOther);
-        this._setText(md.sub, s.audioPlaying ? t.playing : t.paused);
-        this._setClass(md.div, "H2Dim", false);
+        this._setText(mt.title, t.serviceDue);
+        this._setText(mt.sub, whenText || t.serviceTap);
+    }
+    else if (whenText)
+    {
+        this._setText(mt.title, t.serviceNext);
+        this._setText(mt.sub, whenText);
     }
     else
     {
-        this._setChip(md.chip, "H2RowChip", "off");
-        this._setText(md.title, t.audioOff);
-        this._setText(md.sub, t.audioOffSub);
-        this._setClass(md.div, "H2Dim", true);
+        this._setText(mt.title, t.noService);
+        this._setText(mt.sub, s.maintKnown ? t.serviceTap : t.serviceUnknown);
     }
-    this._setClass(md.div, "H2Playing", s.audioPlaying && !!s.audioSource);
+    this._setText(mt.end, s.oil >= 0 ? t.oil + " " + this._digits(String(s.oil)) + (this._isArabic ? "٪" : "%") : "");
+    this._setClass(mt.div, "H2Alert", s.service);
 
     // Dock badges: Phone shows the unread count (or a green dot during a call); Apps flags car alerts.
     var comTile = this._items[this._firstDock + 2];
@@ -838,7 +805,7 @@ MainMenuCtrl.prototype._offsetFocus = function(direction)
     }
 };
 
-// Tilting follows the screen: in right-to-left layouts the next item is on the left.
+// Tilting and turning follow the screen: in right-to-left layouts the next item is on the left.
 MainMenuCtrl.prototype._tiltDirection = function(direction)
 {
     return this._isRtl ? -direction : direction;
@@ -1011,12 +978,14 @@ MainMenuCtrl.prototype.handleControllerEvent = function(eventId)
             this._setHighlight(this._focus);
             break;
 
+        // Turning follows the screen too: in Arabic the items run right to left, so turning left
+        // moves focus to the left (the next item) and turning right moves it to the right.
         case "ccw":
-            if (this._allowInput) { this._offsetFocus(-1); }
+            if (this._allowInput) { this._offsetFocus(this._tiltDirection(-1)); }
             break;
 
         case "cw":
-            if (this._allowInput) { this._offsetFocus(1); }
+            if (this._allowInput) { this._offsetFocus(this._tiltDirection(1)); }
             break;
 
         case "leftStart":

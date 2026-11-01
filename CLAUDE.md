@@ -2,9 +2,9 @@
 
 A custom home screen ("Ember Glass") for Mazda Connect 1. Owner: Hussain (HMubaireek). His car is a
 **2019 Mazda CX-9, Saudi market, firmware 74.00.333A 4A N (ADR)**, system language **Arabic**.
-v1.0.4 is installed and confirmed working in the car (31 Oct 2026). v1.1.0 ("Ember Glance" layout, live status card)
-and v1.2.0/v1.2.1 (+ "Floating Pills" system skin for Mazda's screens, every language) were built and tested on
-31 Oct 2026 but are not yet confirmed in the car. Read this whole file before changing anything.
+v1.0.4 ran in the car on 31 Oct 2026. v1.2.1 (Ember Glance home + "Floating Pills" skin) was installed on 1 Nov 2026;
+his photos showed the bugs fixed in v1.3.0 (camera/map hidden, menus not RTL, unstyled screens). v1.3.0 is built and
+tested but not yet confirmed in the car. Read this whole file before changing anything.
 
 ## What the owner wants
 - Arabic first, right-to-left, Arabic-Indic digits, Hijri (Umm al-Qura) date under the Gregorian date.
@@ -74,6 +74,23 @@ All read from the system app instance `framework._appInstances.system` without c
 - Skin test: `preview/skin.html` + `tests/browser/skin.mjs` need Mazda's CSS in `preview/mazda/` (git-ignored, Mazda's
   files): `sh tools/copy_mazda_preview.sh <extracted jci/gui>`. The firmware extraction lives only in a session
   scratchpad: re-extract from the .up (rootfs1/e0000000001.dat.gz is gzip inside gzip: `gzip -dc | gzip -dc | tar`).
+
+## v1.3.0 lessons (from his photos, 1 Nov 2026)
+- **Never cover video screens.** Map, reversing camera, Android Auto and CarPlay set `customBgImage` =
+  `common/images/FullTransparent.png` (or "none") on `.CommonBgImg` as an inline style; an `!important` background
+  hid the camera. The skin keeps `.CommonBgImg[style*="FullTransparent"], [style*="none"]` at `background-image: none`.
+- The car's browser does **not clip children to border-radius**: rounded containers need rounded focus images.
+- Arabic RTL for Mazda's absolutely positioned rows/alerts: flip the row/box with `scaleX(-1)` and flip each child
+  back (`-o-transform` + `transform`); the caret is flipped once. Touch still works.
+- The knob's turn (cw/ccw) must be mirrored in RTL on the home screen like tilt (he reported it reversed).
+- `Global.AtSpeed` is never sent in his car (GCC), so driving/parked can't be shown. Fuel range, odometer: not available.
+- Fuel economy: `framework._appInstances.ecoenergy._cached_fuelEfficiencyData.fuelEfficiency`. Maintenance "due in":
+  `framework._appInstances.schedmaint._schedmaintDistance`, `._schedmaintTime` (+ `_timeUnit` months/days),
+  `._oilDeteriorationLevel` (oil life %). Only filled once those apps have loaded with car data.
+- Mazda control images are redrawn at their exact size from `tools/skin_controls.json` (sizes, covered area, kind,
+  selectors; made by `tools/extract_skin_table.py` from the firmware). `src/skin/controls.generated.css` is generated;
+  build.sh appends it to home2skin.css. Shared selectors: pressed/focus/selected rules are written last.
+- Mute box = `WinkCtrl` (`Notification_BG.png` + inline `IcnWinkMute.png`/`IcnWinkUnMute.png`).
 
 ## Repo layout
 - `src/launcher/MainMenuCtrl.js` (+ `hijri.js`, generated) — the launcher; `MainMenuCtrl.css`, `MainMenuCtrl_rtl.css`.

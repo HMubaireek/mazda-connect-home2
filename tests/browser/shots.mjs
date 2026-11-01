@@ -10,7 +10,8 @@ page.on('pageerror', e => console.log('PAGE ERROR', e.message));
 page.on('console', m => { if (m.type() === 'error' && !m.text().includes('ERR_FILE_NOT_FOUND')) console.log('CONSOLE', m.text()); });
 
 const BT = encodeURIComponent('جوال حسين');
-const BUSY = 'warnings=2&service=1&missed=3&texts=1&bt=' + BT + '&source=FMRadio';
+const BUSY = 'warnings=2&service=1&missed=3&texts=1&bt=' + BT + '&maintkm=3200&maintmonths=4&oil=75';
+const CALM = 'fuel=10.4&maintkm=3200&maintmonths=4&oil=75';
 
 async function shot(qs, file) {
   await page.goto(base + '?' + qs, { waitUntil: 'load' });
@@ -23,11 +24,11 @@ async function shot(qs, file) {
 }
 
 await shot('lang=ar_SA&phone=androidauto&fmt=12hrs&focus=4&' + BUSY, 'shot_ar_glance.png');
-await shot('lang=ar_SA&phone=carplay&fmt=12hrs&focus=2&driving=1&call=1&warnings=1&missed=3&texts=1&bt=' + BT + '&source=BTAudio&playing=0', 'shot_ar_drive_call.png');
-await shot('lang=ar_SA&phone=none&fmt=12hrs&focus=5&bt=' + BT + '&source=USB_A', 'shot_ar_allclear.png');
+await shot('lang=ar_SA&phone=carplay&fmt=12hrs&focus=2&call=1&warnings=1&missed=3&texts=1&bt=' + BT + '&' + CALM, 'shot_ar_drive_call.png');
+await shot('lang=ar_SA&phone=none&fmt=12hrs&focus=5&bt=' + BT + '&' + CALM, 'shot_ar_allclear.png');
 await shot('lang=en_US&phone=androidauto&fmt=12hrs&focus=4&' + BUSY.replace(BT, 'Hussain%27s%20phone'), 'shot_en_glance.png');
-await shot('lang=en_US&phone=carplay&fmt=12hrs&focus=2&driving=1&call=1&warnings=1&missed=3&texts=1&bt=Hussain%27s%20phone&source=BTAudio&playing=0', 'shot_en_drive_call.png');
-await shot('lang=en_US&phone=none&fmt=12hrs&focus=5&bt=Hussain%27s%20phone&source=USB_A', 'shot_en_allclear.png');
+await shot('lang=en_US&phone=carplay&fmt=12hrs&focus=2&call=1&warnings=1&missed=3&texts=1&bt=Hussain%27s%20phone&' + CALM, 'shot_en_drive_call.png');
+await shot('lang=en_US&phone=none&fmt=12hrs&focus=5&bt=Hussain%27s%20phone&' + CALM, 'shot_en_allclear.png');
 
 // ---- behaviour checks ----
 async function state() {
@@ -49,7 +50,7 @@ function expect(name, got, want) {
   console.log((ok ? 'PASS ' : 'FAIL ') + name + ' -> ' + JSON.stringify(got) + (ok ? '' : ' (want ' + JSON.stringify(want) + ')'));
 }
 
-// Items: 0 pill, 1 car row, 2 phone row, 3 media row, 4 Navigation, 5 Media, 6 Phone, 7 Settings, 8 Apps.
+// Items: 0 pill, 1 car row, 2 phone row, 3 maintenance row, 4 Navigation, 5 Media, 6 Phone, 7 Settings, 8 Apps.
 // English, phone connected: knob order and up/down
 await page.goto(base + '?lang=en_US&phone=androidauto', { waitUntil: 'load' });
 expect('en start on pill', (await state()).focus, 0);
@@ -60,21 +61,23 @@ await key('Enter'); expect('en select pill', (await state()).log, 'sendEventToMm
 await wait(1100);
 await key('ArrowDown'); await key('ArrowDown'); await key('ArrowDown');
 expect('en down through the card', (await state()).focus, 3);
-await key('ArrowDown'); expect('en down from media row -> dock', (await state()).focus, 4);
+await key('ArrowDown'); expect('en down from maintenance row -> dock', (await state()).focus, 4);
 await key('ArrowDown'); expect('en down in dock stays', (await state()).focus, 4);
 await key('ArrowRight'); await key('ArrowRight');
-await key('ArrowUp'); expect('en up from dock -> media row', (await state()).focus, 3);
-await key('Enter'); expect('en select media row', (await state()).log, 'selectCallback icon=ent');
+await key('ArrowUp'); expect('en up from dock -> maintenance row', (await state()).focus, 3);
+await key('Enter'); expect('en select maintenance row -> Applications', (await state()).log, 'selectCallback icon=app');
 await wait(1100);
 for (let i = 0; i < 10; i++) await key(']');
 expect('en clamp at end', (await state()).focus, 8);
 await key('Enter'); expect('en select Apps', (await state()).log, 'selectCallback icon=app');
 await wait(1100);
 
-// Arabic: tilt is mirrored
+// Arabic: tilting and turning are mirrored (the items run right to left)
 await page.goto(base + '?lang=ar_SA&phone=carplay', { waitUntil: 'load' });
-await key(']'); await key(']');
-await key('ArrowRight'); expect('ar tilt right (mirrored)', (await state()).focus, 1);
+await key('['); await key('[');
+expect('ar turn left moves to the next item (left)', (await state()).focus, 2);
+await key(']'); expect('ar turn right moves back (right)', (await state()).focus, 1);
+await key('['); await key('ArrowRight'); expect('ar tilt right (mirrored)', (await state()).focus, 1);
 await key('ArrowLeft'); expect('ar tilt left (mirrored)', (await state()).focus, 2);
 expect('ar pill title', await text('.H2PillTitle'), 'آبل كاربلاي');
 
@@ -102,16 +105,16 @@ await wait(1100);
 // Status card, Arabic, everything showing
 await page.goto(base + '?lang=ar_SA&phone=androidauto&' + BUSY, { waitUntil: 'load' });
 expect('ar car title (2 warnings)', await text('.H2Row1 .H2RowTitle'), 'تحذيران في السيارة');
-expect('ar car sub (service due too)', await text('.H2Row1 .H2RowSub'), 'والصيانة مستحقة');
+expect('ar car sub (warnings)', await text('.H2Row1 .H2RowSub'), 'اضغط لعرض دليل التحذيرات');
 expect('ar phone title = Bluetooth name', await text('.H2Row2 .H2RowTitle'), 'جوال حسين');
 expect('ar phone sub (missed + texts)', await text('.H2Row2 .H2RowSub'), '٣ مكالمات فائتة · رسالة جديدة');
 expect('ar phone row badge', await text('.H2Row2 .H2RowBadge'), '٤');
 expect('ar Phone tile badge', await text('.H2Dock3 .H2DockBadge'), '٤');
 expect('ar Apps tile flags the car', await text('.H2Dock5 .H2DockBadge'), '!');
-expect('ar media title', await text('.H2Row3 .H2RowTitle'), 'راديو FM');
-expect('ar media playing', await text('.H2Row3 .H2RowSub'), 'يعمل الآن');
-expect('ar playing bars shown', await shown('.H2Row3 .H2Eq'), true);
-expect('ar parked', await text('.H2DriveText'), 'متوقفة');
+expect('ar maintenance due', await text('.H2Row3 .H2RowTitle'), 'الصيانة مستحقة');
+expect('ar maintenance due in', await text('.H2Row3 .H2RowSub'), 'بعد ٣٢٠٠ كم · ٤ أشهر');
+expect('ar oil life', await text('.H2Row3 .H2RowEnd'), 'زيت ٧٥٪');
+expect('ar no parked chip any more', await page.evaluate(() => document.querySelector('.H2Drive') === null), true);
 
 // Live changes, the way the car sends them
 await live({ call: true });
@@ -121,27 +124,22 @@ expect('call: green dot on Phone tile', await text('.H2Dock3 .H2DockBadge'), '�
 expect('call: stock handler still runs', await page.evaluate(() => sysApp._handled > 0), true);
 await live({ call: false });
 expect('call ended', await text('.H2Row2 .H2RowTitle'), 'جوال حسين');
-await live({ driving: true });
-expect('driving', await text('.H2DriveText'), 'أثناء القيادة');
 await live({ warnings: 0, service: false });
 expect('all clear', await text('.H2Row1 .H2RowTitle'), 'السيارة سليمة');
+expect('all clear: no warnings line', await text('.H2Row1 .H2RowSub'), 'لا تحذيرات');
 expect('all clear: no Apps flag', await shown('.H2Dock5 .H2DockBadge'), false);
+expect('next service', [await text('.H2Row3 .H2RowTitle'), await text('.H2Row3 .H2RowSub')], ['الصيانة القادمة', 'بعد ٣٢٠٠ كم · ٤ أشهر']);
+await live({ fuel: '10.4' });
+expect('fuel economy on the car row', await text('.H2Row1 .H2RowSub'), 'متوسط الاستهلاك ١٠٫٤ لتر/١٠٠ كم');
 await live({ service: true });
-expect('service only', await text('.H2Row1 .H2RowTitle'), 'الصيانة مستحقة');
+expect('service due flag', await text('.H2Row3 .H2RowTitle'), 'الصيانة مستحقة');
+expect('service due: Apps flag', await text('.H2Dock5 .H2DockBadge'), '!');
 await live({ warnings: 11 });
 expect('11 warnings wording', await text('.H2Row1 .H2RowTitle'), '١١ تحذيرًا في السيارة');
-await live({ warnings: 1, service: false });
+await live({ warnings: 1, service: false, maintkm: 0, maintmonths: 1, oil: 40 });
 expect('1 warning wording', await text('.H2Row1 .H2RowTitle'), 'تحذير واحد في السيارة');
-expect('1 warning sub', await text('.H2Row1 .H2RowSub'), 'لا صيانة مستحقة');
-await live({ source: 'BTAudio', playing: false });
-expect('paused source', [await text('.H2Row3 .H2RowTitle'), await text('.H2Row3 .H2RowSub')], ['صوت بلوتوث', 'متوقف مؤقتًا']);
-expect('paused: no bars', await shown('.H2Row3 .H2Eq'), false);
-await page.evaluate(() => { sendMsg('StatusUpdateAudioSource', { statusAudio: { audioSource: 'BTAudio', audioActive: 'Off' } });
-                            sendMsg('StatusUpdateAudioSource', { statusAudio: { audioSource: 'USB_A', audioActive: 'Pause' } }); });
-await wait(1200);
-expect('switch with Off first', await text('.H2Row3 .H2RowTitle'), 'USB');
-await live({ source: 'AndroidAuto', playing: true });
-expect('Android Auto audio', [await text('.H2Row3 .H2RowTitle'), await text('.H2Row3 .H2RowSub')], ['أندرويد أوتو', 'يعمل الآن']);
+expect('one month wording', await text('.H2Row3 .H2RowSub'), 'بعد شهر');
+expect('oil updates', await text('.H2Row3 .H2RowEnd'), 'زيت ٤٠٪');
 await live({ missed: 0, texts: 0 });
 expect('no news', await text('.H2Row2 .H2RowSub'), 'لا مكالمات أو رسائل جديدة');
 expect('no news: no badge', await shown('.H2Dock3 .H2DockBadge'), false);
@@ -157,11 +155,16 @@ await page.evaluate(() => { framework.common._remoteUiBtns.system = { appName: '
 await wait(1200);
 expect('pill back when phone connects', await shown('.H2Pill'), true);
 
-// No audio, English wording
+// Before the maintenance app has data, English wording
 await page.goto(base + '?lang=en_US&phone=none&missed=3&texts=12&bt=Pixel', { waitUntil: 'load' });
-expect('en no audio', await text('.H2Row3 .H2RowTitle'), 'Audio off');
+expect('en maintenance before data', [await text('.H2Row3 .H2RowTitle'), await text('.H2Row3 .H2RowSub')], ['No service due', 'Details appear after opening Maintenance']);
+expect('en no oil value yet', await text('.H2Row3 .H2RowEnd'), '');
 expect('en counts', await text('.H2Row2 .H2RowSub'), '3 missed calls · 12 new messages');
 expect('en car ok', await text('.H2Row1 .H2RowTitle'), 'Car is OK');
+await live({ fuel: '8.2', maintkm: 1500, maintmonths: 2, oil: 60 });
+expect('en fuel', await text('.H2Row1 .H2RowSub'), 'Average 8.2 L/100km');
+expect('en next service', await text('.H2Row3 .H2RowSub'), 'in 1500 km · 2 months');
+expect('en oil', await text('.H2Row3 .H2RowEnd'), 'Oil 60%');
 
 // Rebuilding the home screen does not wrap the system app's handlers twice
 await page.evaluate(() => {

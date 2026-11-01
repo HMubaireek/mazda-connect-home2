@@ -45,6 +45,53 @@ html body .StatusBarCtrlIconContainer {
   margin: 10px 8px 0px 0px !important;
 }
 
+
+/* Alerts: mirrored (icon on the right, text after it, read right to left). The box is flipped and each
+   part flipped back, so the parts swap sides but read normally. */
 html body .SbnCtrl {
   left: 130px !important;
+  -o-transform: scaleX(-1);
+  transform: scaleX(-1);
+}
+
+html body .SbnCtrl > div {
+  -o-transform: scaleX(-1);
+  transform: scaleX(-1);
+}
+
+html body .SbnCtrl > div[class*="Text"] {
+  text-align: right !important;
+  direction: rtl !important;
+}
+
+/* Menus: rows mirrored the same way, so text sits on the right and switches, values and checkboxes
+   on the left. The caret is flipped only once, so it points left. */
+html body .List2Ctrl .ListItem {
+  -o-transform: scaleX(-1);
+  transform: scaleX(-1);
+}
+
+html body .List2Ctrl .ListItem > * {
+  -o-transform: scaleX(-1);
+  transform: scaleX(-1);
+}
+
+html body .List2Ctrl .ListItem > .caret {
+  -o-transform: none;
+  transform: none;
+}
+
+html body .List2Ctrl .ListItem .line1,
+html body .List2Ctrl .ListItem .line2 {
+  text-align: right !important;
+}
+
+html body .List2CtrlTitle,
+html body .List2CtrlTitle * {
+  text-align: right !important;
+}
+
+html body .List2CtrlScrollIndicatorWrapper {
+  right: auto !important;
+  left: 34px !important;
 }

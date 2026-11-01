@@ -9,9 +9,9 @@
     lang  : ar_SA | en_US | fr_FR ...
     phone : none | androidauto | carplay
     fmt   : 12hrs | 24hrs
-    warnings=N  service=1  missed=N  texts=N  call=1  bt=<phone name>  source=FMRadio|USB_A|BTAudio|AndroidAuto|CarPlay|none
-    playing=0|1  driving=1
-  Live changes from the console: setStatus({warnings: 1, call: true, driving: true, ...})
+    warnings=N  service=1  missed=N  texts=N  call=1  bt=<phone name>
+    fuel=10.4 (trip average, as the fuel economy app keeps it)  maintkm=3200  maintmonths=4  oil=75 (as the maintenance app keeps them)
+  Live changes from the console: setStatus({warnings: 1, call: true, fuel: "9.8", maintkm: 1500, ...})
   Keys: ← → tilt, [ ] rotate, ↑ ↓ up/down, Enter press.  Mouse = touch.
 -->
 <style>
@@ -65,15 +65,15 @@
       { appData: { mmuiEvent: "SelectUSBA", audioSourceId: "USB_A" }, image1: "" } ] },
     _handled: 0,     // how many messages reached the system app's own handlers
     _messageTable: {
-      StatusPhoneCall: function() { sysApp._handled++; },
-      StatusUpdateAudioSource: function() { sysApp._handled++; }
+      StatusPhoneCall: function() { sysApp._handled++; }
     }
   };
-  var atSpeed = false;
-  var curSource = "";
+  // Stand-ins for Mazda's fuel economy and maintenance apps, holding what they keep once they have loaded.
+  var ecoApp = { _cached_fuelEfficiencyData: { fuelEfficiency: null, fuelEfficiencyUnit: "L100km" } };
+  var maintApp = { _schedmaintDistance: 0, _schedmaintTime: 0, _timeUnit: "months", _oilDeteriorationLevel: 0, _distanceUnit: "Kilometers" };
   function item(list, ev) { return list.items.filter(function(i) { return i.appData.mmuiEvent === ev; })[0]; }
   function sendMsg(msgId, payload) { sysApp._messageTable[msgId]({ msgId: msgId, params: { payload: payload } }); }
-  // Apply status the way the car delivers it: list labels for counts, messages for call and audio.
+  // Apply status the way the car delivers it: list labels for counts, a message for the call, app fields for the rest.
   function setStatus(o) {
     var a = sysApp;
     if ("warnings" in o) { item(a._masterApplicationDataList, "SelectWarnGuide").label1 = o.warnings ? String(o.warnings) : ""; }
@@ -81,17 +81,13 @@
     if ("missed" in o) { item(a._communicationsDataList, "SelectCallHistory").label1 = o.missed ? String(o.missed) : ""; }
     if ("texts" in o) { item(a._communicationsDataList, "SelectSms").label1 = o.texts ? String(o.texts) : ""; }
     if ("bt" in o) { item(a._masterEntertainmentDataList, "SelectBTAudio").text1SubMap = o.bt ? { deviceName: o.bt } : null; }
-    if ("driving" in o) { atSpeed = !!o.driving; }
     if ("call" in o) { sendMsg("StatusPhoneCall", { phoneCallStatus: o.call ? "ActiveCall" : "Idle" }); }
-    if ("source" in o) {
-      var playing = ("playing" in o) ? !!o.playing : true;
-      a._masterEntertainmentDataList.items.forEach(function(i) {
-        i.image1 = (playing && i.appData.audioSourceId === o.source) ? "common/images/icons/IcnListEntNowPlaying_En.png" : "";
-      });
-      // Like the car: the new source's message first, then "Off" for the old one (either order happens).
-      if (o.source !== "none") { sendMsg("StatusUpdateAudioSource", { statusAudio: { audioSource: o.source, audioActive: playing ? "Play" : "Pause" } }); }
-      if (curSource && curSource !== o.source) { sendMsg("StatusUpdateAudioSource", { statusAudio: { audioSource: curSource, audioActive: "Off" } }); }
-      curSource = o.source === "none" ? "" : o.source;
+    if ("fuel" in o) { framework._appInstances.ecoenergy = ecoApp; ecoApp._cached_fuelEfficiencyData.fuelEfficiency = o.fuel || null; }
+    if ("maintkm" in o || "maintmonths" in o || "oil" in o) {
+      framework._appInstances.schedmaint = maintApp;
+      if ("maintkm" in o) { maintApp._schedmaintDistance = o.maintkm; }
+      if ("maintmonths" in o) { maintApp._schedmaintTime = o.maintmonths; }
+      if ("oil" in o) { maintApp._oilDeteriorationLevel = o.oil; }
     }
   }
 
@@ -105,7 +101,6 @@
     common: {
       _remoteUiBtns: { system: PHONE === "none" ? null : { appName: PHONE } },
       getCurrentTime: function() { return CACHED; },
-      getAtSpeedValue: function() { return atSpeed; },
       beep: function() {},
       stealFocus: function() {}
     },
@@ -124,9 +119,12 @@
     selectCallback: function(c, appData, p) { say("selectCallback icon=" + p.icon); }
   });
   setStatus({ warnings: num("warnings", 0), service: q.get("service") === "1", missed: num("missed", 0), texts: num("texts", 0),
-              bt: q.has("bt") ? q.get("bt") : "", driving: q.get("driving") === "1" });
+              bt: q.has("bt") ? q.get("bt") : "" });
   if (q.get("call") === "1") { setStatus({ call: true }); }
-  if (q.has("source")) { setStatus({ source: q.get("source"), playing: q.get("playing") !== "0" }); }
+  if (q.has("fuel")) { setStatus({ fuel: q.get("fuel") }); }
+  if (q.has("maintkm") || q.has("maintmonths") || q.has("oil")) {
+    setStatus({ maintkm: num("maintkm", 0), maintmonths: num("maintmonths", 0), oil: num("oil", -1) });
+  }
   ctrl._pollStatus();
   ctrl.handleControllerEvent("acceptFocusInit");
   if (FOCUS !== null) { ctrl._setFocus(+FOCUS); ctrl._setHighlight(+FOCUS); }

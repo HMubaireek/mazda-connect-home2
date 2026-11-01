@@ -8,7 +8,7 @@ G="$1"
 cd "$(dirname "$0")/.."
 D=preview/mazda
 rm -rf "$D"
-for c in StatusBar Sbn List2 LeftBtn Button; do
+for c in StatusBar Sbn List2 LeftBtn Button Tabs Dialog3 InCall2 Ump3 Tuner4 Wink ScreenSettings2 NowPlaying4; do
     mkdir -p "$D/common/controls/$c"
     cp -r "$G/common/controls/$c/css" "$D/common/controls/$c/"
     [ -d "$G/common/controls/$c/images" ] && cp -r "$G/common/controls/$c/images" "$D/common/controls/$c/"
@@ -16,7 +16,7 @@ done
 mkdir -p "$D/common/css" "$D/common/images/icons" "$D/common/transitions/css" "$D/apps/system/images"
 cp "$G/common/css/common.css" "$D/common/css/"
 cp "$G/common/images/background.png" "$D/common/images/"
-cp "$G"/common/images/icons/IcnSb*.png "$D/common/images/icons/"
+cp "$G"/common/images/icons/IcnSb*.png "$G"/common/images/icons/IcnWink*.png "$D/common/images/icons/"
 cp "$G/common/transitions/css/TransitionsGen.css" "$D/common/transitions/css/"
 cp "$G/apps/system/images/Android_Auto_Active.png" "$G/apps/system/images/AppleCP_Active.png" "$D/apps/system/images/"
 echo "copied Mazda preview files to $D"

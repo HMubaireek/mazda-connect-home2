@@ -54,6 +54,13 @@ body * {
   background-image: url(../images/home2skin/bg_ltr.png) !important;
 }
 
+/* Screens that show video (map, reversing camera, Android Auto, CarPlay) ask Mazda's framework for a
+   transparent background (FullTransparent.png) or none: leave those alone, or the video is hidden. */
+.CommonBgImg[style*="FullTransparent"],
+.CommonBgImg[style*="none"] {
+  background-image: none !important;
+}
+
 .CommonRightChrome {
   display: none !important;
 }
@@ -216,17 +223,76 @@ body * {
 #StatusBar_WifiSignal[style*="IcnSbWifiSignal_03"] { background-image: url(../images/home2skin/sb_wifi_03.png) !important; }
 #StatusBar_WifiSignal[style*="IcnSbWifiSignal_04"] { background-image: url(../images/home2skin/sb_wifi_04.png) !important; }
 
+/* Screen icon (top bar) and alert icons: Mazda's IcnSbn* images, replaced by name */
+.StatusBarCtrlDomainIcon[style*="IcnSbnApps."],
+.SbnCtrl div[style*="IcnSbnApps."] { background-image: url(../images/home2skin/sbn_apps.png) !important; }
+.StatusBarCtrlDomainIcon[style*="IcnSbnBt."],
+.SbnCtrl div[style*="IcnSbnBt."] { background-image: url(../images/home2skin/sbn_bt.png) !important; }
+.StatusBarCtrlDomainIcon[style*="IcnSbnComm."],
+.SbnCtrl div[style*="IcnSbnComm."] { background-image: url(../images/home2skin/sbn_comm.png) !important; }
+.StatusBarCtrlDomainIcon[style*="IcnSbnContact."],
+.SbnCtrl div[style*="IcnSbnContact."] { background-image: url(../images/home2skin/sbn_contact.png) !important; }
+.StatusBarCtrlDomainIcon[style*="IcnSbnEmail."],
+.SbnCtrl div[style*="IcnSbnEmail."] { background-image: url(../images/home2skin/sbn_email.png) !important; }
+.StatusBarCtrlDomainIcon[style*="IcnSbnEnt."],
+.SbnCtrl div[style*="IcnSbnEnt."] { background-image: url(../images/home2skin/sbn_ent.png) !important; }
+.StatusBarCtrlDomainIcon[style*="IcnSbnFavorite."],
+.SbnCtrl div[style*="IcnSbnFavorite."] { background-image: url(../images/home2skin/sbn_favorite.png) !important; }
+.StatusBarCtrlDomainIcon[style*="IcnSbnMaint."],
+.SbnCtrl div[style*="IcnSbnMaint."] { background-image: url(../images/home2skin/sbn_maint.png) !important; }
+.StatusBarCtrlDomainIcon[style*="IcnSbnMap."],
+.SbnCtrl div[style*="IcnSbnMap."] { background-image: url(../images/home2skin/sbn_map.png) !important; }
+.StatusBarCtrlDomainIcon[style*="IcnSbnMicClosed."],
+.SbnCtrl div[style*="IcnSbnMicClosed."] { background-image: url(../images/home2skin/sbn_micclosed.png) !important; }
+.StatusBarCtrlDomainIcon[style*="IcnSbnMicOpen."],
+.SbnCtrl div[style*="IcnSbnMicOpen."] { background-image: url(../images/home2skin/sbn_micopen.png) !important; }
+.StatusBarCtrlDomainIcon[style*="IcnSbnMicUnavail."],
+.SbnCtrl div[style*="IcnSbnMicUnavail."] { background-image: url(../images/home2skin/sbn_micunavail.png) !important; }
+.StatusBarCtrlDomainIcon[style*="IcnSbnMuteOff."],
+.SbnCtrl div[style*="IcnSbnMuteOff."] { background-image: url(../images/home2skin/sbn_muteoff.png) !important; }
+.StatusBarCtrlDomainIcon[style*="IcnSbnMuteOn."],
+.SbnCtrl div[style*="IcnSbnMuteOn."] { background-image: url(../images/home2skin/sbn_muteon.png) !important; }
+.StatusBarCtrlDomainIcon[style*="IcnSbnPrompt."],
+.SbnCtrl div[style*="IcnSbnPrompt."] { background-image: url(../images/home2skin/sbn_prompt.png) !important; }
+.StatusBarCtrlDomainIcon[style*="IcnSbnSdCard."],
+.SbnCtrl div[style*="IcnSbnSdCard."] { background-image: url(../images/home2skin/sbn_sdcard.png) !important; }
+.StatusBarCtrlDomainIcon[style*="IcnSbnSettings."],
+.SbnCtrl div[style*="IcnSbnSettings."] { background-image: url(../images/home2skin/sbn_settings.png) !important; }
+.StatusBarCtrlDomainIcon[style*="IcnSbnSystemError."],
+.SbnCtrl div[style*="IcnSbnSystemError."] { background-image: url(../images/home2skin/sbn_systemerror.png) !important; }
+.StatusBarCtrlDomainIcon[style*="IcnSbnVolume."],
+.SbnCtrl div[style*="IcnSbnVolume."] { background-image: url(../images/home2skin/sbn_volume.png) !important; }
+
+/* Mute / unmute box in the middle of the screen */
+.WinkStyle5Image1[style*="IcnWinkMute"] { background-image: url(../images/home2skin/wink_mute.png) !important; }
+.WinkStyle5Image1[style*="IcnWinkUnMute"] { background-image: url(../images/home2skin/wink_unmute.png) !important; }
+
 /* ---------- alerts (status-bar notifications) ---------- */
-/* A glass pill between the button and the clock pill. Mazda's inner layout is kept, with narrower text. */
+/* A glass pill between the button and the clock pill, as tall as the other pills. Mazda's inner layout
+   (built for a 58px box) is kept: its images and meters move up 6px, the text is set on one 42px line. */
 .SbnCtrl {
   left: 78px !important;
-  top: 4px !important;
+  top: 10px !important;
   width: 592px !important;
-  height: 56px !important;
+  height: 44px !important;
   box-sizing: border-box;
-  border-radius: 28px;
+  border-radius: 22px;
   border: 1px solid rgba(255, 255, 255, 0.2);
-  background: rgba(30, 34, 52, 0.94) none !important;
+  background: rgba(30, 34, 52, 0.95) none !important;
+  line-height: 42px !important;
+  font-size: 20px !important;
+}
+
+.SbnCtrl > div {
+  margin-top: -7px !important;
+}
+
+.SbnCtrl > div[class*="Text"] {
+  margin-top: 0px !important;
+  top: 0px !important;
+  height: 42px !important;
+  line-height: 42px !important;
+  font-size: 20px !important;
 }
 
 .SbnCtrl_Style01_Text1 { width: 540px !important; }
@@ -234,13 +300,6 @@ body * {
 .SbnCtrl_Style03_Meter { width: 430px !important; }
 .SbnCtrl_Style04_Meter { width: 500px !important; }
 .SbnCtrl_Style06_Meter { left: 320px !important; }
-
-.SbnCtrl_Style01_Text1,
-.SbnCtrl_Style02_Text1,
-.SbnCtrl_Style03_Text1,
-.SbnCtrl_Style06_Text1 {
-  font-size: 26px !important;
-}
 
 /* ---------- menus (List2) ---------- */
 /* One rounded glass container (screen x 94-776, right edge in line with the top bar pills). */
@@ -252,13 +311,11 @@ body * {
   background: none !important;
 }
 
-/* The mask is the container: it clips the rows to x 26-708 with rounded corners, so a focused row fills it
-   edge to edge. The rows themselves keep Mazda's width and positions (the scroller is shifted back by 26px),
-   so text and icons sit where Mazda put them. */
+/* The mask is the container: it clips rows to x 26-708. The rows keep Mazda's width and positions
+   (the scroller is shifted back by 26px), so text and controls sit where Mazda put them. */
 .List2CtrlMask {
   left: 26px !important;
   width: 682px !important;
-  border-radius: 28px;
 }
 
 .List2CtrlScroller {
@@ -268,6 +325,26 @@ body * {
 
 .List2CtrlTitle {
   background-image: none !important;
+}
+
+.List2CtrlTitle,
+.List2CtrlTitle * {
+  font-size: 24px !important;
+}
+
+/* Text a little smaller than Mazda's 35px */
+.List2Ctrl .ListItem .line1 {
+  font-size: 26px !important;
+}
+
+.List2Ctrl.smallItemText .ListItem .line1 {
+  font-size: 23px !important;
+}
+
+.List2Ctrl .ListItem .line2,
+.List2Ctrl .ListItem .label1,
+.List2Ctrl .ListItem .label2 {
+  font-size: 20px !important;
 }
 
 .List2Ctrl.normalItems .ListItem,
@@ -282,20 +359,26 @@ body * {
   background-color: rgba(255, 255, 255, 0.06) !important;
 }
 
-/* Focus: the whole row is filled, no inset, no outline */
+/* Focus: a rounded pill across the row (the car's browser does not clip to rounded corners,
+   so the pill carries its own corners and looks the same on the first, middle and last row) */
 .List2Ctrl .focusHighlight {
-  background-image: none !important;
-  background-color: rgba(190, 205, 255, 0.22) !important;
+  background: none !important;
 }
 
-.List2Ctrl .ListItem.focus {
-  background-image: none !important;
-  background-color: rgba(190, 205, 255, 0.22) !important;
+.List2Ctrl.normalItems .ListItem.focus {
+  background: url(../images/home2skin/list_focus.png) 0px 0px no-repeat !important;
 }
 
-.List2Ctrl .ListItem.hit {
-  background-image: none !important;
-  background-color: rgba(190, 205, 255, 0.34) !important;
+.List2Ctrl.thickItems .ListItem.focus {
+  background: url(../images/home2skin/list_focus_thick.png) 0px 0px no-repeat !important;
+}
+
+.List2Ctrl.normalItems .ListItem.hit {
+  background: url(../images/home2skin/list_hit.png) 0px 0px no-repeat !important;
+}
+
+.List2Ctrl.thickItems .ListItem.hit {
+  background: url(../images/home2skin/list_hit_thick.png) 0px 0px no-repeat !important;
 }
 
 /* Thin scroll indicator inside the container */
@@ -312,7 +395,12 @@ body * {
   background: rgba(255, 255, 255, 0.35) none !important;
 }
 
-/* ---------- back / folder-up button: glass pill beside the menu ---------- */
+/* Tabs (Settings, Favorites, camera adjustments): smaller labels */
+.TabsCtrlLabelSpan {
+  font-size: 20px !important;
+}
+
+/* ---------- back / folder-up button: a small round glass button beside the menu ---------- */
 .LeftBtnCtrlBackBtn { background: url(../images/home2skin/back_en.png) no-repeat !important; }
 .LeftBtnCtrlBackBtnDisabled { background: url(../images/home2skin/back_ds.png) no-repeat !important; }
 .LeftBtnCtrlBackBtnFocused { background: url(../images/home2skin/back_focus.png) no-repeat !important; }

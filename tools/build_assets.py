@@ -7,7 +7,7 @@ Outputs to installer/home2/images/home2/:
   chip_nav/ent/com/set/app.png      56x56 dock icon chips (40px chip)
   row_*.png                         42x42 status-card chips (car, phone, media)
   pill_aa.png, pill_cp.png          35x35 round chips for the Android Auto / CarPlay pill
-  ic_park.png, ic_drive.png         18x18 parked / driving icons
+  row_maint.png                     maintenance chip
 and docs/background_full.png (800x480, for the README).
 
 Requires: Pillow, numpy, cairosvg
@@ -144,8 +144,7 @@ BT_BLUE = ("#5B8CFF", "#2F5BD8")
 ROW_CHIPS = {
     "ok": ("shield", GREEN), "warn": ("alert", AMBER), "service": ("wrench", AMBER),
     "bt": ("bt", BT_BLUE), "btnone": ("bt", None), "call": ("com", GREEN),
-    "radio": ("radio", ORANGE), "usb": ("usb", ORANGE), "btaudio": ("bt", ORANGE),
-    "aa": ("aa", ORANGE), "cp": ("cp", ORANGE), "media": ("ent", ORANGE), "off": ("ent", None),
+    "maint": ("wrench", ("#3FD9C8", "#168FB3")),
 }
 
 
@@ -205,8 +204,7 @@ if __name__ == "__main__":
         chip(icon, 42, 42, 14, 22, 2.0, None, "row_%s.png" % out, colours)
     chip("aa", 35, 35, 17.5, 19, 2.0, None, "pill_aa.png", BLUE)
     chip("cp", 35, 35, 17.5, 19, 2.0, None, "pill_cp.png", BLUE)
-    glyph("park", 18, "#FFFFFF", 0.75, "ic_park.png")
-    glyph("steer", 18, "#A9BCFF", 1.0, "ic_drive.png")
+
     print("assets written to", OUT)
 
 
@@ -303,22 +301,81 @@ def render_skin_panels():
     for x in range(42, 692):
         sep.putpixel((x, 0), (255, 255, 255, 26))
     sep.save(os.path.join(SKIN, "list_sep.png"), optimize=True)
-    # Back / folder-up buttons: a glass pill (screen x 24-84) beside the menu container, same height.
-    states = {"en": dict(), "ds": dict(top=0.06, bottom=0.02, border=0.08),
-              "focus": dict(top=0.24, bottom=0.08, ring="rgba(200,212,255,0.9)"), "hit": dict(top=0.32, bottom=0.14)}
-    arrows = {"back": "M43 196l-12 12 12 12", "up": "M42 214l12-12 12 12"}
+    # Focus / pressed row: a rounded pill inside the container (x 30-704 of the row's 732px), for normal (64px)
+    # and tall (82px) rows. It carries its own rounded corners because the car's browser does not clip to them.
+    for name, h, top, bottom in (("list_focus", 64, 0.30, 0.16), ("list_focus_thick", 82, 0.30, 0.16),
+                                 ("list_hit", 64, 0.42, 0.26), ("list_hit_thick", 82, 0.42, 0.26)):
+        tint = ('<defs><linearGradient id="fp" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#BECDFF" stop-opacity="%s"/>'
+                '<stop offset="1" stop-color="#BECDFF" stop-opacity="%s"/></linearGradient></defs>') % (top, bottom)
+        body = tint + '<rect x="30" y="3" width="674" height="%d" rx="20" fill="url(#fp)"/>' % (h - 6)
+        svg_canvas(732, h, body, scale=2).save(os.path.join(SKIN, name + ".png"), optimize=True)
+    # Back / folder-up buttons: a small round glass button (56px, screen x 24-80) beside the menu, centred
+    # vertically. The rest of Mazda's 94x416 touch area stays transparent and still works.
+    states = {"en": ("rgba(255,255,255,0.10)", "rgba(255,255,255,0.16)", 1),
+              "ds": ("rgba(255,255,255,0.04)", "rgba(255,255,255,0.08)", 1),
+              "focus": ("rgba(255,255,255,0.18)", "rgba(200,212,255,0.9)", 2.5),
+              "hit": ("rgba(255,255,255,0.30)", "rgba(255,255,255,0.3)", 1)}
+    arrows = {"back": "M55 196l-12 12 12 12", "up": "M40 214l12-12 12 12"}
     for kind, d in arrows.items():
-        for st, kw in states.items():
-            body = glass_rect(24, 0, 60, 412, 30, **kw)
-            body += '<path d="%s" fill="none" stroke="#FFFFFF" stroke-opacity="%s" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" transform="translate(11 0)"/>' % (
-                d, 0.35 if st == "ds" else 0.95)
+        for st, (fill, stroke, sw) in states.items():
+            body = '<circle cx="52" cy="208" r="28" fill="%s" stroke="%s" stroke-width="%s"/>' % (fill, stroke, sw)
+            body += ('<path d="%s" fill="none" stroke="#FFFFFF" stroke-opacity="%s" stroke-width="3" stroke-linecap="round" '
+                     'stroke-linejoin="round"/>') % (d, 0.35 if st == "ds" else 0.95)
             svg_canvas(94, 416, body, scale=2).save(os.path.join(SKIN, "%s_%s.png" % (kind, st)), optimize=True)
+
+
+# Screen icons (top bar) and alert icons: Mazda's IcnSbn<Name>.png, redrawn as 38px chips in a 40px image.
+SBN_ICONS = {
+    "apps": (ICONS["app"], ("#9B8CFF", "#5B46E6")),
+    "bt": ('<polyline points="6.5 6.5 17.5 17.5 12 23 12 1 17.5 6.5 6.5 17.5"/>', ("#5B8CFF", "#2F5BD8")),
+    "comm": ('<path d="M21 11.5a8.5 8.5 0 0 1-12.6 7.4L3 20.5l1.6-5.2A8.5 8.5 0 1 1 21 11.5z"/>', ("#4AD98B", "#189C5F")),
+    "contact": ('<circle cx="12" cy="8" r="4"/><path d="M4 21a8 8 0 0 1 16 0"/>', ("#4AD98B", "#189C5F")),
+    "email": ('<rect x="3" y="5" width="18" height="14" rx="2"/><polyline points="3 7 12 13 21 7"/>', ("#5B8CFF", "#2F5BD8")),
+    "ent": (ICONS["ent"], ("#FFB547", "#FF6A2E")),
+    "favorite": ('<polygon points="12 3 14.8 8.7 21 9.6 16.5 14 17.5 20.2 12 17.3 6.5 20.2 7.5 14 3 9.6 9.2 8.7 12 3"/>', ("#FFD15C", "#F2A31B")),
+    "maint": ('<path d="M14.7 6.3a1 1 0 0 0 0 1.4l1.6 1.6a1 1 0 0 0 1.4 0l3.77-3.77a6 6 0 0 1-7.94 7.94l-6.91 6.91a2.12 2.12 0 0 1-3-3l6.91-6.91a6 6 0 0 1 7.94-7.94l-3.76 3.76z"/>', ("#FFC24A", "#E88A12")),
+    "map": ('<path d="M12 21s7-6.2 7-11a7 7 0 1 0-14 0c0 4.8 7 11 7 11z"/><circle cx="12" cy="10" r="2.5"/>', ("#3FD9C8", "#168FB3")),
+    "micclosed": ('<rect x="9" y="3" width="6" height="11" rx="3"/><path d="M5 11a7 7 0 0 0 14 0"/><line x1="12" y1="18" x2="12" y2="21"/><line x1="4" y1="4" x2="20" y2="20"/>', ("#9AA0AA", "#5A606B")),
+    "micopen": ('<rect x="9" y="3" width="6" height="11" rx="3"/><path d="M5 11a7 7 0 0 0 14 0"/><line x1="12" y1="18" x2="12" y2="21"/>', ("#5B8CFF", "#2F5BD8")),
+    "micunavail": ('<rect x="9" y="3" width="6" height="11" rx="3"/><path d="M5 11a7 7 0 0 0 14 0"/><line x1="12" y1="18" x2="12" y2="21"/>', ("#9AA0AA", "#5A606B")),
+    "muteoff": ('<polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"/><path d="M15.5 8.5a5 5 0 0 1 0 7"/><path d="M19 5a10 10 0 0 1 0 14"/>', ("#FFB547", "#FF6A2E")),
+    "muteon": ('<polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"/><line x1="22" y1="9" x2="16" y2="15"/><line x1="16" y1="9" x2="22" y2="15"/>', ("#FF6B5E", "#D7263D")),
+    "prompt": ('<circle cx="12" cy="12" r="9"/><line x1="12" y1="11" x2="12" y2="16"/><line x1="12" y1="8" x2="12.01" y2="8"/>', ("#5B8CFF", "#2F5BD8")),
+    "sdcard": ('<path d="M7 3h8l4 4v14H7z"/><line x1="10" y1="6" x2="10" y2="9"/><line x1="13" y1="6" x2="13" y2="9"/>', ("#9AA0AA", "#5A606B")),
+    "settings": (ICONS["set"], ("#9AA0AA", "#5A606B")),
+    "systemerror": ('<path d="M10.3 3.9L1.8 18a2 2 0 0 0 1.7 3h17a2 2 0 0 0 1.7-3L13.7 3.9a2 2 0 0 0-3.4 0z"/><line x1="12" y1="9" x2="12" y2="13"/><line x1="12" y1="17" x2="12.01" y2="17"/>', ("#FF6B5E", "#D7263D")),
+    "volume": ('<polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"/><path d="M15.5 8.5a5 5 0 0 1 0 7"/><path d="M19 5a10 10 0 0 1 0 14"/>', ("#FFB547", "#FF6A2E")),
+}
+
+
+def render_wink_icons():
+    """The centre mute / unmute box images (Mazda's IcnWinkMute.png / IcnWinkUnMute.png, 112x112)."""
+    speaker = '<polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"/>'
+    for name, extra, ring, stroke in (("wink_mute", '<line x1="22" y1="9" x2="16" y2="15"/><line x1="16" y1="9" x2="22" y2="15"/>',
+                                       "rgba(255,107,94,0.18)", "#FF8F86"),
+                                      ("wink_unmute", '<path d="M15.5 8.5a5 5 0 0 1 0 7"/><path d="M19 5a10 10 0 0 1 0 14"/>',
+                                       "rgba(108,139,255,0.20)", "#FFFFFF")):
+        body = ('<circle cx="56" cy="56" r="54" fill="%s"/><g transform="translate(26 26) scale(2.5)" fill="none" stroke="%s" '
+                'stroke-width="2" stroke-linecap="round" stroke-linejoin="round">%s%s</g>') % (ring, stroke, speaker, extra)
+        svg_canvas(112, 112, body, scale=4).save(os.path.join(SKIN, name + ".png"), optimize=True)
+
+
+def render_sbn_icons():
+    for name, (icon, (c1, c2)) in SBN_ICONS.items():
+        body = ('<defs><linearGradient id="sg" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="%s"/>'
+                '<stop offset="1" stop-color="%s"/></linearGradient></defs>'
+                '<rect x="1" y="1" width="38" height="38" rx="12" fill="url(#sg)"/>'
+                '<g transform="translate(9 9) scale(0.9167)" fill="none" stroke="#FFFFFF" stroke-width="2" '
+                'stroke-linecap="round" stroke-linejoin="round">%s</g>') % (c1, c2, icon)
+        svg_canvas(40, 40, body, scale=4).save(os.path.join(SKIN, "sbn_%s.png" % name), optimize=True)
 
 
 if __name__ == "__main__":
     os.makedirs(SKIN, exist_ok=True)
     render_status_icons()
     render_skin_panels()
+    render_sbn_icons()
+    render_wink_icons()
     glyph24("sb_home.png", "M3 11l9-8 9 8|M5 10v10h5v-6h4v6h5V10", 22)
     glyph24("sb_aa.png", "M6.5 2.5h11v19h-11z|M10.5 18.5h3|M9.5 13.5l5-5-1.5 6-1.4-1.9z", 24)
     glyph24("sb_cp.png", "M19 17h2c.6 0 1-.4 1-1v-3c0-.9-.7-1.7-1.5-1.9C18.7 10.6 16 10 16 10s-1.3-1.4-2.2-2.3c-.5-.4-1.1-.7-1.8-.7H5c-.6 0-1.1.4-1.4.9l-1.4 2.9A3.7 3.7 0 0 0 2 12v4c0 .6.4 1 1 1h2|M9 17h6|M9 17a2 2 0 1 1-4 0a2 2 0 1 1 4 0|M19 17a2 2 0 1 1-4 0a2 2 0 1 1 4 0", 24)
@@ -327,3 +384,140 @@ if __name__ == "__main__":
     full.save(os.path.join(SKIN, "bg_ltr.png"), optimize=True)
     full.transpose(Image.FLIP_LEFT_RIGHT).save(os.path.join(SKIN, "bg_rtl.png"), optimize=True)
     print("skin assets written to", SKIN)
+
+
+# ---------------------------------------------------------------- Mazda control images, redrawn
+# tools/skin_controls.json lists, for each Mazda control image the skin restyles: its size, the area its pixels
+# cover (bbox), how to redraw it (kind) and the CSS selectors that use it. It holds numbers and class names only
+# (made once from the firmware, see CLAUDE.md). Every image is redrawn at the same size, so Mazda's layout and
+# touch areas stay exactly as they are. Also writes src/skin/controls.generated.css.
+CTL = os.path.join(SKIN, "ctl")
+GLYPHS = {
+    "CloseBtn1": "M7 7l10 10 M17 7L7 17",
+    "SettingsBtn1": "M4 7h10 M18 7h2 M4 17h4 M12 17h8 M14 5v4 M8 15v4",
+    "PSMOpen": "M15 6l-6 6 6 6",
+    "PSMClose": "M9 6l6 6-6 6",
+    "CVCBtn1": "M4 8h3l2-3h6l2 3h3v11H4z M9 13.5a3 3 0 0 1 5.4-1.8 M15 13.5a3 3 0 0 1-5.4 1.8",
+    "BtnLeft": "M15 6l-6 6 6 6",
+}
+BLUE_GRAD = ("#6C8BFF", "#3A3FE0")
+
+
+def _rect(x, y, w, h, r, fill, stroke=None, sw=1.0, grad=None):
+    defs = ""
+    if grad:
+        defs = ('<defs><linearGradient id="cg" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="%s"/>'
+                '<stop offset="1" stop-color="%s"/></linearGradient></defs>' % grad)
+        fill = "url(#cg)"
+    s = '<rect x="%.1f" y="%.1f" width="%.1f" height="%.1f" rx="%.1f" fill="%s"' % (x, y, w, h, r, fill)
+    if stroke:
+        s += ' stroke="%s" stroke-width="%s"' % (stroke, sw)
+    return defs + s + "/>"
+
+
+STATE_STYLE = {   # fill, stroke, stroke width, gradient
+    "btn": ("rgba(255,255,255,0.08)", "rgba(255,255,255,0.14)", 1, None),
+    "btn_hit": ("rgba(255,255,255,0.22)", "rgba(255,255,255,0.28)", 1, None),
+    "btn_focus": ("rgba(255,255,255,0.14)", "rgba(200,212,255,0.9)", 2.5, None),
+    "btn_on": (None, None, 1, BLUE_GRAD),
+    "btn_ds": ("rgba(255,255,255,0.04)", "rgba(255,255,255,0.08)", 1, None),
+    "btn_green": (None, None, 1, ("#4AD98B", "#189C5F")),
+    "btn_red": (None, None, 1, ("#FF6B5E", "#D7263D")),
+}
+
+
+def _state_of(name):
+    for key, st in (("Focus", "btn_focus"), ("Hit", "btn_hit"), ("Press", "btn_hit"), ("Down", "btn_hit"), ("_Ds", "btn_ds")):
+        if key in name:
+            return st
+    return "btn"
+
+
+def _circle(cx, cy, r, fill, stroke=None, sw=1.0):
+    s = '<circle cx="%.1f" cy="%.1f" r="%.1f" fill="%s"' % (cx, cy, r, fill)
+    if stroke:
+        s += ' stroke="%s" stroke-width="%s"' % (stroke, sw)
+    return s + "/>"
+
+
+def control_svg(e):
+    w, h = e["size"]
+    x0, y0, x1, y1 = e["bbox"] or (0, 0, w, h)
+    bw, bh = x1 - x0, y1 - y0
+    k, name = e["kind"], e["file"]
+    glyph = next((d for pre, d in GLYPHS.items() if name.startswith(pre)), None)
+    if glyph and k.startswith("btn"):
+        st = STATE_STYLE[_state_of(name)]
+        r = min(bw, bh) / 2.0 - 3
+        cx, cy = x0 + bw / 2.0, y0 + bh / 2.0
+        body = _rect(cx - r, cy - r, 2 * r, 2 * r, r, st[0] or "rgba(255,255,255,0.1)", st[1], st[2], st[3])
+        s = r * 1.1 / 12.0
+        op = 0.4 if "_Ds" in name else 1
+        body += ('<g transform="translate(%.1f %.1f) scale(%.3f)" fill="none" stroke="#FFFFFF" stroke-opacity="%s" '
+                 'stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="%s"/></g>') % (
+            cx - 12 * s, cy - 12 * s, s, op, glyph)
+        return body
+    if k in STATE_STYLE:
+        fill, stroke, sw, grad = STATE_STYLE[k]
+        r = min(22.0, (bh - 4) / 2.0)
+        return _rect(x0 + 2, y0 + 2, bw - 4, bh - 4, r, fill or "#000", stroke, sw, grad)
+    if k == "clear":
+        return ""
+    if k == "dim":
+        return _rect(0, 0, w, h, 0, "rgba(5,6,12,0.80)")
+    if k == "winkbox":   # the mute / notification box: dim the screen, glass card where Mazda's box is
+        return (_rect(0, 0, w, h, 0, "rgba(3,4,10,0.45)") +
+                _rect(170, 48, 464, 254, 30, "rgba(30,34,52,0.95)", "rgba(255,255,255,0.18)", 1.5))
+    if k == "dock":
+        return _rect(10, 6, w - 20, h - 10, 28, "rgba(255,255,255,0.08)", "rgba(255,255,255,0.14)", 1)
+    if k == "panel":
+        return _rect(x0 + 2, y0 + 2, bw - 4, bh - 4, min(26.0, bh / 4.0), "rgba(255,255,255,0.08)", "rgba(255,255,255,0.15)", 1)
+    if k == "track":
+        return _rect(x0, y0, bw, bh, bh / 2.0, "rgba(255,255,255,0.18)")
+    if k == "fill":
+        return _rect(x0, y0, bw, bh, bh / 2.0, "#000", None, 1, ("#6C8BFF", "#3FD9C8"))
+    if k == "knob":
+        return _circle(x0 + bw / 2.0, y0 + bh / 2.0, min(bw, bh) / 2.0 - 1, "#FFFFFF", "rgba(108,139,255,0.6)", 2)
+    if k == "halo":
+        return _circle(x0 + bw / 2.0, y0 + bh / 2.0, min(bw, bh) / 2.0 - 4, "rgba(108,139,255,0.18)", "rgba(200,212,255,0.9)", 2.5)
+    if k.startswith("dial"):   # tuner dial: glass disc with a blue centre where the frequency is drawn
+        ring = {"dial": "rgba(200,212,255,0.35)", "dial_focus": "rgba(200,212,255,0.95)", "dial_hit": "#FFFFFF"}[k]
+        grad = ('<defs><linearGradient id="dg" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#6C8BFF"/>'
+                '<stop offset="1" stop-color="#3A3FE0"/></linearGradient></defs>')
+        return (_circle(246, 252, 205, "rgba(255,255,255,0.05)", "rgba(255,255,255,0.14)", 1.5) + grad +
+                _circle(246, 252, 78, "url(#dg)", ring, 4))
+    if k.startswith("check") or k.startswith("radio") or k == "checkmark":
+        cx, cy, s = w / 2.0, h / 2.0, 13
+        op = 0.45 if k.endswith("_ds") else 1
+        tick = ('<path d="M%.1f %.1fl4.5 4.5 8-9" fill="none" stroke="#FFFFFF" stroke-width="3" stroke-linecap="round" '
+                'stroke-linejoin="round"/>') % (cx - 6.5, cy)
+        if k == "checkmark":
+            return tick
+        r = s if k.startswith("radio") else 8
+        if "_on" in k:
+            inner = _circle(cx, cy, 5, "#FFFFFF") if k.startswith("radio") else tick
+            return '<g opacity="%s">%s%s</g>' % (op, _rect(cx - s, cy - s, 2 * s, 2 * s, r, "#000", None, 1, BLUE_GRAD), inner)
+        return '<g opacity="%s">%s</g>' % (op, _rect(cx - s, cy - s, 2 * s, 2 * s, r, "rgba(255,255,255,0.06)", "rgba(255,255,255,0.6)", 2))
+    return _rect(x0 + 2, y0 + 2, bw - 4, bh - 4, min(22.0, (bh - 4) / 2.0), "rgba(255,255,255,0.08)", "rgba(255,255,255,0.14)", 1)
+
+
+def render_control_skins():
+    import json
+    os.makedirs(CTL, exist_ok=True)
+    entries = json.load(open(os.path.join(ROOT, "tools", "skin_controls.json"), encoding="utf-8"))
+    # Mazda gives some selectors two images (normal + pressed tab, slider track + fill): the more specific
+    # state is written last so it wins.
+    rank = {"btn_hit": 1, "fill": 1, "knob": 1, "btn_focus": 2, "halo": 2, "btn_on": 3}
+    css = ["/* Generated by tools/build_assets.py from tools/skin_controls.json: Mazda control images, redrawn",
+           " * at the same size in the Home 2.0 style. Do not edit by hand. */", ""]
+    for e in sorted(entries, key=lambda e: (rank.get(e["kind"], 0), e["control"], e["file"])):
+        w, h = e["size"]
+        out_name = "%s_%s" % (e["control"], e["file"])
+        svg_canvas(w, h, control_svg(e), scale=2).save(os.path.join(CTL, out_name), optimize=True)
+        css.append(",\n".join(e["selectors"]) + " {\n  background-image: url(../images/home2skin/ctl/%s) !important;\n}\n" % out_name)
+    open(os.path.join(ROOT, "src", "skin", "controls.generated.css"), "w", encoding="utf-8", newline="\n").write("\n".join(css))
+    print("restyled %d Mazda control images" % len(entries))
+
+
+if __name__ == "__main__":
+    render_control_skins()

@@ -14,22 +14,14 @@
   text-align: right;
 }
 
-/* driving chip + pill: right-aligned under the date */
+/* Android Auto / CarPlay pill: right-aligned under the date */
 .H2StatusLine {
   left: 360px;
   text-align: right;
 }
 
-.H2Drive {
-  padding: 0px 12px 0px 14px;
-}
-
-.H2DriveIcon {
-  margin: -3px 0px 0px 7px;
-}
-
 .H2Pill {
-  margin: 0px 10px 0px 0px;
+  margin: 0px;
 }
 
 .H2PillChip {
@@ -61,7 +53,7 @@
   text-align: right;
 }
 
-.H2Eq {
+.H2RowEnd {
   right: auto;
   left: 16px;
 }
