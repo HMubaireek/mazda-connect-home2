@@ -9,11 +9,12 @@ redrawn image keeps the same structure."""
 import json, os, re, sys
 from PIL import Image
 G, OUT = sys.argv[1], sys.argv[2]
-CONTROLS = ["Tabs", "Dialog3", "InCall2", "Ump3", "Tuner4", "Wink", "ScreenSettings2", "NowPlaying4", "Sbn", "List2",
+# Tabs are styled by hand in src/skin/home2skin.css (one segmented bar).
+CONTROLS = ["Dialog3", "InCall2", "Ump3", "Tuner4", "Wink", "ScreenSettings2", "NowPlaying4", "Sbn", "List2",
             "Keyboard", "DialPad2", "Messaging2", "ScrollDetail", "ClockSettings2"]
 # Mazda's own screens (all their CSS): fuel economy, i-ACTIVSENSE, vehicle status, compass.
 APPS = ["ecoenergy", "idm", "vsm", "emnavi"]
-SKIP = re.compile(r"Ticks_|AhaStar|IcnStatBg|PinEntry|LineSeparatorGrid|Mobile911|IcnContactImage911|UMPPopup|UmpPopup|Popup_Point|"
+SKIP = re.compile(r"Ticks_|NowPlayingBG|AhaStar|IcnStatBg|PinEntry|LineSeparatorGrid|Mobile911|IcnContactImage911|UMPPopup|UmpPopup|Popup_Point|"
                   r"ActiveCall_|SliderTick|ProgressMeter_|_Held_|StatusNotificationBg|ListBackground|ListFocus|ListItemSeparator\.png|"
                   r"^Scrollbar\.png|^ScrollbarBg|TitleStyle|ListItemStyle29|^background\.png|"
                   r"IcnListVDT|IcnListProtect|IcnListPlus|IcnListMinus|Icn_XM|IcnWrn|InLineButton.*XM|Scrubber_Mask|"
@@ -51,7 +52,8 @@ def kind(name, size):
     if re.search(r"IcnListRadio_Unchecked", n): return "radio_off" + ("_ds" if "_Ds" in n else "")
     if "IcnListCheckmark" in n: return "checkmark"
     if re.search(r"UMP_Bg\.png", n): return "dock"
-    if re.search(r"Active_Call_Bkg|AdjustmentSettingsBG|AdjustBtn_Bg|ImageFrame", n): return "panel"
+    if re.search(r"AdjustmentSettingsBG|AdjustBtn_Bg", n): return "panel_dark"   # over the camera picture
+    if re.search(r"Active_Call_Bkg|ImageFrame", n): return "panel"
     if re.search(r"BgDial", n): return "dial" + ("_focus" if "Focus" in n else "_hit" if ("Hit" in n or "Held" in n) else "")
     if re.search(r"Green", n): return "btn_green"
     if re.search(r"Red", n): return "btn_red"

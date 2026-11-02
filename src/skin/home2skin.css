@@ -302,7 +302,8 @@ body * {
 .SbnCtrl_Style06_Meter { left: 320px !important; }
 
 /* ---------- menus (List2) ---------- */
-/* One rounded glass container (screen x 94-776, right edge in line with the top bar pills). */
+/* Layout (screen x): back button 24-72, scroll bar 84-90, one rounded glass container 102-776 (right edge in
+   line with the top bar pills). The list's own box starts at screen x 68, so the container is list x 34-708. */
 .List2Ctrl {
   background: url(../images/home2skin/list_panel.png) 0px 0px no-repeat !important;
 }
@@ -311,16 +312,24 @@ body * {
   background: none !important;
 }
 
-/* The mask is the container: it clips rows to x 26-708. The rows keep Mazda's width and positions
-   (the scroller is shifted back by 26px), so text and controls sit where Mazda put them. */
+/* The mask is the container: it clips rows to x 34-708. The rows keep Mazda's width and positions
+   (the scroller is shifted back by 34px), so text and controls sit where Mazda put them. */
 .List2CtrlMask {
-  left: 26px !important;
-  width: 682px !important;
+  left: 34px !important;
+  width: 674px !important;
 }
 
 .List2CtrlScroller {
-  left: -26px !important;
+  left: -34px !important;
   width: 732px !important;
+}
+
+/* Picture under the tabs (Display settings): inside the container, below the tab bar */
+.List2CtrlTitle.style06 .image1 {
+  left: 39px !important;
+  width: 662px !important;
+  height: 110px !important;
+  top: 68px !important;
 }
 
 .List2CtrlTitle {
@@ -381,9 +390,10 @@ body * {
   background: url(../images/home2skin/list_hit_thick.png) 0px 0px no-repeat !important;
 }
 
-/* Thin scroll indicator inside the container */
+/* Thin scroll indicator outside the container, between it and the back button */
 .List2CtrlScrollIndicatorWrapper {
-  right: 34px !important;
+  right: auto !important;
+  left: 16px !important;
   width: 8px !important;
   background: none !important;
 }
@@ -392,12 +402,163 @@ body * {
   right: 2px !important;
   width: 4px !important;
   border-radius: 2px;
-  background: rgba(255, 255, 255, 0.35) none !important;
+  background: rgba(255, 255, 255, 0.45) none !important;
 }
 
-/* Tabs (Settings, Favorites, camera adjustments): smaller labels */
+/* ---------- tabs (Settings, Favorites, phone): one segmented glass bar inside the menu container ---------- */
+/* The bar is list x 40-702 (6px inside the container), 56px tall. Mazda places each tab with an inline left;
+   those are mapped to the new slots below. 4+ tabs: arrow slots at both ends (Mazda adds arrows past 4 tabs). */
+.TabsCtrlStyle2,
+.TabsCtrlStyle3,
+.TabsCtrlStyle4 {
+  top: 6px !important;
+  left: 40px !important;
+  width: 662px !important;
+  height: 56px !important;
+  background: url(../images/home2skin/tab_bar.png) 0px 0px no-repeat !important;
+}
+
+.TabsCtrlBottomMask {
+  display: none !important;
+}
+
+div[class*="TabsCtrlStyle2Button"],
+div[class*="TabsCtrlStyle3Button"],
+div[class*="TabsCtrlStyle4Button"] {
+  top: 4px !important;
+  height: 48px !important;
+  line-height: 48px !important;
+  margin-top: 0px !important;
+  border-radius: 18px;
+  background: none !important;
+  color: rgba(255, 255, 255, 0.75) !important;
+  font-size: 20px !important;
+}
+
+div[class*="TabsCtrlStyle2Button"] { width: 325px !important; }
+div[class*="TabsCtrlStyle3Button"] { width: 216px !important; }
+div[class*="TabsCtrlStyle4Button"] { width: 137px !important; }
+
+.TabsCtrlStyle2 > div[style*="left: 15px"] { left: 4px !important; }
+.TabsCtrlStyle2 > div[style*="left: 369px"] { left: 333px !important; }
+.TabsCtrlStyle3 > div[style*="left: 16px"] { left: 4px !important; }
+.TabsCtrlStyle3 > div[style*="left: 254px"] { left: 223px !important; }
+.TabsCtrlStyle3 > div[style*="left: 492px"] { left: 442px !important; }
+.TabsCtrlStyle4 > div[style*="left: 84px"] { left: 54px !important; }
+.TabsCtrlStyle4 > div[style*="left: 227px"] { left: 193px !important; }
+.TabsCtrlStyle4 > div[style*="left: 370px"] { left: 332px !important; }
+.TabsCtrlStyle4 > div[style*="left: 513px"] { left: 471px !important; }
+
+div.TabsCtrlStyle2ButtonDown { background: url(../images/home2skin/tab_hit_2.png) no-repeat !important; }
+div.TabsCtrlStyle3ButtonDown { background: url(../images/home2skin/tab_hit_3.png) no-repeat !important; }
+div.TabsCtrlStyle4ButtonDown { background: url(../images/home2skin/tab_hit_4.png) no-repeat !important; }
+
+div.TabsCtrlStyle2ButtonEnabledCurrent,
+div.TabsCtrlStyle2ButtonDownCurrent { background: url(../images/home2skin/tab_on_2.png) no-repeat !important; }
+div.TabsCtrlStyle3ButtonEnabledCurrent,
+div.TabsCtrlStyle3ButtonDownCurrent { background: url(../images/home2skin/tab_on_3.png) no-repeat !important; }
+div.TabsCtrlStyle4ButtonEnabledCurrent,
+div.TabsCtrlStyle4ButtonDownCurrent { background: url(../images/home2skin/tab_on_4.png) no-repeat !important; }
+
+div.TabsCtrlStyle2ButtonEnabledCurrent,
+div.TabsCtrlStyle3ButtonEnabledCurrent,
+div.TabsCtrlStyle4ButtonEnabledCurrent {
+  color: #FFFFFF !important;
+}
+
+div.TabsCtrlStyle2ButtonDisabled,
+div.TabsCtrlStyle3ButtonDisabled,
+div.TabsCtrlStyle4ButtonDisabled {
+  color: rgba(255, 255, 255, 0.3) !important;
+}
+
+/* Knob focus on a tab: a thin light ring (no blur: the car's browser draws blurred shadows as slabs) */
+div[class*="TabsCtrlStyle"].ButtonCtrlFocused {
+  box-shadow: 0 0 0 2px rgba(200, 212, 255, 0.9) inset;
+}
+
+div.TabsCtrlStyle4PrevBtn,
+div.TabsCtrlStyle4NextBtn {
+  top: 4px !important;
+  width: 48px !important;
+  height: 48px !important;
+  border-radius: 18px;
+  background: url(../images/home2skin/tab_prev_en.png) no-repeat !important;
+}
+
+div.TabsCtrlStyle4PrevBtn { left: 4px !important; }
+
+div.TabsCtrlStyle4NextBtn {
+  left: 610px !important;
+  background-image: url(../images/home2skin/tab_next_en.png) !important;
+}
+
+div.TabsCtrlStyle4PrevBtn.TabsCtrlStyle4PrevNextBtnHit { background-image: url(../images/home2skin/tab_prev_hit.png) !important; }
+div.TabsCtrlStyle4NextBtn.TabsCtrlStyle4PrevNextBtnHit { background-image: url(../images/home2skin/tab_next_hit.png) !important; }
+
 .TabsCtrlLabelSpan {
   font-size: 20px !important;
+}
+
+/* ---------- camera adjustment bar (brightness, contrast, colour, tint): dark glass, light text ---------- */
+.ScreenSettings2CtrlTabBtn_En {
+  color: rgba(255, 255, 255, 0.78) !important;
+  font-size: 22px !important;
+}
+
+.ScreenSettings2CtrlTabBtn_Ds {
+  color: rgba(255, 255, 255, 0.35) !important;
+}
+
+.ScreenSettings2CtrlTabBtn_Selected,
+.ScreenSettings2CtrlTabBtn_Down {
+  color: #FFFFFF !important;
+}
+
+/* ---------- now playing (radio, USB, Bluetooth audio): a glass card, big frequency / title, artwork tile ---------- */
+div.NowPlaying4Ctrl {
+  background-image: url(../images/home2skin/np_card.png) !important;
+}
+
+div.NowPlaying4Ctrl.NowPlaying4CtrlNoBG {
+  background-image: none !important;
+}
+
+.NowPlaying4CtrlTitleFull {
+  top: 26px !important;
+  height: 72px !important;
+  line-height: 72px !important;
+  font-size: 58px !important;
+}
+
+.NowPlaying4Ctrl .NowPlaying4CtrlTitleFull {
+  font-family: "Home2 Tajawal Light", "Home2 Tajawal Medium", "Tipperary", Arial, sans-serif !important;
+  font-weight: 300 !important;
+}
+
+.NowPlaying4CtrlInfoBox {
+  top: 104px !important;
+}
+
+.NowPlaying4CtrlArtworkImageDiv {
+  top: 76px !important;
+  background: url(../images/home2skin/np_art.png) no-repeat !important;
+}
+
+/* ---------- media bar tooltip: dark glass balloon ---------- */
+.Ump3CtrlTooltipBalloon {
+  background: rgba(30, 34, 52, 0.96) none !important;
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  border-radius: 18px;
+  margin-top: 14px;
+  padding: 11px 24px 11px 24px !important;
+  min-width: 100px !important;
+  font-size: 22px !important;
+  line-height: 32px !important;
+}
+
+.Ump3CtrlTooltipPoint {
+  background-image: url(../images/home2skin/tooltip_point.png) !important;
 }
 
 /* ---------- back / folder-up button: a small round glass button beside the menu ---------- */

@@ -20,6 +20,10 @@ import cairosvg
 import numpy as np
 from PIL import Image, ImageFilter
 
+sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
+import skin_icons                     # noqa: E402  (our icon set for the media bar and list rows)
+from skin_icons import icon_svg       # noqa: E402
+
 ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 OUT = os.path.join(ROOT, "installer", "home2", "images", "home2")
 DOCS = os.path.join(ROOT, "docs")
@@ -294,35 +298,93 @@ def glass_rect(x, y, w, h, r, top=0.12, bottom=0.035, border=0.15, ring=None):
     return s
 
 
+# Menu layout (List2Ctrl box = screen x 68-800): back button x 24-72, scroll bar x 84-90, container x 102-776
+# (list x 34-708). Rows keep Mazda's 732px width; in Arabic they are mirrored, so row images get an _rtl copy
+# drawn at the mirrored position.
+PANEL_X0, PANEL_X1 = 34, 708
+
+
+def _row_x(x0, x1, rtl):
+    return (732 - x1, 732 - x0) if rtl else (x0, x1)
+
+
 def render_skin_panels():
-    # Menu container: drawn inside the list's own 732x416 box (screen x 68-800), from x 26 to 708 (screen 94-776).
-    svg_canvas(732, 416, glass_rect(26, 0, 682, 412, 28), scale=2).save(os.path.join(SKIN, "list_panel.png"), optimize=True)
-    # Row divider: rows keep Mazda's 732px width; the container shows x 26-708, the line runs 16px inside it.
-    sep = Image.new("RGBA", (732, 1), (0, 0, 0, 0))
-    for x in range(42, 692):
-        sep.putpixel((x, 0), (255, 255, 255, 26))
-    sep.save(os.path.join(SKIN, "list_sep.png"), optimize=True)
-    # Focus / pressed row: a rounded pill inside the container (x 30-704 of the row's 732px), for normal (64px)
-    # and tall (82px) rows. It carries its own rounded corners because the car's browser does not clip to them.
-    for name, h, top, bottom in (("list_focus", 64, 0.30, 0.16), ("list_focus_thick", 82, 0.30, 0.16),
-                                 ("list_hit", 64, 0.42, 0.26), ("list_hit_thick", 82, 0.42, 0.26)):
-        tint = ('<defs><linearGradient id="fp" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#BECDFF" stop-opacity="%s"/>'
-                '<stop offset="1" stop-color="#BECDFF" stop-opacity="%s"/></linearGradient></defs>') % (top, bottom)
-        body = tint + '<rect x="30" y="3" width="674" height="%d" rx="20" fill="url(#fp)"/>' % (h - 6)
-        svg_canvas(732, h, body, scale=2).save(os.path.join(SKIN, name + ".png"), optimize=True)
-    # Back / folder-up buttons: a small round glass button (56px, screen x 24-80) beside the menu, centred
+    svg_canvas(732, 416, glass_rect(PANEL_X0, 0, PANEL_X1 - PANEL_X0, 412, 28), scale=2).save(
+        os.path.join(SKIN, "list_panel.png"), optimize=True)
+    for rtl in (False, True):
+        suffix = "_rtl" if rtl else ""
+        # Row divider, 16px inside the container
+        x0, x1 = _row_x(PANEL_X0 + 16, PANEL_X1 - 16, rtl)
+        sep = Image.new("RGBA", (732, 1), (0, 0, 0, 0))
+        for x in range(x0, x1):
+            sep.putpixel((x, 0), (255, 255, 255, 26))
+        sep.save(os.path.join(SKIN, "list_sep%s.png" % suffix), optimize=True)
+        # Focus / pressed row: a rounded pill 4px inside the container, for normal (64px) and tall (82px) rows.
+        # It carries its own rounded corners because the car's browser does not clip to them.
+        x0, x1 = _row_x(PANEL_X0 + 4, PANEL_X1 - 4, rtl)
+        for name, h, top, bottom in (("list_focus", 64, 0.30, 0.16), ("list_focus_thick", 82, 0.30, 0.16),
+                                     ("list_hit", 64, 0.42, 0.26), ("list_hit_thick", 82, 0.42, 0.26)):
+            tint = ('<defs><linearGradient id="fp" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#BECDFF" '
+                    'stop-opacity="%s"/><stop offset="1" stop-color="#BECDFF" stop-opacity="%s"/></linearGradient></defs>') % (
+                top, bottom)
+            body = tint + '<rect x="%d" y="3" width="%d" height="%d" rx="20" fill="url(#fp)"/>' % (x0, x1 - x0, h - 6)
+            svg_canvas(732, h, body, scale=2).save(os.path.join(SKIN, name + suffix + ".png"), optimize=True)
+    # Back / folder-up buttons: a small round glass button (48px, screen x 24-72) beside the menu, centred
     # vertically. The rest of Mazda's 94x416 touch area stays transparent and still works.
     states = {"en": ("rgba(255,255,255,0.10)", "rgba(255,255,255,0.16)", 1),
               "ds": ("rgba(255,255,255,0.04)", "rgba(255,255,255,0.08)", 1),
               "focus": ("rgba(255,255,255,0.18)", "rgba(200,212,255,0.9)", 2.5),
               "hit": ("rgba(255,255,255,0.30)", "rgba(255,255,255,0.3)", 1)}
-    arrows = {"back": "M55 196l-12 12 12 12", "up": "M40 214l12-12 12 12"}
+    arrows = {"back": "M51 198l-10 10 10 10", "up": "M38 213l10-10 10 10"}
     for kind, d in arrows.items():
         for st, (fill, stroke, sw) in states.items():
-            body = '<circle cx="52" cy="208" r="28" fill="%s" stroke="%s" stroke-width="%s"/>' % (fill, stroke, sw)
+            body = '<circle cx="48" cy="208" r="24" fill="%s" stroke="%s" stroke-width="%s"/>' % (fill, stroke, sw)
             body += ('<path d="%s" fill="none" stroke="#FFFFFF" stroke-opacity="%s" stroke-width="3" stroke-linecap="round" '
                      'stroke-linejoin="round"/>') % (d, 0.35 if st == "ds" else 0.95)
             svg_canvas(94, 416, body, scale=2).save(os.path.join(SKIN, "%s_%s.png" % (kind, st)), optimize=True)
+    render_tabs()
+    render_media_extras()
+
+
+# Tabs (Settings, Favorites, phone): one segmented glass bar inside the menu container (list x 40-702, 662x56),
+# the chosen tab a blue pill, the others plain text. Tab widths for 2, 3 and 4 visible tabs, plus the arrow
+# buttons Mazda adds when there are more than 4 tabs.
+TAB_W = {2: 325, 3: 216, 4: 137}
+
+
+def render_tabs():
+    svg_canvas(662, 56, glass_rect(0, 0, 662, 56, 22, top=0.09, bottom=0.04, border=0.14), scale=2).save(
+        os.path.join(SKIN, "tab_bar.png"), optimize=True)
+    for n, w in TAB_W.items():
+        on = ('<defs><linearGradient id="tb" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#6C8BFF"/>'
+              '<stop offset="1" stop-color="#3A3FE0"/></linearGradient></defs>'
+              '<rect x="0" y="0" width="%d" height="48" rx="18" fill="url(#tb)"/>') % w
+        svg_canvas(w, 48, on, scale=2).save(os.path.join(SKIN, "tab_on_%d.png" % n), optimize=True)
+        svg_canvas(w, 48, '<rect x="0" y="0" width="%d" height="48" rx="18" fill="#FFFFFF" fill-opacity="0.18"/>' % w,
+                   scale=2).save(os.path.join(SKIN, "tab_hit_%d.png" % n), optimize=True)
+    for name, d in (("prev", "M27 16l-8 8 8 8"), ("next", "M21 16l8 8-8 8")):
+        for st, fill in (("en", 0.08), ("hit", 0.24)):
+            body = ('<rect x="0" y="0" width="48" height="48" rx="18" fill="#FFFFFF" fill-opacity="%s"/>'
+                    '<path d="%s" fill="none" stroke="#FFFFFF" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>'
+                    % (fill, d))
+            svg_canvas(48, 48, body, scale=2).save(os.path.join(SKIN, "tab_%s_%s.png" % (name, st)), optimize=True)
+
+
+def render_media_extras():
+    # Media bar tooltip: the small pointer under the dark glass balloon (36x22, like Mazda's).
+    svg_canvas(36, 22, '<path d="M8 0.5h20L18 12z" fill="#1E2234" fill-opacity="0.96" stroke="#FFFFFF" stroke-opacity="0.2"/>'
+               '<rect x="7" y="0" width="22" height="1.2" fill="#1E2234"/>', scale=4).save(
+        os.path.join(SKIN, "tooltip_point.png"), optimize=True)
+    # Now playing (radio, USB, Bluetooth audio): one glass card above the media bar (screen x 24-776),
+    # and an artwork tile that shows when a station or song has no picture of its own.
+    svg_canvas(800, 416, glass_rect(24, 8, 752, 292, 30, top=0.10, bottom=0.03, border=0.14), scale=2).save(
+        os.path.join(SKIN, "np_card.png"), optimize=True)
+    tile = ('<defs><linearGradient id="at" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#FFB547"/>'
+            '<stop offset="1" stop-color="#FF6A2E"/></linearGradient></defs>'
+            '<rect x="3" y="3" width="140" height="140" rx="32" fill="url(#at)"/>'
+            '<g transform="translate(43 43) scale(2.5)" fill="none" stroke="#FFFFFF" stroke-width="1.8" stroke-linecap="round" '
+            'stroke-linejoin="round"><path d="%s"/></g>') % skin_icons.BROADCAST
+    svg_canvas(146, 146, tile, scale=2).save(os.path.join(SKIN, "np_art.png"), optimize=True)
 
 
 # Screen icons (top bar) and alert icons: Mazda's IcnSbn<Name>.png, redrawn as 38px chips in a 40px image.
@@ -394,9 +456,6 @@ if __name__ == "__main__":
 # touch areas stay exactly as they are. Also writes src/skin/controls.generated.css.
 CTL = os.path.join(SKIN, "ctl")
 ICN = os.path.join(SKIN, "icn")
-sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
-import skin_icons                     # noqa: E402  (our icon set for the media bar and list rows)
-from skin_icons import icon_svg       # noqa: E402
 GLYPHS = {
     "CloseBtn1": "M7 7l10 10 M17 7L7 17",
     "SettingsBtn1": "M4 7h10 M18 7h2 M4 17h4 M12 17h8 M14 5v4 M8 15v4",
@@ -515,6 +574,8 @@ def control_svg(e):
                 _rect(170, 48, 464, 254, 30, "rgba(30,34,52,0.95)", "rgba(255,255,255,0.18)", 1.5))
     if k == "dock":
         return _rect(10, 6, w - 20, h - 10, 28, "rgba(255,255,255,0.08)", "rgba(255,255,255,0.14)", 1)
+    if k == "panel_dark":   # camera adjustment bar: dark glass so it reads over the camera picture
+        return _rect(x0 + 2, y0 + 2, bw - 4, bh - 4, min(24.0, bh / 4.0), "rgba(14,16,28,0.82)", "rgba(255,255,255,0.18)", 1)
     if k == "panel":
         return _rect(x0 + 2, y0 + 2, bw - 4, bh - 4, min(26.0, bh / 4.0), "rgba(255,255,255,0.08)", "rgba(255,255,255,0.15)", 1)
     if k == "track":

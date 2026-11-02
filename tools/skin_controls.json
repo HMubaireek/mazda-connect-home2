@@ -782,24 +782,6 @@
  },
  {
   "control": "InCall2",
-  "file": "NowPlayingBG.png",
-  "size": [
-   780,
-   417
-  ],
-  "bbox": [
-   0,
-   0,
-   780,
-   416
-  ],
-  "kind": "clear",
-  "selectors": [
-   ".InCall2InCallBG"
-  ]
- },
- {
-  "control": "InCall2",
   "file": "NowPlayingImageFrame.png",
   "size": [
    146,
@@ -3442,24 +3424,6 @@
  },
  {
   "control": "NowPlaying4",
-  "file": "NowPlayingBG.png",
-  "size": [
-   780,
-   416
-  ],
-  "bbox": [
-   0,
-   0,
-   780,
-   416
-  ],
-  "kind": "clear",
-  "selectors": [
-   ".NowPlaying4Ctrl"
-  ]
- },
- {
-  "control": "NowPlaying4",
   "file": "NowPlayingImageFrame.png",
   "size": [
    146,
@@ -3525,7 +3489,7 @@
    74,
    140
   ],
-  "kind": "panel",
+  "kind": "panel_dark",
   "selectors": [
    ".ScreenSettings2CtrlCloseBtn_Bg"
   ]
@@ -3543,7 +3507,7 @@
    726,
    140
   ],
-  "kind": "panel",
+  "kind": "panel_dark",
   "selectors": [
    ".ScreenSettings2CtrlTabsBg"
   ]
@@ -4246,233 +4210,6 @@
   "kind": "panel",
   "selectors": [
    ".ScrollDetailCtrlHeadBack"
-  ]
- },
- {
-  "control": "Tabs",
-  "file": "TabBottomMask.png",
-  "size": [
-   749,
-   1
-  ],
-  "bbox": [
-   1,
-   0,
-   748,
-   1
-  ],
-  "kind": "clear",
-  "selectors": [
-   ".TabsCtrlBottomMask"
-  ]
- },
- {
-  "control": "Tabs",
-  "file": "TabHighlight_Style02.png",
-  "size": [
-   354,
-   60
-  ],
-  "bbox": [
-   0,
-   0,
-   354,
-   60
-  ],
-  "kind": "btn_on",
-  "selectors": [
-   ".TabsCtrlStyle2ButtonEnabledCurrent",
-   ".TabsCtrlStyle2ButtonDownCurrent"
-  ]
- },
- {
-  "control": "Tabs",
-  "file": "TabHighlight_Style03.png",
-  "size": [
-   238,
-   60
-  ],
-  "bbox": [
-   0,
-   0,
-   238,
-   60
-  ],
-  "kind": "btn_on",
-  "selectors": [
-   ".TabsCtrlStyle3ButtonEnabledCurrent",
-   ".TabsCtrlStyle3ButtonDownCurrent"
-  ]
- },
- {
-  "control": "Tabs",
-  "file": "TabHighlight_Style04.png",
-  "size": [
-   143,
-   59
-  ],
-  "bbox": [
-   0,
-   0,
-   143,
-   59
-  ],
-  "kind": "btn_on",
-  "selectors": [
-   ".TabsCtrlStyle4ButtonEnabledCurrent",
-   ".TabsCtrlStyle4ButtonDownCurrent"
-  ]
- },
- {
-  "control": "Tabs",
-  "file": "TabPress_Arrow.png",
-  "size": [
-   84,
-   60
-  ],
-  "bbox": [
-   0,
-   0,
-   84,
-   28
-  ],
-  "kind": "btn_hit",
-  "selectors": [
-   ".TabsCtrlStyle4PrevNextBtnHit"
-  ]
- },
- {
-  "control": "Tabs",
-  "file": "TabPress_Style02.png",
-  "size": [
-   352,
-   60
-  ],
-  "bbox": [
-   0,
-   0,
-   352,
-   46
-  ],
-  "kind": "btn_hit",
-  "selectors": [
-   ".TabsCtrlStyle2ButtonDown",
-   ".TabsCtrlStyle2ButtonDownCurrent"
-  ]
- },
- {
-  "control": "Tabs",
-  "file": "TabPress_Style03.png",
-  "size": [
-   234,
-   60
-  ],
-  "bbox": [
-   0,
-   0,
-   234,
-   36
-  ],
-  "kind": "btn_hit",
-  "selectors": [
-   ".TabsCtrlStyle3ButtonDown",
-   ".TabsCtrlStyle3ButtonDownCurrent"
-  ]
- },
- {
-  "control": "Tabs",
-  "file": "TabPress_Style04.png",
-  "size": [
-   142,
-   60
-  ],
-  "bbox": [
-   0,
-   0,
-   142,
-   31
-  ],
-  "kind": "btn_hit",
-  "selectors": [
-   ".TabsCtrlStyle4ButtonDown",
-   ".TabsCtrlStyle4ButtonDownCurrent"
-  ]
- },
- {
-  "control": "Tabs",
-  "file": "Tab_Style02.png",
-  "size": [
-   354,
-   60
-  ],
-  "bbox": [
-   0,
-   0,
-   354,
-   60
-  ],
-  "kind": "btn",
-  "selectors": [
-   ".TabsCtrlStyle2ButtonEnabled",
-   ".TabsCtrlStyle2ButtonDown"
-  ]
- },
- {
-  "control": "Tabs",
-  "file": "Tab_Style03.png",
-  "size": [
-   238,
-   60
-  ],
-  "bbox": [
-   0,
-   0,
-   238,
-   60
-  ],
-  "kind": "btn",
-  "selectors": [
-   ".TabsCtrlStyle3ButtonEnabled",
-   ".TabsCtrlStyle3ButtonDown"
-  ]
- },
- {
-  "control": "Tabs",
-  "file": "Tab_Style04.png",
-  "size": [
-   143,
-   60
-  ],
-  "bbox": [
-   0,
-   0,
-   143,
-   60
-  ],
-  "kind": "btn",
-  "selectors": [
-   ".TabsCtrlStyle4ButtonEnabled",
-   ".TabsCtrlStyle4ButtonDown"
-  ]
- },
- {
-  "control": "Tabs",
-  "file": "Tab_StyleArrow.png",
-  "size": [
-   86,
-   62
-  ],
-  "bbox": [
-   0,
-   2,
-   84,
-   62
-  ],
-  "kind": "btn",
-  "selectors": [
-   ".TabsCtrlStyle4PrevBtn",
-   ".TabsCtrlStyle4NextBtn",
-   ".TabsCtrlStyle4PrevNextBtnHit"
   ]
  },
  {

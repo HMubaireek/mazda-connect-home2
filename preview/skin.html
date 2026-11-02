@@ -129,6 +129,36 @@
       el("div", "Ump3CtrlButtonIcon", b, "", "background-image: url(common/images/icons/" + name + ".png)");
     });
   }
+  if (SCREEN === "radio") {
+    // FM radio: NowPlaying4Ctrl style 2 (frequency as the title, no artwork), the media bar and its tooltip
+    var np = el("div", "NowPlaying4Ctrl", document.body, "", "position: absolute; top: 64px");
+    el("div", "NowPlaying4CtrlTitleFull", np, "89.20");
+    var info = el("div", "NowPlaying4CtrlInfoBox", np);
+    el("div", "NowPlaying4CtrlAudioTitle", info, AR ? "إذاعة الرياض" : "Riyadh Radio", "position: relative; font-size: 26px; color: rgba(255,255,255,0.8)");
+    var art = el("div", "NowPlaying4CtrlArtworkImageDiv", np);
+    el("div", "NowPlaying4CtrlArtworkImageBorder", art);
+    var ump2 = el("div", "Ump3Ctrl", document.body, "", "position: absolute; top: 340px");
+    el("div", "Ump3CtrlBackground", ump2);
+    ["IcnUmpEntMenu_En", "IcnUmpAutoMem_En", "IcnUmpFavorite_Unfavorite_En", "IcnUmpScan_Unsel_En", "IcnUmpTune_En",
+     "IcnUmpPreviousChannel_En", "IcnUmpNextChannel_En", "IcnUmpEqualizer_En"].forEach(function(name, i) {
+      var b = el("div", "Ump3Ctrl8Button" + (i === 0 ? "_focused" : "_En"), ump2, "", "position: absolute; left: " + (i * 100) + "px");
+      el("div", "Ump3CtrlButtonIcon", b, "", "background-image: url(common/images/icons/" + name + ".png)");
+    });
+    var tip = el("div", "Ump3CtrlTooltip", ump2, "", "opacity: 1; left: 4px");
+    el("div", "Ump3CtrlTooltipBalloon", tip, AR ? "الترفيه" : "Entertainment");
+    el("div", "Ump3CtrlTooltipPoint", tip, "", "left: 32px");
+  }
+  if (SCREEN === "camadjust") {
+    // Reversing camera adjustment: ScreenSettings2Ctrl (close button, tab row, slider) over the camera picture
+    document.getElementById("bg").setAttribute("style", "background-image: url(common/images/FullTransparent.png)");
+    document.documentElement.style.background = "#7a4";
+    var ss = el("div", "ScreenSettings2Ctrl", document.body, "", "position: absolute; top: 64px; left: 0; width: 800px; height: 416px");
+    el("div", "ScreenSettings2CtrlCloseBtn_Bg", ss, "", "display: block");
+    var tabs = el("div", "ScreenSettings2CtrlTabsBg", ss, "", "display: block");
+    (AR ? ["السطوع", "التباين", "تظليل", "اللون", "إعادة ضبط"] : ["Brightness", "Contrast", "Tint", "Color", "Reset"]).forEach(function(t, i) {
+      el("div", "ScreenSettings2CtrlTabBtn_En" + (i === 0 ? " ScreenSettings2CtrlTabBtn_Selected" : ""), tabs, t, "left: " + (i * 145) + "px");
+    });
+  }
   if (SCREEN === "fuel") {
     // ecoenergy FuelConsumptionCtrl: the per-minute graph (left) and the per-reset history (right)
     var fc = el("div", "FuelConsumptionCtrl", document.body, "", "position: absolute; top: 64px");
@@ -167,9 +197,29 @@
     el("div", "", cw, "").id = "btnSpacebar";
     el("div", "", cw, "").id = "btnOK";
   }
-  if (!isHome && ["camera", "media", "fuel", "dialpad", "keyboard"].indexOf(SCREEN) < 0) {
+  if (!isHome && ["camera", "media", "fuel", "dialpad", "keyboard", "radio", "camadjust"].indexOf(SCREEN) < 0) {
+    var tabbed = SCREEN === "tabs" || SCREEN === "favorites";
     var tmpl = el("div", "TemplateWithStatusLeft List2Tmplt", document.getElementById("list"));
-    var list = el("div", "List2Ctrl normalItems noTitle", tmpl);
+    var list = el("div", "List2Ctrl normalItems " + (tabbed ? "tabsTitle" : "noTitle"), tmpl);
+    if (SCREEN === "tabs") {
+      // Settings: TabsCtrl with more than 4 tabs (arrows), 4 visible at Mazda's lefts 84/227/370/513, Display chosen
+      var tc = el("div", "TabsCtrlStyle4", list);
+      el("div", "TabsCtrlStyle4PrevBtn", tc);
+      el("div", "TabsCtrlStyle4NextBtn", tc);
+      (AR ? ["AD-Disp", "العرض", "السلامة", "الصوت"] : ["AD-Disp", "Display", "Safety", "Sound"]).forEach(function(t, i) {
+        var b = el("div", "TabsCtrlStyle4Button" + (i === 1 ? "EnabledCurrent" : "Enabled"), tc, "", "left: " + (84 + i * 143) + "px");
+        el("span", "TabsCtrlLabelSpan", b, t);
+      });
+      el("div", "TabsCtrlBottomMask", tc);
+    }
+    if (SCREEN === "favorites") {
+      // Favorites: 3 tabs at Mazda's lefts 16/254/492
+      var tf = el("div", "TabsCtrlStyle3", list);
+      (AR ? ["الموسيقى", "الاتصالات", "الملاحة"] : ["Audio", "Contacts", "Navigation"]).forEach(function(t, i) {
+        var b = el("div", "TabsCtrlStyle3Button" + (i === 0 ? "EnabledCurrent" : "Enabled"), tf, "", "left: " + (16 + i * 238) + "px");
+        el("span", "TabsCtrlLabelSpan", b, t);
+      });
+    }
     var mask = el("div", "List2CtrlMask", list);
     var scroller = el("div", "List2CtrlScroller", mask);
     (AR ? ["الشاشة", "الصوت", "الساعة", "الأجهزة", "اللغة", "النظام", "إعادة الضبط"]

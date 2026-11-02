@@ -91,7 +91,33 @@ html body .List2CtrlTitle * {
   text-align: right !important;
 }
 
-html body .List2CtrlScrollIndicatorWrapper {
-  right: auto !important;
-  left: 34px !important;
+/* Mirrored rows show the row images mirrored, so these use copies drawn at the mirrored position. */
+html body .List2Ctrl.normalItems .ListItem,
+html body .List2Ctrl.thickItems .ListItem {
+  background-image: url(../images/home2skin/list_sep_rtl.png) !important;
 }
+
+html body .List2Ctrl.normalItems .ListItem.focus { background-image: url(../images/home2skin/list_focus_rtl.png) !important; }
+html body .List2Ctrl.thickItems .ListItem.focus { background-image: url(../images/home2skin/list_focus_thick_rtl.png) !important; }
+html body .List2Ctrl.normalItems .ListItem.hit { background-image: url(../images/home2skin/list_hit_rtl.png) !important; }
+html body .List2Ctrl.thickItems .ListItem.hit { background-image: url(../images/home2skin/list_hit_thick_rtl.png) !important; }
+
+/* Tabs: the first tab on the right (bar flipped, each tab flipped back); the arrows swap sides and point outwards. */
+html body .TabsCtrlStyle2,
+html body .TabsCtrlStyle3,
+html body .TabsCtrlStyle4 {
+  -o-transform: scaleX(-1);
+  transform: scaleX(-1);
+}
+
+html body .TabsCtrlStyle2 > div,
+html body .TabsCtrlStyle3 > div,
+html body .TabsCtrlStyle4 > div {
+  -o-transform: scaleX(-1);
+  transform: scaleX(-1);
+}
+
+html body div.TabsCtrlStyle4PrevBtn { background-image: url(../images/home2skin/tab_next_en.png) !important; }
+html body div.TabsCtrlStyle4NextBtn { background-image: url(../images/home2skin/tab_prev_en.png) !important; }
+html body div.TabsCtrlStyle4PrevBtn.TabsCtrlStyle4PrevNextBtnHit { background-image: url(../images/home2skin/tab_next_hit.png) !important; }
+html body div.TabsCtrlStyle4NextBtn.TabsCtrlStyle4PrevNextBtnHit { background-image: url(../images/home2skin/tab_prev_hit.png) !important; }

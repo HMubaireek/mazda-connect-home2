@@ -1372,33 +1372,5 @@
  ".ScreenSettings2CtrlSliderContainer .ScreenSettings2CtrlSliderFill_Focused": [
   "gui:common/controls/ScreenSettings2/images/UMP_Scrubber_Mask01.png",
   "ctl:ScreenSettings2_UMP_Scrubber_Fill_Focus.png"
- ],
- ".TabsCtrlStyle2ButtonDown": [
-  "ctl:Tabs_TabPress_Style02.png",
-  "ctl:Tabs_Tab_Style02.png"
- ],
- ".TabsCtrlStyle2ButtonDownCurrent": [
-  "ctl:Tabs_TabPress_Style02.png",
-  "ctl:Tabs_TabHighlight_Style02.png"
- ],
- ".TabsCtrlStyle3ButtonDown": [
-  "ctl:Tabs_TabPress_Style03.png",
-  "ctl:Tabs_Tab_Style03.png"
- ],
- ".TabsCtrlStyle3ButtonDownCurrent": [
-  "ctl:Tabs_TabPress_Style03.png",
-  "ctl:Tabs_TabHighlight_Style03.png"
- ],
- ".TabsCtrlStyle4ButtonDown": [
-  "ctl:Tabs_TabPress_Style04.png",
-  "ctl:Tabs_Tab_Style04.png"
- ],
- ".TabsCtrlStyle4ButtonDownCurrent": [
-  "ctl:Tabs_TabPress_Style04.png",
-  "ctl:Tabs_TabHighlight_Style04.png"
- ],
- ".TabsCtrlStyle4PrevNextBtnHit": [
-  "ctl:Tabs_TabPress_Arrow.png",
-  "ctl:Tabs_Tab_StyleArrow.png"
  ]
 }

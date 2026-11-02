@@ -36,7 +36,7 @@ await shot('lang=en&screen=alert&alert=nav', 'skin_en_alert.png');
 await shot('lang=en&screen=home&focus=btn', 'skin_en_home.png');
 await shot('lang=en&screen=icons', 'skin_en_icons.png');
 await shot('screen=mute', 'skin_ar_mute.png');
-for (const s of ['media', 'fuel', 'dialpad', 'keyboard']) {
+for (const s of ['media', 'fuel', 'dialpad', 'keyboard', 'tabs', 'favorites', 'radio', 'camadjust']) {
   await shot('screen=' + s, 'skin_ar_' + s + '.png');
   await shot('lang=en&screen=' + s, 'skin_en_' + s + '.png');
 }
@@ -56,12 +56,12 @@ expect('menu rows in Tajawal Medium', (await css('.ListItem .line1', 'fontFamily
 expect('clock pill at the left edge (24px)', (await box('.StatusBarCtrlClock')).slice(0, 2), [24, 120]);
 expect('home pill at the right edge (776px)', (await box('.StatusBarCtrlHomeBtn')).slice(0, 2), [732, 776]);
 expect('menu container right edge in line with the bar (776px)', (await box('.List2CtrlMask'))[1], 776);
-expect('menu container starts after the back button', (await box('.List2CtrlMask'))[0], 94);
-expect('focused row is a rounded pill image', (await css('.ListItem.focus', 'backgroundImage')).includes('list_focus.png'), true);
+expect('menu container starts after the back button', (await box('.List2CtrlMask'))[0], 102);
+expect('focused row is a rounded pill image (mirrored copy)', (await css('.ListItem.focus', 'backgroundImage')).includes('list_focus_rtl.png'), true);
 expect('Arabic rows mirrored (text right, controls left)', (await css('.ListItem.focus', 'transform')).startsWith('matrix(-1'), true);
 expect('Arabic row text right-aligned', await css('.ListItem .line1', 'textAlign'), 'right');
 expect('row text smaller than stock 35px', await css('.ListItem .line1', 'fontSize'), '26px');
-expect('scroll indicator on the left in Arabic', (await box('.List2CtrlScrollIndicatorWrapper'))[0], 102);
+expect('scroll indicator outside the container, after the back button', (await box('.List2CtrlScrollIndicatorWrapper'))[0], 84);
 expect('screen icon replaced', (await css('.StatusBarCtrlDomainIcon', 'backgroundImage')).includes('sbn_settings.png'), true);
 expect('focused row spans the container', (await box('.ListItem.focus')).slice(0, 2), [68, 800]);
 expect('empty icon group hidden', await css('.StatusBarCtrlIconContainer', 'display'), 'none');
@@ -136,7 +136,7 @@ expect('en home pill at the left edge (24px)', (await box('.StatusBarCtrlHomeBtn
 expect('en clock pill at the right edge (776px)', (await box('.StatusBarCtrlClock')).slice(0, 2), [680, 776]);
 expect('en title starts after the screen icon', (await box('.StatusBarCtrlAppName'))[0], 124);
 expect('en icon pill ends next to the clock pill', await page.evaluate(() => Math.round(document.querySelectorAll('.StatusBarCtrlIconContainer')[1].getBoundingClientRect().right)), 670);
-expect('en menu container lines up with the bar', (await box('.List2CtrlMask')).slice(0, 2), [94, 776]);
+expect('en menu container lines up with the bar', (await box('.List2CtrlMask')).slice(0, 2), [102, 776]);
 expect('en focused row is a rounded pill image', (await css('.ListItem.focus', 'backgroundImage')).includes('list_focus.png'), true);
 expect('en rows not mirrored', await css('.ListItem.focus', 'transform'), 'none');
 expect('en battery uses the new icon', (await css('#StatusBar_Batt', 'backgroundImage')).includes('sb_batt_04.png'), true);

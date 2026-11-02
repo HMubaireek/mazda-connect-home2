@@ -96,10 +96,6 @@
   background-image: url(../images/home2skin/ctl/InCall2_Active_Call_Bkg.png) !important;
 }
 
-.InCall2InCallBG {
-  background-image: url(../images/home2skin/ctl/InCall2_NowPlayingBG.png) !important;
-}
-
 .InCall2ContactImageFrame {
   background-image: url(../images/home2skin/ctl/InCall2_NowPlayingImageFrame.png) !important;
 }
@@ -477,10 +473,6 @@
   background-image: url(../images/home2skin/ctl/Messaging2_MessageScrollbar_Bg.png) !important;
 }
 
-.NowPlaying4Ctrl {
-  background-image: url(../images/home2skin/ctl/NowPlaying4_NowPlayingBG.png) !important;
-}
-
 .NowPlaying4CtrlArtworkImageBorder {
   background-image: url(../images/home2skin/ctl/NowPlaying4_NowPlayingImageFrame.png) !important;
 }
@@ -574,27 +566,6 @@
 
 .ScrollDetailCtrlHeadBack {
   background-image: url(../images/home2skin/ctl/ScrollDetail_ScrollDetailHeadBack_Bg.png) !important;
-}
-
-.TabsCtrlBottomMask {
-  background-image: url(../images/home2skin/ctl/Tabs_TabBottomMask.png) !important;
-}
-
-.TabsCtrlStyle2ButtonEnabled {
-  background-image: url(../images/home2skin/ctl/Tabs_Tab_Style02.png) !important;
-}
-
-.TabsCtrlStyle3ButtonEnabled {
-  background-image: url(../images/home2skin/ctl/Tabs_Tab_Style03.png) !important;
-}
-
-.TabsCtrlStyle4ButtonEnabled {
-  background-image: url(../images/home2skin/ctl/Tabs_Tab_Style04.png) !important;
-}
-
-.TabsCtrlStyle4PrevBtn,
-.TabsCtrlStyle4NextBtn {
-  background-image: url(../images/home2skin/ctl/Tabs_Tab_StyleArrow.png) !important;
 }
 
 .Tuner4CtrlBackgroundDialBg,
@@ -1197,18 +1168,6 @@
   background-image: url(../images/home2skin/ctl/ScreenSettings2_Tab_Selected.png) !important;
 }
 
-.TabsCtrlStyle2ButtonEnabledCurrent {
-  background-image: url(../images/home2skin/ctl/Tabs_TabHighlight_Style02.png) !important;
-}
-
-.TabsCtrlStyle3ButtonEnabledCurrent {
-  background-image: url(../images/home2skin/ctl/Tabs_TabHighlight_Style03.png) !important;
-}
-
-.TabsCtrlStyle4ButtonEnabledCurrent {
-  background-image: url(../images/home2skin/ctl/Tabs_TabHighlight_Style04.png) !important;
-}
-
 /* Stacked images */
 .DialPad2Ctrl .btn.active { background-image: url(../images/home2skin/ctl/DialPad2_Key_Hit.png), url(../images/home2skin/ctl/DialPad2_DialKey.png) !important; }
 .DialPad2Ctrl .btn.focused { background-image: url(../images/home2skin/ctl/DialPad2_Key_Focus.png), url(../images/home2skin/ctl/DialPad2_DialKey.png) !important; }
@@ -1524,13 +1483,6 @@
 .ScreenSettings2CtrlSliderContainer .ScreenSettings2CtrlSliderFill { background-image: url(../../common/controls/ScreenSettings2/images/UMP_Scrubber_Mask01.png), url(../images/home2skin/ctl/ScreenSettings2_UMP_Scrubber_Fill.png) !important; }
 .ScreenSettings2CtrlSliderContainer .ScreenSettings2CtrlSliderFill_Ds { background-image: url(../../common/controls/ScreenSettings2/images/UMP_Scrubber_Mask01.png), url(../images/home2skin/ctl/ScreenSettings2_UMP_Scrubber_Fill.png) !important; }
 .ScreenSettings2CtrlSliderContainer .ScreenSettings2CtrlSliderFill_Focused { background-image: url(../../common/controls/ScreenSettings2/images/UMP_Scrubber_Mask01.png), url(../images/home2skin/ctl/ScreenSettings2_UMP_Scrubber_Fill_Focus.png) !important; }
-.TabsCtrlStyle2ButtonDown { background-image: url(../images/home2skin/ctl/Tabs_TabPress_Style02.png), url(../images/home2skin/ctl/Tabs_Tab_Style02.png) !important; }
-.TabsCtrlStyle2ButtonDownCurrent { background-image: url(../images/home2skin/ctl/Tabs_TabPress_Style02.png), url(../images/home2skin/ctl/Tabs_TabHighlight_Style02.png) !important; }
-.TabsCtrlStyle3ButtonDown { background-image: url(../images/home2skin/ctl/Tabs_TabPress_Style03.png), url(../images/home2skin/ctl/Tabs_Tab_Style03.png) !important; }
-.TabsCtrlStyle3ButtonDownCurrent { background-image: url(../images/home2skin/ctl/Tabs_TabPress_Style03.png), url(../images/home2skin/ctl/Tabs_TabHighlight_Style03.png) !important; }
-.TabsCtrlStyle4ButtonDown { background-image: url(../images/home2skin/ctl/Tabs_TabPress_Style04.png), url(../images/home2skin/ctl/Tabs_Tab_Style04.png) !important; }
-.TabsCtrlStyle4ButtonDownCurrent { background-image: url(../images/home2skin/ctl/Tabs_TabPress_Style04.png), url(../images/home2skin/ctl/Tabs_TabHighlight_Style04.png) !important; }
-.TabsCtrlStyle4PrevNextBtnHit { background-image: url(../images/home2skin/ctl/Tabs_TabPress_Arrow.png), url(../images/home2skin/ctl/Tabs_Tab_StyleArrow.png) !important; }
 
 /* Media bar and list icons */
 [style*="/IcnListAddRecipient_Ds.png"] { background-image: url(../images/home2skin/icn/IcnListAddRecipient_Ds.png) !important; }

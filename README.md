@@ -25,6 +25,11 @@ opens **Android Auto** or **Apple CarPlay** when a phone is plugged in.
 | **Arabic** | ![Media bar](docs/skin_ar_media.png) | ![Fuel economy](docs/skin_ar_fuel.png) | ![Keypad](docs/skin_ar_dialpad.png) | ![Keyboard](docs/skin_ar_keyboard.png) |
 | **English** | ![Media bar](docs/skin_en_media.png) | ![Fuel economy](docs/skin_en_fuel.png) | ![Keypad](docs/skin_en_dialpad.png) | ![Keyboard](docs/skin_en_keyboard.png) |
 
+| | Settings tabs | Favorites tabs | Radio | Camera adjustment |
+|---|---|---|---|---|
+| **Arabic** | ![Settings tabs](docs/skin_ar_tabs.png) | ![Favorites tabs](docs/skin_ar_favorites.png) | ![Radio](docs/skin_ar_radio.png) | ![Camera adjustment](docs/skin_ar_camadjust.png) |
+| **English** | ![Settings tabs](docs/skin_en_tabs.png) | ![Favorites tabs](docs/skin_en_favorites.png) | ![Radio](docs/skin_en_radio.png) | ![Camera adjustment](docs/skin_en_camadjust.png) |
+
 ![Mute box](docs/skin_ar_mute.png)
 
 > Screenshots come from the desktop preview (`preview/index.html`). The top bar is Mazda's own
@@ -32,9 +37,18 @@ opens **Android Auto** or **Apple CarPlay** when a phone is plugged in.
 
 ## Status
 
-**v1.4.0 — the rest of Mazda's screens and a new icon set.** Not yet tried in the car.
+**v1.4.1 — fixes from the v1.4.0 photos: tabs, scroll bar, radio, camera adjustment.** Not yet tried in the car.
+v1.4.0 runs in the car (new media bar icons confirmed on 2 Nov 2026).
 v1.0.4 (the first layout) runs in a 2019 CX-9 on firmware 74.00.333A (ADR / 4A N).
 
+- v1.4.1 fixes what the car showed with v1.4.0:
+  - **Tabs** (Settings, Favorites, phone) are one segmented glass bar inside the menu container: the chosen tab a
+    blue pill, the others readable white text, the arrow buttons inside the bar. In Arabic the first tab is on the right.
+  - **Scroll bar** sits outside the container, between it and a smaller back button, so it no longer covers the
+    highlighted row. The **map picture** in Display settings fits inside the container.
+  - **Camera adjustment** bar (brightness, contrast, ...) is dark glass with light text, readable over the camera picture.
+  - **Radio / now playing**: a glass card with a large frequency or title, and an artwork tile when there's no picture.
+  - **Media bar tooltip** is a dark glass balloon instead of Mazda's red one.
 - v1.4.0 restyles the screens v1.3.0 left in Mazda's look:
   - **Fuel economy** (graphs, bars, i-stop banner), **i-ACTIVSENSE** driving scores, **oil level**, **compass**:
     one glass panel per screen, Mazda's dividers as faint lines, new graph bars. The car pictures stay Mazda's.
@@ -45,7 +59,7 @@ v1.0.4 (the first layout) runs in a 2019 CX-9 on firmware 74.00.333A (ADR / 4A N
     Wi-Fi, ...): 315 icons drawn for Home 2.0. Icons for services not sold here (Pandora, Stitcher, SiriusXM, HD Radio)
     stay Mazda's.
   - Where Mazda stacks an icon over a key (keyboard keys, call button), both layers are kept.
-  - 285 Mazda images redrawn in all (v1.3.0: 144).
+  - 285 Mazda images redrawn in all (v1.3.0: 144; v1.4.1 draws the tabs and radio background by hand: 271).
 - v1.3.0 fixes what the car showed with v1.2.x:
   - **Map, reversing camera, Android Auto and CarPlay** were hidden behind the skin's background. Screens that show
     video ask Mazda's framework for a transparent background; the skin now leaves those alone.
@@ -74,7 +88,7 @@ v1.0.4 (the first layout) runs in a 2019 CX-9 on firmware 74.00.333A (ADR / 4A N
   earlier versions used `/jci/fonts`, which the browser never scans). Confirmed in the car: Tajawal loads.
 - v1.0.4 turns off the "Font check" test line.
 - The system skin passes 56 checks against Mazda's own CSS, in Arabic and English (fonts, alignment, focus, icons,
-  alerts, transparent video screens, and the 285 redrawn control images).
+  alerts, transparent video screens, the new layout, and the 271 redrawn control images).
 - The launcher passes 70 automated behaviour checks (knob, tilt, touch, every status state and its Arabic wording,
   phone hot-plug, focus hand-off, call and audio messages) and 9 clock checks.
 - The installer passes 47 automated checks against a simulated car file system (install, reinstall, remove,

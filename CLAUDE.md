@@ -4,7 +4,8 @@ A custom home screen ("Ember Glass") for Mazda Connect 1. Owner: Hussain (HMubai
 **2019 Mazda CX-9, Saudi market, firmware 74.00.333A 4A N (ADR)**, system language **Arabic**.
 v1.0.4 ran in the car on 31 Oct 2026. v1.2.1 (Ember Glance home + "Floating Pills" skin) was installed on 1 Nov 2026;
 his photos showed the bugs fixed in v1.3.0 (camera/map hidden, menus not RTL, unstyled screens). v1.3.0 and v1.4.0
-(remaining screens + icon set) are built and tested but not yet confirmed in the car. Read this whole file before changing anything.
+(remaining screens + icon set) were installed; v1.4.0 icons confirmed in the car on 2 Nov 2026. v1.4.1 (his v1.4.0
+photos: tabs, scroll bar, radio, camera bar, tooltip) is built and tested but not yet confirmed in the car. Read this whole file before changing anything.
 
 ## What the owner wants
 - Arabic first, right-to-left, Arabic-Indic digits, Hijri (Umm al-Qura) date under the Gregorian date.
@@ -101,6 +102,19 @@ All read from the system app instance `framework._appInstances.system` without c
 - Icons: `tools/skin_icons.py` holds our glyphs; swapped with `[style*="/IcnUmpX_En.png"]` because Mazda's ButtonCtrl
   and List2 set them as inline backgrounds. InCall2 contact pictures are `<img>` and can't be swapped by CSS.
 - Images go to `common/images/home2skin/ctl/` and `.../icn/`; run.sh copies and md5-verifies both.
+- The `[style*="..."]` swap of inline background images works in the car (confirmed with the media bar icons).
+
+## v1.4.1 notes (2 Nov 2026)
+- Menu layout (screen x): back button 24-72 (48px circle), scroll bar 84-90 outside the container, container 102-776
+  (list x 34-708). Arabic rows are mirrored, so row images (separator, focus, hit) have `_rtl` copies drawn mirrored.
+- Tabs = `TabsCtrl` inside List2Ctrl (2 tabs Style2, 3 Style3, 4+ Style4 with arrow slots; Mazda's inline lefts
+  15/369, 16/254/492, 84/227/370/513). Styled by hand: bar list x 40-702, tabs remapped with `[style*="left: 84px"]`.
+  Tabs are no longer in `skin_controls.json`. Arabic flips the bar (first tab on the right).
+- Display settings map = List2 title style06 `.image1` (SettingsTestImage.png, background-size 100%): resized to 662x110.
+- Camera adjustment = ScreenSettings2 (`AdjustmentSettingsBG`, `AdjustBtn_Bg` → kind `panel_dark`); the bottom
+  warning text on the camera picture is not HTML (drawn with the video), so it can't be restyled.
+- Radio / now playing = NowPlaying4 (FM uses Style2: `NowPlaying4CtrlTitleFull` = frequency, art frame 146px at 610,98).
+- Home sharpness (he wondered): no home image, font or layout value changed since v1.1.0; nothing to fix.
 
 ## Repo layout
 - `src/launcher/MainMenuCtrl.js` (+ `hijri.js`, generated) — the launcher; `MainMenuCtrl.css`, `MainMenuCtrl_rtl.css`.
