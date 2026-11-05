@@ -1,0 +1,1963 @@
+{
+ "btn_cockpitmenu.bmp": {
+  "frames": 4,
+  "size": [
+   99,
+   348
+  ],
+  "states": [
+   {
+    "box": null,
+    "kind": "empty"
+   },
+   {
+    "box": [
+     0,
+     8,
+     99,
+     87
+    ],
+    "kind": "orange"
+   },
+   {
+    "box": null,
+    "kind": "empty"
+   },
+   {
+    "box": [
+     0,
+     8,
+     99,
+     87
+    ],
+    "kind": "red"
+   }
+  ]
+ },
+ "btn_cockpitmenu_2.bmp": {
+  "frames": 4,
+  "size": [
+   400,
+   348
+  ],
+  "states": [
+   {
+    "box": [
+     0,
+     0,
+     234,
+     1
+    ],
+    "kind": "neutral"
+   },
+   {
+    "box": [
+     0,
+     9,
+     400,
+     87
+    ],
+    "kind": "orange"
+   },
+   {
+    "box": [
+     0,
+     0,
+     106,
+     1
+    ],
+    "kind": "orange"
+   },
+   {
+    "box": [
+     0,
+     9,
+     400,
+     87
+    ],
+    "kind": "red"
+   }
+  ]
+ },
+ "btn_cockpitmenu_3.bmp": {
+  "frames": 4,
+  "size": [
+   267,
+   348
+  ],
+  "states": null
+ },
+ "btn_cockpitmenu_4.bmp": {
+  "frames": 4,
+  "size": [
+   200,
+   348
+  ],
+  "states": [
+   {
+    "box": null,
+    "kind": "empty"
+   },
+   {
+    "box": [
+     0,
+     9,
+     200,
+     87
+    ],
+    "kind": "orange"
+   },
+   {
+    "box": null,
+    "kind": "empty"
+   },
+   {
+    "box": [
+     0,
+     9,
+     200,
+     87
+    ],
+    "kind": "red"
+   }
+  ]
+ },
+ "btn_cockpitmenu_4_editroute.bmp": {
+  "frames": 4,
+  "size": [
+   184,
+   348
+  ],
+  "states": [
+   {
+    "box": null,
+    "kind": "empty"
+   },
+   {
+    "box": [
+     0,
+     9,
+     184,
+     87
+    ],
+    "kind": "orange"
+   },
+   {
+    "box": null,
+    "kind": "empty"
+   },
+   {
+    "box": [
+     0,
+     9,
+     184,
+     87
+    ],
+    "kind": "red"
+   }
+  ]
+ },
+ "btn_cockpitmenu_5-8.bmp": {
+  "frames": 4,
+  "size": [
+   500,
+   348
+  ],
+  "states": [
+   {
+    "box": [
+     0,
+     0,
+     234,
+     1
+    ],
+    "kind": "orange"
+   },
+   {
+    "box": [
+     0,
+     9,
+     500,
+     87
+    ],
+    "kind": "orange"
+   },
+   {
+    "box": null,
+    "kind": "empty"
+   },
+   {
+    "box": [
+     0,
+     9,
+     500,
+     87
+    ],
+    "kind": "red"
+   }
+  ]
+ },
+ "btn_cockpitmenu_5.bmp": {
+  "frames": 4,
+  "size": [
+   160,
+   348
+  ],
+  "states": [
+   {
+    "box": null,
+    "kind": "empty"
+   },
+   {
+    "box": [
+     0,
+     9,
+     160,
+     87
+    ],
+    "kind": "orange"
+   },
+   {
+    "box": null,
+    "kind": "empty"
+   },
+   {
+    "box": [
+     0,
+     9,
+     160,
+     87
+    ],
+    "kind": "red"
+   }
+  ]
+ },
+ "btn_cockpitmenu_5_radio.bmp": {
+  "frames": 8,
+  "size": [
+   160,
+   696
+  ],
+  "states": [
+   {
+    "box": null,
+    "kind": "empty"
+   },
+   {
+    "box": null,
+    "kind": "empty"
+   },
+   {
+    "box": null,
+    "kind": "empty"
+   },
+   {
+    "box": [
+     0,
+     9,
+     160,
+     87
+    ],
+    "kind": "orange"
+   },
+   {
+    "box": [
+     0,
+     9,
+     160,
+     87
+    ],
+    "kind": "orange"
+   },
+   {
+    "box": null,
+    "kind": "empty"
+   },
+   {
+    "box": [
+     0,
+     9,
+     160,
+     87
+    ],
+    "kind": "red"
+   },
+   {
+    "box": [
+     0,
+     9,
+     160,
+     87
+    ],
+    "kind": "red"
+   }
+  ]
+ },
+ "btn_cockpitmenu_6-8.bmp": {
+  "frames": 4,
+  "size": [
+   600,
+   348
+  ],
+  "states": [
+   {
+    "box": null,
+    "kind": "empty"
+   },
+   {
+    "box": [
+     0,
+     9,
+     600,
+     87
+    ],
+    "kind": "orange"
+   },
+   {
+    "box": null,
+    "kind": "empty"
+   },
+   {
+    "box": [
+     0,
+     9,
+     600,
+     87
+    ],
+    "kind": "red"
+   }
+  ]
+ },
+ "btn_cockpitmenu_6.bmp": {
+  "frames": 4,
+  "size": [
+   135,
+   348
+  ],
+  "states": [
+   {
+    "box": null,
+    "kind": "empty"
+   },
+   {
+    "box": [
+     0,
+     9,
+     135,
+     87
+    ],
+    "kind": "orange"
+   },
+   {
+    "box": null,
+    "kind": "empty"
+   },
+   {
+    "box": [
+     0,
+     9,
+     135,
+     87
+    ],
+    "kind": "red"
+   }
+  ]
+ },
+ "btn_cockpitmenu_6_radio.bmp": {
+  "frames": 8,
+  "size": [
+   135,
+   696
+  ],
+  "states": [
+   {
+    "box": null,
+    "kind": "empty"
+   },
+   {
+    "box": null,
+    "kind": "empty"
+   },
+   {
+    "box": null,
+    "kind": "empty"
+   },
+   {
+    "box": [
+     0,
+     9,
+     135,
+     87
+    ],
+    "kind": "orange"
+   },
+   {
+    "box": [
+     0,
+     9,
+     135,
+     87
+    ],
+    "kind": "orange"
+   },
+   {
+    "box": null,
+    "kind": "empty"
+   },
+   {
+    "box": [
+     0,
+     9,
+     135,
+     87
+    ],
+    "kind": "red"
+   },
+   {
+    "box": [
+     0,
+     9,
+     135,
+     87
+    ],
+    "kind": "red"
+   }
+  ]
+ },
+ "btn_cockpitmenu_7-8.bmp": {
+  "frames": 4,
+  "size": [
+   700,
+   348
+  ],
+  "states": [
+   {
+    "box": null,
+    "kind": "empty"
+   },
+   {
+    "box": [
+     0,
+     9,
+     700,
+     87
+    ],
+    "kind": "orange"
+   },
+   {
+    "box": null,
+    "kind": "empty"
+   },
+   {
+    "box": [
+     0,
+     9,
+     700,
+     87
+    ],
+    "kind": "red"
+   }
+  ]
+ },
+ "btn_cockpitmenu_7.bmp": {
+  "frames": 4,
+  "size": [
+   115,
+   348
+  ],
+  "states": [
+   {
+    "box": null,
+    "kind": "empty"
+   },
+   {
+    "box": [
+     0,
+     9,
+     115,
+     87
+    ],
+    "kind": "orange"
+   },
+   {
+    "box": null,
+    "kind": "empty"
+   },
+   {
+    "box": [
+     0,
+     9,
+     115,
+     87
+    ],
+    "kind": "red"
+   }
+  ]
+ },
+ "btn_cockpitmenu_8.bmp": {
+  "frames": 4,
+  "size": [
+   100,
+   348
+  ],
+  "states": [
+   {
+    "box": null,
+    "kind": "empty"
+   },
+   {
+    "box": [
+     0,
+     9,
+     100,
+     87
+    ],
+    "kind": "orange"
+   },
+   {
+    "box": null,
+    "kind": "empty"
+   },
+   {
+    "box": [
+     0,
+     9,
+     100,
+     87
+    ],
+    "kind": "red"
+   }
+  ]
+ },
+ "btn_cockpitmenu_9.bmp": {
+  "frames": 4,
+  "size": [
+   89,
+   348
+  ],
+  "states": [
+   {
+    "box": null,
+    "kind": "empty"
+   },
+   {
+    "box": [
+     0,
+     9,
+     89,
+     87
+    ],
+    "kind": "orange"
+   },
+   {
+    "box": null,
+    "kind": "empty"
+   },
+   {
+    "box": [
+     0,
+     9,
+     89,
+     87
+    ],
+    "kind": "red"
+   }
+  ]
+ },
+ "btn_cockpitmenu_9_radio.bmp": {
+  "frames": 8,
+  "size": [
+   89,
+   696
+  ],
+  "states": [
+   {
+    "box": null,
+    "kind": "empty"
+   },
+   {
+    "box": null,
+    "kind": "empty"
+   },
+   {
+    "box": null,
+    "kind": "empty"
+   },
+   {
+    "box": [
+     0,
+     9,
+     89,
+     87
+    ],
+    "kind": "orange"
+   },
+   {
+    "box": [
+     0,
+     9,
+     89,
+     87
+    ],
+    "kind": "orange"
+   },
+   {
+    "box": null,
+    "kind": "empty"
+   },
+   {
+    "box": [
+     0,
+     9,
+     89,
+     87
+    ],
+    "kind": "red"
+   },
+   {
+    "box": [
+     0,
+     9,
+     89,
+     87
+    ],
+    "kind": "red"
+   }
+  ]
+ },
+ "btn_cockpitmenu_np.bmp": {
+  "frames": 4,
+  "size": [
+   115,
+   348
+  ],
+  "states": [
+   {
+    "box": null,
+    "kind": "empty"
+   },
+   {
+    "box": null,
+    "kind": "empty"
+   },
+   {
+    "box": null,
+    "kind": "empty"
+   },
+   {
+    "box": [
+     0,
+     9,
+     115,
+     87
+    ],
+    "kind": "red"
+   }
+  ]
+ },
+ "btn_openpanel.bmp": {
+  "frames": 4,
+  "size": [
+   117,
+   240
+  ],
+  "states": [
+   {
+    "box": [
+     0,
+     0,
+     117,
+     60
+    ],
+    "kind": "neutral"
+   },
+   {
+    "box": [
+     0,
+     0,
+     117,
+     60
+    ],
+    "kind": "orange"
+   },
+   {
+    "box": [
+     0,
+     0,
+     117,
+     60
+    ],
+    "kind": "neutral"
+   },
+   {
+    "box": [
+     0,
+     0,
+     117,
+     60
+    ],
+    "kind": "red"
+   }
+  ]
+ },
+ "cockpit_bg.bmp": {
+  "frames": 1,
+  "size": [
+   131,
+   419
+  ],
+  "states": [
+   {
+    "box": [
+     0,
+     0,
+     131,
+     419
+    ],
+    "kind": "neutral"
+   }
+  ]
+ },
+ "cockpit_bg_straight.bmp": {
+  "frames": 1,
+  "size": [
+   116,
+   2
+  ],
+  "states": [
+   {
+    "box": [
+     0,
+     0,
+     116,
+     2
+    ],
+    "kind": "neutral"
+   }
+  ]
+ },
+ "cockpit_bg_straight_overspeed.bmp": {
+  "frames": 2,
+  "size": [
+   116,
+   4
+  ],
+  "states": [
+   {
+    "box": [
+     0,
+     0,
+     116,
+     2
+    ],
+    "kind": "neutral"
+   },
+   {
+    "box": [
+     0,
+     0,
+     116,
+     2
+    ],
+    "kind": "yellow"
+   }
+  ]
+ },
+ "cockpit_separator_line.bmp": {
+  "frames": 1,
+  "size": [
+   117,
+   1
+  ],
+  "states": [
+   {
+    "box": [
+     0,
+     0,
+     117,
+     1
+    ],
+    "kind": "neutral"
+   }
+  ]
+ },
+ "ico_CM_2D.bmp": {
+  "frames": 4,
+  "size": [
+   50,
+   200
+  ],
+  "states": [
+   {
+    "box": [
+     6,
+     13,
+     44,
+     38
+    ],
+    "kind": "neutral"
+   },
+   {
+    "box": [
+     6,
+     13,
+     44,
+     38
+    ],
+    "kind": "neutral"
+   },
+   {
+    "box": [
+     6,
+     13,
+     44,
+     38
+    ],
+    "kind": "neutral"
+   },
+   {
+    "box": [
+     6,
+     13,
+     44,
+     38
+    ],
+    "kind": "neutral"
+   }
+  ]
+ },
+ "ico_CM_3D.bmp": {
+  "frames": 4,
+  "size": [
+   50,
+   200
+  ],
+  "states": [
+   {
+    "box": [
+     5,
+     13,
+     45,
+     37
+    ],
+    "kind": "neutral"
+   },
+   {
+    "box": [
+     5,
+     13,
+     45,
+     37
+    ],
+    "kind": "neutral"
+   },
+   {
+    "box": [
+     5,
+     13,
+     45,
+     37
+    ],
+    "kind": "neutral"
+   },
+   {
+    "box": [
+     5,
+     13,
+     45,
+     37
+    ],
+    "kind": "neutral"
+   }
+  ]
+ },
+ "ico_CM_Northup.bmp": {
+  "frames": 4,
+  "size": [
+   50,
+   200
+  ],
+  "states": [
+   {
+    "box": [
+     6,
+     7,
+     44,
+     43
+    ],
+    "kind": "neutral"
+   },
+   {
+    "box": [
+     6,
+     7,
+     44,
+     43
+    ],
+    "kind": "neutral"
+   },
+   {
+    "box": [
+     6,
+     7,
+     44,
+     43
+    ],
+    "kind": "neutral"
+   },
+   {
+    "box": [
+     6,
+     7,
+     44,
+     43
+    ],
+    "kind": "neutral"
+   }
+  ]
+ },
+ "ico_CM_PointInfo.bmp": {
+  "frames": 4,
+  "size": [
+   50,
+   200
+  ],
+  "states": [
+   {
+    "box": [
+     5,
+     6,
+     45,
+     44
+    ],
+    "kind": "neutral"
+   },
+   {
+    "box": [
+     5,
+     6,
+     45,
+     44
+    ],
+    "kind": "neutral"
+   },
+   {
+    "box": [
+     5,
+     6,
+     45,
+     44
+    ],
+    "kind": "neutral"
+   },
+   {
+    "box": [
+     5,
+     6,
+     45,
+     44
+    ],
+    "kind": "neutral"
+   }
+  ]
+ },
+ "ico_CM_RecenterMap.bmp": {
+  "frames": 4,
+  "size": [
+   50,
+   200
+  ],
+  "states": [
+   {
+    "box": [
+     6,
+     6,
+     45,
+     44
+    ],
+    "kind": "neutral"
+   },
+   {
+    "box": [
+     6,
+     6,
+     45,
+     44
+    ],
+    "kind": "neutral"
+   },
+   {
+    "box": [
+     6,
+     6,
+     45,
+     44
+    ],
+    "kind": "neutral"
+   },
+   {
+    "box": [
+     6,
+     6,
+     45,
+     44
+    ],
+    "kind": "neutral"
+   }
+  ]
+ },
+ "ico_CM_Rotate.bmp": {
+  "frames": 4,
+  "size": [
+   50,
+   200
+  ],
+  "states": [
+   {
+    "box": [
+     6,
+     7,
+     45,
+     44
+    ],
+    "kind": "neutral"
+   },
+   {
+    "box": [
+     6,
+     6,
+     45,
+     44
+    ],
+    "kind": "red"
+   },
+   {
+    "box": [
+     6,
+     7,
+     45,
+     44
+    ],
+    "kind": "neutral"
+   },
+   {
+    "box": [
+     6,
+     7,
+     45,
+     44
+    ],
+    "kind": "neutral"
+   }
+  ]
+ },
+ "ico_CM_Tilt.bmp": {
+  "frames": 4,
+  "size": [
+   50,
+   200
+  ],
+  "states": [
+   {
+    "box": [
+     6,
+     12,
+     45,
+     39
+    ],
+    "kind": "neutral"
+   },
+   {
+    "box": [
+     6,
+     12,
+     45,
+     39
+    ],
+    "kind": "red"
+   },
+   {
+    "box": [
+     6,
+     12,
+     45,
+     39
+    ],
+    "kind": "neutral"
+   },
+   {
+    "box": [
+     6,
+     12,
+     45,
+     39
+    ],
+    "kind": "neutral"
+   }
+  ]
+ },
+ "ico_CM_Zoom.bmp": {
+  "frames": 4,
+  "size": [
+   50,
+   200
+  ],
+  "states": [
+   {
+    "box": [
+     6,
+     6,
+     45,
+     45
+    ],
+    "kind": "neutral"
+   },
+   {
+    "box": [
+     6,
+     6,
+     45,
+     45
+    ],
+    "kind": "red"
+   },
+   {
+    "box": [
+     6,
+     6,
+     45,
+     44
+    ],
+    "kind": "neutral"
+   },
+   {
+    "box": [
+     6,
+     6,
+     45,
+     45
+    ],
+    "kind": "neutral"
+   }
+  ]
+ },
+ "ico_CM_browsemap.bmp": {
+  "frames": 4,
+  "size": [
+   50,
+   200
+  ],
+  "states": [
+   {
+    "box": [
+     6,
+     11,
+     45,
+     40
+    ],
+    "kind": "neutral"
+   },
+   {
+    "box": [
+     6,
+     11,
+     45,
+     40
+    ],
+    "kind": "neutral"
+   },
+   {
+    "box": [
+     6,
+     11,
+     45,
+     40
+    ],
+    "kind": "neutral"
+   },
+   {
+    "box": [
+     6,
+     11,
+     45,
+     40
+    ],
+    "kind": "neutral"
+   }
+  ]
+ },
+ "ico_CM_cancel.bmp": {
+  "frames": 4,
+  "size": [
+   50,
+   200
+  ],
+  "states": [
+   {
+    "box": [
+     6,
+     5,
+     45,
+     44
+    ],
+    "kind": "neutral"
+   },
+   {
+    "box": [
+     6,
+     5,
+     45,
+     44
+    ],
+    "kind": "neutral"
+   },
+   {
+    "box": [
+     7,
+     6,
+     45,
+     44
+    ],
+    "kind": "neutral"
+   },
+   {
+    "box": [
+     6,
+     5,
+     45,
+     44
+    ],
+    "kind": "neutral"
+   }
+  ]
+ },
+ "ico_CM_closepanel.bmp": {
+  "frames": 4,
+  "size": [
+   50,
+   200
+  ],
+  "states": [
+   {
+    "box": [
+     6,
+     6,
+     45,
+     45
+    ],
+    "kind": "neutral"
+   },
+   {
+    "box": [
+     6,
+     6,
+     45,
+     45
+    ],
+    "kind": "neutral"
+   },
+   {
+    "box": [
+     6,
+     6,
+     45,
+     45
+    ],
+    "kind": "neutral"
+   },
+   {
+    "box": [
+     6,
+     6,
+     45,
+     45
+    ],
+    "kind": "neutral"
+   }
+  ]
+ },
+ "ico_CM_closepanel_ER.bmp": {
+  "frames": 4,
+  "size": [
+   56,
+   200
+  ],
+  "states": [
+   {
+    "box": [
+     12,
+     6,
+     51,
+     45
+    ],
+    "kind": "neutral"
+   },
+   {
+    "box": [
+     12,
+     6,
+     51,
+     45
+    ],
+    "kind": "neutral"
+   },
+   {
+    "box": [
+     12,
+     6,
+     51,
+     45
+    ],
+    "kind": "neutral"
+   },
+   {
+    "box": [
+     12,
+     6,
+     51,
+     45
+    ],
+    "kind": "neutral"
+   }
+  ]
+ },
+ "ico_CM_down.bmp": {
+  "frames": 4,
+  "size": [
+   50,
+   200
+  ],
+  "states": [
+   {
+    "box": [
+     6,
+     9,
+     45,
+     42
+    ],
+    "kind": "neutral"
+   },
+   {
+    "box": [
+     6,
+     9,
+     45,
+     42
+    ],
+    "kind": "neutral"
+   },
+   {
+    "box": [
+     6,
+     9,
+     45,
+     42
+    ],
+    "kind": "neutral"
+   },
+   {
+    "box": [
+     6,
+     9,
+     45,
+     42
+    ],
+    "kind": "neutral"
+   }
+  ]
+ },
+ "ico_CM_findplace.bmp": {
+  "frames": 4,
+  "size": [
+   50,
+   200
+  ],
+  "states": [
+   {
+    "box": [
+     13,
+     6,
+     38,
+     45
+    ],
+    "kind": "neutral"
+   },
+   {
+    "box": [
+     13,
+     6,
+     38,
+     45
+    ],
+    "kind": "neutral"
+   },
+   {
+    "box": [
+     13,
+     6,
+     38,
+     45
+    ],
+    "kind": "neutral"
+   },
+   {
+    "box": [
+     13,
+     6,
+     38,
+     45
+    ],
+    "kind": "neutral"
+   }
+  ]
+ },
+ "ico_CM_navigationinfo.bmp": {
+  "frames": 4,
+  "size": [
+   50,
+   200
+  ],
+  "states": [
+   {
+    "box": [
+     14,
+     7,
+     36,
+     44
+    ],
+    "kind": "neutral"
+   },
+   {
+    "box": [
+     14,
+     7,
+     36,
+     44
+    ],
+    "kind": "neutral"
+   },
+   {
+    "box": [
+     15,
+     7,
+     36,
+     44
+    ],
+    "kind": "neutral"
+   },
+   {
+    "box": [
+     14,
+     7,
+     36,
+     44
+    ],
+    "kind": "neutral"
+   }
+  ]
+ },
+ "ico_CM_newroute.bmp": {
+  "frames": 4,
+  "size": [
+   50,
+   200
+  ],
+  "states": [
+   {
+    "box": [
+     9,
+     7,
+     41,
+     44
+    ],
+    "kind": "neutral"
+   },
+   {
+    "box": [
+     9,
+     7,
+     41,
+     44
+    ],
+    "kind": "neutral"
+   },
+   {
+    "box": [
+     9,
+     7,
+     41,
+     44
+    ],
+    "kind": "neutral"
+   },
+   {
+    "box": [
+     9,
+     7,
+     41,
+     44
+    ],
+    "kind": "neutral"
+   }
+  ]
+ },
+ "ico_CM_openpanel.bmp": {
+  "frames": 4,
+  "size": [
+   50,
+   200
+  ],
+  "states": [
+   {
+    "box": [
+     6,
+     4,
+     45,
+     43
+    ],
+    "kind": "neutral"
+   },
+   {
+    "box": [
+     6,
+     4,
+     45,
+     43
+    ],
+    "kind": "neutral"
+   },
+   {
+    "box": [
+     6,
+     4,
+     45,
+     43
+    ],
+    "kind": "neutral"
+   },
+   {
+    "box": [
+     6,
+     4,
+     45,
+     43
+    ],
+    "kind": "neutral"
+   }
+  ]
+ },
+ "ico_CM_repeatguidance.bmp": {
+  "frames": 4,
+  "size": [
+   50,
+   200
+  ],
+  "states": [
+   {
+    "box": [
+     9,
+     6,
+     44,
+     45
+    ],
+    "kind": "neutral"
+   },
+   {
+    "box": [
+     9,
+     6,
+     44,
+     45
+    ],
+    "kind": "neutral"
+   },
+   {
+    "box": [
+     9,
+     7,
+     43,
+     44
+    ],
+    "kind": "neutral"
+   },
+   {
+    "box": [
+     9,
+     6,
+     44,
+     45
+    ],
+    "kind": "neutral"
+   }
+  ]
+ },
+ "ico_CM_routemenu.bmp": {
+  "frames": 4,
+  "size": [
+   50,
+   200
+  ],
+  "states": [
+   {
+    "box": [
+     7,
+     8,
+     44,
+     42
+    ],
+    "kind": "neutral"
+   },
+   {
+    "box": [
+     7,
+     8,
+     44,
+     42
+    ],
+    "kind": "neutral"
+   },
+   {
+    "box": [
+     8,
+     8,
+     44,
+     41
+    ],
+    "kind": "neutral"
+   },
+   {
+    "box": [
+     7,
+     8,
+     44,
+     42
+    ],
+    "kind": "neutral"
+   }
+  ]
+ },
+ "ico_CM_select.bmp": {
+  "frames": 4,
+  "size": [
+   50,
+   200
+  ],
+  "states": [
+   {
+    "box": [
+     5,
+     9,
+     46,
+     42
+    ],
+    "kind": "neutral"
+   },
+   {
+    "box": [
+     5,
+     9,
+     46,
+     42
+    ],
+    "kind": "neutral"
+   },
+   {
+    "box": [
+     5,
+     9,
+     46,
+     42
+    ],
+    "kind": "neutral"
+   },
+   {
+    "box": [
+     5,
+     9,
+     46,
+     42
+    ],
+    "kind": "neutral"
+   }
+  ]
+ },
+ "ico_CM_settings.bmp": {
+  "frames": 4,
+  "size": [
+   50,
+   200
+  ],
+  "states": [
+   {
+    "box": [
+     5,
+     6,
+     45,
+     45
+    ],
+    "kind": "neutral"
+   },
+   {
+    "box": [
+     5,
+     6,
+     45,
+     45
+    ],
+    "kind": "neutral"
+   },
+   {
+    "box": [
+     5,
+     6,
+     45,
+     45
+    ],
+    "kind": "neutral"
+   },
+   {
+    "box": [
+     5,
+     6,
+     45,
+     45
+    ],
+    "kind": "neutral"
+   }
+  ]
+ },
+ "ico_CM_stopnavigation.bmp": {
+  "frames": 4,
+  "size": [
+   50,
+   200
+  ],
+  "states": [
+   {
+    "box": [
+     9,
+     7,
+     41,
+     44
+    ],
+    "kind": "neutral"
+   },
+   {
+    "box": [
+     9,
+     7,
+     41,
+     44
+    ],
+    "kind": "neutral"
+   },
+   {
+    "box": [
+     9,
+     7,
+     41,
+     44
+    ],
+    "kind": "neutral"
+   },
+   {
+    "box": [
+     9,
+     7,
+     41,
+     44
+    ],
+    "kind": "neutral"
+   }
+  ]
+ },
+ "ico_CM_traffic.bmp": {
+  "frames": 4,
+  "size": [
+   50,
+   200
+  ],
+  "states": [
+   {
+    "box": [
+     6,
+     9,
+     44,
+     43
+    ],
+    "kind": "neutral"
+   },
+   {
+    "box": [
+     6,
+     9,
+     44,
+     43
+    ],
+    "kind": "neutral"
+   },
+   {
+    "box": [
+     5,
+     9,
+     44,
+     43
+    ],
+    "kind": "neutral"
+   },
+   {
+    "box": [
+     6,
+     9,
+     44,
+     43
+    ],
+    "kind": "neutral"
+   }
+  ]
+ },
+ "ico_CM_up.bmp": {
+  "frames": 4,
+  "size": [
+   50,
+   200
+  ],
+  "states": [
+   {
+    "box": [
+     6,
+     9,
+     45,
+     42
+    ],
+    "kind": "neutral"
+   },
+   {
+    "box": [
+     6,
+     9,
+     45,
+     42
+    ],
+    "kind": "neutral"
+   },
+   {
+    "box": [
+     6,
+     9,
+     45,
+     42
+    ],
+    "kind": "neutral"
+   },
+   {
+    "box": [
+     6,
+     9,
+     45,
+     42
+    ],
+    "kind": "neutral"
+   }
+  ]
+ },
+ "mapmenupopup.bmp": {
+  "frames": 1,
+  "size": [
+   200,
+   90
+  ],
+  "states": [
+   {
+    "box": [
+     5,
+     5,
+     195,
+     85
+    ],
+    "kind": "red"
+   }
+  ]
+ },
+ "mapmenupopup_leg.bmp": {
+  "frames": 1,
+  "size": [
+   36,
+   21
+  ],
+  "states": [
+   {
+    "box": [
+     0,
+     0,
+     36,
+     21
+    ],
+    "kind": "red"
+   }
+  ]
+ },
+ "spr_cockpitMenuBG.bmp": {
+  "frames": 1,
+  "size": [
+   800,
+   98
+  ],
+  "states": [
+   {
+    "box": [
+     0,
+     0,
+     800,
+     98
+    ],
+    "kind": "neutral"
+   }
+  ]
+ },
+ "spr_floating_divider.bmp": {
+  "frames": 1,
+  "size": [
+   2,
+   83
+  ],
+  "states": [
+   {
+    "box": [
+     0,
+     0,
+     2,
+     83
+    ],
+    "kind": "neutral"
+   }
+  ]
+ },
+ "spr_speedlimit_eu.bmp": {
+  "frames": 2,
+  "size": [
+   61,
+   122
+  ],
+  "states": [
+   {
+    "box": [
+     2,
+     1,
+     61,
+     59
+    ],
+    "kind": "red"
+   },
+   {
+    "box": [
+     1,
+     1,
+     61,
+     61
+    ],
+    "kind": "red"
+   }
+  ]
+ }
+}

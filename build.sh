@@ -3,6 +3,7 @@
 #   ./build.sh            -> installer/home2/* + dist/home2-installer-<version>.zip
 # Asset generation (needs Python: Pillow numpy cairosvg hijridate mutagen, and ffmpeg):
 #   python3 tools/build_assets.py && python3 tools/gen_hijri.py && python3 tools/make_trigger.py
+#   python3 tools/build_nav_skin.py   (navigation map images -> installer/home2/nav/)
 set -e
 cd "$(dirname "$0")"
 VERSION=$(cat VERSION)

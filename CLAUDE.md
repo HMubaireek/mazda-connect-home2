@@ -6,7 +6,8 @@ v1.0.4 ran in the car on 31 Oct 2026. v1.2.1 (Ember Glance home + "Floating Pill
 his photos showed the bugs fixed in v1.3.0 (camera/map hidden, menus not RTL, unstyled screens). v1.3.0 and v1.4.0
 (remaining screens + icon set) were installed; v1.4.0 icons confirmed in the car on 2 Nov 2026. v1.4.1 (his v1.4.0
 photos: tabs, scroll bar, radio, camera bar, tooltip) was installed; v1.4.2 (his v1.4.1 photos) is built and tested
-but not yet confirmed in the car. Read this whole file before changing anything.
+but not yet confirmed in the car. v1.5.0 adds the navigation map skin ("Glass Dock"), built and tested, not yet in the
+car. Read this whole file before changing anything.
 
 ## What the owner wants
 - Arabic first, right-to-left, Arabic-Indic digits, Hijri (Umm al-Qura) date under the Gregorian date.
@@ -137,6 +138,27 @@ All read from the system app instance `framework._appInstances.system` without c
 - Oil value = Mazda's `OilLife` message (`schedmaint._oilDeteriorationLevel`), shown only when
   `_oilMaintenanceMode === "Flexible"`. Fuel range really isn't sent to the head unit (only the cluster has it).
 - The map screen is NNG navigation from the SD card (native), not HTML: only the status bar over it is ours.
+
+## v1.5.0 navigation map skin (5 Nov 2026, design S "Glass Dock", Round 10 on the canvas)
+- The map is NNG 9.12 (native). Its look is in the **car**, not on the SD card: `/jci/nng/ux/_skin_jci_mazda.zip`
+  (1458 images in `ui_jci_mazda/800_480/`), layout `.ui/.css/.lua` in `/jci/nng/data.zip` + other `ux/*.zip` plug-ins.
+  The SD card (`/mnt/sd_nav`) holds only signed map content (`*.sgn`) and the VIN-locked licence (`license/device.nng`,
+  `.lyc`): never write to it. A Naviextras map update only writes the card, so it can't touch our skin; a firmware
+  reflash would.
+- Images are NNG "RL" bitmaps (decoded by `tools/nng_rl.py`; format in its header), but the skin also holds plain 32-bit
+  BMPs with straight alpha (cursor.bmp...), so we write BM (see `write_bmp` in `tools/build_nav_skin.py`).
+- `tools/extract_nav_table.py <extracted jci/nng>` → `tools/nav_skin_table.json` (sizes + what each state shows);
+  `tools/build_nav_skin.py` → `installer/home2/nav/` (51 BMPs + `home2_nav.txt` marker). Mazda's images are never shipped:
+  run.sh copies the original zip to `<backup>/nav/`, adds ours with the car's `/usr/bin/zip`, tests it, puts it in place
+  (new file + rename), Remove puts the backup back. Stock zip md5 (74.00.333A ADR) `d9fa61c112864b2858e4bdc3ac3449a8`.
+- Bar buttons `btn_cockpitmenu_<n>.bmp` are 87px per state: normal, pressed (Mazda orange), disabled, focus (Mazda red);
+  `_radio` ones have 8. Icons `ico_CM_*` 50px per state (normal, pressed/active, disabled, focus). All 8 bar buttons use
+  the same image, so the focus pill is inset 24px (can't round only the end buttons with images alone).
+  Bar background `spr_cockpitMenuBG.bmp` (800x98, drawn from y 384), tooltip `mapmenupopup(_leg).bmp` (stretched),
+  speed sign `spr_speedlimit_eu.bmp` (2 states) on `cockpit_bg_straight*.bmp` (stretched, so no rounded corners).
+- Not done yet (would need layout or `data.zip` changes): Midnight map colours (`scheme/*/color.ini`), rounded side
+  cards, Tajawal in the map (`fonts/jci.vfont`; OS fonts from `/jci/fonts;/jci/fonts/navi`). Plug-ins in `ux/` override
+  data.zip files (`north_america.zip` replaces a `color.ini`), but their load order is untested.
 
 ## Repo layout
 - `src/launcher/MainMenuCtrl.js` (+ `hijri.js`, generated) — the launcher; `MainMenuCtrl.css`, `MainMenuCtrl_rtl.css`.

@@ -24,6 +24,12 @@ SKIN_MAIN="${R}/jci/gui/common/css/home2skin.css"
 SKIN_CSS="${R}/jci/gui/common/css/common_rtl.css"
 SKIN_IMG="${R}/jci/gui/common/images/home2skin"
 SKIN_MARKER="Home 2.0 system skin"
+# Navigation map skin (NNG, native, not HTML): our images are added to a copy of Mazda's skin zip on the car
+# (Mazda's images are never shipped). The original zip is kept in the backup folders under nav/.
+NAV_SKIN="${R}/jci/nng/ux/_skin_jci_mazda.zip"
+NAV_MARK="home2_nav.txt"
+NAV_STOCK_MD5="d9fa61c112864b2858e4bdc3ac3449a8"   # 74.00.333A ADR
+NAV_TMP="${R}/tmp/home2_nav.zip"
 
 # MD5 of Mazda's original home-menu files this build has been checked against.
 # 74.00.333A ADR (4A N)
@@ -115,6 +121,93 @@ remove_skin()
     else
         rm -f "${SKIN_CSS}"
     fi
+}
+
+nav_is_ours()
+{
+    unzip -l "${NAV_SKIN}" 2>/dev/null | grep -q "${NAV_MARK}"
+}
+
+# Put a zip in place of the navigation skin. Write a new file and rename it, so the running navigation keeps
+# reading the old one until the restart; if there is no room for two copies, overwrite in place.
+put_nav()
+{
+    # $1 = zip to put in place
+    if cp "$1" "${NAV_SKIN}.home2new" 2>/dev/null && mv -f "${NAV_SKIN}.home2new" "${NAV_SKIN}"; then
+        :
+    else
+        rm -f "${NAV_SKIN}.home2new"
+        cp "$1" "${NAV_SKIN}" || return 1
+    fi
+    sync
+    [ "$(md5 "${NAV_SKIN}")" = "$(md5 "$1")" ]
+}
+
+install_nav()
+{
+    [ -d "${PAYLOAD}/nav" ] || return 0
+    if [ ! -f "${NAV_SKIN}" ]; then
+        echo "No navigation skin on this unit (${NAV_SKIN}): map skin skipped."
+        return 0
+    fi
+    if ! command -v zip > /dev/null 2>&1 || ! command -v unzip > /dev/null 2>&1; then
+        echo "zip/unzip not found: map skin skipped."
+        return 0
+    fi
+    echo "Navigation skin md5: $(md5 "${NAV_SKIN}") (stock 74.00.333A: ${NAV_STOCK_MD5})"
+    if nav_is_ours; then
+        if [ ! -f "${BACKUP}/nav/_skin_jci_mazda.zip" ]; then
+            echo "Map skin is installed but its backup is missing: map skin left as it is."
+            return 0
+        fi
+        echo "Map skin already installed: updating it from the backup of the original."
+    else
+        mkdir -p "${BACKUP}/nav" "${USB_BACKUP}/nav"
+        if ! cp "${NAV_SKIN}" "${BACKUP}/nav/_skin_jci_mazda.zip" ||
+           [ "$(md5 "${BACKUP}/nav/_skin_jci_mazda.zip")" != "$(md5 "${NAV_SKIN}")" ]; then
+            rm -f "${BACKUP}/nav/_skin_jci_mazda.zip"
+            echo "Could not back up the navigation skin: map skin skipped."
+            return 0
+        fi
+        cp "${NAV_SKIN}" "${USB_BACKUP}/nav/_skin_jci_mazda.zip" || echo "Note: no copy of the navigation skin on the USB stick."
+        echo "Backed up the navigation skin to ${BACKUP}/nav and ${USB_BACKUP}/nav"
+    fi
+    mkdir -p "$(dirname "${NAV_TMP}")"
+    rm -f "${NAV_TMP}"
+    if ! cp "${BACKUP}/nav/_skin_jci_mazda.zip" "${NAV_TMP}" ||
+       ! ( cd "${PAYLOAD}/nav" && zip -q -X "${NAV_TMP}" "${NAV_MARK}" ui_jci_mazda/800_480/*.bmp ) ||
+       ! unzip -tq "${NAV_TMP}" > /dev/null 2>&1; then
+        rm -f "${NAV_TMP}"
+        echo "Could not build the new navigation skin."
+        return 1
+    fi
+    if ! put_nav "${NAV_TMP}"; then
+        rm -f "${NAV_TMP}"
+        echo "Could not copy the new navigation skin."
+        return 1
+    fi
+    rm -f "${NAV_TMP}"
+    echo "Map skin installed ($(ls "${PAYLOAD}"/nav/ui_jci_mazda/800_480/*.bmp | wc -l) images)."
+    return 0
+}
+
+restore_nav()
+{
+    # $1 = backup folder holding nav/_skin_jci_mazda.zip
+    # $2 = "force": put the backup back even if the current file is not ours (an install that failed half-way)
+    if [ "$2" != "force" ]; then
+        [ -f "${NAV_SKIN}" ] && nav_is_ours || return 0
+    else
+        [ -f "${BACKUP}/nav/_skin_jci_mazda.zip" ] || [ -f "${USB_BACKUP}/nav/_skin_jci_mazda.zip" ] || return 0
+        [ "$(md5 "${NAV_SKIN}")" = "$(md5 "${BACKUP}/nav/_skin_jci_mazda.zip")" ] && return 0
+    fi
+    for b in "$1" "${BACKUP}" "${USB_BACKUP}"; do
+        if [ -f "$b/nav/_skin_jci_mazda.zip" ] && ! unzip -l "$b/nav/_skin_jci_mazda.zip" 2>/dev/null | grep -q "${NAV_MARK}"; then
+            put_nav "$b/nav/_skin_jci_mazda.zip" && { echo "Navigation skin restored from $b/nav"; return 0; }
+        fi
+    done
+    echo "Could not restore the navigation skin."
+    return 1
 }
 
 if [ ${CHOICE} -eq 0 ]
@@ -217,11 +310,19 @@ then
         [ "$(md5 "${SKIN_IMG}/icn/$(basename "$p")")" = "$(md5 "$p")" ] || VERIFY_OK=1
     done
 
-    if [ ${COPY_OK} -ne 0 ] || [ ${VERIFY_OK} -ne 0 ]; then
+    # Navigation map skin (only once everything else is in place).
+    NAV_OK=0
+    if [ ${COPY_OK} -eq 0 ] && [ ${VERIFY_OK} -eq 0 ]; then
+        install_nav
+        NAV_OK=$?
+    fi
+
+    if [ ${COPY_OK} -ne 0 ] || [ ${VERIFY_OK} -ne 0 ] || [ ${NAV_OK} -ne 0 ]; then
         echo "Copy or verify failed: restoring originals."
         restore_originals "${BACKUP}"
         rm -f "${CTRL}/css/MainMenuCtrl_rtl.css" "${FONTS}"/Home2Tajawal-*.ttf
         remove_skin "${BACKUP}"
+        if [ ${NAV_OK} -ne 0 ]; then restore_nav "${BACKUP}" force; else restore_nav "${BACKUP}"; fi
         sync
         dialog_wait "Install failed while copying.\nThe original home screen was restored.\nSee logs/install.log on the USB stick." 12
         exit 1
@@ -264,6 +365,7 @@ else
     rm -f "${FONTS}"/Tajawal-*.ttf "${FONTS}"/Home2Tajawal-*.ttf
     rm -f "${OLD_FONTS}"/Tajawal-*.ttf "${OLD_FONTS}"/Home2Tajawal-*.ttf
     remove_skin "${SRC}"
+    restore_nav "${SRC}" || RESTORE_OK=1
     sync
 
     if [ ${RESTORE_OK} -ne 0 ]; then

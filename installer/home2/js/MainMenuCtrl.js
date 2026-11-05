@@ -1,6 +1,6 @@
 /*
  * Home 2.0 "Ember Glass" launcher for Mazda Connect (CMU 150, firmware 74.x)
- * Version 1.4.2, "Ember Glance" layout (live car, phone and maintenance status) — see README.md
+ * Version 1.5.0, "Ember Glance" layout (live car, phone and maintenance status) — see README.md
  *
  * The installer (run.sh) recognises an installed launcher by the first line above: keep it.
  *

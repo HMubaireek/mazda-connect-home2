@@ -33,6 +33,14 @@ setup()
     FONTDIR="$CAR/jci/fonts/CHN"   # what firmware 74's /etc/profile gives the browser
     printf 'OPERA_ROOT="/jci/opera"\nexport FREETYPE_FONT_SET=YES\nexport OPERA_FONTS="/jci/fonts/CHN"\n' > "$CAR/etc/profile"
     touch "$CAR/jci/fonts/Tajawal-Bold.ttf" "$CAR/jci/fonts/Home2Tajawal-Bold.ttf"   # left over from v1.0.0-1.0.2
+    # Mazda's navigation skin stand-in: a zip with the same layout (info.ini + ui_jci_mazda/800_480/*.bmp).
+    NAV="$CAR/jci/nng/ux/_skin_jci_mazda.zip"
+    mkdir -p "$T/navsrc/ui_jci_mazda/800_480" "$CAR/jci/nng/ux"
+    echo "[INFO]" > "$T/navsrc/info.ini"
+    echo "stock bar button" > "$T/navsrc/ui_jci_mazda/800_480/btn_cockpitmenu_8.bmp"
+    echo "stock other image" > "$T/navsrc/ui_jci_mazda/800_480/arrow_straight.bmp"
+    ( cd "$T/navsrc" && zip -q -r "$NAV" info.ini ui_jci_mazda )
+    ORIG_NAV=$(md5 "$NAV")
 
     # jci-dialog stub: --question answers come from $T/answers (one exit code per line)
     cat > "$CAR/jci/tools/jci-dialog" <<EOF
@@ -73,12 +81,21 @@ check "skin main sheet installed" '[ "$(md5 "$SKIN_MAIN")" = "$(md5 "$USB/home2/
 check "skin images installed" '[ -f "$SKIN_IMG/list_panel.png" ] && [ -f "$SKIN_IMG/sb_batt_05.png" ]'
 check "control images installed" '[ -f "$SKIN_IMG/ctl/Dialog3_Dialog_2Btn.png" ]'
 check "icons installed" '[ -f "$SKIN_IMG/icn/IcnUmpPlayPause_Play_En.png" ]'
+check "map skin marked as ours" 'unzip -l "$NAV" | grep -q home2_nav.txt'
+check "map skin has our bar button" '[ "$(unzip -p "$NAV" ui_jci_mazda/800_480/btn_cockpitmenu_8.bmp | md5sum | cut -d " " -f 1)" = "$(md5 "$USB/home2/nav/ui_jci_mazda/800_480/btn_cockpitmenu_8.bmp")" ]'
+check "map skin keeps Mazda's other images" '[ "$(unzip -p "$NAV" ui_jci_mazda/800_480/arrow_straight.bmp)" = "stock other image" ]'
+check "map skin zip is valid" 'unzip -tq "$NAV" > /dev/null'
+check "map skin backup on car" '[ "$(md5 "$CAR/data_persist/home2-backup/nav/_skin_jci_mazda.zip")" = "$ORIG_NAV" ]'
+check "map skin backup on USB" '[ "$(md5 "$USB/backup/nav/_skin_jci_mazda.zip")" = "$ORIG_NAV" ]'
+check "no temporary files left" '[ ! -f "$CAR/tmp/home2_nav.zip" ] && [ ! -f "$NAV.home2new" ]'
 
 echo "--- 2. reinstall over itself keeps the original backup"
 rm -f "$T/rebooted"
 rc=$(run 0)
 check "exit 0" '[ "$rc" = 0 ]'
 check "backup still original" '[ "$(md5 "$CAR/data_persist/home2-backup/MainMenuCtrl.js")" = "$ORIG_JS" ]'
+check "map skin backup still original" '[ "$(md5 "$CAR/data_persist/home2-backup/nav/_skin_jci_mazda.zip")" = "$ORIG_NAV" ]'
+check "map skin still ours" 'unzip -l "$NAV" | grep -q home2_nav.txt'
 
 echo "--- 3. remove restores everything"
 rc=$(run 1)
@@ -93,6 +110,7 @@ check "skin style sheet removed" '[ ! -f "$SKIN" ]'
 check "skin main sheet removed" '[ ! -f "$SKIN_MAIN" ]'
 check "skin images removed" '[ ! -d "$SKIN_IMG" ]'
 check "stock common css folder kept" '[ -d "$CAR/jci/gui/common/css" ]'
+check "map skin restored" '[ "$(md5 "$NAV")" = "$ORIG_NAV" ]'
 
 echo "--- 4. remove when not installed changes nothing"
 rc=$(run 1)
@@ -148,6 +166,25 @@ check "existing sheet backed up" '[ "$(md5 "$CAR/data_persist/home2-backup/commo
 check "skin installed over it" 'grep -q "Home 2.0 system skin" "$SKIN"'
 rc=$(run 1)
 check "remove restores the earlier sheet" '[ "$(md5 "$SKIN")" = "$OTHER" ]'
+
+echo "--- 11. a unit without navigation installs without the map skin"
+setup 74.00.333
+rm -f "$NAV"
+rc=$(run 0 0)
+check "exit 0" '[ "$rc" = 0 ]'
+check "launcher installed" 'grep -q "Ember Glass" "$CTRL/js/MainMenuCtrl.js"'
+check "no navigation skin created" '[ ! -f "$NAV" ]'
+check "log says skipped" 'grep -q "map skin skipped" "$USB/logs/install.log"'
+
+echo "--- 12. a failure while building the map skin rolls everything back"
+setup 74.00.333
+printf '#!/bin/sh\nexit 12\n' > "$T/bin/zip"; chmod +x "$T/bin/zip"
+rc=$(run 0 0)
+rm -f "$T/bin/zip"
+check "exit 1" '[ "$rc" = 1 ]'
+check "js rolled back" '[ "$(md5 "$CTRL/js/MainMenuCtrl.js")" = "$ORIG_JS" ]'
+check "map skin untouched" '[ "$(md5 "$NAV")" = "$ORIG_NAV" ]'
+check "skin style sheet removed" '[ ! -f "$SKIN" ]'
 
 echo
 echo "$PASS passed, $FAIL failed"
