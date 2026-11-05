@@ -4,8 +4,11 @@
  * when the language changes back. The skin itself is home2skin.css (every language, left-to-right); these
  * rules mirror the top bar: clock on the left, title and button on the right.
  * Selectors start with "html body" so they win over home2skin.css whichever file loads last.
+ * This file is loaded at start-up, before any screen, so it also brings in the skin itself (the @import below):
+ * the camera or a USB dialog shown before the home screen is styled too.
  * Home 2.0 system skin
  */
+@import url("home2skin.css");
 
 html body .CommonBgImg {
   background-image: url(../images/home2skin/bg_rtl.png) !important;
@@ -117,7 +120,41 @@ html body .TabsCtrlStyle4 > div {
   transform: scaleX(-1);
 }
 
-html body div.TabsCtrlStyle4PrevBtn { background-image: url(../images/home2skin/tab_next_en.png) !important; }
-html body div.TabsCtrlStyle4NextBtn { background-image: url(../images/home2skin/tab_prev_en.png) !important; }
-html body div.TabsCtrlStyle4PrevBtn.TabsCtrlStyle4PrevNextBtnHit { background-image: url(../images/home2skin/tab_next_hit.png) !important; }
-html body div.TabsCtrlStyle4NextBtn.TabsCtrlStyle4PrevNextBtnHit { background-image: url(../images/home2skin/tab_prev_hit.png) !important; }
+html body [style*="Tab_ArrowLeft.png"] { background-image: url(../images/home2skin/tab_chev_right.png) !important; }
+html body [style*="Tab_ArrowLeft_Ds.png"] { background-image: url(../images/home2skin/tab_chev_right_ds.png) !important; }
+html body [style*="Tab_ArrowRight.png"] { background-image: url(../images/home2skin/tab_chev_left.png) !important; }
+html body [style*="Tab_ArrowRight_Ds.png"] { background-image: url(../images/home2skin/tab_chev_left_ds.png) !important; }
+
+/* Row text: the gap after the picture is on the right once the row is mirrored. */
+html body .List2Ctrl .ListItem .line1,
+html body .List2Ctrl .ListItem .line2,
+html body .List2Ctrl .List2CtrlLoading .loadingText {
+  padding-left: 0px !important;
+  padding-right: 26px !important;
+}
+
+html body .List2Ctrl .ListItem.styleStep .line1 {
+  padding-right: 0px !important;
+}
+
+/* Loading row: mirrored like the rows (text on the right, spinner on the left). */
+html body .List2Ctrl .List2CtrlLoading {
+  -o-transform: scaleX(-1);
+  transform: scaleX(-1);
+  background-image: url(../images/home2skin/list_sep_rtl.png) !important;
+}
+
+html body .List2Ctrl .List2CtrlLoading > * {
+  -o-transform: scaleX(-1);
+  transform: scaleX(-1);
+}
+
+html body .List2Ctrl .List2CtrlLoading > .loadingImage {
+  -o-transform: none;
+  transform: none;
+}
+
+html body .List2Ctrl .List2CtrlLoading .loadingText {
+  text-align: right !important;
+  direction: rtl !important;
+}

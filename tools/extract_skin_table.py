@@ -12,13 +12,14 @@ G, OUT = sys.argv[1], sys.argv[2]
 # Tabs are styled by hand in src/skin/home2skin.css (one segmented bar).
 CONTROLS = ["Dialog3", "InCall2", "Ump3", "Tuner4", "Wink", "ScreenSettings2", "NowPlaying4", "Sbn", "List2",
             "Keyboard", "DialPad2", "Messaging2", "ScrollDetail", "ClockSettings2"]
-# Mazda's own screens (all their CSS): fuel economy, i-ACTIVSENSE, vehicle status, compass.
-APPS = ["ecoenergy", "idm", "vsm", "emnavi"]
+# Mazda's own screens (all their CSS): fuel economy, i-ACTIVSENSE, vehicle status, compass, DVD, HD traffic image,
+# network management, SiriusXM data (sports, weather, fuel prices, ...).
+APPS = ["ecoenergy", "idm", "vsm", "emnavi", "dvd", "hdtrafficimage", "netmgmt", "xmdata"]
 SKIP = re.compile(r"Ticks_|NowPlayingBG|AhaStar|IcnStatBg|PinEntry|LineSeparatorGrid|Mobile911|IcnContactImage911|UMPPopup|UmpPopup|Popup_Point|"
-                  r"ActiveCall_|SliderTick|ProgressMeter_|_Held_|StatusNotificationBg|ListBackground|ListFocus|ListItemSeparator\.png|"
+                  r"SliderTick|ProgressMeter_|_Held_|StatusNotificationBg|ListBackground|ListFocus|ListItemSeparator\.png|"
                   r"^Scrollbar\.png|^ScrollbarBg|TitleStyle|ListItemStyle29|^background\.png|"
                   r"IcnListVDT|IcnListProtect|IcnListPlus|IcnListMinus|Icn_XM|IcnWrn|InLineButton.*XM|Scrubber_Mask|"
-                  r"^Icn(?!ListCheck|ListRadio)|Cursor|DisplayMask|Delete_Btn|Colon|ScoreTransBar|Glow|Cylinder|^Number|"
+                  r"^Icn(?!ListCheck|ListRadio|_|KbdShift)|Cursor|DisplayMask|Colon|ScoreTransBar|Glow|Cylinder|^Number|"
                   r"HEV|Flow|SmallTree|bg_tcs")
 # In app folders only frames are redrawn; pictures (car, engine, battery, energy flow, gauges) stay Mazda's.
 FRAME = re.compile(r"(?i)bg|bkgd|background|^key|btn|button|bar|divider|whiteline|rail|input|focus|hit|charconv")
@@ -26,6 +27,8 @@ NOT_SCREEN = re.compile(r"BarsBg|SliderBg|ScrubberBg|Bg_Arch|BgDial|AdjustBtn_Bg
 
 
 def kind(name, size):
+    n0 = name
+    if re.match(r"Icn_|IcnKbdShift|Delete_Btn|ActiveCall_|Arrow(Left|Right).png", n0): return "glyph"   # keyboard / keypad key symbols: our own glyphs
     n, (w, h) = name, size
     if re.search(r"(?i)(^|_)bg|bkgd|background|Bkg_|BG(_Focus)?\.png", n) and not NOT_SCREEN.search(n) and w >= 500 and h >= 300:
         if h >= 470: return "clear"   # full-screen art that also sits behind the status bar: show the skin background
@@ -129,6 +132,14 @@ for ctrl, path, is_app in css_files():
             e = entries[key]
             for sel in sels:
                 if sel not in e["selectors"]: e["selectors"].append(sel)
+# Some apps ship their own copy of a common control's CSS (xmdata: Messaging2, ScrollDetail) with other image sizes:
+# those selectors belong to the common control, so the app's copy must not claim them.
+common_sels = {s for e in entries.values() if e["control"] not in APPS for s in e["selectors"]}
+for k in list(entries):
+    e = entries[k]
+    if e["control"] in APPS:
+        e["selectors"] = [s for s in e["selectors"] if s not in common_sels]
+        if not e["selectors"]: del entries[k]
 out = sorted(entries.values(), key=lambda e: (e["control"], e["file"]))
 json.dump(out, open(OUT, "w", encoding="utf-8", newline="\n"), indent=1)
 # Stacked rules: per selector, its layers in Mazda's order, ours ("ctl:<control>_<file>") or Mazda's ("gui:<path>").

@@ -58,7 +58,7 @@ var HOME2_TEXT = {
         miles : "ميل",
         monthCount : ["شهر", "شهران", "أشهر", "شهرًا"],
         dayCount : ["يوم", "يومان", "أيام", "يومًا"],
-        oil : "زيت",
+        oil : "عمر الزيت",
         call : "مكالمة جارية",
         callSub : "اضغط للعودة",
         phoneFallback : "الجوال",
@@ -96,7 +96,7 @@ var HOME2_TEXT = {
         miles : "mi",
         monthCount : ["1 month", "2 months", "months", "months"],
         dayCount : ["1 day", "2 days", "days", "days"],
-        oil : "Oil",
+        oil : "Oil life",
         call : "Call in progress",
         callSub : "tap to return",
         phoneFallback : "Phone",
@@ -507,7 +507,8 @@ MainMenuCtrl.prototype._readCarApps = function(s)
     {
         var eco = apps.ecoenergy;
         var fe = eco && eco._cached_fuelEfficiencyData;
-        if (fe && fe.fuelEfficiency !== null && fe.fuelEfficiency !== undefined && fe.fuelEfficiency !== "")
+        // The car sends "--.-" until it has a trip average: show nothing then.
+        if (fe && fe.fuelEfficiency !== null && fe.fuelEfficiency !== undefined && !isNaN(parseFloat(fe.fuelEfficiency)))
         {
             s.fuel = String(fe.fuelEfficiency);
             var u = String(fe.fuelEfficiencyUnit || "").toLowerCase();
@@ -526,7 +527,8 @@ MainMenuCtrl.prototype._readCarApps = function(s)
             s.maintDist = (dist > 0) ? dist : 0;
             s.maintTime = (time > 0) ? time : 0;
             s.maintTimeUnit = (sm._timeUnit === "days") ? "days" : "months";
-            s.oil = (oil >= 0 && oil <= 100) ? oil : -1;
+            // Oil life is the car's own reading; Mazda shows it only with the Flexible oil-change setting.
+            s.oil = (oil >= 0 && oil <= 100 && sm._oilMaintenanceMode === "Flexible") ? oil : -1;
             s.miles = (String(sm._distanceUnit || "").toLowerCase().indexOf("mile") !== -1);
             s.maintKnown = (s.maintDist > 0 || s.maintTime > 0 || s.oil >= 0);
         }
@@ -1204,13 +1206,83 @@ function home2HookStatusBar()
     catch (e2) {}
 }
 
-// The system skin for Mazda's own screens (common/css/home2skin.css) applies in every language. Mazda's framework
-// only loads extra sheets for Arabic (common_rtl.css, the mirroring), so the launcher adds this one to the page.
+// Mazda's own lists (List2Ctrl). Row icons: List2Ctrl._setImage puts the icon URL in an inline style, which the
+// skin's [style*=...] rules did not catch in the car, so the launcher points it at our redrawn icon (HOME2_ICONS,
+// generated). Focus: when the list scrolls, Mazda's code can leave an old row marked "focus", so after every
+// focus move only the row that really has focus keeps the mark.
+function home2IconUrl(url)
+{
+    if (typeof url !== "string") { return url; }
+    var m = url.match(/(Icn(?:List|Ump)[A-Za-z0-9_]*\.png)$/);
+    if (m && typeof HOME2_ICONS !== "undefined" && HOME2_ICONS[m[1]]) { return "common/images/home2skin/icn/" + m[1]; }
+    return url;
+}
+
+function home2OneFocus(list)
+{
+    if (!list || !list.divElt || typeof list._getDOMItem !== "function") { return; }
+    var keep = list._getDOMItem(list._lastItemWithFocus);
+    var rows = list.divElt.querySelectorAll(".ListItem.focus");
+    for (var i = 0; i < rows.length; i++)
+    {
+        if (rows[i] !== keep) { rows[i].classList.remove("focus"); }
+    }
+}
+
+function home2HookList()
+{
+    try
+    {
+        if (typeof List2Ctrl === "undefined" || List2Ctrl.prototype._home2Hooked) { return; }
+        var p = List2Ctrl.prototype;
+        var setImage = p._setImage;
+        if (typeof setImage === "function")
+        {
+            p._setImage = function(li, className, url)
+            {
+                return setImage.call(this, li, className, home2IconUrl(url));
+            };
+        }
+        var showFocus = p._showFocus;
+        if (typeof showFocus === "function")
+        {
+            p._showFocus = function(item, allowOffscreen, simulationMode)
+            {
+                var result = showFocus.apply(this, arguments);
+                if (simulationMode !== true) { try { home2OneFocus(this); } catch (e) {} }
+                return result;
+            };
+        }
+        p._home2Hooked = true;
+    }
+    catch (e2) {}
+}
+
+// The system skin for Mazda's own screens (common/css/home2skin.css) applies in every language. In Arabic Mazda's
+// framework loads common_rtl.css at start-up, before any screen, and that file imports the skin, so the camera or a
+// USB dialog shown before the home screen is already styled. In other languages the launcher adds the skin here,
+// and again whenever the language changes to one without common_rtl.css.
+// The skin sets #Home2SkinProbe to 7px wide: a quick check that it is on the page.
+function home2SkinActive()
+{
+    var probe = document.getElementById("Home2SkinProbe");
+    if (!probe)
+    {
+        probe = document.createElement("div");
+        probe.id = "Home2SkinProbe";
+        probe.style.position = "absolute";
+        probe.style.visibility = "hidden";
+        document.body.appendChild(probe);
+    }
+    return probe.offsetWidth === 7;
+}
+
 function home2LoadSkin()
 {
     try
     {
         if (document.getElementById("Home2Skin")) { return; }
+        if (framework._rtlLanguage && home2SkinActive()) { return; }
         var link = document.createElement("link");
         link.id = "Home2Skin";
         link.rel = "stylesheet";
@@ -1221,7 +1293,42 @@ function home2LoadSkin()
     catch (e) {}
 }
 
+// Mazda's controls load on first use and announce themselves with framework.registerCtrlLoaded: hook them then,
+// before the first one is built. Also follow language changes for the skin.
+function home2HookFramework()
+{
+    try
+    {
+        if (framework._home2Hooked) { return; }
+        var registered = framework.registerCtrlLoaded;
+        if (typeof registered === "function")
+        {
+            framework.registerCtrlLoaded = function()
+            {
+                var result = registered.apply(this, arguments);
+                home2HookList();
+                home2HookStatusBar();
+                return result;
+            };
+        }
+        var styling = framework._setLanguageSpecificStyling;
+        if (typeof styling === "function")
+        {
+            framework._setLanguageSpecificStyling = function()
+            {
+                var result = styling.apply(this, arguments);
+                home2LoadSkin();
+                return result;
+            };
+        }
+        framework._home2Hooked = true;
+    }
+    catch (e) {}
+}
+
 home2LoadSkin();
 home2HookStatusBar();
+home2HookList();
+home2HookFramework();
 
 framework.registerCtrlLoaded("MainMenuCtrl");

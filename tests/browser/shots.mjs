@@ -41,7 +41,7 @@ async function key(k) { await page.keyboard.press(k); await new Promise(r => set
 const wait = ms => new Promise(r => setTimeout(r, ms));
 const text = sel => page.evaluate(s => { const e = document.querySelector(s); return e ? e.textContent : null; }, sel);
 const shown = sel => page.evaluate(s => { const e = document.querySelector(s); return !!e && getComputedStyle(e).display !== 'none'; }, sel);
-async function live(o) { await page.evaluate(x => setStatus(x), o); await wait(1200); }
+async function live(o) { await page.evaluate(x => setStatus(x), o); await wait(1600); }
 
 let fails = 0;
 function expect(name, got, want) {
@@ -113,7 +113,7 @@ expect('ar Phone tile badge', await text('.H2Dock3 .H2DockBadge'), '٤');
 expect('ar Apps tile flags the car', await text('.H2Dock5 .H2DockBadge'), '!');
 expect('ar maintenance due', await text('.H2Row3 .H2RowTitle'), 'الصيانة مستحقة');
 expect('ar maintenance due in', await text('.H2Row3 .H2RowSub'), 'بعد ٣٢٠٠ كم · ٤ أشهر');
-expect('ar oil life', await text('.H2Row3 .H2RowEnd'), 'زيت ٧٥٪');
+expect('ar oil life', await text('.H2Row3 .H2RowEnd'), 'عمر الزيت ٧٥٪');
 expect('ar no parked chip any more', await page.evaluate(() => document.querySelector('.H2Drive') === null), true);
 
 // Live changes, the way the car sends them
@@ -139,7 +139,7 @@ expect('11 warnings wording', await text('.H2Row1 .H2RowTitle'), '١١ تحذي�
 await live({ warnings: 1, service: false, maintkm: 0, maintmonths: 1, oil: 40 });
 expect('1 warning wording', await text('.H2Row1 .H2RowTitle'), 'تحذير واحد في السيارة');
 expect('one month wording', await text('.H2Row3 .H2RowSub'), 'بعد شهر');
-expect('oil updates', await text('.H2Row3 .H2RowEnd'), 'زيت ٤٠٪');
+expect('oil updates', await text('.H2Row3 .H2RowEnd'), 'عمر الزيت ٤٠٪');
 await live({ missed: 0, texts: 0 });
 expect('no news', await text('.H2Row2 .H2RowSub'), 'لا مكالمات أو رسائل جديدة');
 expect('no news: no badge', await shown('.H2Dock3 .H2DockBadge'), false);
@@ -164,7 +164,37 @@ expect('en car ok', await text('.H2Row1 .H2RowTitle'), 'Car is OK');
 await live({ fuel: '8.2', maintkm: 1500, maintmonths: 2, oil: 60 });
 expect('en fuel', await text('.H2Row1 .H2RowSub'), 'Average 8.2 L/100km');
 expect('en next service', await text('.H2Row3 .H2RowSub'), 'in 1500 km · 2 months');
-expect('en oil', await text('.H2Row3 .H2RowEnd'), 'Oil 60%');
+expect('en oil', await text('.H2Row3 .H2RowEnd'), 'Oil life 60%');
+await page.evaluate(() => { maintApp._oilMaintenanceMode = 'Fixed'; });
+await live({ oil: 60 });
+expect('en oil life hidden with the Fixed oil-change setting', await text('.H2Row3 .H2RowEnd'), '');
+await live({ fuel: '--.-' });
+expect('en no fuel line while the car sends --.-', await text('.H2Row1 .H2RowSub'), 'No warnings');
+
+// Mazda's list control, hooked when it loads: our row icons, and only one row keeps the focus mark
+const listResult = await page.evaluate(() => {
+  window.List2Ctrl = function() {};
+  List2Ctrl.prototype._setImage = function(li, cls, url) { this.lastUrl = url; return li; };
+  List2Ctrl.prototype._getDOMItem = function(i) { return this.rows[i]; };
+  List2Ctrl.prototype._showFocus = function(i) { this.rows[i].classList.add('focus'); this._lastItemWithFocus = i; return i; };
+  framework.registerCtrlLoaded('List2Ctrl');
+  const l = new List2Ctrl();
+  l.divElt = document.createElement('div');
+  l.rows = [0, 1, 2].map(() => { const r = document.createElement('div'); r.className = 'ListItem'; l.divElt.appendChild(r); return r; });
+  l._setImage(null, '.image1', 'common/images/icons/IcnListAddRecipient_En.png');
+  const swapped = l.lastUrl;
+  l._setImage(null, '.image1', './data/contact_photo_12.jpg');
+  const photo = l.lastUrl;
+  l._setImage(null, '.image1', 'common/images/icons/IcnListPandora_En.png');
+  const brand = l.lastUrl;
+  l.rows[0].classList.add('focus');        // a mark Mazda left behind while scrolling
+  l._showFocus(2);
+  return { swapped, photo, brand, focused: l.divElt.querySelectorAll('.focus').length, kept: l.rows[2].classList.contains('focus') };
+});
+expect('list icon swapped for ours', listResult.swapped, 'common/images/home2skin/icn/IcnListAddRecipient_En.png');
+expect('contact photo left alone', listResult.photo, './data/contact_photo_12.jpg');
+expect('brand logo left as Mazda drew it', listResult.brand, 'common/images/icons/IcnListPandora_En.png');
+expect('only one row keeps the focus mark', [listResult.focused, listResult.kept], [1, true]);
 
 // Rebuilding the home screen does not wrap the system app's handlers twice
 await page.evaluate(() => {

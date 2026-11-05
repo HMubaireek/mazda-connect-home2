@@ -30,6 +30,11 @@ opens **Android Auto** or **Apple CarPlay** when a phone is plugged in.
 | **Arabic** | ![Settings tabs](docs/skin_ar_tabs.png) | ![Favorites tabs](docs/skin_ar_favorites.png) | ![Radio](docs/skin_ar_radio.png) | ![Camera adjustment](docs/skin_ar_camadjust.png) |
 | **English** | ![Settings tabs](docs/skin_en_tabs.png) | ![Favorites tabs](docs/skin_en_favorites.png) | ![Radio](docs/skin_en_radio.png) | ![Camera adjustment](docs/skin_en_camadjust.png) |
 
+| | Contacts | Loading | Dialog |
+|---|---|---|---|
+| **Arabic** | ![Contacts](docs/skin_ar_contacts.png) | ![Loading](docs/skin_ar_loading.png) | ![Dialog](docs/skin_ar_dialog.png) |
+| **English** | ![Contacts](docs/skin_en_contacts.png) | ![Loading](docs/skin_en_loading.png) | ![Dialog](docs/skin_en_dialog.png) |
+
 ![Mute box](docs/skin_ar_mute.png)
 
 > Screenshots come from the desktop preview (`preview/index.html`). The top bar is Mazda's own
@@ -37,10 +42,26 @@ opens **Android Auto** or **Apple CarPlay** when a phone is plugged in.
 
 ## Status
 
-**v1.4.1 — fixes from the v1.4.0 photos: tabs, scroll bar, radio, camera adjustment.** Not yet tried in the car.
-v1.4.0 runs in the car (new media bar icons confirmed on 2 Nov 2026).
+**v1.4.2 — fixes from the v1.4.1 photos: styled from start-up, lists, keypad, dialogs, tab arrows.** Not yet tried
+in the car. v1.4.0 runs in the car (new media bar icons confirmed on 2 Nov 2026).
 v1.0.4 (the first layout) runs in a 2019 CX-9 on firmware 74.00.333A (ADR / 4A N).
 
+- v1.4.2 fixes what the car showed with v1.4.1:
+  - **Styled from start-up.** The reversing camera or a USB dialog shown right after starting the car (before the
+    home screen) appeared in Mazda's look: in Arabic the skin now loads with Mazda's start-up style sheet.
+  - **Lists:** contact photos sit inside the menu with a gap before the name; row icons are ours in every list;
+    only one row is highlighted while scrolling (Mazda's list could leave an old row marked); the loading row
+    ("Loading") reads right to left with a new spinner.
+  - **Phone keypad, keyboard and some dialogs:** a few of Mazda's own rules won over the skin; the skin's rules now
+    always win. Keyboard and keypad key symbols (shift, delete, globe, ...) and the dialog spinner are ours.
+  - **Tab arrows:** one clear chevron that points the right way in Arabic, on a lighter button.
+  - **Home:** the maintenance row says "Oil life 90%" and shows it only when the car's oil-change setting is
+    Flexible (that's when Mazda's own Maintenance screen shows it); no "--.-" fuel economy before the car has a value.
+  - More icons redrawn (HD, traffic announcements, subtitles, thumbs up/down, lock, signal bars, ...): 378 in all.
+    Service logos (Pandora, SiriusXM, Stitcher, Facebook, Twitter) stay as Mazda drew them.
+  - Screens sold elsewhere are covered too: DVD, HD traffic images, network management and SiriusXM data.
+  - The **map** itself (roads, bottom buttons, speed sign) is drawn by the navigation program on the map SD card,
+    not by Mazda's HTML screens, so the skin can only style the top bar over it.
 - v1.4.1 fixes what the car showed with v1.4.0:
   - **Tabs** (Settings, Favorites, phone) are one segmented glass bar inside the menu container: the chosen tab a
     blue pill, the others readable white text, the arrow buttons inside the bar. In Arabic the first tab is on the right.
@@ -88,8 +109,8 @@ v1.0.4 (the first layout) runs in a 2019 CX-9 on firmware 74.00.333A (ADR / 4A N
   earlier versions used `/jci/fonts`, which the browser never scans). Confirmed in the car: Tajawal loads.
 - v1.0.4 turns off the "Font check" test line.
 - The system skin passes 56 checks against Mazda's own CSS, in Arabic and English (fonts, alignment, focus, icons,
-  alerts, transparent video screens, the new layout, and the 271 redrawn control images).
-- The launcher passes 70 automated behaviour checks (knob, tilt, touch, every status state and its Arabic wording,
+  alerts, transparent video screens, the new layout, and the 310 redrawn control images).
+- The launcher passes 76 automated behaviour checks (knob, tilt, touch, every status state and its Arabic wording,
   phone hot-plug, focus hand-off, call and audio messages) and 9 clock checks.
 - The installer passes 47 automated checks against a simulated car file system (install, reinstall, remove,
   wrong firmware, damaged USB copy, cancel, an existing `common_rtl.css`).

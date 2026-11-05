@@ -1,6 +1,6 @@
 /*
  * Home 2.0 "Ember Glass" launcher for Mazda Connect (CMU 150, firmware 74.x)
- * Version 1.4.1, "Ember Glance" layout (live car, phone and maintenance status) — see README.md
+ * Version 1.4.2, "Ember Glance" layout (live car, phone and maintenance status) — see README.md
  *
  * The installer (run.sh) recognises an installed launcher by the first line above: keep it.
  *
@@ -58,7 +58,7 @@ var HOME2_TEXT = {
         miles : "ميل",
         monthCount : ["شهر", "شهران", "أشهر", "شهرًا"],
         dayCount : ["يوم", "يومان", "أيام", "يومًا"],
-        oil : "زيت",
+        oil : "عمر الزيت",
         call : "مكالمة جارية",
         callSub : "اضغط للعودة",
         phoneFallback : "الجوال",
@@ -96,7 +96,7 @@ var HOME2_TEXT = {
         miles : "mi",
         monthCount : ["1 month", "2 months", "months", "months"],
         dayCount : ["1 day", "2 days", "days", "days"],
-        oil : "Oil",
+        oil : "Oil life",
         call : "Call in progress",
         callSub : "tap to return",
         phoneFallback : "Phone",
@@ -507,7 +507,8 @@ MainMenuCtrl.prototype._readCarApps = function(s)
     {
         var eco = apps.ecoenergy;
         var fe = eco && eco._cached_fuelEfficiencyData;
-        if (fe && fe.fuelEfficiency !== null && fe.fuelEfficiency !== undefined && fe.fuelEfficiency !== "")
+        // The car sends "--.-" until it has a trip average: show nothing then.
+        if (fe && fe.fuelEfficiency !== null && fe.fuelEfficiency !== undefined && !isNaN(parseFloat(fe.fuelEfficiency)))
         {
             s.fuel = String(fe.fuelEfficiency);
             var u = String(fe.fuelEfficiencyUnit || "").toLowerCase();
@@ -526,7 +527,8 @@ MainMenuCtrl.prototype._readCarApps = function(s)
             s.maintDist = (dist > 0) ? dist : 0;
             s.maintTime = (time > 0) ? time : 0;
             s.maintTimeUnit = (sm._timeUnit === "days") ? "days" : "months";
-            s.oil = (oil >= 0 && oil <= 100) ? oil : -1;
+            // Oil life is the car's own reading; Mazda shows it only with the Flexible oil-change setting.
+            s.oil = (oil >= 0 && oil <= 100 && sm._oilMaintenanceMode === "Flexible") ? oil : -1;
             s.miles = (String(sm._distanceUnit || "").toLowerCase().indexOf("mile") !== -1);
             s.maintKnown = (s.maintDist > 0 || s.maintTime > 0 || s.oil >= 0);
         }
@@ -1204,13 +1206,83 @@ function home2HookStatusBar()
     catch (e2) {}
 }
 
-// The system skin for Mazda's own screens (common/css/home2skin.css) applies in every language. Mazda's framework
-// only loads extra sheets for Arabic (common_rtl.css, the mirroring), so the launcher adds this one to the page.
+// Mazda's own lists (List2Ctrl). Row icons: List2Ctrl._setImage puts the icon URL in an inline style, which the
+// skin's [style*=...] rules did not catch in the car, so the launcher points it at our redrawn icon (HOME2_ICONS,
+// generated). Focus: when the list scrolls, Mazda's code can leave an old row marked "focus", so after every
+// focus move only the row that really has focus keeps the mark.
+function home2IconUrl(url)
+{
+    if (typeof url !== "string") { return url; }
+    var m = url.match(/(Icn(?:List|Ump)[A-Za-z0-9_]*\.png)$/);
+    if (m && typeof HOME2_ICONS !== "undefined" && HOME2_ICONS[m[1]]) { return "common/images/home2skin/icn/" + m[1]; }
+    return url;
+}
+
+function home2OneFocus(list)
+{
+    if (!list || !list.divElt || typeof list._getDOMItem !== "function") { return; }
+    var keep = list._getDOMItem(list._lastItemWithFocus);
+    var rows = list.divElt.querySelectorAll(".ListItem.focus");
+    for (var i = 0; i < rows.length; i++)
+    {
+        if (rows[i] !== keep) { rows[i].classList.remove("focus"); }
+    }
+}
+
+function home2HookList()
+{
+    try
+    {
+        if (typeof List2Ctrl === "undefined" || List2Ctrl.prototype._home2Hooked) { return; }
+        var p = List2Ctrl.prototype;
+        var setImage = p._setImage;
+        if (typeof setImage === "function")
+        {
+            p._setImage = function(li, className, url)
+            {
+                return setImage.call(this, li, className, home2IconUrl(url));
+            };
+        }
+        var showFocus = p._showFocus;
+        if (typeof showFocus === "function")
+        {
+            p._showFocus = function(item, allowOffscreen, simulationMode)
+            {
+                var result = showFocus.apply(this, arguments);
+                if (simulationMode !== true) { try { home2OneFocus(this); } catch (e) {} }
+                return result;
+            };
+        }
+        p._home2Hooked = true;
+    }
+    catch (e2) {}
+}
+
+// The system skin for Mazda's own screens (common/css/home2skin.css) applies in every language. In Arabic Mazda's
+// framework loads common_rtl.css at start-up, before any screen, and that file imports the skin, so the camera or a
+// USB dialog shown before the home screen is already styled. In other languages the launcher adds the skin here,
+// and again whenever the language changes to one without common_rtl.css.
+// The skin sets #Home2SkinProbe to 7px wide: a quick check that it is on the page.
+function home2SkinActive()
+{
+    var probe = document.getElementById("Home2SkinProbe");
+    if (!probe)
+    {
+        probe = document.createElement("div");
+        probe.id = "Home2SkinProbe";
+        probe.style.position = "absolute";
+        probe.style.visibility = "hidden";
+        document.body.appendChild(probe);
+    }
+    return probe.offsetWidth === 7;
+}
+
 function home2LoadSkin()
 {
     try
     {
         if (document.getElementById("Home2Skin")) { return; }
+        if (framework._rtlLanguage && home2SkinActive()) { return; }
         var link = document.createElement("link");
         link.id = "Home2Skin";
         link.rel = "stylesheet";
@@ -1221,8 +1293,43 @@ function home2LoadSkin()
     catch (e) {}
 }
 
+// Mazda's controls load on first use and announce themselves with framework.registerCtrlLoaded: hook them then,
+// before the first one is built. Also follow language changes for the skin.
+function home2HookFramework()
+{
+    try
+    {
+        if (framework._home2Hooked) { return; }
+        var registered = framework.registerCtrlLoaded;
+        if (typeof registered === "function")
+        {
+            framework.registerCtrlLoaded = function()
+            {
+                var result = registered.apply(this, arguments);
+                home2HookList();
+                home2HookStatusBar();
+                return result;
+            };
+        }
+        var styling = framework._setLanguageSpecificStyling;
+        if (typeof styling === "function")
+        {
+            framework._setLanguageSpecificStyling = function()
+            {
+                var result = styling.apply(this, arguments);
+                home2LoadSkin();
+                return result;
+            };
+        }
+        framework._home2Hooked = true;
+    }
+    catch (e) {}
+}
+
 home2LoadSkin();
 home2HookStatusBar();
+home2HookList();
+home2HookFramework();
 
 framework.registerCtrlLoaded("MainMenuCtrl");
 
@@ -1246,3 +1353,385 @@ var Home2Hijri = {
     }
 };
 
+
+// Generated by tools/build_assets.py: the Mazda icons Home 2.0 redraws (common/images/home2skin/icn/).
+var HOME2_ICONS = {
+    "IcnListAddRecipient_Ds.png": 1,
+    "IcnListAddRecipient_En.png": 1,
+    "IcnListAddSong_Ds.png": 1,
+    "IcnListAddSong_En.png": 1,
+    "IcnListAlbum.png": 1,
+    "IcnListAm_Ds.png": 1,
+    "IcnListAm_En.png": 1,
+    "IcnListArtist.png": 1,
+    "IcnListAttachmentDisallowed.png": 1,
+    "IcnListAudio_Ds.png": 1,
+    "IcnListAudio_En.png": 1,
+    "IcnListBluetoothSettings_Ds.png": 1,
+    "IcnListBluetoothSettings_En.png": 1,
+    "IcnListBluetooth_Off.png": 1,
+    "IcnListBluetooth_On.png": 1,
+    "IcnListBrake_Ds.png": 1,
+    "IcnListBrake_En.png": 1,
+    "IcnListBtConnType_Both.png": 1,
+    "IcnListBtConnType_Music.png": 1,
+    "IcnListBtConnType_Phone.png": 1,
+    "IcnListCall_Incoming.png": 1,
+    "IcnListCall_Missed.png": 1,
+    "IcnListCall_Outgoing.png": 1,
+    "IcnListCall_Recent.png": 1,
+    "IcnListCancelImport_Ds.png": 1,
+    "IcnListCancelImport_En.png": 1,
+    "IcnListCarBattery_Ds.png": 1,
+    "IcnListCarBattery_En.png": 1,
+    "IcnListCarFinder_Ds.png": 1,
+    "IcnListCarFinder_En.png": 1,
+    "IcnListCarHealthAmber_Med.png": 1,
+    "IcnListCarHealthAmber_Small.png": 1,
+    "IcnListCarHealthGreen_Med.png": 1,
+    "IcnListCarHealthGreen_Small.png": 1,
+    "IcnListCarHealthRed_Med.png": 1,
+    "IcnListCarHealthRed_Small.png": 1,
+    "IcnListCdPlayer_Ds.png": 1,
+    "IcnListCdPlayer_En.png": 1,
+    "IcnListCheckbox_Checked.png": 1,
+    "IcnListCheckbox_Unchecked.png": 1,
+    "IcnListCheckmark.png": 1,
+    "IcnListCompose_Ds.png": 1,
+    "IcnListCompose_En.png": 1,
+    "IcnListContact_Ds.png": 1,
+    "IcnListContact_En.png": 1,
+    "IcnListContact_Placeholder.png": 1,
+    "IcnListContact_Unavailable.png": 1,
+    "IcnListContacts_Ds.png": 1,
+    "IcnListContacts_En.png": 1,
+    "IcnListCoolant_Ds.png": 1,
+    "IcnListCoolant_En.png": 1,
+    "IcnListDab_Ds.png": 1,
+    "IcnListDab_En.png": 1,
+    "IcnListDealerInfo_Ds.png": 1,
+    "IcnListDealerInfo_En.png": 1,
+    "IcnListDelete_Ds.png": 1,
+    "IcnListDelete_En.png": 1,
+    "IcnListDialpad_Ds.png": 1,
+    "IcnListDialpad_En.png": 1,
+    "IcnListDir_E.png": 1,
+    "IcnListDir_N.png": 1,
+    "IcnListDir_NE.png": 1,
+    "IcnListDir_NW.png": 1,
+    "IcnListDir_S.png": 1,
+    "IcnListDir_SE.png": 1,
+    "IcnListDir_SW.png": 1,
+    "IcnListDir_W.png": 1,
+    "IcnListDrafts_Ds.png": 1,
+    "IcnListDrafts_En.png": 1,
+    "IcnListDrivingStats_Ds.png": 1,
+    "IcnListDrivingStats_En.png": 1,
+    "IcnListEmailPending.png": 1,
+    "IcnListEmail_Ds.png": 1,
+    "IcnListEmail_En.png": 1,
+    "IcnListEmergencyBroadcast_Ds.png": 1,
+    "IcnListEmergencyBroadcast_En.png": 1,
+    "IcnListEntNowPlaying_Ds.png": 1,
+    "IcnListEntNowPlaying_En.png": 1,
+    "IcnListEnvelope_Ds.png": 1,
+    "IcnListEnvelope_En.png": 1,
+    "IcnListExclamationPoint.png": 1,
+    "IcnListFm_Ds.png": 1,
+    "IcnListFm_En.png": 1,
+    "IcnListFolder.png": 1,
+    "IcnListFolderUp.png": 1,
+    "IcnListFolder_Closed.png": 1,
+    "IcnListFolder_Open.png": 1,
+    "IcnListGlobe.png": 1,
+    "IcnListHD.png": 1,
+    "IcnListHelp_Ds.png": 1,
+    "IcnListHelp_En.png": 1,
+    "IcnListImport_Ds.png": 1,
+    "IcnListImport_En.png": 1,
+    "IcnListInbox_Ds.png": 1,
+    "IcnListInbox_En.png": 1,
+    "IcnListIncomingCalls.png": 1,
+    "IcnListIpodout_Ds.png": 1,
+    "IcnListIpodout_En.png": 1,
+    "IcnListKeyboard_Ds.png": 1,
+    "IcnListKeyboard_En.png": 1,
+    "IcnListMove_Ds.png": 1,
+    "IcnListMove_En.png": 1,
+    "IcnListNavPoi_Ds.png": 1,
+    "IcnListNavPoi_En.png": 1,
+    "IcnListOilLife_Ds.png": 1,
+    "IcnListOilLife_En.png": 1,
+    "IcnListOutbox_Ds.png": 1,
+    "IcnListOutbox_En.png": 1,
+    "IcnListOutgoingCalls.png": 1,
+    "IcnListParentalControl.png": 1,
+    "IcnListPerson.png": 1,
+    "IcnListPhone_Ds.png": 1,
+    "IcnListPhone_En.png": 1,
+    "IcnListPlaylist_Ds.png": 1,
+    "IcnListPlaylist_En.png": 1,
+    "IcnListPresetResponse_Ds.png": 1,
+    "IcnListPresetResponse_En.png": 1,
+    "IcnListProgram_Ds.png": 1,
+    "IcnListProgram_En.png": 1,
+    "IcnListProtectFile_Off_Ds.png": 1,
+    "IcnListProtectFile_Off_En.png": 1,
+    "IcnListProtectFile_On_Ds.png": 1,
+    "IcnListProtectFile_On_En.png": 1,
+    "IcnListRadio_Checked_Ds.png": 1,
+    "IcnListRadio_Checked_En.png": 1,
+    "IcnListRadio_Unchecked_Ds.png": 1,
+    "IcnListRadio_Unchecked_En.png": 1,
+    "IcnListRemoveRecipient_Ds.png": 1,
+    "IcnListRemoveRecipient_En.png": 1,
+    "IcnListRename_Ds.png": 1,
+    "IcnListRename_En.png": 1,
+    "IcnListReplace_Ds.png": 1,
+    "IcnListReplace_En.png": 1,
+    "IcnListReplicatedMobileScreen.png": 1,
+    "IcnListReporting_Ds.png": 1,
+    "IcnListReporting_En.png": 1,
+    "IcnListSMSPending.png": 1,
+    "IcnListServiceNotifications_Ds.png": 1,
+    "IcnListServiceNotifications_En.png": 1,
+    "IcnListSettings_Ds.png": 1,
+    "IcnListSettings_En.png": 1,
+    "IcnListShuffle_Off_Ds.png": 1,
+    "IcnListShuffle_Off_En.png": 1,
+    "IcnListSignalE_00.png": 1,
+    "IcnListSignalG_00.png": 1,
+    "IcnListSignalG_01.png": 1,
+    "IcnListSignalG_02.png": 1,
+    "IcnListSignalG_03.png": 1,
+    "IcnListSignalG_04.png": 1,
+    "IcnListSignalG_05.png": 1,
+    "IcnListSms_Ds.png": 1,
+    "IcnListSms_En.png": 1,
+    "IcnListSong.png": 1,
+    "IcnListSong_Placeholder.png": 1,
+    "IcnListSong_Unavailable.png": 1,
+    "IcnListStore_Ds.png": 1,
+    "IcnListStore_En.png": 1,
+    "IcnListSynchronize_Ds.png": 1,
+    "IcnListSynchronize_En.png": 1,
+    "IcnListTire_Ds.png": 1,
+    "IcnListTire_En.png": 1,
+    "IcnListUnknownCalls.png": 1,
+    "IcnListUsb_Ds.png": 1,
+    "IcnListUsb_En.png": 1,
+    "IcnListVehicleHealth_Ds.png": 1,
+    "IcnListVehicleHealth_En.png": 1,
+    "IcnListVoicemail_Ds.png": 1,
+    "IcnListVoicemail_En.png": 1,
+    "IcnListWifiHotspot_Ds.png": 1,
+    "IcnListWifiHotspot_Error.png": 1,
+    "IcnListWifiHotspot_Off.png": 1,
+    "IcnListWifiHotspot_On.png": 1,
+    "IcnListWifiSecure_00.png": 1,
+    "IcnListWifiSecure_01.png": 1,
+    "IcnListWifiSecure_02.png": 1,
+    "IcnListWifiSecure_03.png": 1,
+    "IcnListWifiSecure_04.png": 1,
+    "IcnListWifi_00.png": 1,
+    "IcnListWifi_01.png": 1,
+    "IcnListWifi_02.png": 1,
+    "IcnListWifi_03.png": 1,
+    "IcnListWifi_04.png": 1,
+    "IcnUmpAddCall_Ds.png": 1,
+    "IcnUmpAddCall_En.png": 1,
+    "IcnUmpAddContact_Ds.png": 1,
+    "IcnUmpAddContact_En.png": 1,
+    "IcnUmpAddSong_Ds.png": 1,
+    "IcnUmpAddSong_En.png": 1,
+    "IcnUmpAmPm_Ds.png": 1,
+    "IcnUmpAmPm_En.png": 1,
+    "IcnUmpApps_Ds.png": 1,
+    "IcnUmpApps_En.png": 1,
+    "IcnUmpAutoMem_Ds.png": 1,
+    "IcnUmpAutoMem_En.png": 1,
+    "IcnUmpBack15s_Ds.png": 1,
+    "IcnUmpBack15s_En.png": 1,
+    "IcnUmpBack30s_Ds.png": 1,
+    "IcnUmpBack30s_En.png": 1,
+    "IcnUmpBack_Ds.png": 1,
+    "IcnUmpBack_En.png": 1,
+    "IcnUmpBargeIn_Ds.png": 1,
+    "IcnUmpBargeIn_En.png": 1,
+    "IcnUmpBookmark_Sel_Ds.png": 1,
+    "IcnUmpBookmark_Sel_En.png": 1,
+    "IcnUmpBookmark_Unsel_Ds.png": 1,
+    "IcnUmpBookmark_Unsel_En.png": 1,
+    "IcnUmpCallVol_01.png": 1,
+    "IcnUmpCallVol_02.png": 1,
+    "IcnUmpCallVol_03.png": 1,
+    "IcnUmpCallVol_Mute.png": 1,
+    "IcnUmpCall_Ds.png": 1,
+    "IcnUmpCall_En.png": 1,
+    "IcnUmpCamAngle_Sel_Ds.png": 1,
+    "IcnUmpCamAngle_Sel_En.png": 1,
+    "IcnUmpCamAngle_Unsel_Ds.png": 1,
+    "IcnUmpCamAngle_Unsel_En.png": 1,
+    "IcnUmpCloseUmp_Ds.png": 1,
+    "IcnUmpCloseUmp_En.png": 1,
+    "IcnUmpCommMenu_Ds.png": 1,
+    "IcnUmpCommMenu_En.png": 1,
+    "IcnUmpConnectionManager_Ds.png": 1,
+    "IcnUmpConnectionManager_En.png": 1,
+    "IcnUmpCtrlPanel_Ds.png": 1,
+    "IcnUmpCtrlPanel_En.png": 1,
+    "IcnUmpCurrentList_Ds.png": 1,
+    "IcnUmpCurrentList_En.png": 1,
+    "IcnUmpDelete_Ds.png": 1,
+    "IcnUmpDelete_En.png": 1,
+    "IcnUmpDialpad_Ds.png": 1,
+    "IcnUmpDialpad_En.png": 1,
+    "IcnUmpEject.png": 1,
+    "IcnUmpEntMenu_Ds.png": 1,
+    "IcnUmpEntMenu_En.png": 1,
+    "IcnUmpEqualizer_Ds.png": 1,
+    "IcnUmpEqualizer_En.png": 1,
+    "IcnUmpFavorite_Favorite.png": 1,
+    "IcnUmpFavorite_Favorite_Ds.png": 1,
+    "IcnUmpFavorite_Favorite_En.png": 1,
+    "IcnUmpFavorite_Unfavorite.png": 1,
+    "IcnUmpFavorite_Unfavorite_Ds.png": 1,
+    "IcnUmpFavorite_Unfavorite_En.png": 1,
+    "IcnUmpFolder_Down.png": 1,
+    "IcnUmpFolder_Up.png": 1,
+    "IcnUmpFwd15s_Ds.png": 1,
+    "IcnUmpFwd15s_En.png": 1,
+    "IcnUmpFwd30s_Ds.png": 1,
+    "IcnUmpFwd30s_En.png": 1,
+    "IcnUmpFwd_Ds.png": 1,
+    "IcnUmpFwd_En.png": 1,
+    "IcnUmpGenre_Ds.png": 1,
+    "IcnUmpGenre_En.png": 1,
+    "IcnUmpHD_Sel_Ds.png": 1,
+    "IcnUmpHD_Sel_En.png": 1,
+    "IcnUmpHD_Unsel_Ds.png": 1,
+    "IcnUmpHD_Unsel_En.png": 1,
+    "IcnUmpHangup_Ds.png": 1,
+    "IcnUmpHangup_En.png": 1,
+    "IcnUmpHelp.png": 1,
+    "IcnUmpHide_Ds.png": 1,
+    "IcnUmpHide_En.png": 1,
+    "IcnUmpInfo_Ds.png": 1,
+    "IcnUmpInfo_En.png": 1,
+    "IcnUmpItunesTag_Tagged_Ds.png": 1,
+    "IcnUmpItunesTag_Tagged_En.png": 1,
+    "IcnUmpItunesTag_Untagged_Ds.png": 1,
+    "IcnUmpItunesTag_Untagged_En.png": 1,
+    "IcnUmpLiveStreaming.png": 1,
+    "IcnUmpLock_Locked_Ds.png": 1,
+    "IcnUmpLock_Locked_En.png": 1,
+    "IcnUmpLock_Unlocked_Ds.png": 1,
+    "IcnUmpLock_Unlocked_En.png": 1,
+    "IcnUmpMap_Ds.png": 1,
+    "IcnUmpMap_En.png": 1,
+    "IcnUmpMergecall_Ds.png": 1,
+    "IcnUmpMergecall_En.png": 1,
+    "IcnUmpMic.png": 1,
+    "IcnUmpMinus_Ds.png": 1,
+    "IcnUmpMinus_En.png": 1,
+    "IcnUmpMinus_Hd.png": 1,
+    "IcnUmpMore_Ds.png": 1,
+    "IcnUmpMore_En.png": 1,
+    "IcnUmpMuteUnmute_Mute_Ds.png": 1,
+    "IcnUmpMuteUnmute_Mute_En.png": 1,
+    "IcnUmpMuteUnmute_Unmute_Ds.png": 1,
+    "IcnUmpMuteUnmute_Unmute_En.png": 1,
+    "IcnUmpNextAudio_Ds.png": 1,
+    "IcnUmpNextAudio_En.png": 1,
+    "IcnUmpNextAudio_Hd.png": 1,
+    "IcnUmpNextChannel_Ds.png": 1,
+    "IcnUmpNextChannel_En.png": 1,
+    "IcnUmpNextChannel_Hd.png": 1,
+    "IcnUmpNextStation_Ds.png": 1,
+    "IcnUmpNextStation_En.png": 1,
+    "IcnUmpPhoneRoute_Handset.png": 1,
+    "IcnUmpPhoneRoute_Handset_En.png": 1,
+    "IcnUmpPhoneRoute_Vehicle.png": 1,
+    "IcnUmpPlayOrPause_Ds.png": 1,
+    "IcnUmpPlayOrPause_En.png": 1,
+    "IcnUmpPlayPause_Pause_Ds.png": 1,
+    "IcnUmpPlayPause_Pause_En.png": 1,
+    "IcnUmpPlayPause_Play_Ds.png": 1,
+    "IcnUmpPlayPause_Play_En.png": 1,
+    "IcnUmpPlayPause_Stop_Ds.png": 1,
+    "IcnUmpPlayPause_Stop_En.png": 1,
+    "IcnUmpPlus_Ds.png": 1,
+    "IcnUmpPlus_En.png": 1,
+    "IcnUmpPlus_Hd.png": 1,
+    "IcnUmpPreviousAudio_Ds.png": 1,
+    "IcnUmpPreviousAudio_En.png": 1,
+    "IcnUmpPreviousAudio_Hd.png": 1,
+    "IcnUmpPreviousChannel_Ds.png": 1,
+    "IcnUmpPreviousChannel_En.png": 1,
+    "IcnUmpPreviousChannel_Hd.png": 1,
+    "IcnUmpPreviousStation_Ds.png": 1,
+    "IcnUmpPreviousStation_En.png": 1,
+    "IcnUmpProgram_Ds.png": 1,
+    "IcnUmpProgram_En.png": 1,
+    "IcnUmpRepeat_List.png": 1,
+    "IcnUmpRepeat_List_Ds.png": 1,
+    "IcnUmpRepeat_List_En.png": 1,
+    "IcnUmpRepeat_None.png": 1,
+    "IcnUmpRepeat_None_Ds.png": 1,
+    "IcnUmpRepeat_None_En.png": 1,
+    "IcnUmpRepeat_Song.png": 1,
+    "IcnUmpRepeat_Song_Ds.png": 1,
+    "IcnUmpRepeat_Song_En.png": 1,
+    "IcnUmpReplyToAll_Ds.png": 1,
+    "IcnUmpReplyToAll_En.png": 1,
+    "IcnUmpReply_Ds.png": 1,
+    "IcnUmpReply_En.png": 1,
+    "IcnUmpReset_Ds.png": 1,
+    "IcnUmpReset_En.png": 1,
+    "IcnUmpScan_Folder_Ds.png": 1,
+    "IcnUmpScan_Folder_En.png": 1,
+    "IcnUmpScan_Sel_Ds.png": 1,
+    "IcnUmpScan_Sel_En.png": 1,
+    "IcnUmpScan_Unsel_Ds.png": 1,
+    "IcnUmpScan_Unsel_En.png": 1,
+    "IcnUmpScrollDown_Ds.png": 1,
+    "IcnUmpScrollDown_En.png": 1,
+    "IcnUmpScrollUp_Ds.png": 1,
+    "IcnUmpScrollUp_En.png": 1,
+    "IcnUmpSettings_Ds.png": 1,
+    "IcnUmpSettings_En.png": 1,
+    "IcnUmpShuffle_Folder_Ds.png": 1,
+    "IcnUmpShuffle_Folder_En.png": 1,
+    "IcnUmpShuffle_Off_Ds.png": 1,
+    "IcnUmpShuffle_Off_En.png": 1,
+    "IcnUmpShuffle_On_Ds.png": 1,
+    "IcnUmpShuffle_On_En.png": 1,
+    "IcnUmpSubtitles_Sel_Ds.png": 1,
+    "IcnUmpSubtitles_Sel_En.png": 1,
+    "IcnUmpSubtitles_Unsel_Ds.png": 1,
+    "IcnUmpSubtitles_Unsel_En.png": 1,
+    "IcnUmpSwapCalls_01_Ds.png": 1,
+    "IcnUmpSwapCalls_01_En.png": 1,
+    "IcnUmpSwapCalls_02_Ds.png": 1,
+    "IcnUmpSwapCalls_02_En.png": 1,
+    "IcnUmpSwitchView_Ds.png": 1,
+    "IcnUmpSwitchView_En.png": 1,
+    "IcnUmpThumbsDown_Sel_Ds.png": 1,
+    "IcnUmpThumbsDown_Sel_En.png": 1,
+    "IcnUmpThumbsDown_UnSel_Ds.png": 1,
+    "IcnUmpThumbsDown_UnSel_En.png": 1,
+    "IcnUmpThumbsUp_Sel_Ds.png": 1,
+    "IcnUmpThumbsUp_Sel_En.png": 1,
+    "IcnUmpThumbsUp_UnSel_Ds.png": 1,
+    "IcnUmpThumbsUp_UnSel_En.png": 1,
+    "IcnUmpTopList_Ds.png": 1,
+    "IcnUmpTopList_En.png": 1,
+    "IcnUmpTrafficAlert_Sel_Ds.png": 1,
+    "IcnUmpTrafficAlert_Sel_En.png": 1,
+    "IcnUmpTrafficAlert_Unsel_Ds.png": 1,
+    "IcnUmpTrafficAlert_Unsel_En.png": 1,
+    "IcnUmpTune_Ds.png": 1,
+    "IcnUmpTune_En.png": 1,
+    "IcnUmpVideoSet_Ds.png": 1,
+    "IcnUmpVideoSet_En.png": 1
+};

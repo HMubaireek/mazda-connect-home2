@@ -36,7 +36,7 @@ await shot('lang=en&screen=alert&alert=nav', 'skin_en_alert.png');
 await shot('lang=en&screen=home&focus=btn', 'skin_en_home.png');
 await shot('lang=en&screen=icons', 'skin_en_icons.png');
 await shot('screen=mute', 'skin_ar_mute.png');
-for (const s of ['media', 'fuel', 'dialpad', 'keyboard', 'tabs', 'favorites', 'radio', 'camadjust']) {
+for (const s of ['media', 'fuel', 'dialpad', 'keyboard', 'tabs', 'favorites', 'radio', 'camadjust', 'contacts', 'loading', 'dialog']) {
   await shot('screen=' + s, 'skin_ar_' + s + '.png');
   await shot('lang=en&screen=' + s, 'skin_en_' + s + '.png');
 }

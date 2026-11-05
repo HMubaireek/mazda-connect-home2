@@ -149,6 +149,31 @@ g("Mergecall", "M8 6l4-4 4 4 M12 2v10.3a4 4 0 0 1-1.2 2.8L4 22 M20 22l-5-5")
 g("PhoneRoute_Handset", "M7 2h10v20H7z M11 18h2")
 g("PhoneRoute_Vehicle", CAR)
 
+# media bar extras (radio data, video, music services' generic buttons)
+BOX_TEXT = "M6 5h12a3.5 3.5 0 0 1 3.5 3.5v7a3.5 3.5 0 0 1-3.5 3.5H6a3.5 3.5 0 0 1-3.5-3.5v-7A3.5 3.5 0 0 1 6 5z"
+g("HD_Unsel", BOX_TEXT, extra=_text("HD", 8))
+g("HD", BOX_TEXT, colour=ACCENT, extra=_text("HD", 8))
+g("TrafficAlert_Unsel", BOX_TEXT, extra=_text("TA", 8))
+g("TrafficAlert", BOX_TEXT, colour=ACCENT, extra=_text("TA", 8))
+g("AmPm", extra=_text("AM PM", 7))
+g("Subtitles_Unsel", BOX_TEXT + " M6 13h4 M12 13h6 M6 16h8 M16 16h2")
+g("Subtitles", BOX_TEXT + " M6 13h4 M12 13h6 M6 16h8 M16 16h2", colour=ACCENT)
+g("CamAngle_Unsel", "M23 7l-7 5 7 5z M1 5h15v14H1z")
+g("CamAngle", "M23 7l-7 5 7 5z M1 5h15v14H1z", colour=ACCENT)
+THUMB_UP = "M7 22H4a2 2 0 0 1-2-2v-7a2 2 0 0 1 2-2h3 M7 11l4-9a3 3 0 0 1 3 3v4h5.7a2 2 0 0 1 2 2.3l-1.4 9a2 2 0 0 1-2 1.7H7z"
+THUMB_DOWN = "M17 2h3a2 2 0 0 1 2 2v7a2 2 0 0 1-2 2h-3 M17 13l-4 9a3 3 0 0 1-3-3v-4H4.3a2 2 0 0 1-2-2.3l1.4-9A2 2 0 0 1 5.7 2H17z"
+g("ThumbsUp_UnSel", THUMB_UP)
+g("ThumbsUp", THUMB_UP, colour=ACCENT)
+g("ThumbsDown_UnSel", THUMB_DOWN)
+g("ThumbsDown", THUMB_DOWN, colour=ACCENT)
+TAG = "M20.6 13.4l-7.2 7.2a2 2 0 0 1-2.8 0L2 12V2h10l8.6 8.6a2 2 0 0 1 0 2.8z M7 7h.01"
+g("ItunesTag_Untagged", TAG)
+g("ItunesTag_Tagged", TAG, colour=ACCENT)
+LOCK = "M5 11h14v10H5z M8 11V7a4 4 0 0 1 8 0v4"
+UNLOCK = "M5 11h14v10H5z M8 11V7a4 4 0 0 1 7.9-1"
+g("Lock_Locked", LOCK, colour=ACCENT)
+g("Lock_Unlocked", UNLOCK)
+
 UMP = dict(G)
 G.clear()
 
@@ -212,6 +237,27 @@ g("WifiHotspot WifiHotspot_On", BROADCAST)
 g("WifiHotspot_Off WifiHotspot_Error", BROADCAST, colour="#9AA0AA")
 for _d, _a in (("N", 0), ("NE", 45), ("E", 90), ("SE", 135), ("S", 180), ("SW", 225), ("W", 270), ("NW", 315)):
     g("Dir_" + _d, extra='<path d="M12 3l6 16-6-4-6 4z" fill="currentColor" stroke="none" transform="rotate(%d 12 12)"/>' % _a)
+
+g("AddSong", "M9 18V5l12-2v7 M9 18a3 3 0 1 1-6 0a3 3 0 1 1 6 0 M18 14v8 M14 18h8")
+g("Program", BROADCAST)
+g("HD", BOX_TEXT, extra=_text("HD", 8))
+g("AttachmentDisallowed", "M21.4 11.1l-9.2 9.2a6 6 0 0 1-8.5-8.5l9.2-9.2a4 4 0 0 1 5.7 5.7l-9.2 9.2a2 2 0 0 1-2.8-2.8l8.5-8.5 M2 2l20 20",
+  colour="#9AA0AA")
+g("Ipodout", "M6 2h12v20H6z M15 15a3 3 0 1 1-6 0a3 3 0 1 1 6 0 M9 6h6")
+g("ParentalControl", "M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z")
+g("ProtectFile_On", LOCK, colour=ACCENT)
+g("ProtectFile_Off", UNLOCK)
+g("Store", "M6 2L3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4z M3 6h18 M16 10a4 4 0 0 1-8 0")
+g("Checkbox_Unchecked", "M8 3h8a5 5 0 0 1 5 5v8a5 5 0 0 1-5 5H8a5 5 0 0 1-5-5V8a5 5 0 0 1 5-5z")
+g("Checkbox_Checked", "M8 3h8a5 5 0 0 1 5 5v8a5 5 0 0 1-5 5H8a5 5 0 0 1-5-5V8a5 5 0 0 1 5-5z M7.5 12l3 3 6-6", colour="#8FA8FF")
+g("Checkmark", "M5 12.5l4.5 4.5 9.5-10")
+g("Radio_Unchecked", CIRCLE)
+g("Radio_Checked", CIRCLE, fill="M16 12a4 4 0 1 1-8 0a4 4 0 1 1 8 0", colour="#8FA8FF")
+SIGNAL = ["M4 20v-2", "M8.5 20v-5", "M13 20v-8", "M17.5 20v-11", "M22 20v-14"]
+for _i in range(6):
+    g("SignalG_0%d" % _i, " ".join(SIGNAL[:_i]) or "M4 20h.01",
+      extra='<path d="%s" opacity="0.3"/>' % " ".join(SIGNAL[_i:]) if _i < 5 else "")
+g("SignalE_00", extra='<path d="%s" opacity="0.3"/>' % " ".join(SIGNAL))
 
 LISTICONS = dict(G)
 STATE = re.compile(r"_(Sel_En|Sel_Ds|En|Ds)$")

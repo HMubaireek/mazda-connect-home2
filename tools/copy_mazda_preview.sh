@@ -15,7 +15,7 @@ for c in StatusBar Sbn List2 LeftBtn Button Tabs Dialog3 InCall2 Ump3 Tuner4 Win
 done
 mkdir -p "$D/common/css" "$D/common/images/icons" "$D/common/transitions/css" "$D/apps/system/images"
 cp "$G/common/css/common.css" "$D/common/css/"
-cp "$G/common/images/background.png" "$D/common/images/"
+cp "$G/common/images/background.png" "$G/common/images/IndeterminateMeter.png" "$D/common/images/"
 cp "$G"/common/images/icons/IcnSb*.png "$G"/common/images/icons/IcnWink*.png "$G"/common/images/icons/IcnUmp*.png "$G"/common/images/icons/IcnList*.png "$D/common/images/icons/"
 mkdir -p "$D/apps/ecoenergy/controls"
 cp -r "$G/apps/ecoenergy/controls/FuelConsumption" "$D/apps/ecoenergy/controls/"

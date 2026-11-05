@@ -5,7 +5,8 @@ A custom home screen ("Ember Glass") for Mazda Connect 1. Owner: Hussain (HMubai
 v1.0.4 ran in the car on 31 Oct 2026. v1.2.1 (Ember Glance home + "Floating Pills" skin) was installed on 1 Nov 2026;
 his photos showed the bugs fixed in v1.3.0 (camera/map hidden, menus not RTL, unstyled screens). v1.3.0 and v1.4.0
 (remaining screens + icon set) were installed; v1.4.0 icons confirmed in the car on 2 Nov 2026. v1.4.1 (his v1.4.0
-photos: tabs, scroll bar, radio, camera bar, tooltip) is built and tested but not yet confirmed in the car. Read this whole file before changing anything.
+photos: tabs, scroll bar, radio, camera bar, tooltip) was installed; v1.4.2 (his v1.4.1 photos) is built and tested
+but not yet confirmed in the car. Read this whole file before changing anything.
 
 ## What the owner wants
 - Arabic first, right-to-left, Arabic-Indic digits, Hijri (Umm al-Qura) date under the Gregorian date.
@@ -115,6 +116,27 @@ All read from the system app instance `framework._appInstances.system` without c
   warning text on the camera picture is not HTML (drawn with the video), so it can't be restyled.
 - Radio / now playing = NowPlaying4 (FM uses Style2: `NowPlaying4CtrlTitleFull` = frequency, art frame 146px at 610,98).
 - Home sharpness (he wondered): no home image, font or layout value changed since v1.1.0; nothing to fix.
+
+## v1.4.2 lessons (5 Nov 2026)
+- **Skin before the home screen:** the launcher JS only runs once the home screen loads, so the camera or a USB
+  dialog at start-up was stock. The framework loads `common/css/common_rtl.css` (ours) at start-up for Arabic, so it
+  starts with `@import url("home2skin.css")`. The launcher adds the link only when the skin isn't active (probe
+  `#Home2SkinProbe` = 7px) and again on a switch to a language without common_rtl (wraps
+  `framework._setLanguageSpecificStyling`). English before the home screen is still stock (would need a Mazda file).
+- **Mazda `!important` rules** (DialPad2 keys/call button, Keyboard) load after the skin and won ties: every generated
+  rule now starts with `html ` (one more element of specificity).
+- **List icons:** `[style*=...]` did not swap icons set by `List2Ctrl._setImage` in the car (it does for ButtonCtrl).
+  The launcher wraps `List2Ctrl.prototype._setImage` (hooked from `framework.registerCtrlLoaded`) and points known
+  icon names at `common/images/home2skin/icn/` (`src/launcher/icons.generated.js`, made by build_assets.py).
+- **Double focus:** List2 can leave `focus` on an old row while scrolling; the launcher wraps `_showFocus` and keeps the
+  class only on `_getDOMItem(_lastItemWithFocus)`.
+- Row pictures: every List2 style puts image1 at x 18 and text at x 70/71; the skin moves image1 18px in and pads the
+  text 26px (padding-right in Arabic, rows are mirrored). The loading row (`.List2CtrlLoading`) is mirrored the same way.
+- Dialog spinner is an animated PNG `<img>` (IndeterminateMeter*.png): hidden, our spinner rotates on its frame.
+- Tab arrows: TabsCtrl sets Mazda's `Tab_Arrow*.png` as the button's icon layer (inline): swapped for our chevrons.
+- Oil value = Mazda's `OilLife` message (`schedmaint._oilDeteriorationLevel`), shown only when
+  `_oilMaintenanceMode === "Flexible"`. Fuel range really isn't sent to the head unit (only the cluster has it).
+- The map screen is NNG navigation from the SD card (native), not HTML: only the status bar over it is ours.
 
 ## Repo layout
 - `src/launcher/MainMenuCtrl.js` (+ `hijri.js`, generated) — the launcher; `MainMenuCtrl.css`, `MainMenuCtrl_rtl.css`.

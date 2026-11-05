@@ -344,6 +344,7 @@ def render_skin_panels():
             svg_canvas(94, 416, body, scale=2).save(os.path.join(SKIN, "%s_%s.png" % (kind, st)), optimize=True)
     render_tabs()
     render_media_extras()
+    render_spinners()
 
 
 # Tabs (Settings, Favorites, phone): one segmented glass bar inside the menu container (list x 40-702, 662x56),
@@ -362,12 +363,31 @@ def render_tabs():
         svg_canvas(w, 48, on, scale=2).save(os.path.join(SKIN, "tab_on_%d.png" % n), optimize=True)
         svg_canvas(w, 48, '<rect x="0" y="0" width="%d" height="48" rx="18" fill="#FFFFFF" fill-opacity="0.18"/>' % w,
                    scale=2).save(os.path.join(SKIN, "tab_hit_%d.png" % n), optimize=True)
-    for name, d in (("prev", "M27 16l-8 8 8 8"), ("next", "M21 16l8 8-8 8")):
-        for st, fill in (("en", 0.08), ("hit", 0.24)):
-            body = ('<rect x="0" y="0" width="48" height="48" rx="18" fill="#FFFFFF" fill-opacity="%s"/>'
-                    '<path d="%s" fill="none" stroke="#FFFFFF" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>'
-                    % (fill, d))
-            svg_canvas(48, 48, body, scale=2).save(os.path.join(SKIN, "tab_%s_%s.png" % (name, st)), optimize=True)
+    # Arrow buttons (more than 4 tabs): a plain light pill; Mazda puts its arrow symbol (Tab_Arrow*.png, 25x27) in the
+    # button's icon layer, so the skin swaps that symbol for our chevron instead of drawing one here.
+    for st, fill, ring in (("en", 0.16, 0.22), ("hit", 0.32, 0.4)):
+        body = ('<rect x="0.5" y="0.5" width="47" height="47" rx="18" fill="#FFFFFF" fill-opacity="%s" stroke="#FFFFFF" '
+                'stroke-opacity="%s"/>' % (fill, ring))
+        svg_canvas(48, 48, body, scale=2).save(os.path.join(SKIN, "tab_arrow_%s.png" % st), optimize=True)
+    for name, d in (("left", "M15.5 6.5l-6 7 6 7"), ("right", "M9.5 6.5l6 7-6 7")):
+        for st, op in (("", 1), ("_ds", 0.35)):
+            body = ('<path d="%s" fill="none" stroke="#FFFFFF" stroke-opacity="%s" stroke-width="3" stroke-linecap="round" '
+                    'stroke-linejoin="round"/>' % (d, op))
+            svg_canvas(25, 27, body, scale=4).save(os.path.join(SKIN, "tab_chev_%s%s.png" % (name, st)), optimize=True)
+
+
+def render_spinners():
+    # Loading spinner (lists, dialogs, now playing): a blue arc on a faint ring; Mazda's CSS rotates it.
+    for size in (112, 53, 37, 36):
+        r = size * 0.36
+        c = size / 2.0
+        sw = max(3.0, size * 0.07)
+        body = ('<defs><linearGradient id="sp" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#6C8BFF"/>'
+                '<stop offset="1" stop-color="#3FD9C8"/></linearGradient></defs>'
+                '<circle cx="%.1f" cy="%.1f" r="%.1f" fill="none" stroke="#FFFFFF" stroke-opacity="0.14" stroke-width="%.1f"/>'
+                '<path d="M%.1f %.1fa%.1f %.1f 0 0 1 %.1f %.1f" fill="none" stroke="url(#sp)" stroke-width="%.1f" stroke-linecap="round"/>'
+                ) % (c, c, r, sw, c, c - r, r, r, r, r, sw)
+        svg_canvas(size, size, body, scale=3).save(os.path.join(SKIN, "spin_%d.png" % size), optimize=True)
 
 
 def render_media_extras():
@@ -465,6 +485,20 @@ GLYPHS = {
     "BtnLeft": "M15 6l-6 6 6 6",
 }
 BLUE_GRAD = ("#6C8BFF", "#3A3FE0")
+# Keyboard / keypad key symbols (Mazda's Icn_*, IcnKbdShift_*, Delete_Btn_*), first matching prefix wins.
+KEY_GLYPHS = [
+    ("Delete_Btn", "M21 5H9l-7 7 7 7h12a1 1 0 0 0 1-1V6a1 1 0 0 0-1-1z M17 9l-5 6 M12 9l5 6"),
+    ("IcnKbdShift", "M12 3l9 9h-5v8H8v-8H3z"),
+    ("Icn_Cancel", "M6 6l12 12 M18 6L6 18"),
+    ("Icn_Send", "M5 12.5l4.5 4.5 9.5-10"),
+    ("Icn_Globe", "M21 12a9 9 0 1 1-18 0a9 9 0 1 1 18 0 M3 12h18 M12 3a14 14 0 0 1 0 18 M12 3a14 14 0 0 0 0 18"),
+    ("Icn_Bck", "M15 5l-7 7 7 7"),
+    ("Icn_Fwd", "M9 5l7 7-7 7"),
+    ("ActiveCall", skin_icons.PHONE),
+    ("ArrowLeft", "M15 5l-7 7 7 7"),
+    ("ArrowRight", "M9 5l7 7-7 7"),
+    ("Icn_Small", "M4 10v8 M4 14a3 3 0 0 1 6 0v4 M13 18v-4a3 3 0 0 1 6 0v4 M16 6l-2 2 2 2"),
+]
 
 
 def _rect(x, y, w, h, r, fill, stroke=None, sw=1.0, grad=None):
@@ -565,6 +599,17 @@ def control_svg(e):
     if k == "caret":
         return ('<path d="M%.1f %.1fl%.1f %.1f-%.1f %.1f" fill="none" stroke="#FFFFFF" stroke-opacity="0.7" stroke-width="2.2" '
                 'stroke-linecap="round" stroke-linejoin="round"/>') % (w * 0.3, h * 0.25, w * 0.4, h * 0.25, w * 0.4, h * 0.25)
+    if k == "glyph":
+        d = next((g for pre, g in KEY_GLYPHS if name.startswith(pre)), None)
+        if d is None:
+            return ""
+        op = 0.35 if ("_Ds" in name or "Disabled" in name) else 1
+        sz = min(w, h) * 0.8
+        sc = sz / 24.0
+        fill_on = "IcnKbdShift_On" in name
+        return ('<g transform="translate(%.2f %.2f) scale(%.4f)" fill="%s" stroke="#FFFFFF" stroke-opacity="%s" fill-opacity="%s" '
+                'stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="%s"/></g>') % (
+            (w - sz) / 2.0, (h - sz) / 2.0, sc, "#FFFFFF" if fill_on else "none", op, op, d)
     if k == "icon_call":
         return icon_svg("IcnUmpCall_En.png", w, h).replace(skin_icons.GREEN, "#FFFFFF")
     if k == "dim":
@@ -623,25 +668,34 @@ def render_control_skins():
         svg_canvas(w, h, control_svg(e), scale=2).save(os.path.join(CTL, out_name), optimize=True)
         sels = [s for s in e["selectors"] if s not in layers]
         if sels:
-            css.append(",\n".join(sels) + " {\n  background-image: url(../images/home2skin/ctl/%s) !important;\n}\n" % out_name)
+            css.append(",\n".join("html " + x for x in sels) +
+                       " {\n  background-image: url(../images/home2skin/ctl/%s) !important;\n}\n" % out_name)
     # Rules where Mazda stacks images (an icon over a key, focus over the button): every layer, in Mazda's order.
     css.append("/* Stacked images */")
     for sel in sorted(layers):
         urls = ["url(../images/home2skin/ctl/%s)" % x[4:] if x.startswith("ctl:") else "url(../../%s)" % x[4:] for x in layers[sel]]
-        css.append("%s { background-image: %s !important; }" % (sel, ", ".join(urls)))
+        css.append("html %s { background-image: %s !important; }" % (sel, ", ".join(urls)))
     # Media bar and list icons, swapped by file name (Mazda's controls set them as an inline background).
     os.makedirs(ICN, exist_ok=True)
     icons = json.load(open(os.path.join(ROOT, "tools", "skin_controls_icons.json"), encoding="utf-8"))
     css.append("\n/* Media bar and list icons */")
     drawn = 0
+    drawn_names = []
     for name, (w, h) in sorted(icons.items()):
         body = icon_svg(name, w, h)
         if body is None:
             continue
         svg_canvas(w, h, body, scale=3).save(os.path.join(ICN, name), optimize=True)
-        css.append('[style*="/%s"] { background-image: url(../images/home2skin/icn/%s) !important; }' % (name, name))
+        css.append('html [style*="/%s"] { background-image: url(../images/home2skin/icn/%s) !important; }' % (name, name))
+        drawn_names.append(name)
         drawn += 1
     open(os.path.join(ROOT, "src", "skin", "controls.generated.css"), "w", encoding="utf-8", newline="\n").write("\n".join(css) + "\n")
+    # The launcher swaps list row icons itself (Mazda's List2Ctrl._setImage), so it needs the names we drew.
+    js = ["// Generated by tools/build_assets.py: the Mazda icons Home 2.0 redraws (common/images/home2skin/icn/).",
+          "var HOME2_ICONS = {"]
+    js.append(",\n".join('    "%s": 1' % n for n in drawn_names))
+    js.append("};")
+    open(os.path.join(ROOT, "src", "launcher", "icons.generated.js"), "w", encoding="utf-8", newline="\n").write("\n".join(js) + "\n")
     print("restyled %d Mazda control images, %d stacked rules, %d icons" % (len(entries), len(layers), drawn))
 
 

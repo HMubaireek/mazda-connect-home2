@@ -7,6 +7,12 @@
  * Opera Presto: -o- prefixes, no flexbox.
  */
 
+/* The launcher checks this to see whether the skin is on the page. */
+#Home2SkinProbe {
+  width: 7px !important;
+  height: 1px !important;
+}
+
 /* ---------- Tajawal everywhere ---------- */
 body,
 body * {
@@ -477,24 +483,28 @@ div[class*="TabsCtrlStyle"].ButtonCtrlFocused {
   box-shadow: 0 0 0 2px rgba(200, 212, 255, 0.9) inset;
 }
 
+/* Arrow buttons: a light pill; the arrow is Mazda's icon layer (Tab_Arrow*.png), swapped for our chevron. */
 div.TabsCtrlStyle4PrevBtn,
 div.TabsCtrlStyle4NextBtn {
   top: 4px !important;
   width: 48px !important;
   height: 48px !important;
   border-radius: 18px;
-  background: url(../images/home2skin/tab_prev_en.png) no-repeat !important;
+  background: url(../images/home2skin/tab_arrow_en.png) no-repeat !important;
 }
 
 div.TabsCtrlStyle4PrevBtn { left: 4px !important; }
+div.TabsCtrlStyle4NextBtn { left: 610px !important; }
 
-div.TabsCtrlStyle4NextBtn {
-  left: 610px !important;
-  background-image: url(../images/home2skin/tab_next_en.png) !important;
+div.TabsCtrlStyle4PrevBtn.TabsCtrlStyle4PrevNextBtnHit,
+div.TabsCtrlStyle4NextBtn.TabsCtrlStyle4PrevNextBtnHit {
+  background-image: url(../images/home2skin/tab_arrow_hit.png) !important;
 }
 
-div.TabsCtrlStyle4PrevBtn.TabsCtrlStyle4PrevNextBtnHit { background-image: url(../images/home2skin/tab_prev_hit.png) !important; }
-div.TabsCtrlStyle4NextBtn.TabsCtrlStyle4PrevNextBtnHit { background-image: url(../images/home2skin/tab_next_hit.png) !important; }
+html [style*="Tab_ArrowLeft.png"] { background-image: url(../images/home2skin/tab_chev_left.png) !important; }
+html [style*="Tab_ArrowLeft_Ds.png"] { background-image: url(../images/home2skin/tab_chev_left_ds.png) !important; }
+html [style*="Tab_ArrowRight.png"] { background-image: url(../images/home2skin/tab_chev_right.png) !important; }
+html [style*="Tab_ArrowRight_Ds.png"] { background-image: url(../images/home2skin/tab_chev_right_ds.png) !important; }
 
 .TabsCtrlLabelSpan {
   font-size: 20px !important;
@@ -559,6 +569,77 @@ div.NowPlaying4Ctrl.NowPlaying4CtrlNoBG {
 
 .Ump3CtrlTooltipPoint {
   background-image: url(../images/home2skin/tooltip_point.png) !important;
+}
+
+/* ---------- list rows: pictures inside the container, a gap before the text ---------- */
+/* Mazda puts the row picture (icon, contact photo) at x 18 and the text at x 71 in every row style; the container
+   starts at list x 34, so the picture moves 18px in and the text keeps a 26px gap after it (same box, less text). */
+.List2Ctrl .ListItem .image1 {
+  margin-left: 18px !important;
+}
+
+.List2Ctrl .ListItem.style29 .image1 {
+  margin-left: 0px !important;
+}
+
+.List2Ctrl .ListItem .line1,
+.List2Ctrl .ListItem .line2 {
+  padding-left: 26px !important;
+  box-sizing: border-box;
+}
+
+.List2Ctrl .ListItem.styleStep .line1 {
+  padding-left: 0px !important;
+}
+
+/* ---------- loading row and spinners ---------- */
+.List2Ctrl.normalItems .List2CtrlLoading,
+.List2Ctrl.thickItems .List2CtrlLoading {
+  background: url(../images/home2skin/list_sep.png) 0px 100% no-repeat !important;
+}
+
+.List2Ctrl .List2CtrlLoading .loadingText {
+  font-size: 24px !important;
+  padding-left: 26px !important;
+  box-sizing: border-box;
+  color: rgba(255, 255, 255, 0.8) !important;
+}
+
+.List2Ctrl .List2CtrlLoading .loadingImage1 {
+  margin-left: 18px !important;
+}
+
+html .List2Ctrl .List2CtrlLoading .loadingImage,
+html .List2Ctrl .ListItem.style02.indeterminate .image2 {
+  background-image: url(../images/home2skin/spin_53.png) !important;
+}
+
+html .NowPlaying4CtrlLoadingImageFrame.loading,
+html [style*="IcnStatBgFunctions_Refreshing"] {
+  background-image: url(../images/home2skin/spin_37.png) !important;
+}
+
+/* Dialog spinner: Mazda's is an animated picture (<img>), so it is hidden and our spinner turns in its place. */
+@-o-keyframes home2_spin {
+  0% { -o-transform: rotate(0deg); }
+  100% { -o-transform: rotate(360deg); }
+}
+
+@keyframes home2_spin {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}
+
+.Dialog3Ctrl_Indeterminate_Meter_01 {
+  display: block !important;
+  margin: 0px auto !important;
+  background: url(../images/home2skin/spin_112.png) 50% 50% no-repeat !important;
+  -o-animation: home2_spin 1.2s linear infinite;
+  animation: home2_spin 1.2s linear infinite;
+}
+
+.Dialog3Ctrl_Indeterminate_Meter_01 img {
+  visibility: hidden !important;
 }
 
 /* ---------- back / folder-up button: a small round glass button beside the menu ---------- */

@@ -70,7 +70,8 @@
   };
   // Stand-ins for Mazda's fuel economy and maintenance apps, holding what they keep once they have loaded.
   var ecoApp = { _cached_fuelEfficiencyData: { fuelEfficiency: null, fuelEfficiencyUnit: "L100km" } };
-  var maintApp = { _schedmaintDistance: 0, _schedmaintTime: 0, _timeUnit: "months", _oilDeteriorationLevel: 0, _distanceUnit: "Kilometers" };
+  var maintApp = { _schedmaintDistance: 0, _schedmaintTime: 0, _timeUnit: "months", _oilDeteriorationLevel: 0, _distanceUnit: "Kilometers",
+                   _oilMaintenanceMode: "Flexible" };
   function item(list, ev) { return list.items.filter(function(i) { return i.appData.mmuiEvent === ev; })[0]; }
   function sendMsg(msgId, payload) { sysApp._messageTable[msgId]({ msgId: msgId, params: { payload: payload } }); }
   // Apply status the way the car delivers it: list labels for counts, a message for the call, app fields for the rest.
