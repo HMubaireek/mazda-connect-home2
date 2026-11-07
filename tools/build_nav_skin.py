@@ -14,6 +14,15 @@ What changes (images only, Mazda's layout files stay as they are):
   - the divider lines, the tooltip above the focused button, the side panel and the panel behind the
     speed-limit sign -> dark glass
   - the speed-limit sign -> a clean flat sign (white disc, red ring; red disc when over the limit)
+  - list screens (map settings, search): rows on one dark glass panel with thin dividers, a blue
+    full-width focus pill instead of the red bar, a round 48px back button instead of the chevron
+    column, a thin scroll bar instead of the red/white rails (all drawn symmetric, so they still fit
+    when the lists are laid out right to left)
+
+It also writes, for data.zip (applied on the car by run.sh to Mazda's own files):
+  installer/home2/nav/data/colors_day.txt, colors_night.txt   the Midnight map colours: whole lines that
+      replace the lines with the same key in the [color] section of scheme/<day|night>/color.ini
+      (made from tools/nav_colors_orig.json, Mazda's lines for those keys, with our colour numbers)
 
 Requires: Pillow, cairosvg
 """
@@ -33,6 +42,65 @@ ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 TABLE = os.path.join(ROOT, "tools", "nav_skin_table.json")
 OUT = os.path.join(ROOT, "installer", "home2", "nav", "ui_jci_mazda", "800_480")
 MARKER_FILE = os.path.join(ROOT, "installer", "home2", "nav", "home2_nav.txt")
+COLORS_ORIG = os.path.join(ROOT, "tools", "nav_colors_orig.json")
+DATA_OUT = os.path.join(ROOT, "installer", "home2", "nav", "data")
+
+# ---------------------------------------------------------------- map colours (Midnight)
+# Key -> colour (or two colours for keys with a fill and an outline value). Road keys: lower case = the
+# road's inside, upper case = its edge; 0/1 = main roads, 4-12 = smaller roads, r = freeway.
+_NIGHT_ROADS = {
+    "r": (255, 181, 71), "R": (92, 62, 22),                       # freeways: ember
+    "a": (132, 150, 206), "c": (132, 150, 206), "d": (132, 150, 206), "e": (100, 116, 172),
+    "g": (74, 88, 136), "h": (74, 88, 136), "i": (58, 68, 108), "k": (58, 68, 108), "l": (58, 68, 108),
+    "u": (48, 57, 92), "s": (44, 50, 72), "x": (44, 50, 72), "z": (40, 46, 68),
+    "b": (70, 92, 156), "f": (70, 92, 156), "j": (70, 92, 156), "v": (70, 92, 156), "q": (70, 92, 156),
+    "B": (26, 34, 64), "F": (26, 34, 64), "J": (26, 34, 64), "V": (26, 34, 64), "Q": (26, 34, 64),
+}
+for _k in "ACDEGHIKLUSXZ":
+    _NIGHT_ROADS[_k] = (16, 20, 34)                              # dark edges keep the roads crisp
+
+PALETTES = {
+    "night": dict(_NIGHT_ROADS, **{
+        "0": (11, 14, 25), "5": (13, 34, 58),                     # ground, water
+        "1": (86, 72, 120), "2": (70, 62, 100), "3": (52, 48, 78), "4": (52, 48, 78),
+        "salt_water": (13, 34, 58), "sweet_water": (13, 34, 58), "intermittent_water": (16, 38, 62),
+        "National_Park": (14, 34, 31), "city_forest": (14, 34, 31), "city_park": (14, 34, 31),
+        "state_forest": (14, 34, 31), "recreational_area": (14, 32, 30),
+        "building": (26, 31, 50), "built_up": (17, 21, 36), "built_up_border": (9, 11, 20),
+        "Partition_area": (17, 21, 36), "industrial_area": (20, 24, 38), "Shopping_Center_Ground": (20, 24, 38),
+        "cemetery_ground": (20, 24, 38), "airport_ground": (24, 28, 44), "airport_runway": (40, 46, 70),
+        "Railway_area": (22, 26, 40), "area_a": (16, 19, 32), "area_b": (20, 24, 40), "area_c": (24, 28, 46),
+        "railway": ((90, 100, 140), (30, 35, 55)),
+        "planned_road": (108, 139, 255), "planned_road_ext": (58, 63, 224),          # the route: Ember blue
+        "planned_road_future": (108, 139, 255), "planned_road_future_ext": (58, 63, 224),
+        "planned_road_visited": (70, 80, 140), "planned_road_visited_ext": (40, 45, 90),
+        "guidancestrip_ext": (58, 63, 224), "guidancestripalt_ext": (58, 63, 224),
+        "international_border": (96, 76, 130), "political_border": (76, 64, 108), "region_border": (54, 48, 80),
+        "label_road": (206, 214, 236), "label_roadlt": (140, 150, 182), "label_road_bubble": (206, 214, 236),
+        "roadlabel_frame": (58, 63, 224), "roadlabel_stick": (58, 63, 224), "box_fill": (58, 63, 224),
+        "3d_sky": (8, 10, 20), "hazecolor": (18, 24, 48),
+        "3d_building_color": (40, 48, 78), "3d_building_roof": (54, 64, 100), "3d_building_outline_color": (20, 24, 40),
+        "3d_faded_building_body": (34, 40, 64), "3d_grass": (14, 34, 31),
+        "zoomcolor1": (20, 24, 40), "zoomcolor2": (58, 68, 108),
+        "oneway_arrow": (150, 165, 210), "tunnel_overview_main_road": (255, 181, 71),
+    }),
+}
+
+# Day: the same Midnight look, a touch brighter so it reads in sunlight (Mazda's day map is grey and white).
+_DAY_ROADS = {k: tuple(min(255, int(c * 1.18 + 6)) for c in v) if k.islower() and k != "r" else v
+              for k, v in _NIGHT_ROADS.items()}
+_DAY_ROADS.update({"r": (255, 186, 80), "R": (110, 74, 26)})
+for _k in "ACDEGHIKLUSXZ":
+    _DAY_ROADS[_k] = (22, 27, 44)
+PALETTES["day"] = dict(PALETTES["night"], **_DAY_ROADS)
+PALETTES["day"].update({
+    "0": (20, 25, 42), "5": (20, 48, 80), "salt_water": (20, 48, 80), "sweet_water": (20, 48, 80),
+    "intermittent_water": (24, 52, 84), "built_up": (25, 31, 50), "building": (34, 41, 64), "area_a": (24, 29, 46),
+    "area_b": (28, 34, 54), "area_c": (32, 38, 60), "Partition_area": (25, 31, 50), "National_Park": (20, 46, 42),
+    "city_park": (20, 46, 42), "city_forest": (20, 46, 42), "state_forest": (20, 46, 42),
+    "3d_sky": (36, 44, 72), "hazecolor": (40, 52, 90), "label_road": (226, 232, 248), "label_settlements": (255, 255, 255),
+    "label_roadlt": (160, 170, 200), "zoomcolor1": (20, 25, 42), "zoomcolor2": (226, 232, 248),
+})
 
 BLUE = '<linearGradient id="blue" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#6C8BFF"/><stop offset="1" stop-color="#3A3FE0"/></linearGradient>'
 GLASS_FILL = "rgb(14,17,30)"     # dark glass over the map
@@ -241,6 +309,143 @@ def draw_other(name, e):
     return None
 
 
+# ---------------------------------------------------------------- list screens (settings, search)
+# Screen layout (NNG params.css): back button x 0-94 from y 64; list x 60-800 with 64px rows; scroll bar
+# 46px wide, 20px from the right. Row images are 730 wide; everything is drawn symmetric in them so a
+# right-to-left list (rows mirrored) still lines up.
+ROW_X0 = 50                 # glass panel / focus pill inset in the 730px row (screen x 110 .. 740)
+ROW_R = 18
+BACK_R = 24                 # the round 48px back button, like the HTML menus (x 24-72)
+CHEVRON_BACK = "M14.5 6l-6 6 6 6"
+CHEVRON_UP = "M6 14.5l6-6 6 6"
+
+
+def row_glass(w, fh, divider_top=True):
+    s = rrect(ROW_X0, 0, w - 2 * ROW_X0, fh, 0, GLASS_FILL, GLASS_A)
+    y = 0.5 if divider_top else fh - 0.5
+    s += '<path d="M%s %sH%s" stroke="#FFFFFF" stroke-opacity="0.12" stroke-width="1"/>' % (ROW_X0 + 16, y, w - ROW_X0 - 16)
+    return s
+
+
+def row_pill(w, fh, kind):
+    if kind == "focus":
+        return rrect(ROW_X0, 2, w - 2 * ROW_X0, fh - 4, ROW_R, "url(#blue)")
+    return (rrect(ROW_X0, 2, w - 2 * ROW_X0, fh - 4, ROW_R, "#6C8BFF", 0.30) +
+            rrect(ROW_X0 + 0.5, 2.5, w - 2 * ROW_X0 - 1, fh - 5, ROW_R, "none", 1, "#A0B6FF", 0.55))
+
+
+def draw_row(name, e):
+    w, h = e["size"]
+    frames = e["frames"]
+    fh = h // frames
+    states = e["states"] or [{"kind": "neutral"}] * frames
+    img = Image.new("RGBA", (w, h), (0, 0, 0, 0))
+    for f, st in enumerate(states):
+        k = st["kind"]
+        if k == "red":
+            body = row_pill(w, fh, "focus")
+        elif k == "orange":
+            body = row_glass(w, fh) + row_pill(w, fh, "pressed")
+        elif f in (0, 2) or frames == 1:
+            body = row_glass(w, fh, divider_top=(name != "listitem_nofocus.bmp"))
+        else:
+            body = ""          # the focused state: the focus sprite under the row shows through
+        if body:
+            img.alpha_composite(svg_canvas(w, fh, body, scale=2), (0, f * fh))
+    return img
+
+
+def draw_focus_bar(e):
+    w, h = e["size"]
+    return svg_canvas(w, h, row_pill(w, h, "focus"), scale=2)
+
+
+def back_circle(w, fh, kind, chevron):
+    cx, cy = 48, fh / 2.0
+    if kind == "focus":
+        disc, op = '<circle cx="%s" cy="%s" r="%s" fill="url(#blue)"/>' % (cx, cy, BACK_R), 1.0
+    elif kind == "pressed":
+        disc, op = ('<circle cx="%s" cy="%s" r="%s" fill="#6C8BFF" fill-opacity="0.30" stroke="#A0B6FF" stroke-opacity="0.55"/>'
+                    % (cx, cy, BACK_R - 0.5)), 1.0
+    else:
+        disc = ('<circle cx="%s" cy="%s" r="%s" fill="%s" fill-opacity="%s" stroke="#FFFFFF" stroke-opacity="0.16"/>'
+                % (cx, cy, BACK_R - 0.5, GLASS_FILL, GLASS_A))
+        op = 0.35 if kind == "disabled" else 1.0
+    icon = ('<g transform="translate(%s %s)"><path d="%s" fill="none" stroke="#FFFFFF" stroke-opacity="%s" stroke-width="2.4" '
+            'stroke-linecap="round" stroke-linejoin="round"/></g>') % (cx - 12, cy - 12, chevron, op)
+    return disc + icon
+
+
+def draw_back(name, e):
+    w, h = e["size"]
+    chevron = CHEVRON_UP if name.startswith("btn_folderUp") else CHEVRON_BACK
+    if e["frames"] == 1:                    # the *_fade overlay shown while the button has the focus
+        return svg_canvas(w, h, back_circle(w, h, "focus", chevron), scale=2)
+    fh = h // e["frames"]
+    img = Image.new("RGBA", (w, h), (0, 0, 0, 0))
+    order = ["normal", "pressed", "disabled", "focus"]
+    for f in range(e["frames"]):
+        img.alpha_composite(svg_canvas(w, fh, back_circle(w, fh, order[f % 4], chevron), scale=2), (0, f * fh))
+    return img
+
+
+def draw_scroll(name, e):
+    """Track: nothing (its image is wider than the scroll bar, so its position is not certain).
+    Indicator: a thin 4px light-blue bar in the middle of the scroll bar."""
+    w, h = e["size"]
+    if "indicator" not in name:
+        return Image.new("RGBA", (w, h), (0, 0, 0, 0))
+    x = w / 2.0 - 2
+    return svg_canvas(w, h, rrect(x, 2, 4, h - 4, 2, "#A0B6FF", 0.92), scale=2)
+
+
+# ---------------------------------------------------------------- data.zip: map colours
+def recolor_line(line, colour):
+    """Put our colour(s) into one of Mazda's color.ini lines, keeping its label and other numbers.
+    Forms: key="label", r,g,b[, n]   key=n, r,g,b[, n]   key=n, r,g,b, r,g,b   key=r,g,b"""
+    import re
+    key, value = line.split("=", 1)
+    labelled = value.lstrip().startswith('"')
+    skip = value.index('"', value.index('"') + 1) + 1 if labelled else 0      # numbers after the label
+    nums = [m for m in re.finditer(r"-?\d+", value) if m.start() >= skip]
+    start = 0 if (labelled or len(nums) == 3) else 1
+    colours = colour if isinstance(colour[0], tuple) else (colour,)
+    if len(nums) < start + 3 * len(colours):
+        raise ValueError("unexpected colour line: %r" % line)
+    repl = {}
+    for i, c in enumerate(colours):
+        for j in range(3):
+            repl[start + 3 * i + j] = str(c[j])
+    out = value
+    for idx in sorted(repl, reverse=True):          # replace from the end so positions stay valid
+        m = nums[idx]
+        out = out[:m.start()] + repl[idx] + out[m.end():]
+    return key + "=" + out
+
+
+def write_colors():
+    orig = json.load(open(COLORS_ORIG, encoding="utf-8"))
+    os.makedirs(DATA_OUT, exist_ok=True)
+    for scheme, lines in sorted(orig.items()):
+        out = []
+        for key in sorted(lines):
+            out.append(recolor_line(lines[key], PALETTES[scheme][key]))
+        with open(os.path.join(DATA_OUT, "colors_%s.txt" % scheme), "w", encoding="utf-8", newline="\n") as f:
+            f.write("\n".join(out) + "\n")
+    # What run.sh changes in data.zip, and how (applied on the car to Mazda's own files).
+    with open(os.path.join(DATA_OUT, "files.txt"), "w", encoding="utf-8", newline="\n") as f:
+        f.write("ui_jci_mazda/scheme/day/color.ini\nui_jci_mazda/scheme/night/color.ini\n"
+                "ui_jci_mazda/fonts/jci.vfont\nui_jci_mazda/fonts/jci_sb.vfont\nui_jci_mazda/fonts/jci_bd.vfont\n"
+                "ui_jci_mazda/common/ui/jci_mazda.css\n")
+    with open(os.path.join(DATA_OUT, "fonts.sed"), "w", encoding="utf-8", newline="\n") as f:
+        # Arabic in the map in Tajawal (files in /jci/fonts/navi; NNG finds fonts by file name).
+        f.write('s/^AkhbarOTS="/Home2Tajawal-Medium="/\ns/^AkhbarOTS-Bold="/Home2Tajawal-Bold="/\n')
+    with open(os.path.join(DATA_OUT, "css.sed"), "w", encoding="utf-8", newline="\n") as f:
+        # Lists (settings, search, and the map's bottom bar, also a list) right to left in Arabic.
+        f.write("s/^LIST2{/LIST2{ R2L:(%regional.current_language.is_r2l);/\n")
+    print("wrote map colours and data.zip edits to", DATA_OUT)
+
+
 def main():
     table = json.load(open(TABLE, encoding="utf-8"))
     os.makedirs(OUT, exist_ok=True)
@@ -254,6 +459,14 @@ def main():
             img = draw_openpanel(e)
         elif name.startswith("btn_cockpitmenu"):
             img = draw_button(name, e)
+        elif name.startswith("btn_back") or name.startswith("btn_folderUp"):
+            img = draw_back(name, e)
+        elif name.endswith("_focus.bmp") and name.startswith("listitem"):
+            img = draw_focus_bar(e)
+        elif name.startswith("listitem"):
+            img = draw_row(name, e)
+        elif name.startswith("scrolltrack") or name.startswith("spr_hscroll"):
+            img = draw_scroll(name, e)
         else:
             img = draw_other(name, e)
         if img is None:
@@ -263,8 +476,10 @@ def main():
         write_bmp(img, os.path.join(OUT, name))
         written.append(name)
     with open(MARKER_FILE, "w", encoding="utf-8", newline="\n") as f:
-        f.write("Home 2.0 navigation skin (Glass Dock): %d images replaced in _skin_jci_mazda.zip\n" % len(written))
+        f.write("Home 2.0 navigation skin (Glass Dock): %d images replaced in _skin_jci_mazda.zip; "
+                "Midnight map colours, Tajawal and right-to-left lists in data.zip\n" % len(written))
     print("wrote %d navigation images to %s" % (len(written), OUT))
+    write_colors()
 
 
 if __name__ == "__main__":

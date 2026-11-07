@@ -30,10 +30,15 @@ opens **Android Auto** or **Apple CarPlay** when a phone is plugged in.
 | **Arabic** | ![Settings tabs](docs/skin_ar_tabs.png) | ![Favorites tabs](docs/skin_ar_favorites.png) | ![Radio](docs/skin_ar_radio.png) | ![Camera adjustment](docs/skin_ar_camadjust.png) |
 | **English** | ![Settings tabs](docs/skin_en_tabs.png) | ![Favorites tabs](docs/skin_en_favorites.png) | ![Radio](docs/skin_en_radio.png) | ![Camera adjustment](docs/skin_en_camadjust.png) |
 
-| | Contacts | Loading | Dialog |
-|---|---|---|---|
-| **Arabic** | ![Contacts](docs/skin_ar_contacts.png) | ![Loading](docs/skin_ar_loading.png) | ![Dialog](docs/skin_ar_dialog.png) |
-| **English** | ![Contacts](docs/skin_en_contacts.png) | ![Loading](docs/skin_en_loading.png) | ![Dialog](docs/skin_en_dialog.png) |
+| | Contacts | Call history | Loading | Dialog |
+|---|---|---|---|---|
+| **Arabic** | ![Contacts](docs/skin_ar_contacts.png) | ![Call history](docs/skin_ar_calls.png) | ![Loading](docs/skin_ar_loading.png) | ![Dialog](docs/skin_ar_dialog.png) |
+| **English** | ![Contacts](docs/skin_en_contacts.png) | ![Call history](docs/skin_en_calls.png) | ![Loading](docs/skin_en_loading.png) | ![Dialog](docs/skin_en_dialog.png) |
+
+| | Call screen | Two calls | Map settings | Map (night) |
+|---|---|---|---|---|
+| **Arabic** | ![Call](docs/skin_ar_incall.png) | ![Two calls](docs/skin_ar_incall2.png) | ![Map settings](docs/nav/settings_ar.png) | ![Map](docs/nav/map_night_ar.png) |
+| **English** | ![Call](docs/skin_en_incall.png) | ![Two calls](docs/skin_en_incall2.png) | ![Map settings](docs/nav/settings_en.png) | ![Map](docs/nav/map_night_en.png) |
 
 ![Mute box](docs/skin_ar_mute.png)
 
@@ -42,10 +47,30 @@ opens **Android Auto** or **Apple CarPlay** when a phone is plugged in.
 
 ## Status
 
-**v1.4.2 — fixes from the v1.4.1 photos: styled from start-up, lists, keypad, dialogs, tab arrows.** Not yet tried
-in the car. v1.4.0 runs in the car (new media bar icons confirmed on 2 Nov 2026).
+**v1.6.0 — fixes from the v1.5.0 photos: contacts, call history, call screen, keypad, tabs, map lists, map colours.**
+Not yet tried in the car. v1.5.0 runs in the car (the map's Glass Dock bar confirmed on 6 Nov 2026).
 v1.0.4 (the first layout) runs in a 2019 CX-9 on firmware 74.00.333A (ADR / 4A N).
 
+- v1.6.0 fixes what the car showed with v1.5.0:
+  - **Contacts:** Mazda's A–Z letter column has its own glass strip beside the menu (left in Arabic), so contact
+    icons and photos no longer sit under the letters. Contact photos are round, in lists and on the call screen.
+  - **Call screen redesigned:** one call shows the contact in the middle (round picture with a call badge, name,
+    number, time in a pill) on a soft glow; two calls are two glass cards, the active one highlighted, mirrored in Arabic.
+  - **Phone keypad redesigned:** one glass panel with the number on top, borderless keys in Tajawal Light with small
+    letters, a round green call button and a delete pill. The knob moves through the keys as before.
+  - **Tabs in Arabic:** tilting the knob right now goes to the tab on the right (the bar is mirrored, so the tilt is too).
+  - **Call history:** full Arabic month names ("نوفمبر"; Mazda's Arabic short names are cut words like "نوفم").
+  - **Emoji square:** names with an emoji such as "♥️" showed a square after the heart. That was the invisible emoji
+    variation selector; Tajawal now has empty glyphs for it, joiners and direction marks. (Colour emoji themselves can't
+    be shown: the car has no emoji font.)
+  - **Two highlighted rows** after a fast scroll: the list now also clears press marks and repaints itself once the knob
+    stops (the leftover pill was most likely Opera not repainting the mirrored rows).
+  - **Map (navigation):** settings and search lists in one glass panel with a rounded blue focus, the round back button
+    and a thin scroll bar; right-to-left lists in Arabic; Tajawal for Arabic text in the map (tooltips too); and new
+    "Midnight" map colours (navy ground, blue-grey roads by size, orange freeways, blue route, navy water, teal parks).
+    All of it is in the car's own navigation files; the SD card (maps and licence) is never touched, so map updates
+    and the restyle don't affect each other.
+- v1.5.0 restyles the navigation map's button bar ("Glass Dock"), tooltip and speed sign.
 - v1.4.2 fixes what the car showed with v1.4.1:
   - **Styled from start-up.** The reversing camera or a USB dialog shown right after starting the car (before the
     home screen) appeared in Mazda's look: in Arabic the skin now loads with Mazda's start-up style sheet.
@@ -60,8 +85,6 @@ v1.0.4 (the first layout) runs in a 2019 CX-9 on firmware 74.00.333A (ADR / 4A N
   - More icons redrawn (HD, traffic announcements, subtitles, thumbs up/down, lock, signal bars, ...): 378 in all.
     Service logos (Pandora, SiriusXM, Stitcher, Facebook, Twitter) stay as Mazda drew them.
   - Screens sold elsewhere are covered too: DVD, HD traffic images, network management and SiriusXM data.
-  - The **map** itself (roads, bottom buttons, speed sign) is drawn by the navigation program on the map SD card,
-    not by Mazda's HTML screens, so the skin can only style the top bar over it.
 - v1.4.1 fixes what the car showed with v1.4.0:
   - **Tabs** (Settings, Favorites, phone) are one segmented glass bar inside the menu container: the chosen tab a
     blue pill, the others readable white text, the arrow buttons inside the bar. In Arabic the first tab is on the right.
@@ -108,12 +131,12 @@ v1.0.4 (the first layout) runs in a 2019 CX-9 on firmware 74.00.333A (ADR / 4A N
 - v1.0.3 installs the fonts into the folder the browser really reads (`/jci/fonts/CHN` on firmware 74;
   earlier versions used `/jci/fonts`, which the browser never scans). Confirmed in the car: Tajawal loads.
 - v1.0.4 turns off the "Font check" test line.
-- The system skin passes 56 checks against Mazda's own CSS, in Arabic and English (fonts, alignment, focus, icons,
+- The system skin passes 80 checks against Mazda's own CSS, in Arabic and English (fonts, alignment, focus, icons,
   alerts, transparent video screens, the new layout, and the 310 redrawn control images).
-- The launcher passes 76 automated behaviour checks (knob, tilt, touch, every status state and its Arabic wording,
+- The launcher passes 86 automated behaviour checks (knob, tilt, touch, every status state and its Arabic wording,
   phone hot-plug, focus hand-off, call and audio messages) and 9 clock checks.
-- The installer passes 47 automated checks against a simulated car file system (install, reinstall, remove,
-  wrong firmware, damaged USB copy, cancel, an existing `common_rtl.css`).
+- The installer passes 96 automated checks against a simulated car file system (install, reinstall, remove,
+  wrong firmware, damaged USB copy, cancel, an existing `common_rtl.css`, the map files).
 
 Treat it as experimental. Removing it is one step (see [Remove](#remove)).
 

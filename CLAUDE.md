@@ -6,8 +6,8 @@ v1.0.4 ran in the car on 31 Oct 2026. v1.2.1 (Ember Glance home + "Floating Pill
 his photos showed the bugs fixed in v1.3.0 (camera/map hidden, menus not RTL, unstyled screens). v1.3.0 and v1.4.0
 (remaining screens + icon set) were installed; v1.4.0 icons confirmed in the car on 2 Nov 2026. v1.4.1 (his v1.4.0
 photos: tabs, scroll bar, radio, camera bar, tooltip) was installed; v1.4.2 (his v1.4.1 photos) is built and tested
-but not yet confirmed in the car. v1.5.0 adds the navigation map skin ("Glass Dock"), built and tested, not yet in the
-car. Read this whole file before changing anything.
+but not yet confirmed in the car. v1.5.0 (navigation map skin "Glass Dock") was installed; his photos (6 Nov 2026,
+bugs-4) led to v1.6.0 (phone screens, contacts, map lists/colours/fonts), built and tested, not yet in the car. Read this whole file before changing anything.
 
 ## What the owner wants
 - Arabic first, right-to-left, Arabic-Indic digits, Hijri (Umm al-Qura) date under the Gregorian date.
@@ -156,9 +156,40 @@ All read from the system app instance `framework._appInstances.system` without c
   the same image, so the focus pill is inset 24px (can't round only the end buttons with images alone).
   Bar background `spr_cockpitMenuBG.bmp` (800x98, drawn from y 384), tooltip `mapmenupopup(_leg).bmp` (stretched),
   speed sign `spr_speedlimit_eu.bmp` (2 states) on `cockpit_bg_straight*.bmp` (stretched, so no rounded corners).
-- Not done yet (would need layout or `data.zip` changes): Midnight map colours (`scheme/*/color.ini`), rounded side
-  cards, Tajawal in the map (`fonts/jci.vfont`; OS fonts from `/jci/fonts;/jci/fonts/navi`). Plug-ins in `ux/` override
-  data.zip files (`north_america.zip` replaces a `color.ini`), but their load order is untested.
+- v1.6.0 does the `data.zip` part: Midnight map colours (`scheme/*/color.ini`, lines replaced by key), Tajawal in the
+  map (`fonts/jci*.vfont` + fonts copied to `/jci/fonts/navi`, which Opera never reads), right-to-left lists
+  (`common/ui/jci_mazda.css` R2L switch). run.sh edits Mazda's own copies on the car (`installer/home2/nav/data/`
+  holds only our lines and sed scripts), backs up the originals, tests the zip, rolls back on failure. Still not done:
+  rounded side cards. Plug-ins in `ux/` override data.zip files, but their load order is untested.
+- SD card content (copy in `C:\maps-rea\nav-sd\content`, HERE 2017 Q4 GCC): see `docs/nav-sd-content.md`. Every file has
+  a `.sgn` (version + 128-byte NNG signature + CRC32 per 4 KiB); `tools/inspect_nav_sd.py` checks them (read-only).
+  Map/POI/3D files are licence-encrypted: don't try to decrypt them. To add data, use NNG's KML POI/user POI support (folder still unknown).
+
+## v1.6.0 lessons (7 Nov 2026, his v1.5.0 photos)
+- **Contacts letter index:** List2 with `hasLetterIndex` adds class `letterIndex` and a 100px
+  `List2CtrlLetterIndexWrapper` at list x 632-732 drawn OVER the rows. The skin gives it its own glass strip
+  (list x 608-708, Arabic 34-134) and shortens the container (34-596, Arabic 146-708) with `_li` row images.
+  The desktop preview didn't have the letter column before, which is why v1.4.2 missed it: preview screens must copy
+  Mazda's real DOM (read the control's JS).
+- Row contact photos: `.image1[style*="url"]:not([style*="common/images"])` → round (icons all live under common/images).
+- **Arabic month names:** `MonthNameNov` = "نوفم" in Mazda's ar_SA dictionary (cut words); `FullMonthName*` are full.
+  The launcher wraps `Utility.prototype.formatDate` (Arabic only).
+- **"♥ ☐":** U+FE0F (emoji variation selector) had no glyph. `rename_fonts.py` maps FE00-FE0F, 200B-200F, 202A-202E,
+  2060-2069, 061C, FEFF to an empty zero-width glyph. Emoji themselves have no font in the car.
+- **TabsCtrl knob in Arabic:** the bar is mirrored by CSS, so the launcher wraps `TabsCtrl.prototype.handleControllerEvent`
+  to swap left/right (and the giveFocusLeft/Right it returns) when RTL.
+- **Double focus:** List2's own code clears `focus` correctly; the leftover pill after fast scrolls is most likely Presto
+  not repainting transformed (mirrored) rows. The launcher wraps List2 `handleControllerEvent`: cleans focus/hit marks,
+  and 350 ms after the last knob event sets the mask's opacity to 0.99 and back (forces a repaint). Unconfirmed in the car.
+- **InCall2** (call screen): styles OneCall/TwoCall/Mobile911 share class names, so the launcher wraps `_createStructure`
+  to add `H2<ctrlStyle>` to the control, and copies the contact `<img>` src into a round `div.H2CallPhoto`
+  (setContact1/2Config). Skin rules are scoped to H2OneCall/H2TwoCall: without the launcher Mazda's layout stays.
+- **DialPad2** key positions are CSS (not inline), so style 02 is laid out by hand: control x 78-776, keys 168x76 at
+  box x 40/209/378, call button 120x307 (round image), delete 120x64. Key order unchanged, so knob moves are Mazda's.
+- Hand-styled images are excluded from the generated-image check in `tests/browser/skin.mjs` (`HAND`).
+- Map (other session): NNG RTL switch turned on for lists, Tajawal via `fonts/*.vfont` + `/jci/fonts/navi`, Midnight
+  `scheme/day|night/color.ini`, all edited inside `/jci/nng/data.zip` on the car (originals backed up, full data.zip copy
+  on the stick). See the map notes above and `tools/build_nav_skin.py`.
 
 ## Repo layout
 - `src/launcher/MainMenuCtrl.js` (+ `hijri.js`, generated) — the launcher; `MainMenuCtrl.css`, `MainMenuCtrl_rtl.css`.

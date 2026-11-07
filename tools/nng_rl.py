@@ -57,7 +57,8 @@ def _rows(b, w, h, n, off):
                 px[y * w + x] = i
                 x += 1
                 p += 1
-    if p != len(b):
+    # Some files carry a few bytes of padding after the last row.
+    if p > len(b) or len(b) - p > 32:
         raise ValueError("%d bytes left over" % (len(b) - p))
     return px
 

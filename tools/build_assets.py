@@ -345,12 +345,103 @@ def render_skin_panels():
     render_tabs()
     render_media_extras()
     render_spinners()
+    render_letter_lists()
+    render_phone()
 
 
 # Tabs (Settings, Favorites, phone): one segmented glass bar inside the menu container (list x 40-702, 662x56),
 # the chosen tab a blue pill, the others plain text. Tab widths for 2, 3 and 4 visible tabs, plus the arrow
 # buttons Mazda adds when there are more than 4 tabs.
 TAB_W = {2: 325, 3: 216, 4: 137}
+
+
+# Lists with Mazda's A-Z letter column (contacts): the letter column gets its own glass strip at the end of the row
+# (right in English, left in Arabic) and the menu container is shorter, so rows never run under the letters.
+# List x: English container 34-596 + letters 608-708; Arabic letters 34-134 + container 146-708.
+LETTER_LISTS = {False: ((34, 596), (608, 708)), True: ((146, 708), (34, 134))}
+
+
+def render_letter_lists():
+    for rtl, ((c0, c1), (l0, l1)) in LETTER_LISTS.items():
+        suffix = "_rtl" if rtl else ""
+        body = glass_rect(c0, 0, c1 - c0, 412, 28) + glass_rect(l0, 0, l1 - l0, 412, 24, top=0.08, bottom=0.03)
+        svg_canvas(732, 416, body, scale=2).save(os.path.join(SKIN, "list_panel_li%s.png" % suffix), optimize=True)
+        x0, x1 = _row_x(c0 + 16, c1 - 16, rtl)
+        sep = Image.new("RGBA", (732, 1), (0, 0, 0, 0))
+        for x in range(x0, x1):
+            sep.putpixel((x, 0), (255, 255, 255, 26))
+        sep.save(os.path.join(SKIN, "list_sep_li%s.png" % suffix), optimize=True)
+        x0, x1 = _row_x(c0 + 4, c1 - 4, rtl)
+        for name, h, top, bottom in (("list_focus_li", 64, 0.30, 0.16), ("list_focus_thick_li", 82, 0.30, 0.16),
+                                     ("list_hit_li", 64, 0.42, 0.26), ("list_hit_thick_li", 82, 0.42, 0.26)):
+            tint = ('<defs><linearGradient id="fp" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#BECDFF" '
+                    'stop-opacity="%s"/><stop offset="1" stop-color="#BECDFF" stop-opacity="%s"/></linearGradient></defs>') % (
+                top, bottom)
+            body = tint + '<rect x="%d" y="3" width="%d" height="%d" rx="20" fill="url(#fp)"/>' % (x0, x1 - x0, h - 6)
+            svg_canvas(732, h, body, scale=2).save(os.path.join(SKIN, name + suffix + ".png"), optimize=True)
+    # One letter (100x64): focus / pressed pill inside the strip
+    for name, fill, ring in (("letter_focus", 0.22, "rgba(200,212,255,0.85)"), ("letter_hit", 0.36, None)):
+        body = '<rect x="12" y="8" width="76" height="48" rx="18" fill="#BECDFF" fill-opacity="%s"%s/>' % (
+            fill, ' stroke="%s" stroke-width="2"' % ring if ring else "")
+        svg_canvas(100, 64, body, scale=2).save(os.path.join(SKIN, name + ".png"), optimize=True)
+
+
+GREEN_CALL = ('<defs><linearGradient id="gc" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#4BE08E"/>'
+              '<stop offset="1" stop-color="#1FA864"/></linearGradient></defs>')
+AVATAR = ('<defs><linearGradient id="av" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#6D8BFF"/>'
+          '<stop offset="1" stop-color="#A46BF5"/></linearGradient></defs>')
+
+
+def _phone_glyph(cx, cy, size, colour="#FFFFFF", width=2.0):
+    s = size / 24.0
+    return ('<g transform="translate(%s %s) scale(%s)" fill="none" stroke="%s" stroke-width="%s" stroke-linecap="round" '
+            'stroke-linejoin="round"><path d="%s"/></g>') % (cx - size / 2.0, cy - size / 2.0, s, colour, width / s,
+                                                             skin_icons.PHONE)
+
+
+def render_phone():
+    """Phone keypad (DialPad2 style 02) and call screen (InCall2): glass panel, round call button, avatar, glow."""
+    # Keypad panel: control box = screen x 78-776; glass container screen 102-776 (box x 24-698), divider under the number.
+    body = glass_rect(24, 8, 674, 400, 28)
+    body += '<rect x="40" y="91" width="506" height="1" fill="#FFFFFF" fill-opacity="0.14"/>'
+    svg_canvas(698, 416, body, scale=2).save(os.path.join(SKIN, "dp_panel.png"), optimize=True)
+    # Call button: a 104px green circle in the middle of Mazda's tall button area (120x307)
+    for st, ring, light in (("en", None, 0), ("focus", "rgba(255,255,255,0.95)", 0), ("hit", None, 0.25)):
+        b = GREEN_CALL
+        if ring:
+            b += '<circle cx="60" cy="153" r="57" fill="none" stroke="%s" stroke-width="3"/>' % ring
+        b += '<circle cx="60" cy="153" r="50" fill="url(#gc)"/>'
+        if light:
+            b += '<circle cx="60" cy="153" r="50" fill="#FFFFFF" fill-opacity="%s"/>' % light
+        b += _phone_glyph(60, 153, 38, width=2.2)
+        svg_canvas(120, 307, b, scale=2).save(os.path.join(SKIN, "dp_call_%s.png" % st), optimize=True)
+    # Delete key (120x64): a small glass pill with a backspace glyph
+    bs = "M21 5H8l-6 7 6 7h13a1 1 0 0 0 1-1V6a1 1 0 0 0-1-1z M17 9l-6 6 M11 9l6 6"
+    for st, fill, ring in (("en", 0.10, "rgba(255,255,255,0.16)"), ("focus", 0.18, "rgba(200,212,255,0.9)"),
+                           ("hit", 0.32, "rgba(255,255,255,0.3)")):
+        b = '<rect x="24" y="8" width="72" height="48" rx="20" fill="#FFFFFF" fill-opacity="%s" stroke="%s" stroke-width="%s"/>' % (
+            fill, ring, 2 if st == "focus" else 1)
+        b += ('<g transform="translate(46 20) scale(1)" fill="none" stroke="#FFFFFF" stroke-width="2" stroke-linecap="round" '
+              'stroke-linejoin="round"><path d="%s"/></g>') % bs
+        svg_canvas(120, 64, b, scale=2).save(os.path.join(SKIN, "dp_clear_%s.png" % st), optimize=True)
+    # Call screen background (800x416): a soft glow and thin rings around the contact picture (centre 400, 100)
+    b = ('<defs><radialGradient id="cg" cx="400" cy="100" r="260" gradientUnits="userSpaceOnUse">'
+         '<stop offset="0" stop-color="#6D8BFF" stop-opacity="0.30"/><stop offset="0.55" stop-color="#6D8BFF" stop-opacity="0.08"/>'
+         '<stop offset="1" stop-color="#6D8BFF" stop-opacity="0"/></radialGradient></defs>'
+         '<rect width="800" height="416" fill="url(#cg)"/>')
+    for r, a in ((72, 0.16), (94, 0.09), (118, 0.05)):
+        b += '<circle cx="400" cy="100" r="%d" fill="none" stroke="#FFFFFF" stroke-opacity="%s" stroke-width="1.5"/>' % (r, a)
+    svg_canvas(800, 416, b, scale=1).save(os.path.join(SKIN, "call_bg.png"), optimize=True)
+    # Contact without a picture: initials can't be known from CSS, so a person glyph on a gradient circle
+    b = AVATAR + '<circle cx="56" cy="56" r="56" fill="url(#av)"/>'
+    b += ('<g transform="translate(28 26) scale(2.333)" fill="none" stroke="#FFFFFF" stroke-width="1.6" stroke-linecap="round" '
+          'stroke-linejoin="round"><path d="%s"/></g>') % skin_icons.USER
+    svg_canvas(112, 112, b, scale=2).save(os.path.join(SKIN, "call_avatar.png"), optimize=True)
+    # Call state badge on the picture: green while the call is on the car, grey when on hold
+    for st, col in (("on", "url(#gc)"), ("off", "#5C6270")):
+        b = GREEN_CALL + '<circle cx="18" cy="18" r="16" fill="%s" stroke="#14182A" stroke-width="3"/>' % col
+        b += _phone_glyph(18, 18, 16, width=2.4)
+        svg_canvas(36, 36, b, scale=2).save(os.path.join(SKIN, "call_badge_%s.png" % st), optimize=True)
 
 
 def render_tabs():

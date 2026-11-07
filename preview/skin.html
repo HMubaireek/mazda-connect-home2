@@ -75,6 +75,8 @@
     if (parent) { parent.appendChild(e); }
     return e;
   }
+  var PHOTO_BIG = "data:image/svg+xml," + encodeURIComponent('<svg xmlns="http://www.w3.org/2000/svg" width="120" height="120">' +
+    '<rect width="120" height="120" fill="#c89b6d"/><circle cx="60" cy="46" r="22" fill="#f1d9bd"/><rect x="22" y="76" width="76" height="50" rx="24" fill="#f1d9bd"/></svg>');
   function icon(name, state) { return "display: inline-block; background-image: url(common/images/icons/IcnSb" + name + (state ? "_" + state : "") + ".png);"; }
 
   // ---- status bar (StatusBarCtrl._createStructure order) ----
@@ -187,13 +189,53 @@
     });
   }
   if (SCREEN === "dialpad") {
-    // DialPad2Ctrl style 02: 12 keys and the green call button
-    var dp = el("div", "DialPad2Ctrl DialpadStyle02", document.body, "", "position: absolute; top: 64px; left: 0; width: 800px; height: 416px");
+    // DialPad2Ctrl style 02 as DialPad2Ctrl._buildPhoneDialPad builds it: background, number, delete key, 12 keys
+    // (digit + letters span), call button, back button. Positions come from the CSS, as in the car.
+    var tmp = el("div", "", document.body, "", "position: absolute; top: 64px; left: 0; width: 800px; height: 416px");
+    var dp = el("div", "DialPad2Ctrl DialpadStyle02", tmp);
     el("div", "ctrlBackground", dp);
-    "123456789*0#".split("").forEach(function(k, i) {
-      el("div", "btn" + (i === 4 ? " focused" : ""), dp, k, "left: " + (90 + (i % 3) * 130) + "px; top: " + (100 + Math.floor(i / 3) * 78) + "px");
+    var inp = el("div", "inputDiv", dp);
+    el("span", "inputSpan", inp, "0551234567", "left: 16px");
+    el("div", "inputFade", inp);
+    el("div", "caret", inp, "", "left: 15px");
+    el("img", "", el("div", "btn clear", dp)).src = "common/controls/DialPad2/images/Delete_Btn.png";
+    var letters = ["+", "", "ABC", "DEF", "GHI", "JKL", "MNO", "PQRS", "TUV", "WXYZ"];
+    for (var k = 0; k < 12; k++) {
+      var b = el("div", "btn", dp);
+      if (k < 10) { b.appendChild(document.createTextNode(k)); b.classList.add("btn" + k); el("span", "", b, letters[k]); }
+      else { b.appendChild(document.createTextNode(k === 10 ? "*" : "#")); b.classList.add(k === 10 ? "btnAsterisk" : "btnSharp"); }
+      if (k === 5) { b.classList.add("focused"); }
+    }
+    el("div", "btn callBtn", dp);
+    el("div", "btn leftBtn", dp);
+  }
+  if (SCREEN === "incall" || SCREEN === "incall2") {
+    // InCall2Ctrl (OneCall / TwoCall) as InCall2Ctrl._createContactStructure builds it, with the classes the
+    // launcher adds (H2OneCall / H2TwoCall, H2CallPhoto), and the call button bar (Ump3Ctrl, 7 buttons).
+    var two = SCREEN === "incall2";
+    var ic = el("div", "InCall2Ctrl InCall2InCallBG " + (two ? "H2TwoCall" : "H2OneCall"), document.body, "", "top: 64px");
+    el("span", "InCall2CtrlTitle", ic, AR ? "الاتصال جارٍ" : "Call in progress");
+    var people = [[AR ? "حورتي ♥️ Sweet Heart" : "Sweet Heart ♥️", AR ? "جوال" : "Mobile", "00:42", true, true],
+                  [AR ? "أبو عمر" : "Abu Omar", "+966 55 123 4567", "03:15", false, false]];
+    people.slice(0, two ? 2 : 1).forEach(function(p, n) {
+      var c = el("div", "InCall2Contact" + (n + 1) + (two && p[3] ? " InCall2ContactActiveBkg" : ""), ic);
+      el("span", "InCall2CtrlTitleContactRuleLine", c);
+      el("div", "InCall2CallContactIcon " + (p[3] ? "InCall2ActivePhone" : "InCall2InactivePhone"), c);
+      var fr = el("div", "InCall2ContactImageFrame", c);
+      el("img", "", fr).src = "common/images/icons/IcnContactImagePlaceholder_Active.png";
+      if (p[4]) { el("div", "H2CallPhoto", fr, "", "display: block; background-image: url(" + PHOTO_BIG + ")"); }
+      var col = p[3] ? " InCall2ActiveFontColor" : " InCall2InactiveFontColor";
+      el("span", "InCall2ContactName" + col, c, p[0]);
+      el("span", "InCall2ContactPhoneNumber" + col, c, p[1]);
+      el("span", "InCall2ContactElapsedTime" + col, c, p[2]);
     });
-    el("div", "callBtn", dp);
+    var umpc = el("div", "Ump3Ctrl", ic, "", "position: absolute; top: 276px");
+    el("div", "Ump3CtrlBackground", umpc);
+    ["IcnUmpSms_En", "IcnUmpCall_En", "IcnUmpPhoneRoute_Handset_En", "IcnUmpMuteUnmute_Unmute_En", "IcnUmpAddCall_En",
+     "IcnUmpSwap_Ds", "IcnUmpDialpad_En"].forEach(function(name, i) {
+      var b = el("div", "Ump3Ctrl7Button" + (i === 1 ? "_focused" : "_En"), umpc, "", "position: absolute; left: " + (i * 114) + "px");
+      el("div", "Ump3CtrlButtonIcon", b, "", "background-image: url(common/images/icons/" + name + ".png)");
+    });
   }
   if (SCREEN === "keyboard") {
     // KeyboardCtrl, 5x10 layout: input box, letter keys, space bar
@@ -208,10 +250,18 @@
     el("div", "", cw, "").id = "btnSpacebar";
     el("div", "", cw, "").id = "btnOK";
   }
-  if (!isHome && ["camera", "media", "fuel", "dialpad", "keyboard", "radio", "camadjust", "dialog"].indexOf(SCREEN) < 0) {
-    var tabbed = SCREEN === "tabs" || SCREEN === "favorites";
+  if (!isHome && ["camera", "media", "fuel", "dialpad", "keyboard", "radio", "camadjust", "dialog", "incall", "incall2"].indexOf(SCREEN) < 0) {
+    var tabbed = SCREEN === "tabs" || SCREEN === "favorites" || SCREEN === "calls";
     var tmpl = el("div", "TemplateWithStatusLeft List2Tmplt", document.getElementById("list"));
-    var list = el("div", "List2Ctrl normalItems " + (tabbed ? "tabsTitle" : "noTitle"), tmpl);
+    var list = el("div", "List2Ctrl normalItems " + (tabbed ? "tabsTitle" : "noTitle") + (SCREEN === "contacts" ? " letterIndex" : ""), tmpl);
+    if (SCREEN === "calls") {
+      // Call history: TabsCtrl with 2 tabs (Mazda's lefts 15/369), "All calls" chosen
+      var t2 = el("div", "TabsCtrlStyle2", list);
+      (AR ? ["جميع المكالمات", "المكالمات الفائتة"] : ["All calls", "Missed calls"]).forEach(function(t, i) {
+        var b = el("div", "TabsCtrlStyle2Button" + (i === 0 ? "EnabledCurrent" : "Enabled"), t2, "", "left: " + (15 + i * 354) + "px");
+        el("span", "TabsCtrlLabelSpan", b, t);
+      });
+    }
     if (SCREEN === "tabs") {
       // Settings: TabsCtrl with more than 4 tabs (arrows), 4 visible at Mazda's lefts 84/227/370/513, Display chosen
       var tc = el("div", "TabsCtrlStyle4", list);
@@ -243,6 +293,29 @@
       : (AR ? ["الشاشة", "الصوت", "الساعة", "الأجهزة", "اللغة", "النظام", "إعادة الضبط"]
             : ["Display", "Sound", "Clock", "Devices", "Language", "System", "Factory Reset"]).map(function(l) { return [l, ""]; });
     var topRow = SCREEN === "loading" ? 1 : 0;
+    if (SCREEN === "calls") {
+      // List2Ctrl style07 with labelWidth "wide" (phoneApp): call icon, name, time over date
+      var sh = AR ? "حورتي ♥️ Sweet Heart" : "Sweet Heart ♥️";
+      [[sh, "IcnListCall_Incoming", "PM 05:12", AR ? "5 نوفمبر" : "5 Nov"],
+       [AR ? "حلاق - محمد - بجانب" : "Barber - Mohammed", "IcnListCall_Outgoing", "PM 08:18", AR ? "4 نوفمبر" : "4 Nov"],
+       [sh, "IcnListCall_Incoming", "PM 08:08", AR ? "4 نوفمبر" : "4 Nov"],
+       [sh, "IcnListCall_Missed", "PM 04:43", AR ? "30 سبتمبر" : "30 Sep"]].forEach(function(r, i) {
+        var li = el("div", "ListItem style07 wideLabel" + (i === 0 ? " focus" : ""), scroller, "", "top: " + (i * 64) + "px");
+        el("span", "image1", li, "", "background-image: url(common/images/icons/" + r[1] + ".png)");
+        el("span", "label1", li, r[2]);
+        el("span", "label2", li, r[3]);
+        el("span", "line1", li, r[0]);
+      });
+      rows = [];
+    }
+    if (SCREEN === "contacts") {
+      // Letter index (List2Ctrl hasLetterIndex): an <ol> of letters in its own wrapper
+      var lw = el("div", "List2CtrlLetterIndexWrapper", list);
+      var ol = el("ol", "List2CtrlLetterIndex", lw);
+      (AR ? ["أ", "ب", "ت", "ث", "ج", "ح"] : ["A", "B", "C", "D", "E", "F"]).forEach(function(l, i) {
+        el("li", "letter" + (i === 1 ? " active" : "") + (i === 4 ? " disabled" : ""), ol, l);
+      });
+    }
     rows.forEach(function(r, i) {
       var li = el("div", "ListItem style01" + (i === 0 ? " focus" : ""), scroller, "", "top: " + ((i + topRow) * 64) + "px");
       var img = el("span", "image1", li);

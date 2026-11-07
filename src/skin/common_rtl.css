@@ -158,3 +158,56 @@ html body .List2Ctrl .List2CtrlLoading .loadingText {
   text-align: right !important;
   direction: rtl !important;
 }
+
+/* Contacts: the letter strip moves to the left (list x 34-134) and the container to the right (146-708). */
+html body div.List2Ctrl.letterIndex {
+  background-image: url(../images/home2skin/list_panel_li_rtl.png) !important;
+}
+
+html body div.List2Ctrl.letterIndex .List2CtrlMask {
+  left: 146px !important;
+}
+
+html body div.List2Ctrl.letterIndex .List2CtrlScroller {
+  left: -146px !important;
+}
+
+html body div.List2Ctrl.letterIndex .List2CtrlLetterIndexWrapper {
+  left: 34px !important;
+}
+
+html body div.List2Ctrl.letterIndex.normalItems .ListItem,
+html body div.List2Ctrl.letterIndex.thickItems .ListItem {
+  background-image: url(../images/home2skin/list_sep_li_rtl.png) !important;
+}
+
+html body div.List2Ctrl.letterIndex.normalItems .ListItem.focus { background-image: url(../images/home2skin/list_focus_li_rtl.png) !important; }
+html body div.List2Ctrl.letterIndex.thickItems .ListItem.focus { background-image: url(../images/home2skin/list_focus_thick_li_rtl.png) !important; }
+html body div.List2Ctrl.letterIndex.normalItems .ListItem.hit { background-image: url(../images/home2skin/list_hit_li_rtl.png) !important; }
+html body div.List2Ctrl.letterIndex.thickItems .ListItem.hit { background-image: url(../images/home2skin/list_hit_thick_li_rtl.png) !important; }
+
+/* Call screen with two calls: each card mirrored (picture on the right, time on the left), text flipped back. */
+html body .H2TwoCall .InCall2Contact1,
+html body .H2TwoCall .InCall2Contact2 {
+  -o-transform: scaleX(-1);
+  transform: scaleX(-1);
+}
+
+html body .H2TwoCall .InCall2Contact1 > *,
+html body .H2TwoCall .InCall2Contact2 > * {
+  -o-transform: scaleX(-1);
+  transform: scaleX(-1);
+}
+
+html body div.H2TwoCall .InCall2ContactName,
+html body div.H2TwoCall .InCall2ContactPhoneNumber,
+html body div.H2TwoCall .InCall2ContactPhoneNumberType {
+  text-align: right !important;
+  direction: rtl !important;
+}
+
+/* Phone numbers read left to right ("+966 55 ..."), also in Arabic; the phone type is a single word either way. */
+html body div.InCall2Ctrl .InCall2ContactPhoneNumber {
+  direction: ltr !important;
+  unicode-bidi: embed;
+}

@@ -36,7 +36,9 @@ await shot('lang=en&screen=alert&alert=nav', 'skin_en_alert.png');
 await shot('lang=en&screen=home&focus=btn', 'skin_en_home.png');
 await shot('lang=en&screen=icons', 'skin_en_icons.png');
 await shot('screen=mute', 'skin_ar_mute.png');
-for (const s of ['media', 'fuel', 'dialpad', 'keyboard', 'tabs', 'favorites', 'radio', 'camadjust', 'contacts', 'loading', 'dialog']) {
+await shot('lang=en&screen=mute', 'skin_en_mute.png');
+for (const s of ['media', 'fuel', 'dialpad', 'keyboard', 'tabs', 'favorites', 'radio', 'camadjust', 'contacts', 'loading', 'dialog',
+                 'calls', 'incall', 'incall2']) {
   await shot('screen=' + s, 'skin_ar_' + s + '.png');
   await shot('lang=en&screen=' + s, 'skin_en_' + s + '.png');
 }
@@ -91,7 +93,10 @@ await open('lang=en&screen=camera');
 expect('en camera background stays transparent', await css('#bg', 'backgroundImage'), 'none');
 
 // Every redrawn Mazda control image: build an element with Mazda's own classes and check that our image wins
-const table = JSON.parse(readFileSync(new URL('../../tools/skin_controls.json', import.meta.url), 'utf8'));
+// (keypad keys / back button / panel and the contacts letter column are styled by hand in home2skin.css)
+const HAND = /^(DialPad2\/(BtnLeft_|DialKey|DialPadStyle02_Bkgd|Key_)|List2\/IndexedList_(Divider|Focus|Hit))/;
+const table = JSON.parse(readFileSync(new URL('../../tools/skin_controls.json', import.meta.url), 'utf8'))
+  .filter(e => !HAND.test(e.control + '/' + e.file));
 for (const lang of ['ar', 'en']) {
   await open((lang === 'en' ? 'lang=en&' : '') + 'screen=settings');
   const res = await page.evaluate((table) => {
@@ -147,6 +152,50 @@ expect('en alert between button and clock', (await box('.SbnCtrl')).slice(0, 2),
 await open('lang=en&screen=home&focus=btn');
 expect('en Android Auto pill at the left edge', (await box('.StatusBarCtrlRemoteUIBtn_En')).slice(0, 2), [24, 68]);
 expect('en home clock keeps Tajawal Light', (await css('.H2Time', 'fontFamily')).split(',')[0], '"Home2 Tajawal Light"');
+
+// Contacts: the letter column has its own strip, the rows stop before it (v1.6.0, contact pictures overlapped letters)
+for (const lang of ['ar', 'en']) {
+  await open((lang === 'en' ? 'lang=en&' : '') + 'screen=contacts');
+  const mask = await box('.List2CtrlMask');
+  const letters = await box('.List2CtrlLetterIndexWrapper');
+  expect(lang + ' letter strip beside the rows, not under them', lang === 'ar' ? letters[1] <= mask[0] : letters[0] >= mask[1], true);
+  expect(lang + ' contact photo round', await page.evaluate(() => getComputedStyle(document.querySelectorAll('.ListItem .image1')[2]).borderTopLeftRadius), '50%');
+  expect(lang + ' Mazda icons not rounded', await page.evaluate(() => getComputedStyle(document.querySelectorAll('.ListItem .image1')[1]).borderTopLeftRadius), '0px');
+}
+await open('screen=contacts');
+expect('ar letter strip on the left', (await box('.List2CtrlLetterIndexWrapper')).slice(0, 2), [102, 202]);
+expect('ar focused contact row uses the shorter mirrored pill', (await css('.ListItem.focus', 'backgroundImage')).includes('list_focus_li_rtl.png'), true);
+
+// Call history: time and date fit inside the container
+for (const lang of ['ar', 'en']) {
+  await open((lang === 'en' ? 'lang=en&' : '') + 'screen=calls');
+  const fits = await page.evaluate(() => {
+    const m = document.querySelector('.List2CtrlMask').getBoundingClientRect();
+    return [...document.querySelectorAll('.ListItem .label2')].every(l => {
+      const r = document.createRange(); r.selectNodeContents(l); const t = r.getBoundingClientRect();
+      return t.left >= m.left - 0.5 && t.right <= m.right + 0.5 && l.scrollWidth <= l.clientWidth;
+    });
+  });
+  expect(lang + ' call date fits (was cut to "نوفم")', fits, true);
+}
+
+// Keypad and call screen
+for (const lang of ['ar', 'en']) {
+  await open((lang === 'en' ? 'lang=en&' : '') + 'screen=dialpad');
+  expect(lang + ' keypad keys in Tajawal Light', (await css('.DialPad2Ctrl .btn5', 'fontFamily')).split(',')[0], '"Home2 Tajawal Light"');
+  expect(lang + ' keypad call button is the round image', (await css('.callBtn', 'backgroundImage')).includes('dp_call_en.png'), true);
+  expect(lang + ' keypad keys inside the container', [(await box('.btn1'))[0] >= 102, (await box('.btn3'))[1] <= (await box('.callBtn'))[0]], [true, true]);
+  await open((lang === 'en' ? 'lang=en&' : '') + 'screen=incall');
+  expect(lang + ' call screen contact picture round', await css('.H2CallPhoto', 'borderTopLeftRadius'), '50%');
+  expect(lang + ' call screen name centred', await css('.InCall2ContactName', 'textAlign'), 'center');
+  expect(lang + ' call picture centred', (await box('.InCall2ContactImageFrame')).slice(0, 2), [344, 456]);
+}
+await open('screen=incall2');
+const c1 = await box('.InCall2Contact1 .InCall2ContactImageFrame');
+const t1 = await box('.InCall2Contact1 .InCall2ContactElapsedTime');
+expect('ar two calls: picture on the right, time on the left', c1[0] > t1[1], true);
+await open('lang=en&screen=incall2');
+expect('en two calls: picture on the left, time on the right', (await box('.InCall2Contact1 .InCall2ContactImageFrame'))[1] < (await box('.InCall2Contact1 .InCall2ContactElapsedTime'))[0], true);
 
 await open('screen=settings&skin=0');
 expect('stock look without the skin', (await css('.StatusBarCtrlAppName', 'fontFamily')).includes('Tajawal'), false);

@@ -196,6 +196,61 @@ expect('contact photo left alone', listResult.photo, './data/contact_photo_12.jp
 expect('brand logo left as Mazda drew it', listResult.brand, 'common/images/icons/IcnListPandora_En.png');
 expect('only one row keeps the focus mark', [listResult.focused, listResult.kept], [1, true]);
 
+// v1.6.0: tab bar knob tilt mirrored in Arabic, full Arabic month names, call screen classes and round photo
+const v16 = await page.evaluate(() => {
+  const out = {};
+  window.TabsCtrl = function() {};
+  TabsCtrl.prototype.handleControllerEvent = function(e) { this.got = e; return e === 'left' ? 'giveFocusLeft' : 'consumed'; };
+  window.InCall2Ctrl = function(style) { this.properties = { ctrlStyle: style }; this._createStructure(); };
+  InCall2Ctrl.prototype._createStructure = function() {
+    this.divElt = document.createElement('div');
+    this._contact1ImageFrame = document.createElement('div');
+    this._contact1Image = document.createElement('img');
+    this._contact1ImageFrame.appendChild(this._contact1Image);
+  };
+  InCall2Ctrl.prototype.setContact1Config = function(d) { this._contact1Image.setAttribute('src', d.imagePath || 'common/images/icons/IcnContactImagePlaceholder_Active.png'); };
+  framework.registerCtrlLoaded('TabsCtrl');
+  const t = new TabsCtrl();
+  t.handleControllerEvent('rightStart'); out.enTilt = t.got;
+  framework._rtlLanguage = true;
+  t.handleControllerEvent('rightStart'); out.arTilt = t.got;
+  out.arEdge = t.handleControllerEvent('right');
+  t.handleControllerEvent('select'); out.arOther = t.got;
+  delete framework._rtlLanguage;
+  const c = new InCall2Ctrl('OneCall');
+  out.callClass = c.divElt.className;
+  c.setContact1Config({ imagePath: '/tmp/contact_4.jpg' });
+  const photo = c._contact1ImageFrame.querySelector('.H2CallPhoto');
+  out.photo = photo ? [photo.style.display, photo.style.backgroundImage.indexOf('contact_4.jpg') >= 0] : null;
+  c.setContact1Config({});
+  out.noPhoto = photo.style.display;
+  window.Utility = function() { this._localeMonthNames = ['MonthNameJan', 'MonthNameFeb', 'MonthNameMar', 'MonthNameApr', 'MonthNameMay',
+    'MonthNameJun', 'MonthNameJul', 'MonthNameAug', 'MonthNameSep', 'MonthNameOct', 'MonthNameNov', 'MonthNameDec']; };
+  Utility.prototype.formatDate = function(s) { return new Date(s * 1000).getDate() + ' ' + framework.localize.getLocStr('common', this._localeMonthNames[new Date(s * 1000).getMonth()]); };
+  home2HookDate();
+  const lang = framework.localize.getCurrentLanguage, loc = framework.localize.getLocStr;
+  const dict = { MonthNameNov: 'نوفم', FullMonthNameNov: 'نوفمبر', MonthNameJan: 'يناير', FullMonthNameJan: 'يناير' };
+  framework.localize.getLocStr = function(a, id) { return dict[id] || id; };
+  const u = new Utility();
+  framework.localize.getCurrentLanguage = function() { return 'ar_SA'; };
+  out.arNov = u.formatDate(Date.UTC(2026, 10, 5, 12) / 1000);
+  out.arJan = u.formatDate(Date.UTC(2027, 0, 5, 12) / 1000);
+  framework.localize.getCurrentLanguage = function() { return 'en_US'; };
+  out.enNov = u.formatDate(Date.UTC(2026, 10, 5, 12) / 1000);
+  framework.localize.getCurrentLanguage = lang; framework.localize.getLocStr = loc;
+  return out;
+});
+expect('tabs: English tilt unchanged', v16.enTilt, 'rightStart');
+expect('tabs: Arabic tilt mirrored (bar is mirrored)', v16.arTilt, 'leftStart');
+expect('tabs: Arabic edge hand-off mirrored back', v16.arEdge, 'giveFocusRight');
+expect('tabs: other events untouched', v16.arOther, 'select');
+expect('call screen marked one call', v16.callClass, 'H2OneCall');
+expect('call photo copied to the round div', v16.photo, ['block', true]);
+expect('no call photo: placeholder avatar', v16.noPhoto, 'none');
+expect('Arabic short month replaced by the full name', v16.arNov, '5 نوفمبر');
+expect('Arabic month already full stays', v16.arJan, '5 يناير');
+expect('English dates unchanged', v16.enNov, '5 نوفم');
+
 // Rebuilding the home screen does not wrap the system app's handlers twice
 await page.evaluate(() => {
   ctrl.cleanUp();

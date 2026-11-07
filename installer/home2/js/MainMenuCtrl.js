@@ -1,6 +1,6 @@
 /*
  * Home 2.0 "Ember Glass" launcher for Mazda Connect (CMU 150, firmware 74.x)
- * Version 1.5.0, "Ember Glance" layout (live car, phone and maintenance status) — see README.md
+ * Version 1.6.0, "Ember Glance" layout (live car, phone and maintenance status) — see README.md
  *
  * The installer (run.sh) recognises an installed launcher by the first line above: keep it.
  *
@@ -1221,12 +1221,37 @@ function home2IconUrl(url)
 function home2OneFocus(list)
 {
     if (!list || !list.divElt || typeof list._getDOMItem !== "function") { return; }
+    if (list._inSecondaryMulticontroller) { return; }   // Mazda keeps a second mark on purpose (buttons inside a row)
     var keep = list._getDOMItem(list._lastItemWithFocus);
-    var rows = list.divElt.querySelectorAll(".ListItem.focus");
+    var knob = (list._inputMode === "controller");
+    var rows = list.divElt.querySelectorAll(".ListItem.focus, .ListItem.hit");
     for (var i = 0; i < rows.length; i++)
     {
-        if (rows[i] !== keep) { rows[i].classList.remove("focus"); }
+        if (rows[i] === keep) { continue; }
+        rows[i].classList.remove("focus");
+        if (knob) { rows[i].classList.remove("hit"); }   // a press mark left behind while turning the knob
     }
+}
+
+// Opera can leave the old focus pill painted on screen after a fast scroll (the rows are transformed in Arabic), even
+// though no row has the class any more. Once the knob stops, the list area is repainted.
+function home2Repaint(list)
+{
+    var mask = list && list.divElt ? list.divElt.querySelector(".List2CtrlMask") : null;
+    if (!mask) { return; }
+    mask.style.opacity = "0.99";
+    setTimeout(function() { mask.style.opacity = ""; }, 30);
+}
+
+function home2SettleList(list)
+{
+    try { home2OneFocus(list); } catch (e) {}
+    if (list._home2Settle) { clearTimeout(list._home2Settle); }
+    list._home2Settle = setTimeout(function()
+    {
+        list._home2Settle = null;
+        try { home2OneFocus(list); home2Repaint(list); } catch (e2) {}
+    }, 350);
 }
 
 function home2HookList()
@@ -1253,6 +1278,143 @@ function home2HookList()
                 return result;
             };
         }
+        var handle = p.handleControllerEvent;
+        if (typeof handle === "function")
+        {
+            p.handleControllerEvent = function()
+            {
+                var result = handle.apply(this, arguments);
+                home2SettleList(this);
+                return result;
+            };
+        }
+        p._home2Hooked = true;
+    }
+    catch (e2) {}
+}
+
+// Arabic: the tab bar is mirrored (first tab on the right), so the knob's left/right tilt is mirrored for it too,
+// like on the home screen. TabsCtrl itself is not changed: its controller handler is wrapped once.
+var HOME2_TILT = { leftStart: "rightStart", rightStart: "leftStart", left: "right", right: "left" };
+var HOME2_TILT_BACK = { giveFocusLeft: "giveFocusRight", giveFocusRight: "giveFocusLeft" };
+
+function home2Rtl()
+{
+    try
+    {
+        if (framework._rtlLanguage === true) { return true; }
+        var lang = framework.localize.getCurrentLanguage();
+        return lang === "ar_SA" || lang === "he_IL";
+    }
+    catch (e) { return false; }
+}
+
+function home2HookTabs()
+{
+    try
+    {
+        if (typeof TabsCtrl === "undefined" || TabsCtrl.prototype._home2Hooked) { return; }
+        var handle = TabsCtrl.prototype.handleControllerEvent;
+        if (typeof handle !== "function") { return; }
+        TabsCtrl.prototype.handleControllerEvent = function(eventId)
+        {
+            if (!HOME2_TILT[eventId] || !home2Rtl()) { return handle.apply(this, arguments); }
+            var result = handle.call(this, HOME2_TILT[eventId]);
+            return HOME2_TILT_BACK[result] || result;
+        };
+        TabsCtrl.prototype._home2Hooked = true;
+    }
+    catch (e) {}
+}
+
+// Dates in lists (call history, messages): Mazda's Arabic short month names are cut words ("نوفم" for November,
+// "سبتم" for September). Mazda's dictionary also has the full names (FullMonthName*), so Arabic dates use those.
+function home2HookDate()
+{
+    try
+    {
+        if (typeof Utility === "undefined" || Utility.prototype._home2Hooked) { return; }
+        var format = Utility.prototype.formatDate;
+        if (typeof format !== "function") { return; }
+        Utility.prototype.formatDate = function(timeSeconds)
+        {
+            var text = format.apply(this, arguments);
+            try
+            {
+                if (typeof text === "string" && typeof timeSeconds === "number" && timeSeconds > 0 && this._localeMonthNames &&
+                    framework.localize.getCurrentLanguage() === "ar_SA")
+                {
+                    var key = this._localeMonthNames[new Date(timeSeconds * 1000).getMonth()];
+                    var cut = framework.localize.getLocStr("common", key, null);
+                    var full = framework.localize.getLocStr("common", "Full" + key, null);
+                    if (cut && full && full !== "Full" + key && full !== cut && text.indexOf(cut) >= 0)
+                    {
+                        text = text.replace(cut, full);
+                    }
+                }
+            }
+            catch (e) {}
+            return text;
+        };
+        Utility.prototype._home2Hooked = true;
+    }
+    catch (e2) {}
+}
+
+// Call screen (InCall2Ctrl). The skin needs to know one call from two, and the contact picture is an <img> that the
+// car's browser can't round: it is copied to a round div (H2CallPhoto) and the <img> is hidden by the skin.
+function home2CallPhoto(frame, img)
+{
+    if (!frame || !img) { return; }
+    var photo = frame.querySelector(".H2CallPhoto");
+    if (!photo)
+    {
+        photo = document.createElement("div");
+        photo.className = "H2CallPhoto";
+        frame.appendChild(photo);
+    }
+    var src = img.getAttribute("src") || "";
+    if (!src || src.indexOf("IcnContactImagePlaceholder") >= 0 || src.indexOf("NoContactImage") >= 0)
+    {
+        photo.style.backgroundImage = "";
+        photo.style.display = "none";
+    }
+    else
+    {
+        photo.style.backgroundImage = "url(" + src + ")";
+        photo.style.display = "block";
+    }
+}
+
+function home2HookCall()
+{
+    try
+    {
+        if (typeof InCall2Ctrl === "undefined" || InCall2Ctrl.prototype._home2Hooked) { return; }
+        var p = InCall2Ctrl.prototype;
+        var create = p._createStructure;
+        if (typeof create === "function")
+        {
+            p._createStructure = function()
+            {
+                var result = create.apply(this, arguments);
+                try { if (this.divElt) { this.divElt.classList.add("H2" + this.properties.ctrlStyle); } } catch (e) {}
+                return result;
+            };
+        }
+        var wrapContact = function(name, frameKey, imgKey)
+        {
+            var original = p[name];
+            if (typeof original !== "function") { return; }
+            p[name] = function()
+            {
+                var result = original.apply(this, arguments);
+                try { home2CallPhoto(this[frameKey], this[imgKey]); } catch (e) {}
+                return result;
+            };
+        };
+        wrapContact("setContact1Config", "_contact1ImageFrame", "_contact1Image");
+        wrapContact("setContact2Config", "_contact2ImageFrame", "_contact2Image");
         p._home2Hooked = true;
     }
     catch (e2) {}
@@ -1307,6 +1469,8 @@ function home2HookFramework()
             {
                 var result = registered.apply(this, arguments);
                 home2HookList();
+                home2HookTabs();
+                home2HookCall();
                 home2HookStatusBar();
                 return result;
             };
@@ -1329,6 +1493,9 @@ function home2HookFramework()
 home2LoadSkin();
 home2HookStatusBar();
 home2HookList();
+home2HookTabs();
+home2HookCall();
+home2HookDate();
 home2HookFramework();
 
 framework.registerCtrlLoaded("MainMenuCtrl");

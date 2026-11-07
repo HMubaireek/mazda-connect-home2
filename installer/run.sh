@@ -30,6 +30,14 @@ NAV_SKIN="${R}/jci/nng/ux/_skin_jci_mazda.zip"
 NAV_MARK="home2_nav.txt"
 NAV_STOCK_MD5="d9fa61c112864b2858e4bdc3ac3449a8"   # 74.00.333A ADR
 NAV_TMP="${R}/tmp/home2_nav.zip"
+# Map colours, Tajawal and right-to-left lists: a few text files inside /jci/nng/data.zip, changed on the car with
+# awk/sed (nav/data/). Only the original copies of those files are kept (backup nav/data/); restoring zips them
+# back. The stick's backup also gets a full copy of data.zip as a last resort.
+NAV_DATA="${R}/jci/nng/data.zip"
+NAV_DTMP="${R}/tmp/home2_data.zip"
+NAV_WORK="${R}/tmp/home2_navdata"
+NAV_FONTDIR="${R}/jci/fonts/navi"        # NNG reads fonts from /jci/fonts and /jci/fonts/navi; Opera does not
+NAV_FONTS="Home2Tajawal-Medium.ttf Home2Tajawal-Bold.ttf"
 
 # MD5 of Mazda's original home-menu files this build has been checked against.
 # 74.00.333A ADR (4A N)
@@ -130,17 +138,22 @@ nav_is_ours()
 
 # Put a zip in place of the navigation skin. Write a new file and rename it, so the running navigation keeps
 # reading the old one until the restart; if there is no room for two copies, overwrite in place.
-put_nav()
+put_file()
 {
-    # $1 = zip to put in place
-    if cp "$1" "${NAV_SKIN}.home2new" 2>/dev/null && mv -f "${NAV_SKIN}.home2new" "${NAV_SKIN}"; then
+    # $1 = file to put in place, $2 = where
+    if cp "$1" "$2.home2new" 2>/dev/null && mv -f "$2.home2new" "$2"; then
         :
     else
-        rm -f "${NAV_SKIN}.home2new"
-        cp "$1" "${NAV_SKIN}" || return 1
+        rm -f "$2.home2new"
+        cp "$1" "$2" || return 1
     fi
     sync
-    [ "$(md5 "${NAV_SKIN}")" = "$(md5 "$1")" ]
+    [ "$(md5 "$2")" = "$(md5 "$1")" ]
+}
+
+put_nav()
+{
+    put_file "$1" "${NAV_SKIN}"
 }
 
 install_nav()
@@ -207,6 +220,147 @@ restore_nav()
         fi
     done
     echo "Could not restore the navigation skin."
+    return 1
+}
+
+data_is_ours()
+{
+    unzip -l "${NAV_DATA}" 2>/dev/null | grep -q "${NAV_MARK}"
+}
+
+# Replace whole lines of a color.ini [color] section by key (first occurrence only; keeps CRLF endings).
+recolor()
+{
+    # $1 = Mazda's color.ini, $2 = our lines (key=...), $3 = output
+    awk -v OVR="$2" '
+        BEGIN { while ((getline l < OVR) > 0) { k = l; sub(/=.*/, "", k); o[k] = l } }
+        { line = $0; cr = ""; if (line ~ /\r$/) { cr = "\r"; sub(/\r$/, "", line) } }
+        line ~ /^\[/ { sec = line }
+        { k = line; sub(/=.*/, "", k); gsub(/^[ \t]+|[ \t]+$/, "", k)
+          if (sec == "[color]" && (k in o) && !(k in done)) { print o[k] cr; done[k] = 1 } else print $0 }' "$1" > "$3"
+}
+
+install_nav_data()
+{
+    D="${PAYLOAD}/nav/data"
+    [ -f "$D/files.txt" ] || return 0
+    if [ ! -f "${NAV_DATA}" ]; then
+        echo "No ${NAV_DATA}: map colours and fonts skipped."
+        return 0
+    fi
+    command -v zip > /dev/null 2>&1 && command -v unzip > /dev/null 2>&1 || return 0
+    FILES=$(cat "$D/files.txt")
+    if data_is_ours; then
+        for f in ${FILES}; do
+            if [ ! -f "${BACKUP}/nav/data/$f" ]; then
+                echo "Map colours are installed but the backup of $f is missing: left as they are."
+                return 0
+            fi
+        done
+    else
+        rm -rf "${BACKUP}/nav/data"
+        mkdir -p "${BACKUP}/nav/data" "${USB_BACKUP}/nav"
+        if ! unzip -o -q "${NAV_DATA}" ${FILES} -d "${BACKUP}/nav/data"; then
+            rm -rf "${BACKUP}/nav/data"
+            echo "Could not back up the files in data.zip: map colours and fonts skipped."
+            return 0
+        fi
+        rm -rf "${USB_BACKUP}/nav/data"
+        cp -r "${BACKUP}/nav/data" "${USB_BACKUP}/nav/" || echo "Note: no copy of the data.zip files on the USB stick."
+        cp "${NAV_DATA}" "${USB_BACKUP}/nav/data.zip" || echo "Note: no full copy of data.zip on the USB stick."
+        echo "Backed up ${FILES} from data.zip"
+    fi
+    # Our versions of Mazda's files, made from the originals.
+    rm -rf "${NAV_WORK}"
+    for f in ${FILES}; do
+        mkdir -p "${NAV_WORK}/$(dirname "$f")" && cp "${BACKUP}/nav/data/$f" "${NAV_WORK}/$f" || return 1
+    done
+    W="${NAV_WORK}/ui_jci_mazda"
+    for s in day night; do
+        recolor "${BACKUP}/nav/data/ui_jci_mazda/scheme/$s/color.ini" "$D/colors_$s.txt" "$W/scheme/$s/color.ini" || return 1
+        want=$(grep -c . "$D/colors_$s.txt")
+        got=$(grep -c -F -f "$D/colors_$s.txt" "$W/scheme/$s/color.ini")
+        if [ "${got}" -lt "${want}" ]; then
+            echo "Map colours ($s): only ${got} of ${want} lines found."
+            return 1
+        fi
+    done
+    for v in jci jci_sb jci_bd; do
+        sed -f "$D/fonts.sed" "${BACKUP}/nav/data/ui_jci_mazda/fonts/$v.vfont" > "$W/fonts/$v.vfont" || return 1
+        grep -q "^Home2Tajawal-" "$W/fonts/$v.vfont" || { echo "Font edit did not apply to $v.vfont."; return 1; }
+    done
+    sed -f "$D/css.sed" "${BACKUP}/nav/data/ui_jci_mazda/common/ui/jci_mazda.css" > "$W/common/ui/jci_mazda.css" || return 1
+    grep -q "R2L:(%regional.current_language.is_r2l);" "$W/common/ui/jci_mazda.css" ||
+        { echo "Right-to-left edit did not apply to jci_mazda.css."; return 1; }
+    cp "${PAYLOAD}/nav/${NAV_MARK}" "${NAV_WORK}/" || return 1
+    # Tajawal for the map.
+    mkdir -p "${NAV_FONTDIR}"
+    for t in ${NAV_FONTS}; do
+        cp "${PAYLOAD}/fonts/$t" "${NAV_FONTDIR}/$t" && [ "$(md5 "${NAV_FONTDIR}/$t")" = "$(md5 "${PAYLOAD}/fonts/$t")" ] ||
+            { echo "Could not copy $t."; return 1; }
+    done
+    # data.zip with our files in it.
+    mkdir -p "$(dirname "${NAV_DTMP}")"
+    rm -f "${NAV_DTMP}"
+    if ! cp "${NAV_DATA}" "${NAV_DTMP}" ||
+       ! ( cd "${NAV_WORK}" && zip -q -X "${NAV_DTMP}" ${FILES} "${NAV_MARK}" ) ||
+       ! unzip -tq "${NAV_DTMP}" > /dev/null 2>&1; then
+        rm -f "${NAV_DTMP}"
+        echo "Could not build the new data.zip."
+        return 1
+    fi
+    if ! put_file "${NAV_DTMP}" "${NAV_DATA}"; then
+        rm -f "${NAV_DTMP}"
+        echo "Could not copy the new data.zip."
+        return 1
+    fi
+    rm -f "${NAV_DTMP}"
+    for f in ${FILES}; do
+        [ "$(unzip -p "${NAV_DATA}" "$f" | md5sum | cut -d ' ' -f 1)" = "$(md5 "${NAV_WORK}/$f")" ] ||
+            { echo "data.zip check failed for $f."; return 1; }
+    done
+    rm -rf "${NAV_WORK}"
+    echo "Map colours, Tajawal and right-to-left lists installed."
+    return 0
+}
+
+restore_nav_data()
+{
+    # $1 = "force": also repair a data.zip an install left broken half-way
+    rm -f "${NAV_FONTDIR}"/Home2Tajawal-*.ttf
+    [ -f "${NAV_DATA}" ] || return 0
+    if ! data_is_ours; then
+        [ "$1" = "force" ] || return 0
+        unzip -tq "${NAV_DATA}" > /dev/null 2>&1 && return 0      # untouched
+        if [ -f "${USB_BACKUP}/nav/data.zip" ] && put_file "${USB_BACKUP}/nav/data.zip" "${NAV_DATA}"; then
+            echo "data.zip restored from the full copy on the USB stick"
+            return 0
+        fi
+        echo "data.zip is damaged and no full copy was found."
+        return 1
+    fi
+    FILES=$(cat "${PAYLOAD}/nav/data/files.txt" 2>/dev/null)
+    for b in "${BACKUP}" "${USB_BACKUP}"; do
+        ok=1
+        for f in ${FILES}; do [ -f "$b/nav/data/$f" ] || ok=0; done
+        [ -n "${FILES}" ] && [ ${ok} -eq 1 ] || continue
+        rm -f "${NAV_DTMP}"
+        if cp "${NAV_DATA}" "${NAV_DTMP}" &&
+           ( cd "$b/nav/data" && zip -q -X "${NAV_DTMP}" ${FILES} ) &&
+           zip -q -d "${NAV_DTMP}" "${NAV_MARK}" > /dev/null &&
+           unzip -tq "${NAV_DTMP}" > /dev/null 2>&1 &&
+           put_file "${NAV_DTMP}" "${NAV_DATA}"; then
+            rm -f "${NAV_DTMP}"
+            echo "Mazda's files in data.zip restored from $b/nav/data"
+            return 0
+        fi
+        rm -f "${NAV_DTMP}"
+    done
+    if [ -f "${USB_BACKUP}/nav/data.zip" ] && put_file "${USB_BACKUP}/nav/data.zip" "${NAV_DATA}"; then
+        echo "data.zip restored from the full copy on the USB stick"
+        return 0
+    fi
+    echo "Could not restore data.zip."
     return 1
 }
 
@@ -313,7 +467,7 @@ then
     # Navigation map skin (only once everything else is in place).
     NAV_OK=0
     if [ ${COPY_OK} -eq 0 ] && [ ${VERIFY_OK} -eq 0 ]; then
-        install_nav
+        install_nav && install_nav_data
         NAV_OK=$?
     fi
 
@@ -322,7 +476,12 @@ then
         restore_originals "${BACKUP}"
         rm -f "${CTRL}/css/MainMenuCtrl_rtl.css" "${FONTS}"/Home2Tajawal-*.ttf
         remove_skin "${BACKUP}"
-        if [ ${NAV_OK} -ne 0 ]; then restore_nav "${BACKUP}" force; else restore_nav "${BACKUP}"; fi
+        if [ ${NAV_OK} -ne 0 ]; then
+            restore_nav "${BACKUP}" force; restore_nav_data force
+        else
+            restore_nav "${BACKUP}"; restore_nav_data
+        fi
+        rm -rf "${NAV_WORK}"
         sync
         dialog_wait "Install failed while copying.\nThe original home screen was restored.\nSee logs/install.log on the USB stick." 12
         exit 1
@@ -366,6 +525,7 @@ else
     rm -f "${OLD_FONTS}"/Tajawal-*.ttf "${OLD_FONTS}"/Home2Tajawal-*.ttf
     remove_skin "${SRC}"
     restore_nav "${SRC}" || RESTORE_OK=1
+    restore_nav_data || RESTORE_OK=1
     sync
 
     if [ ${RESTORE_OK} -ne 0 ]; then

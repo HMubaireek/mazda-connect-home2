@@ -11,6 +11,8 @@ installer/home2/fonts/Home2Tajawal-{Light,Medium,Bold}.ttf with:
    Old engines often shape Arabic themselves and then look up these codepoints; Tajawal
    only maps some of them, which makes the engine fall back to another font. Each form
    is pointed at the glyph HarfBuzz picks for that letter in that position.
+3. An empty, zero-width glyph for characters that never draw anything (emoji variation selectors, joiners,
+   direction marks), so a name like "♥️" doesn't show a missing-glyph square.
 
 Tajawal is under the SIL Open Font License 1.1 with no Reserved Font Name, so modified
 copies may keep a name containing "Tajawal". Requires: fonttools, uharfbuzz
@@ -76,6 +78,31 @@ def add_presentation_forms(path, tt):
     return added
 
 
+# Characters that never draw anything: emoji variation selectors (the U+FE0F after a heart in "♥️"), joiners,
+# direction marks, BOM. Tajawal has none of them, so Presto drew its missing-glyph square ("♥ ☐").
+INVISIBLE = (list(range(0x200B, 0x2010)) + list(range(0x202A, 0x202F)) + list(range(0x2060, 0x2065)) +
+             list(range(0x2066, 0x206A)) + list(range(0xFE00, 0xFE10)) + [0x061C, 0xFEFF])
+
+
+def add_invisibles(tt):
+    """Map the INVISIBLE characters to one new empty glyph with no width."""
+    name = "home2zerowidth"
+    order = tt.getGlyphOrder()
+    if name not in order:
+        from fontTools.ttLib.tables._g_l_y_f import Glyph
+        tt.setGlyphOrder(order + [name])
+        tt["glyf"].glyphs[name] = Glyph()
+        tt["glyf"].glyphOrder = tt.getGlyphOrder()
+        tt["hmtx"].metrics[name] = (0, 0)
+        tt["maxp"].numGlyphs = len(tt.getGlyphOrder())
+    cmap = tt.getBestCmap()
+    new = {cp: name for cp in INVISIBLE if cp not in cmap}
+    for table in tt["cmap"].tables:
+        if table.isUnicode() and table.format != 14:
+            table.cmap.update(new)
+    return len(new)
+
+
 def set_names(tt, family, sub, ps):
     name = tt["name"]
     for rec in list(name.names):
@@ -93,6 +120,7 @@ def main():
         src = os.path.join(SRC, "Tajawal-%s.ttf" % weight)
         tt = TTFont(src)
         added = add_presentation_forms(src, tt)
+        invisible = add_invisibles(tt)
         family = "Home2 Tajawal %s" % weight
         sub = "Bold" if weight == "Bold" else "Regular"
         set_names(tt, family, sub, "Home2Tajawal-%s" % weight)
@@ -100,7 +128,8 @@ def main():
         tt.save(out)
         cmap = TTFont(out).getBestCmap()
         pf = sum(1 for u in list(range(0xFB50, 0xFE00)) + list(range(0xFE70, 0xFF00)) if u in cmap)
-        print("%s: +%d presentation forms (now %d), family '%s'" % (os.path.basename(out), added, pf, family))
+        print("%s: +%d presentation forms (now %d), +%d invisible characters, family '%s'" % (
+            os.path.basename(out), added, pf, invisible, family))
 
 
 if __name__ == "__main__":

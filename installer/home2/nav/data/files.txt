@@ -1,0 +1,6 @@
+ui_jci_mazda/scheme/day/color.ini
+ui_jci_mazda/scheme/night/color.ini
+ui_jci_mazda/fonts/jci.vfont
+ui_jci_mazda/fonts/jci_sb.vfont
+ui_jci_mazda/fonts/jci_bd.vfont
+ui_jci_mazda/common/ui/jci_mazda.css

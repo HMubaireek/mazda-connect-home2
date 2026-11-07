@@ -26,11 +26,23 @@ ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 OUT = os.path.join(ROOT, "tools", "nav_skin_table.json")
 SKIN_DIR = "ui_jci_mazda/800_480/"
 
+COLORS_OUT = os.path.join(ROOT, "tools", "nav_colors_orig.json")
+
 # What we redraw: the map's bottom menu (bar, buttons, dividers, icons, tooltip),
-# the cockpit panels on the left of the map and the speed-limit sign.
+# the cockpit panels on the left of the map, the speed-limit sign, and the list screens
+# (settings, search: rows, focus bar, back button, scroll bar).
 TARGETS = re.compile(r"^(btn_cockpitmenu.*|ico_CM_.*|spr_cockpitMenuBG|spr_floating_divider|mapmenupopup(_leg)?|"
                      r"cockpit_bg|cockpit_bg_straight|cockpit_bg_straight_overspeed|cockpit_separator_line|"
-                     r"spr_speedlimit_eu|btn_openpanel)\.bmp$")
+                     r"spr_speedlimit_eu|btn_openpanel|"
+                     r"btn_back|btn_back_fade|btn_folderUp|btn_folderUp_fade|"
+                     r"listitem|listitem64px1line|listitem64px1line_dialog|listitem65px1line|listitem78px2lines|"
+                     r"listitem82px2lines|listitem_nofocus|listitem64px1line_focus|listitem82px2lines_focus|"
+                     r"scrolltrack_spr|scrolltrack_spr_alternatives|scrolltrack_straight_spr|"
+                     r"scrolltrack_straight_spr_nohighlight|spr_hscroll_indicator|spr_hscroll_indicator_alternatives|"
+                     r"spr_hscroll_straight_indicator)\.bmp$")
+
+# Map colour schemes in data.zip whose lines we rewrite (tools/build_nav_skin.py has the new colours).
+SCHEMES = {"day": "ui_jci_mazda/scheme/day/color.ini", "night": "ui_jci_mazda/scheme/night/color.ini"}
 
 
 def frame_counts(nng):
@@ -52,6 +64,11 @@ def frame_counts(nng):
 # Heights of one state: the bar buttons are 87px per state, the menu icons 50px. Their "#4" / "#8" is
 # built in Lua (floating_menu.lua), so it is not in the layout files as text.
 STATE_HEIGHT = (("btn_cockpitmenu", 87), ("ico_CM_", 50))
+# List rows and the back button: one state's height by file name (the layout names some with "#3"
+# although the file holds 4 states).
+NAME_STATE_HEIGHT = {"listitem.bmp": 65, "listitem64px1line.bmp": 64, "listitem64px1line_dialog.bmp": 64,
+                     "listitem65px1line.bmp": 65, "listitem78px2lines.bmp": 78, "listitem82px2lines.bmp": 82,
+                     "btn_back.bmp": 416, "btn_folderUp.bmp": 416}
 
 
 def classify(img, frames):
@@ -99,6 +116,8 @@ def main(nng):
             for prefix, sh in STATE_HEIGHT:
                 if name.startswith(prefix) and h and h % sh == 0:
                     frames = h // sh
+            if name in NAME_STATE_HEIGHT and h and h % NAME_STATE_HEIGHT[name] == 0:
+                frames = h // NAME_STATE_HEIGHT[name]
             entry = {"frames": frames}
             try:
                 img = nng_rl.load_bytes(data)
@@ -113,6 +132,25 @@ def main(nng):
         json.dump(table, f, indent=1, sort_keys=True)
         f.write("\n")
     print("wrote %s (%d images)" % (OUT, len(table)))
+
+    # The lines of the colour keys we change, so the build can rewrite just their colour numbers.
+    from build_nav_skin import PALETTES
+    colors = {}
+    with zipfile.ZipFile(os.path.join(nng, "data.zip")) as z:
+        for scheme, path in SCHEMES.items():
+            lines = {}
+            for line in z.read(path).decode("latin-1").splitlines():
+                key = line.split("=", 1)[0].strip()
+                if "=" in line and key in PALETTES[scheme] and key not in lines:
+                    lines[key] = line.rstrip("\r")
+            missing = sorted(set(PALETTES[scheme]) - set(lines))
+            if missing:
+                print("not in Mazda's %s scheme (skipped): %s" % (scheme, ", ".join(missing)))
+            colors[scheme] = lines
+    with open(COLORS_OUT, "w", encoding="utf-8", newline="\n") as f:
+        json.dump(colors, f, indent=1, sort_keys=True, ensure_ascii=False)
+        f.write("\n")
+    print("wrote %s" % COLORS_OUT)
 
 
 if __name__ == "__main__":

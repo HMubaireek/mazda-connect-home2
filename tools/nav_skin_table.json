@@ -1,4 +1,67 @@
 {
+ "btn_back.bmp": {
+  "frames": 4,
+  "size": [
+   93,
+   1664
+  ],
+  "states": [
+   {
+    "box": [
+     0,
+     0,
+     93,
+     416
+    ],
+    "kind": "neutral"
+   },
+   {
+    "box": [
+     0,
+     0,
+     93,
+     416
+    ],
+    "kind": "orange"
+   },
+   {
+    "box": [
+     0,
+     0,
+     93,
+     416
+    ],
+    "kind": "neutral"
+   },
+   {
+    "box": [
+     0,
+     0,
+     93,
+     416
+    ],
+    "kind": "neutral"
+   }
+  ]
+ },
+ "btn_back_fade.bmp": {
+  "frames": 1,
+  "size": [
+   93,
+   416
+  ],
+  "states": [
+   {
+    "box": [
+     0,
+     0,
+     93,
+     416
+    ],
+    "kind": "red"
+   }
+  ]
+ },
  "btn_cockpitmenu.bmp": {
   "frames": 4,
   "size": [
@@ -650,6 +713,69 @@
      9,
      115,
      87
+    ],
+    "kind": "red"
+   }
+  ]
+ },
+ "btn_folderUp.bmp": {
+  "frames": 4,
+  "size": [
+   93,
+   1664
+  ],
+  "states": [
+   {
+    "box": [
+     0,
+     0,
+     93,
+     416
+    ],
+    "kind": "neutral"
+   },
+   {
+    "box": [
+     0,
+     0,
+     93,
+     416
+    ],
+    "kind": "orange"
+   },
+   {
+    "box": [
+     0,
+     0,
+     93,
+     416
+    ],
+    "kind": "neutral"
+   },
+   {
+    "box": [
+     0,
+     0,
+     93,
+     416
+    ],
+    "kind": "neutral"
+   }
+  ]
+ },
+ "btn_folderUp_fade.bmp": {
+  "frames": 1,
+  "size": [
+   93,
+   416
+  ],
+  "states": [
+   {
+    "box": [
+     0,
+     0,
+     93,
+     416
     ],
     "kind": "red"
    }
@@ -1861,6 +1987,320 @@
    }
   ]
  },
+ "listitem.bmp": {
+  "frames": 4,
+  "size": [
+   730,
+   260
+  ],
+  "states": [
+   {
+    "box": [
+     0,
+     0,
+     574,
+     65
+    ],
+    "kind": "neutral"
+   },
+   {
+    "box": [
+     0,
+     0,
+     730,
+     65
+    ],
+    "kind": "orange"
+   },
+   {
+    "box": [
+     38,
+     64,
+     574,
+     65
+    ],
+    "kind": "neutral"
+   },
+   {
+    "box": [
+     0,
+     0,
+     730,
+     65
+    ],
+    "kind": "red"
+   }
+  ]
+ },
+ "listitem64px1line.bmp": {
+  "frames": 4,
+  "size": [
+   730,
+   256
+  ],
+  "states": [
+   {
+    "box": [
+     0,
+     0,
+     669,
+     64
+    ],
+    "kind": "neutral"
+   },
+   {
+    "box": [
+     0,
+     0,
+     730,
+     64
+    ],
+    "kind": "orange"
+   },
+   {
+    "box": [
+     29,
+     0,
+     669,
+     64
+    ],
+    "kind": "neutral"
+   },
+   {
+    "box": null,
+    "kind": "empty"
+   }
+  ]
+ },
+ "listitem64px1line_dialog.bmp": {
+  "frames": 4,
+  "size": [
+   730,
+   256
+  ],
+  "states": [
+   {
+    "box": [
+     0,
+     0,
+     585,
+     64
+    ],
+    "kind": "neutral"
+   },
+   {
+    "box": [
+     0,
+     0,
+     730,
+     64
+    ],
+    "kind": "orange"
+   },
+   {
+    "box": [
+     27,
+     62,
+     585,
+     64
+    ],
+    "kind": "neutral"
+   },
+   {
+    "box": [
+     27,
+     62,
+     585,
+     64
+    ],
+    "kind": "neutral"
+   }
+  ]
+ },
+ "listitem64px1line_focus.bmp": {
+  "frames": 1,
+  "size": [
+   730,
+   64
+  ],
+  "states": [
+   {
+    "box": [
+     0,
+     0,
+     730,
+     64
+    ],
+    "kind": "red"
+   }
+  ]
+ },
+ "listitem65px1line.bmp": {
+  "frames": 4,
+  "size": [
+   730,
+   260
+  ],
+  "states": [
+   {
+    "box": [
+     0,
+     0,
+     574,
+     65
+    ],
+    "kind": "neutral"
+   },
+   {
+    "box": [
+     0,
+     0,
+     730,
+     65
+    ],
+    "kind": "orange"
+   },
+   {
+    "box": [
+     38,
+     64,
+     574,
+     65
+    ],
+    "kind": "neutral"
+   },
+   {
+    "box": [
+     0,
+     0,
+     730,
+     65
+    ],
+    "kind": "red"
+   }
+  ]
+ },
+ "listitem78px2lines.bmp": {
+  "frames": 4,
+  "size": [
+   730,
+   312
+  ],
+  "states": [
+   {
+    "box": [
+     0,
+     0,
+     574,
+     78
+    ],
+    "kind": "neutral"
+   },
+   {
+    "box": [
+     0,
+     0,
+     730,
+     78
+    ],
+    "kind": "orange"
+   },
+   {
+    "box": [
+     38,
+     77,
+     574,
+     78
+    ],
+    "kind": "neutral"
+   },
+   {
+    "box": [
+     0,
+     0,
+     730,
+     78
+    ],
+    "kind": "red"
+   }
+  ]
+ },
+ "listitem82px2lines.bmp": {
+  "frames": 4,
+  "size": [
+   730,
+   328
+  ],
+  "states": [
+   {
+    "box": [
+     2,
+     0,
+     660,
+     82
+    ],
+    "kind": "neutral"
+   },
+   {
+    "box": [
+     0,
+     0,
+     730,
+     82
+    ],
+    "kind": "orange"
+   },
+   {
+    "box": [
+     0,
+     0,
+     730,
+     81
+    ],
+    "kind": "orange"
+   },
+   {
+    "box": null,
+    "kind": "empty"
+   }
+  ]
+ },
+ "listitem82px2lines_focus.bmp": {
+  "frames": 1,
+  "size": [
+   730,
+   82
+  ],
+  "states": [
+   {
+    "box": [
+     0,
+     0,
+     730,
+     82
+    ],
+    "kind": "red"
+   }
+  ]
+ },
+ "listitem_nofocus.bmp": {
+  "frames": 1,
+  "size": [
+   730,
+   65
+  ],
+  "states": [
+   {
+    "box": [
+     38,
+     64,
+     574,
+     65
+    ],
+    "kind": "neutral"
+   }
+  ]
+ },
  "mapmenupopup.bmp": {
   "frames": 1,
   "size": [
@@ -1897,6 +2337,78 @@
    }
   ]
  },
+ "scrolltrack_spr.bmp": {
+  "frames": 1,
+  "size": [
+   65,
+   416
+  ],
+  "states": [
+   {
+    "box": [
+     10,
+     0,
+     65,
+     416
+    ],
+    "kind": "neutral"
+   }
+  ]
+ },
+ "scrolltrack_spr_alternatives.bmp": {
+  "frames": 1,
+  "size": [
+   78,
+   416
+  ],
+  "states": [
+   {
+    "box": [
+     5,
+     0,
+     56,
+     416
+    ],
+    "kind": "neutral"
+   }
+  ]
+ },
+ "scrolltrack_straight_spr.bmp": {
+  "frames": 1,
+  "size": [
+   36,
+   416
+  ],
+  "states": [
+   {
+    "box": [
+     0,
+     0,
+     36,
+     416
+    ],
+    "kind": "red"
+   }
+  ]
+ },
+ "scrolltrack_straight_spr_nohighlight.bmp": {
+  "frames": 1,
+  "size": [
+   36,
+   416
+  ],
+  "states": [
+   {
+    "box": [
+     24,
+     0,
+     36,
+     416
+    ],
+    "kind": "neutral"
+   }
+  ]
+ },
  "spr_cockpitMenuBG.bmp": {
   "frames": 1,
   "size": [
@@ -1930,6 +2442,60 @@
      83
     ],
     "kind": "neutral"
+   }
+  ]
+ },
+ "spr_hscroll_indicator.bmp": {
+  "frames": 1,
+  "size": [
+   46,
+   416
+  ],
+  "states": [
+   {
+    "box": [
+     15,
+     0,
+     46,
+     416
+    ],
+    "kind": "red"
+   }
+  ]
+ },
+ "spr_hscroll_indicator_alternatives.bmp": {
+  "frames": 1,
+  "size": [
+   46,
+   416
+  ],
+  "states": [
+   {
+    "box": [
+     9,
+     0,
+     34,
+     416
+    ],
+    "kind": "red"
+   }
+  ]
+ },
+ "spr_hscroll_straight_indicator.bmp": {
+  "frames": 1,
+  "size": [
+   36,
+   416
+  ],
+  "states": [
+   {
+    "box": [
+     27,
+     0,
+     36,
+     415
+    ],
+    "kind": "red"
    }
   ]
  },
